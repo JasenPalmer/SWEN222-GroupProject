@@ -13,10 +13,13 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JWindow;
+import javax.swing.SwingConstants;
 
 import ui.panels.*;
 
@@ -118,10 +121,40 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		this.add(cameraRightButton,0);
 	}
 
+	private static void displaySplash(){
+		JWindow window = new JWindow();
+		window.setLayout(null);
+		
+		JLabel loadingTextImage = new JLabel(new ImageIcon("src/ui/images/splashTextImage.gif"));
+		loadingTextImage.setBounds(0,25, 405, 200);
+		window.getContentPane().add(loadingTextImage);
+		
+		JLabel loadingLabel = new JLabel(new ImageIcon("src/ui/images/loadingbar.gif"));
+		loadingLabel.setBounds(50,325,305,15);
+		loadingLabel.setOpaque(false);
+		window.getContentPane().add(loadingLabel);
+				
+		
+		JLabel backgroundLabel = new JLabel(new ImageIcon("src/ui/images/splashBackgroundImageTemp.jpg"));
+		backgroundLabel.setBounds(0,0,400,400);
+		window.getContentPane().add(backgroundLabel);
+		
+		window.setBounds(750, 300, 400, 400);
+		window.setVisible(true);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		window.setVisible(false);
+		window.dispose();
+	}
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		displaySplash();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
