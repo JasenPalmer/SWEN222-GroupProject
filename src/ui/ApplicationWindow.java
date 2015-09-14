@@ -33,6 +33,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
+		setFocusable(true);
 		
 		//Setup frame
 		setResizable(false);
@@ -59,6 +60,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setupButtons();
 	}
 
+	private void setInventory(){
+		if(inventOpen == false){
+			
+		}
+	}
+	
 	private void setupMenu(){
 		ArrayList<JMenuItem> option1List = new ArrayList<>();
 		ArrayList<JMenuItem> option2List = new ArrayList<>();
@@ -140,24 +147,27 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_I:
-			System.out.println("Invent Button");
+			if(inventOpen == true){
+				System.out.println("Close Invent");
+				inventOpen = false;
+			}
+			else{
+				System.out.println("Open Invent");
+				inventOpen = true;
+			}
 			break;
 		default:
 			break;
 		}
-		System.out.println("Pressed");
-		System.out.println(e.toString());
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("Released");
-		System.out.println(e.toString());
+		//TODO
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("Typed");
-		System.out.println(e.toString());
+		//TODO
 	}
 }
