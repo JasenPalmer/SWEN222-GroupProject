@@ -23,7 +23,8 @@ import ui.panels.*;
 
 public class ApplicationWindow extends JFrame implements ActionListener, KeyListener{
 
-	private JLayeredPane layeredPane = new JLayeredPane();
+	private JLayeredPane layeredPanel = new JLayeredPane();
+	private InventoryPanel inventPanel;
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	
@@ -41,18 +42,23 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setBounds(450, 50, 1050, 950);
 
 		//Setup layered pane
-		layeredPane.setBounds(0, 0, 1050, 950);
-		getContentPane().add(layeredPane);
+		layeredPanel.setBounds(0, 0, 1050, 950);
+		getContentPane().add(layeredPanel);
 
 		//TODO Change Image size to fit once confirmed
 		//Setup Background Panel
 		BackgroundPanel bgPanel = new BackgroundPanel();
-		layeredPane.add(bgPanel, 0,0);
+		layeredPanel.add(bgPanel, 0,0);
 
 		//Setup rendering window
 		rw = new RenderingWindow();
-		layeredPane.add(rw, 1,1);
-		
+		layeredPanel.add(rw, 1,1);
+
+		//Setup Inventory
+		inventPanel = new InventoryPanel();
+		layeredPanel.add(inventPanel,2,2);
+		setInventory();
+				
 		//Setup the menu bar
 		setupMenu();
 		
@@ -62,7 +68,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	private void setInventory(){
 		if(inventOpen == false){
-			
+			inventPanel.setVisible(false);
+			inventPanel.setFocusable(false);
+		}
+		else{
+			inventPanel.setVisible(true);
+			inventPanel.setFocusable(true);
 		}
 	}
 	
@@ -150,10 +161,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			if(inventOpen == true){
 				System.out.println("Close Invent");
 				inventOpen = false;
+				setInventory();
 			}
 			else{
 				System.out.println("Open Invent");
 				inventOpen = true;
+				setInventory();
 			}
 			break;
 		default:
