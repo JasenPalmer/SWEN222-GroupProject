@@ -3,8 +3,15 @@ package ui;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
@@ -14,20 +21,26 @@ import javax.swing.JMenuItem;
 import ui.panels.*;
 
 
-public class ApplicationWindow extends JFrame implements ActionListener{
+public class ApplicationWindow extends JFrame implements ActionListener, KeyListener{
 
 	private JLayeredPane layeredPane = new JLayeredPane();
-
+	private RenderingWindow rw;
+	private boolean inventOpen = false;
+	
 	public ApplicationWindow() {
+		//Setup
 		super("Pretty Sick UI TBH");
-
+		setLayout(null);
+		setResizable(false);
+		addKeyListener(this);
+		
 		//Setup frame
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1050, 950);
+		setBounds(450, 50, 1050, 950);
 
 		//Setup layered pane
-		layeredPane.setBounds(0, 0, 750, 750);
+		layeredPane.setBounds(0, 0, 1050, 950);
 		getContentPane().add(layeredPane);
 
 		//TODO Change Image size to fit once confirmed
@@ -35,8 +48,15 @@ public class ApplicationWindow extends JFrame implements ActionListener{
 		BackgroundPanel bgPanel = new BackgroundPanel();
 		layeredPane.add(bgPanel, 0,0);
 
+		//Setup rendering window
+		rw = new RenderingWindow();
+		layeredPane.add(rw, 1,1);
+		
 		//Setup the menu bar
 		setupMenu();
+		
+		//Setup buttons
+		setupButtons();
 	}
 
 	private void setupMenu(){
@@ -67,6 +87,18 @@ public class ApplicationWindow extends JFrame implements ActionListener{
 
 		this.setJMenuBar(menuBar);		
 	}
+	
+	private void setupButtons(){
+		JButton cameraLeftButton = new JButton("Left");
+		cameraLeftButton.setBounds(500,800,70,30);
+		cameraLeftButton.addActionListener(this);
+		this.add(cameraLeftButton,0);
+		
+		JButton cameraRightButton = new JButton("Right");
+		cameraRightButton.setBounds(600,800,70,30);
+		cameraRightButton.addActionListener(this);
+		this.add(cameraRightButton,0);
+	}
 
 	/**
 	 * Launch the application.
@@ -88,13 +120,44 @@ public class ApplicationWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
 		case "New Game":
-			System.out.println("New Game");
+			System.out.println("New Game optin clicked");
 			break;
 		case "Temp":
-			System.out.println("Temp");
+			System.out.println("Temp option clicked");
+			break;
+		case "Left":
+			System.out.println("Left button clicked");
+			break;
+		case "Right":
+			System.out.println("Right button clicked");
 			break;
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_I:
+			System.out.println("Invent Button");
+			break;
+		default:
+			break;
+		}
+		System.out.println("Pressed");
+		System.out.println(e.toString());
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		System.out.println("Released");
+		System.out.println(e.toString());
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		System.out.println("Typed");
+		System.out.println(e.toString());
 	}
 }
