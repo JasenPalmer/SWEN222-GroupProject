@@ -119,6 +119,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		cameraRightButton.setBounds(600,800,70,30);
 		cameraRightButton.addActionListener(this);
 		this.add(cameraRightButton,0);
+		
+		//Temp label
+		JLabel temp = new JLabel("Press I to open Invent");
+		temp.setBounds(300,800,150,20);
+		this.add(temp, 0);
 	}
 
 	private static void displaySplash(){
