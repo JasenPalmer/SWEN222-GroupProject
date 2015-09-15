@@ -5,8 +5,13 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Server {
+	
+	//Game uses a constant port of 9954
+	private static final int PORT = 9954;
+	
 	
 	//Server to accept socket connections
 	private ServerSocket serverSocket;
@@ -14,9 +19,11 @@ public class Server {
 	//All connected clients
 	private ArrayList<ClientThread> connections;
 	
+	//Running status of server
 	private boolean finished = false;
 	
-	private static final int port = 9954;
+	//Queue of events to be processed
+	private Queue<NetworkEvent> eventQueue;
 	
 	public Server(){
 		connections = new ArrayList<ClientThread>();
@@ -38,7 +45,7 @@ public class Server {
 		private ObjectInputStream input;
 		private ObjectOutputStream output;
 		
-		private String action;
+		private NetworkEvent currentEvent;
 		
 		public ClientThread(Socket socket){
 			this.socket = socket;
