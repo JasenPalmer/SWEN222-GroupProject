@@ -13,15 +13,24 @@ public class NetworkEvent implements Serializable {
 	//KeyCode of the pressed key, -1 if this is not a KEY_PRESS event.
 	private final int keyCode;
 	
+	//Username of the client that created the NetworkEvent
+	private final String user;
+	
 	
 	/**
 	 * Creates a network event of the KEY_PRESS type.
 	 * @param e - The KeyEvent associated with the event.
 	 */
-	public NetworkEvent(KeyEvent e){
+	public NetworkEvent(KeyEvent e, String user){
 		this.type = EventType.KEY_PRESS;
 		this.keyCode = e.getKeyCode();
+		this.user = user;
 	}
+	
+	//Getters
+	public String getUser() { return user; }
+	public EventType getType() { return type; }
+	public int getKeyCode() { return keyCode; }
 	
 	//All possible types of NetworkEvents.
 	public enum EventType{

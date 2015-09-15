@@ -28,10 +28,35 @@ public class Client {
 	
 	public void start(){
 		
+		System.out.println("Start new client: " + user);
+		
+		//Create a new Socket to the specified host's server
+		try {
+			socket = new Socket(host, PORT);
+		} catch (IOException e){
+			System.err.println("Error creating new client: " + user);
+			return;
+		}
+		
+		//Open object input and output streams for the newly created socket
+		try {
+			input = new ObjectInputStream(socket.getInputStream());
+			output = new ObjectOutputStream(socket.getOutputStream());
+		} catch (IOException e){
+			System.err.println("Error opening object streams for client: " + user);
+			return;
+		}
+		
+		//Write the username to the ouput
+		try {
+			output.writeObject(user);
+		} catch (IOException e) {
+			System.err.println("Error writing to output stream for client: " + user);
+		}
 	}
 	
 	public void registerKeyPress(KeyEvent event){
-		NetworkEvent toWrite = new NetworkEvent(event);
+		NetworkEvent toWrite = new NetworkEvent(event, user);
 		try {
 			output.writeObject(toWrite);
 		} catch (IOException e) {
