@@ -1,10 +1,13 @@
 package ui.panels;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+
 
 public class InventoryPanel extends JLayeredPane{
 
@@ -20,6 +23,7 @@ public class InventoryPanel extends JLayeredPane{
 		this.add(inventBackground,0,0);
 		
 		//Add invent items
+		inventArray[0][0] = null;
 		populateInvent();
 	}
 	
@@ -47,12 +51,11 @@ public class InventoryPanel extends JLayeredPane{
 			inventArray[x1][y1] = null;
 		}
 		else{
-			Item temp = inventArray[x1][y1];
-			inventArray[x1][y1] = inventArray[x2][y2];
-			inventArray[x2][y2] = temp;
+			Item temp = inventArray[x2][y2];
+			inventArray[x2][y2] = inventArray[x1][y1];
+			inventArray[x1][y1] = temp;
 		}
 		populateInvent();
-		this.repaint();
 	}
 	
 	private void populateInvent(){
@@ -61,6 +64,7 @@ public class InventoryPanel extends JLayeredPane{
 				if(inventArray[i][j] != null){
 					JLabel item = new JLabel(inventArray[i][j].getImage());
 					item.setBounds(13 + (i*49),37 + (j*36),35,35);
+					item.setOpaque(true);
 					this.add(item,1,1);
 				}
 			}
