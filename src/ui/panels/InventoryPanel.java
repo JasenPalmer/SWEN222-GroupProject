@@ -9,14 +9,14 @@ import javax.swing.JLayeredPane;
 public class InventoryPanel extends JLayeredPane{
 
 	Image backgroundImage; 
-	ArrayList<Item> inventList = new ArrayList<Item>();
+	Item[][] inventArray = new Item[4][7];
+	InventoryBackground inventBackground = new InventoryBackground();
 
 	public InventoryPanel(){
 		setLayout(null);
 		setBounds(790, 450, 210, 330);
 			
 		//Add invent background
-		InventoryBackground inventBackground = new InventoryBackground();
 		this.add(inventBackground,0,0);
 		
 		//Add invent items
@@ -24,32 +24,45 @@ public class InventoryPanel extends JLayeredPane{
 	}
 	
 	public void addItem(Item item){
-		inventList.add(item);
-		populateInvent();
+		for(int i = 0; i < inventArray[0].length; i++){
+			for(int j = 0; j < inventArray.length; j++){
+				if(inventArray[j][i] == null){
+					inventArray[j][i] = item;
+					System.out.println(inventArray[j][i].getName() + " Added");
+					populateInvent();
+					return;
+				}
+				if(i == inventArray[0].length-1 && j == inventArray.length-1){
+					if(inventArray[j][i] != null){
+						System.out.println("Inventory is full");
+					}
+				}
+			}
+		}
 	}
 	
-	public void removeItem(Item item){
-		inventList.remove(item);
+	public void addItemTo(int x1, int y1, int x2, int y2){
+		if(inventArray[x2][y2] == null){
+			inventArray[x2][y2] = inventArray[x1][y1];
+			inventArray[x1][y1] = null;
+		}
+		else{
+			Item temp = inventArray[x1][y1];
+			inventArray[x1][y1] = inventArray[x2][y2];
+			inventArray[x2][y2] = temp;
+		}
+		populateInvent();
+		this.repaint();
 	}
 	
 	private void populateInvent(){
-		int x = 13,  y = 37, xcount = 0, ycount = 0;
-		for(Item i : inventList){
-			if(ycount > 6){
-				System.out.println("Inventory Full");
-				return;
-			}
-			JLabel item = new JLabel(i.getImage());
-			item.setBounds(x,y,35,35);
-			this.add(item, 1,1);
-			xcount++;
-			if(xcount < 4){
-				x += 49;
-			}
-			else{
-				xcount = 0;
-				x = 13;
-				y += 36;
+		for(int i = 0; i < inventArray.length; i++){
+			for(int j = 0; j < inventArray[0].length; j++){
+				if(inventArray[i][j] != null){
+					JLabel item = new JLabel(inventArray[i][j].getImage());
+					item.setBounds(13 + (i*49),37 + (j*36),35,35);
+					this.add(item,1,1);
+				}
 			}
 		}
 	}

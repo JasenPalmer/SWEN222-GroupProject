@@ -39,6 +39,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setResizable(false);
 		addKeyListener(this);
 		setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
 		
 		//Setup frame
 		setResizable(false);
@@ -62,8 +63,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		inventPanel = new InventoryPanel();
 		layeredPanel.add(inventPanel,2,0);
 		setInventory();
-		
-		//this.add(new InventoryBackground(),3,0);
 				
 		//Setup the menu bar
 		setupMenu();
@@ -72,6 +71,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setupButtons();
 	}
 
+	/**
+	 * Changes visibility of the inventory panel
+	 */
 	private void setInventory(){
 		if(inventOpen == false){
 			inventPanel.setVisible(false);
@@ -83,6 +85,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 	
+	/**
+	 * Creates and populates the UI Menubar
+	 */
 	private void setupMenu(){
 		ArrayList<JMenuItem> option1List = new ArrayList<>();
 		ArrayList<JMenuItem> option2List = new ArrayList<>();
@@ -112,6 +117,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		this.setJMenuBar(menuBar);		
 	}
 	
+	/**
+	 * Creates and positions the UI's buttons
+	 */
 	private void setupButtons(){
 		JButton addShankButton = new JButton("Add Shank");
 		addShankButton.setBounds(500,800,100,30);
@@ -129,8 +137,18 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		JLabel temp = new JLabel("Press I to open Invent");
 		temp.setBounds(300,800,150,20);
 		this.add(temp, 0);
+		
+		//Test Button
+		JButton testButton = new JButton("Test");
+		testButton.setBounds(800,800,100,30);
+		testButton.addActionListener(this);
+		testButton.setFocusable(false);
+		this.add(testButton,0);
 	}
 
+	/**
+	 * Creates splash loading screen then updates according to loading speed
+	 */
 	private static void displaySplash(){
 		JWindow window = new JWindow();
 		window.setLayout(null);
@@ -161,7 +179,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 	
 	/**
-	 * Launch the application.
+	 * Launches the application.
 	 */
 	public static void main(String[] args) {
 		//displaySplash();
@@ -181,18 +199,19 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
 		case "New Game":
-			System.out.println("New Game optin clicked");
+			System.out.println("New Game option clicked");
 			break;
-		case "Temp":
-			System.out.println("Temp option clicked");
+		case "Shank all players":
+			System.out.println("All players were ruthlessly shanked, y u do dis?");
 			break;
 		case "Add Shank":
-			System.out.println("Shank Added");
 			inventPanel.addItem(new Item("Shank", "Tis a shank mate"));
 			break;
 		case "Add Potion":
-			System.out.println("Potion Added");
-			inventPanel.addItem(new Item("Potion", "Tis a mate mate"));
+			inventPanel.addItem(new Item("Potion", "Tis a potion mate"));
+			break;
+		case "Test":
+			inventPanel.addItemTo(0,0,1,0);
 			break;
 		default:
 			break;
@@ -202,14 +221,14 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()){
-		case KeyEvent.VK_I:
+		case KeyEvent.VK_TAB:
 			if(inventOpen == true){
-				System.out.println("Close Invent");
+				System.out.println("Close Inventory");
 				inventOpen = false;
 				setInventory();
 			}
 			else{
-				System.out.println("Open Invent");
+				System.out.println("Open Inventory");
 				inventOpen = true;
 				setInventory();
 			}
