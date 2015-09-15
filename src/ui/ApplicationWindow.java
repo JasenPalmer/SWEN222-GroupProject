@@ -22,6 +22,7 @@ import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
 import ui.panels.*;
+import ui.panels.Item;
 
 
 public class ApplicationWindow extends JFrame implements ActionListener, KeyListener{
@@ -33,7 +34,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	
 	public ApplicationWindow() {
 		//Setup
-		super("Pretty Sick UI TBH");
+		super("Adventure Game");
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
@@ -51,7 +52,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//TODO Change Image size to fit once confirmed
 		//Setup Background Panel
 		BackgroundPanel bgPanel = new BackgroundPanel();
-		layeredPanel.add(bgPanel, 0,0);
+		layeredPanel.add(bgPanel);
 
 		//Setup rendering window
 		rw = new RenderingWindow();
@@ -59,8 +60,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 		//Setup Inventory
 		inventPanel = new InventoryPanel();
-		layeredPanel.add(inventPanel,2,2);
+		layeredPanel.add(inventPanel,2,0);
 		setInventory();
+		
+		//this.add(new InventoryBackground(),3,0);
 				
 		//Setup the menu bar
 		setupMenu();
@@ -96,7 +99,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 
 		JMenu option2 = new JMenu("Edit");
-		option2List.add(new JMenuItem("Temp"));
+		option2List.add(new JMenuItem("Shank all players"));
 		
 		for(JMenuItem jmItem : option2List){
 			option2.add(jmItem);
@@ -110,15 +113,17 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 	
 	private void setupButtons(){
-		JButton cameraLeftButton = new JButton("Left");
-		cameraLeftButton.setBounds(500,800,70,30);
-		cameraLeftButton.addActionListener(this);
-		this.add(cameraLeftButton,0);
+		JButton addShankButton = new JButton("Add Shank");
+		addShankButton.setBounds(500,800,100,30);
+		addShankButton.addActionListener(this);
+		addShankButton.setFocusable(false);
+		this.add(addShankButton,0);
 		
-		JButton cameraRightButton = new JButton("Right");
-		cameraRightButton.setBounds(600,800,70,30);
-		cameraRightButton.addActionListener(this);
-		this.add(cameraRightButton,0);
+		JButton addPotionButton = new JButton("Add Potion");
+		addPotionButton.setBounds(650,800,100,30);
+		addPotionButton.addActionListener(this);
+		addPotionButton.setFocusable(false);
+		this.add(addPotionButton,0);
 		
 		//Temp label
 		JLabel temp = new JLabel("Press I to open Invent");
@@ -159,7 +164,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		displaySplash();
+		//displaySplash();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -181,11 +186,13 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Temp":
 			System.out.println("Temp option clicked");
 			break;
-		case "Left":
-			System.out.println("Left button clicked");
+		case "Add Shank":
+			System.out.println("Shank Added");
+			inventPanel.addItem(new Item("Shank", "Tis a shank mate"));
 			break;
-		case "Right":
-			System.out.println("Right button clicked");
+		case "Add Potion":
+			System.out.println("Potion Added");
+			inventPanel.addItem(new Item("Potion", "Tis a mate mate"));
 			break;
 		default:
 			break;
