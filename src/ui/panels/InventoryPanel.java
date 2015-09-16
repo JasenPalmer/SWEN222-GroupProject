@@ -59,12 +59,13 @@ public class InventoryPanel extends JLayeredPane{
 	}
 	
 	private void populateInvent(){
+		this.removeAll();
+		this.add(inventBackground,0,0);
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] != null){
 					JLabel item = new JLabel(inventArray[i][j].getImage());
 					item.setBounds(13 + (i*49),37 + (j*36),35,35);
-					item.setOpaque(true);
 					this.add(item,1,1);
 				}
 			}
