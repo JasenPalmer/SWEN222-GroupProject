@@ -2,7 +2,7 @@ package gameworld;
 
 import gameworld.entity.InteractableEntity;
 import gameworld.entity.Item;
-import gameworld.location.Location;
+import gameworld.location.InsideLocation;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
@@ -23,10 +23,6 @@ public class Player {
 	 * The items that the player has in their inventory
 	 */
 	private  Item[] inventory;
-	/**
-	 * The amount of items the player has in their inventory
-	 */
-	private int itemCount;
 
 	/**
 	 * Flag for if the player is holding an entity
@@ -42,7 +38,7 @@ public class Player {
 	/**
 	 * The current location the player is in
 	 */
-	private Location location;
+	private InsideLocation location;
 
 	/**
 	 * The current position of the player
@@ -55,7 +51,6 @@ public class Player {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
 		holding = false;
-		itemCount = 0;
 	}
 
 	/**
@@ -70,6 +65,7 @@ public class Player {
 	}
 
 	/**
+	 * Tells the player to hold this item
 	 *
 	 * @param entity for the player to hold
 	 * @return true if the player is now holding the entity or false if the player is already holding an entity
@@ -82,29 +78,31 @@ public class Player {
 	}
 
 	/**
-	 * Removes an item from the players inventory
-	 *Direction
+	 * Removes an item from the players inventory and places it on the ground
+	 *
 	 * @param item to be removed
 	 * @return true if the item was successfully removed
 	 */
-	public boolean dropFromInv(Item item) {
-		for(int i = 0; i < inventory.length; i++) {
-			if(inventory[i].equals(item)) {
-				inventory[i] = null;
-				itemCount++;
-				return true;
-			}
-		}
-		return false;
+	public boolean dropFromInv(int index) {
+		// get the item
+		Item item = inventory[index];
+		if(item == null){return false;}
+		// remove the item from the inventory
+		inventory[index] = null;
+		// place the item on the ground
+		location.getTileAt(position).setEntity(item);
+		return true;
 	}
 
 	/**
 	 * Adds an item to the first available slot in the players inventory
+	 *
 	 * @param item to be added
 	 * @return true if the item was successfully added
 	 */
 	public boolean pickupItem(Item item) {
-		if(itemCount >= inventory.length) {return false;}
+		// if the inventory is full cant pick up item
+		if(inventoryFull()){return false;}
 		for(int i = 0; i < inventory.length; i++) {
 			if(inventory[i] == null) {
 				inventory[i] = item;
@@ -114,6 +112,23 @@ public class Player {
 		return false;
 	}
 
+	/**
+	 * check the players inventory for a free space
+	 * @return
+	 */
+	private boolean inventoryFull() {
+		for(int i = 0; i < inventory.length; i++) {
+			if(inventory[i] != null){return false;}
+		}
+		return true;
+	}
+
+
+	/**
+	 * Get the tile that is in a direction from the player
+	 * @param dir to get the tile from
+	 * @return the tile in the direction
+	 */
 	public Tile getTile(Game.Direction dir) {
 		Tile[][] array = location.getTiles();
 		switch(dir) {
@@ -129,8 +144,6 @@ public class Player {
 		case WEST:
 			if(position.x-1 >= 0){return array[position.y][position.x-1];}
 			break;
-		default:
-			break;
 		}
 		return null;
 	}
@@ -144,12 +157,21 @@ public class Player {
 	public boolean move(Game.Direction dir) {
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
-		if(tile.containedEntity() != null){return false;}
+		if(tile.containedEntity() != null){
+			if(!(tile.containedEntity() instanceof Item)) {
+				return false;
+			}
+		}
 		moveDir(dir);
 		return true;
 	}
 
 
+	/**
+	 * updates the players position field to one tile in a direction
+	 *
+	 * @param dir to move
+	 */
 	private void moveDir(Game.Direction dir) {
 		switch(dir) {
 		case NORTH:
@@ -186,11 +208,11 @@ public class Player {
 		return position;
 	}
 
-	public Location getLocation() {
+	public InsideLocation getLocation() {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(InsideLocation location) {
 		this.location = location;
 	}
 

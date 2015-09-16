@@ -1,6 +1,8 @@
 package gameworld.tile;
 
+import gameworld.Player;
 import gameworld.entity.Entity;
+import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -11,24 +13,26 @@ import java.awt.Point;
  *
  */
 public interface Tile {
-	
+
 	/**
 	 * @return the position of the tile in the location as a Point
 	 */
 	public Point getPos();
-	
+
 	/**
 	 * @return the entity that is contained in the tile or null if none is contained
 	 */
 	public Entity containedEntity();
-	
+
 	/**
 	 * add an entity to the tile
 	 */
 	public void setEntity(Entity entity);
-	
+
 	/**
 	 * @return the location that this tile is in
 	 */
 	public Location getLocation();
+
+	public Player getPlayer();
 }

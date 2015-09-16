@@ -1,6 +1,8 @@
 package gameworld.tile;
 
+import gameworld.Player;
 import gameworld.entity.Entity;
+import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -11,17 +13,17 @@ import java.awt.Point;
  *
  */
 public abstract class AbstractTile implements Tile {
-	
+
 	private Point position;
 	private Entity entity;
 	private Location location;
-	
+	private Player player;
+
 	public AbstractTile(Location location, Point pos) {
 		position = pos;
 		this.location = location;
-		entity = null;
 	}
-	
+
 	@Override
 	public void setEntity(Entity entity) {
 		this.entity = entity;
@@ -36,10 +38,14 @@ public abstract class AbstractTile implements Tile {
 	public Entity containedEntity() {
 		return entity;
 	}
-	
+
 	@Override
 	public Location getLocation() {
 		return location;
 	}
 
+	@Override
+	public Player getPlayer() {
+		return player;
+	}
 }

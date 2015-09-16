@@ -10,9 +10,9 @@ import java.awt.Point;
  *
  */
 public class ExitTile extends AbstractTile {
-	
+
 	private EntranceTile exitPoint;
-	
+
 	public ExitTile(Location location, Point pos) {
 		super(location, pos);
 	}
