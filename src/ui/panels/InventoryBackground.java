@@ -17,7 +17,7 @@ public class InventoryBackground extends JPanel{
 		setLayout(null);
 		setOpaque(false);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/inventImage.png"));
+			backgroundImage = ImageIO.read(new File("src/ui/images/inventImageTransparent.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}

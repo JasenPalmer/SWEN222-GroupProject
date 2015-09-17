@@ -69,6 +69,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		
 		//Setup buttons
 		setupButtons();
+				
 	}
 
 	/**

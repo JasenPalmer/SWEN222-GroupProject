@@ -2,6 +2,8 @@ package ui.panels;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -9,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 
-public class InventoryPanel extends JLayeredPane{
+public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	Image backgroundImage; 
 	Item[][] inventArray = new Item[4][7];
@@ -66,9 +68,39 @@ public class InventoryPanel extends JLayeredPane{
 				if(inventArray[i][j] != null){
 					JLabel item = new JLabel(inventArray[i][j].getImage());
 					item.setBounds(13 + (i*49),37 + (j*36),35,35);
-					this.add(item,1,1);
+					this.add(item,1,0);
 				}
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
