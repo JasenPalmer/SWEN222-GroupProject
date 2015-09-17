@@ -18,11 +18,11 @@ import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
 import ui.panels.*;
-import ui.panels.Item;
 
 
 public class ApplicationWindow extends JFrame implements ActionListener, KeyListener{
@@ -69,7 +69,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		
 		//Setup buttons
 		setupButtons();
-				
+			
+		//Setup loot inventory
+		LootInventoryPanel lip = new LootInventoryPanel();
+		this.add(lip,2,0);
 	}
 
 	/**
