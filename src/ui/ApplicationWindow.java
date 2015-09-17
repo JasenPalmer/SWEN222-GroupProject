@@ -29,8 +29,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	private JLayeredPane layeredPanel = new JLayeredPane();
 	private InventoryPanel inventPanel;
+	private JLayeredPane overlayPanel;
+	private LootInventoryPanel lootInventPanel;
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
+	private boolean lootInventOpen = false;
 	
 	public ApplicationWindow() {
 		//Setup
@@ -50,7 +53,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.setBounds(0, 0, 1050, 950);
 		getContentPane().add(layeredPanel);
 
-		//TODO Change Image size to fit once confirmed
 		//Setup Background Panel
 		BackgroundPanel bgPanel = new BackgroundPanel();
 		layeredPanel.add(bgPanel);
@@ -59,20 +61,27 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		rw = new RenderingWindow();
 		layeredPanel.add(rw, 1,1);
 
+		//Setup Overlay Panel
+		overlayPanel = new JLayeredPane();
+		overlayPanel.setBounds(0,0,1050,950);
+		layeredPanel.add(overlayPanel,2,0);
+			
 		//Setup Inventory
 		inventPanel = new InventoryPanel();
-		layeredPanel.add(inventPanel,2,0);
+		overlayPanel.add(inventPanel,2,0);
 		setInventory();
 				
+		//Setup loot inventory
+		lootInventPanel = new LootInventoryPanel();
+		overlayPanel.add(lootInventPanel,2,0);
+		setLootInventory();
+		
 		//Setup the menu bar
 		setupMenu();
 		
 		//Setup buttons
 		setupButtons();
 			
-		//Setup loot inventory
-		LootInventoryPanel lip = new LootInventoryPanel();
-		this.add(lip,2,0);
 	}
 
 	/**
@@ -86,6 +95,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		else{
 			inventPanel.setVisible(true);
 			inventPanel.setFocusable(true);
+		}
+	}
+	
+	/**
+	 * Changes visibility of loot inventory panel
+	 */
+	private void setLootInventory(){
+		if(lootInventOpen == false){
+			lootInventPanel.setVisible(false);
+			lootInventPanel.setFocusable(false);
+		}
+		else{
+			lootInventPanel.setVisible(true);
+			lootInventPanel.setFocusable(true);
 		}
 	}
 	
@@ -235,6 +258,18 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				System.out.println("Open Inventory");
 				inventOpen = true;
 				setInventory();
+			}
+			break;
+		case KeyEvent.VK_I:
+			if(lootInventOpen == true){
+				System.out.println("Close Loot Inventory");
+				lootInventOpen = false;
+				setLootInventory();
+			}
+			else{
+				System.out.println("Open Loot Inventory");
+				lootInventOpen = true;
+				setLootInventory();
 			}
 			break;
 		default:
