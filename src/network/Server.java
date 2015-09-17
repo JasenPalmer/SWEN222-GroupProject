@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
+/**
+ * 
+ * @author Matt Byers
+ *
+ */
 public class Server {
 	
 	//Game uses a constant port of 9954
@@ -51,6 +55,31 @@ public class Server {
 			}
 		} catch (IOException e){
 			System.err.println("Error in main server.");
+		}
+	}
+	
+	public ClientThread getClient(String user){
+		for(ClientThread client : connections){
+			if(client.getUser().equals(user)) return client;
+		}
+		System.err.println("User: " + user + " not found.");
+		return null;
+	}
+	
+	public void sendMessage(String receiverUser, String message, String senderUser){
+		ClientThread receiver = getClient(receiverUser);
+		if(receiver != null) receiver.sendMessage(message, senderUser);
+	}
+	
+	public void broadcastMessage(String message, String senderUser){
+		for(ClientThread client: connections){
+			client.sendMessage(message, senderUser);
+		}
+	}
+	
+	public void updateGUI(){
+		for(ClientThread client : connections){
+			client.updateGUI();
 		}
 	}
 	
@@ -107,9 +136,40 @@ public class Server {
 					System.err.println("Error reading input stream of client: " + user);
 				}
 				
-				if(currentEvent  != null) eventQueue.offer(currentEvent);
+				if(currentEvent  != null) {
+					switch(currentEvent.getType()){
+					case KEY_PRESS:
+						eventQueue.add(currentEvent);
+						break;
+					case MESSAGE:
+						broadcastMessage(currentEvent.getMessage(), user);
+						break;
+					case UPDATE_GUI:
+						System.err.println("Unexpected EventType on server-side: UPDATE_GUI");
+						break;
+					}
+				}
 			}
 		}
+		
+		public void updateGUI(){
+			try {
+				output.writeObject(new NetworkEvent());
+			} catch (IOException e) {
+				System.err.println("Error writing update to client: " + user);
+			}
+		}
+		
+		public void sendMessage(String message, String senderUser){
+			try {
+				output.writeObject(new NetworkEvent(message, senderUser));
+			} catch (IOException e) {
+				System.err.println("Error writing update to client: " + user);
+			}
+		}
+		
+		//Getters
+		public String getUser(){ return user; }
 		
 		public void close(){
 			

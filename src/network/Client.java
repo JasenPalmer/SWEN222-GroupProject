@@ -6,6 +6,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import network.NetworkEvent.EventType;
+
+/**
+ * 
+ * @author Matt Byers
+ *
+ */
 public class Client {
 	
 	//Socket connect to server
@@ -61,6 +68,34 @@ public class Client {
 			output.writeObject(toWrite);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void registerMessage(String message){
+		NetworkEvent toWrite = new NetworkEvent(message, user);
+		try {
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public class ServerThread extends Thread {
+		public void run() {
+			while(true) {
+				try {
+					NetworkEvent event = (NetworkEvent)input.readObject();
+					if(event.getType() == EventType.UPDATE_GUI){
+						//TODO Repaint the clients Rendering window
+					}
+					else if(event.getType() == EventType.MESSAGE){
+						//TODO Update the JText Area with the message
+					}
+				}
+				catch (IOException e){
+					System.err.println("Connection to the server has been interrupted..."); } 
+				catch (ClassNotFoundException e) {}
+			}
 		}
 	}
 
