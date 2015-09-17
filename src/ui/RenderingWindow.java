@@ -22,9 +22,11 @@ public class RenderingWindow extends JPanel{
 	
 	private Image backgroundImage;
 	private Player player;
+	
 	private int TILESIZE = 64;
-	private int MAP_WIDTH = 100;
-	private int MAP_HEIGHT = 100;
+	private int MAP_WIDTH = 30;
+	private int MAP_HEIGHT = 30;
+	
 	Game.Direction direction = Direction.NORTH;
 	
 	public RenderingWindow(){
@@ -41,32 +43,32 @@ public class RenderingWindow extends JPanel{
 	public void paint( Graphics g ) { 
 		super.paint(g);
 
-		Location l = player.getLocation();
-		Tile[][] tiles = l.getTiles();
-		//Tile[][] rooms = l.getRooms();
-		//Item[][] items = l.getItems();
-			
-		Image offscreen = createImage(MAP_WIDTH*TILESIZE, MAP_HEIGHT*TILESIZE);
-		Graphics offgc = offscreen.getGraphics();
-	
-		switch(direction){
-		case NORTH:
-			//isometric(tiles,rooms, offgc);
-			break;
-		case EAST:
-			//isometric(rotate(tiles), rotate(rooms), offgc);		
-			break;			
-		case SOUTH:
-			//isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);		
-			break;	
-		case WEST:
-			//isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
-			break;
-				
-		}
-
-			
-			g.drawImage(offscreen,0,0,null);
+//		Location l = player.getLocation();
+//		Tile[][] tiles = l.getTiles();
+//		//Tile[][] rooms = l.getRooms();
+//		//Item[][] items = l.getItems();
+//			
+//		Image offscreen = createImage(MAP_WIDTH*TILESIZE, MAP_HEIGHT*TILESIZE);
+//		Graphics offgc = offscreen.getGraphics();
+//	
+//		switch(direction){
+//		case NORTH:
+//			//isometric(tiles,rooms, offgc);
+//			break;
+//		case EAST:
+//			//isometric(rotate(tiles), rotate(rooms), offgc);		
+//			break;			
+//		case SOUTH:
+//			//isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);		
+//			break;	
+//		case WEST:
+//			//isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
+//			break;
+//				
+//		}
+//
+//			
+//			g.drawImage(offscreen,0,0,null);
 
 		}
 		
