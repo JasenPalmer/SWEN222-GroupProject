@@ -3,7 +3,7 @@ package gameworld.entity;
 import java.awt.Point;
 
 import gameworld.Player;
-import gameworld.location.Location;
+import gameworld.location.InsideLocation;
 
 
 /**
@@ -20,7 +20,7 @@ public abstract class Item implements InteractableEntity{
 	/**
 	 * The location that the item is in
 	 */
-	private Location location;
+	private InsideLocation location;
 	
 	/**
 	 * The position of the item in the location
@@ -34,7 +34,7 @@ public abstract class Item implements InteractableEntity{
 
 
 	@Override
-	public Location location() {
+	public InsideLocation location() {
 		return location;
 	}
 	

@@ -1,14 +1,19 @@
 package gameworld;
 
 import gameworld.location.Location;
+import gameworld.tile.BuildingTile;
 import gameworld.tile.Tile;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
+
+import network.NetworkEvent;
+import network.Server;
 
 public class Game {
 
@@ -19,15 +24,15 @@ public class Game {
 	 */
 	private static final int LOCATION_AMOUNT = 5;
 
+	private Server server;
+
 	private Set<Location> locations;
 	private Set<Player> players;
-
-//	private Server server;
 
 	public Game() {
 		locations = new HashSet<Location>();
 		for(int i = 0; i < LOCATION_AMOUNT; i++) {
-			parseLocation("location"+i+".txt");
+			parseLocationFolder("locations");
 		}
 	}
 
@@ -41,47 +46,77 @@ public class Game {
 	}
 
 	/**
-	 * Create a location from a file
-	 * @param filename of location to be created
-	 * @return the created location
+	 * Create all locations from a folder
+	 * @param locationsPath - path to locations folder
 	 */
-	private Location parseLocation(String filename) {
-		if(filename == null){return null;}
+	private void parseLocationFolder(String locationsPath) {
+		Scanner fileScan = null;
 		try{
-			// open file with filename
-			Scanner scan = new Scanner(new File(filename));
-			// create the tile array for the location
-			Tile[][] locTiles = new Tile[Location.DEFAULT_LOC_SIZE][Location.DEFAULT_LOC_SIZE];
-			//row index
-			int row = 0;
-			while(scan.hasNextLine()) {
-				// scan line by line
-				Scanner lineScan = new Scanner(scan.nextLine());
-				// col index
-				int col = 0;
-				while(lineScan.hasNext()) {
-					// create tile at [row][col]
-					locTiles[row][col] = parseTile(lineScan.next());
-					col++;
-				}
-				lineScan.close();
-				row++;
+			//create the file holding all the location files
+			File locFolder = new File("/locations");
+			for(File file : locFolder.listFiles()) {
+				// open file
+				fileScan = new Scanner(file);
+				//read name
+				String name = fileScan.nextLine();
+				//read description
+				String desc = fileScan.nextLine();
+				//read size
+				int width = fileScan.nextInt();
+				int height = fileScan.nextInt();
+				// create the tile array for the location
+				Tile[][] locTiles = new Tile[height][width];
+				Location loc = parseLocationTiles(fileScan, locTiles, name, desc);
+				if(loc != null){locations.add(loc);}
+				fileScan.close();
 			}
-			scan.close();
-			Location loc = new Location();
+		}catch(NullPointerException e){
+			System.err.println("Path to location folder is incorrect - "+e);
+		}catch(FileNotFoundException e){
+			System.err.println("File was not found - "+e);
+		}catch(NoSuchElementException e){
+			System.err.println("A location file has incorrect formatting - "+e);
+		}
+		finally {
+			if(fileScan != null) {
+				fileScan.close();
+			}
+		}
+	}
 
-		}catch(IOException e){
-			System.err.println("File not found");
-		}finally {
+	private Location parseLocationTiles(Scanner file, Tile[][] locTiles, String name, String description) throws NoSuchElementException{
+		Location loc;
+		Tile[][] buildingTiles = new Tile[locTiles.length][locTiles[0].length];
+		//row index
+		int row = 0;
+		while(file.hasNextLine()) {
+			// scan line by line
+			Scanner lineScan = new Scanner(file.nextLine());
+			// col index
+			int col = 0;
+			while(lineScan.hasNext()) {
+				// create tile at [row][col]
+				Tile tile = parseTile(lineScan.next());
+				if(tile instanceof BuildingTile) {
+					buildingTiles[row][col] = tile;
+					locTiles[row][col] = null;
+				}
+				else {
+					locTiles[row][col] = tile;
+					buildingTiles[row][col] = null;
+				}
+				col++;
+			}
+			lineScan.close();
+			row++;
 		}
 		return null;
 	}
 
 	private Tile parseTile(String type) {
+
 		return null;
 	}
-
-
 
 
 	/**
@@ -101,6 +136,7 @@ public class Game {
 	 * @return true if the player moved successfully
 	 */
 	public boolean movePlayer(Player player, Direction direction) {
+		if(direction == null || player == null) {return false;}
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
@@ -108,7 +144,7 @@ public class Game {
 	/**
 	 * Listen to the server for events
 	 */
-	public void listenToServer() {
+	private void listenToServer() {
 //		while(server.hasEvent()) {
 //			actionEvent(server.getEvent());
 //		}
@@ -118,13 +154,10 @@ public class Game {
 	 * Parse an event from the server
 	 * @param event to be parsed
 	 */
-	private void actionEvent(ActionEvent event) {
-		switch(event.getActionCommand()) {
-		case "move":
-			//movePlayer(event.getPlayer(), parseDirection(event.keyPress()));
-			break;
-		case "interact":
-			//playerInteraction(event.getPlayer(), parseKeyPress(event.keyPress()));
+	private void actionEvent(NetworkEvent event) {
+		switch(event.getType()) {
+		case KEY_PRESS:
+			//movePlayer(event.getPlayer(), parseDirection(event.getKeyCode()));
 			break;
 		default:
 			//throw new InvalidActionException("There was an invalid event recieved from the server");
@@ -132,18 +165,27 @@ public class Game {
 		}
 	}
 
-	private Direction parseDirection(String keyPress) {
+	private Direction parseDirection(int keyPress) {
 		switch(keyPress) {
-		case"UP":
+		case KeyEvent.VK_W:
 			return Direction.NORTH;
-		case"RIGHT":
+		case KeyEvent.VK_D:
 			return Direction.EAST;
-		case"DOWN":
+		case KeyEvent.VK_S:
 			return Direction.SOUTH;
-		case"LEFT":
+		case KeyEvent.VK_A:
 			return Direction.WEST;
 			default:
 				return null;
 		}
 	}
+
+
+	public Set<Location> getLocations() {
+		return locations;
+	}
+	public Set<Player> getPlayers() {
+		return players;
+	}
+
 }
