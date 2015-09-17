@@ -80,8 +80,6 @@ public class RenderingWindow extends JPanel{
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
-//					Image image = new ImageIcon(Main.class.getResource("images/Nothing.png")).getImage();
-//					offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (i*TILESIZE/4)-(j*TILESIZE/4) + 500, null);
 					Tile t = tiles[i][j];
 					if(t!=null) {
 						Image image = null; //t.getImg().getImage();
@@ -96,7 +94,7 @@ public class RenderingWindow extends JPanel{
 				for(int j = rooms[i].length-1; j >=0 ; j--){
 					BuildingTile r = (BuildingTile) rooms[i][j];
 					if(r!=null) {
-						Image image = new ImageIcon(Main.class.getResource("images/Room.png")).getImage();
+						Image image = new ImageIcon(Main.class.getResource("buildings/Room.png")).getImage();
 						
 
 						// walls
@@ -107,21 +105,21 @@ public class RenderingWindow extends JPanel{
 
 						// Side of room
 						if(j-1 >= 0 && rooms[i][j-1] == null){
-							image = new ImageIcon(Main.class.getResource("images/RoofUD.png")).getImage();
+							image = new ImageIcon(Main.class.getResource("buildings/RoofUD.png")).getImage();
 						}
 
 						// Bottom of room
 						if(i+1 < rooms.length && rooms[i+1][j]==null){
-							image = new ImageIcon(Main.class.getResource("images/RoofLR.png")).getImage();
+							image = new ImageIcon(Main.class.getResource("buildings/RoofLR.png")).getImage();
 						}
 
 						// Outwards corner roof
 						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-							image = new ImageIcon(Main.class.getResource("images/RoofCornerO.png")).getImage();
+							image = new ImageIcon(Main.class.getResource("buildings/RoofCornerO.png")).getImage();
 						}
 						// Inwards corner roof
 						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-							image = new ImageIcon(Main.class.getResource("images/RoofCornerI.png")).getImage();
+							image = new ImageIcon(Main.class.getResource("buildings/RoofCornerI.png")).getImage();
 						}
 
 
