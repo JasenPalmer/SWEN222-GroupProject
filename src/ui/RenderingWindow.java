@@ -69,29 +69,32 @@ public class RenderingWindow extends JPanel{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+
 
 		
 		// Example location. To be changed later.
 		Location l = null;
 		Tile g1 = new FloorTile(l, new Point(0,0), grass);
+		Tile g2 = new FloorTile(l, new Point(5,5), grass);
 		Tile w1 = new FloorTile(l, new Point(0,0), water);
 		Tile r1 = new FloorTile(l, new Point(0,0), rock);
 		Tile[][] tiles = {
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,g1,g1,g1,g1},
-				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{r1,r1,r1,r1,r1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{w1,w1,w1,r1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,w1,r1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,w1,w1,w1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,w1,w1,g1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,w1,g1},
+				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,w1,w1,w1,g1},
+				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{r1,r1,r1,r1,r1,r1,r1,g1,g2,g1,g1,w1,w1,g1,g1},
+				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,w1,g1,g1,g1},
+				{w1,w1,w1,r1,g1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
+				{g1,w1,r1,r1,r1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
+				{g1,w1,w1,w1,w1,w1,g1,g1,g1,g1,g1,w1,w1,g1,g1},
+				{g1,w1,w1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,g1,g1},
 				};
 		
 		Tile r = new BuildingTile(l, new Point(1,2), building);
@@ -155,6 +158,9 @@ public class RenderingWindow extends JPanel{
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
 
+			Player p = new Player("Jim");
+			Point playerPoint = new Point(5,5);
+			
 			g.fillRect(0,0,this.getWidth(), this.getHeight());
 			
 			// outside tiles
@@ -162,72 +168,83 @@ public class RenderingWindow extends JPanel{
 				for(int j = tiles[i].length-1; j >=0 ; j--){
 					Tile t = tiles[i][j];
 					if(t!=null) {
+						// DRAWING TERRAIN
+						
 						Image image = t.getImg();
 						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
+						
+						// DRAWING PLAYER 
+						if(t.getPos().equals(playerPoint)){
+							Image playerImage = null;
+							try {
+								playerImage = ImageIO.read(new File("src/ui/images/player/0.png"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
+							
+							g.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - playerImage.getHeight(null), null);
+						}
+						
+						// DRAWING ROOMS
+						
+						BuildingTile r = (BuildingTile) rooms[i][j];
+						if(r!=null) {
+							image = null;
+							try {
+								image = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
 
+							// Drawing 2 block high walls
+							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+							
+
+
+							// Western most point of building
+							if(j-1 >= 0 && rooms[i][j-1] == null){
+								try {
+									image = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+
+							// Northern most point of building
+							if(i+1 < rooms.length && rooms[i+1][j]==null){
+								try {
+									image = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+
+							// Outwards corner roof
+							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+								try {
+									image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+							// Inwards corner roof
+							if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+								try {
+									image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						
+							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
+
+						}
 					}
 				}
-			}
 
-			// room tiles
-			for(int i = 0; i < rooms.length; i++){
-				for(int j = rooms[i].length-1; j >=0 ; j--){
-					BuildingTile r = (BuildingTile) rooms[i][j];
-					if(r!=null) {
-						Image image = null;
-						try {
-							image = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						
-
-						// Drawing 2 block high walls
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
-						
-
-
-						// Western most point of building
-						if(j-1 >= 0 && rooms[i][j-1] == null){
-							try {
-								image = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-
-						// Northern most point of building
-						if(i+1 < rooms.length && rooms[i+1][j]==null){
-							try {
-								image = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-
-						// Outwards corner roof
-						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-							try {
-								image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						// Inwards corner roof
-						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-							try {
-								image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-
-
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
-						
-					}
-				}
 			}
 		}
 
