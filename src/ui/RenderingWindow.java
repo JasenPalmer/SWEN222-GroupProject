@@ -69,18 +69,39 @@ public class RenderingWindow extends JPanel{
 		
 		// Example location. To be changed later.
 		Location l = null;
-		Tile[][] tiles = {	{new FloorTile(l, new Point(0,0), grass), new FloorTile(l, new Point(0,1), grass), new FloorTile(l, new Point(0,2), grass), new FloorTile(l, new Point(0,3), grass), new FloorTile(l, new Point(0,4), grass)},
-							{new FloorTile(l, new Point(1,0), grass), new FloorTile(l, new Point(1,1), grass), new FloorTile(l, new Point(1,2), grass), new FloorTile(l, new Point(1,3), grass), new FloorTile(l, new Point(1,4), grass)},
-							{new FloorTile(l, new Point(2,0), grass), new FloorTile(l, new Point(2,1), grass), new FloorTile(l, new Point(2,2), grass), new FloorTile(l, new Point(2,3), grass), new FloorTile(l, new Point(2,4), grass)},
-							{new FloorTile(l, new Point(3,0), grass), new FloorTile(l, new Point(3,1), grass), new FloorTile(l, new Point(3,2), grass), new FloorTile(l, new Point(3,3), grass), new FloorTile(l, new Point(3,4), grass)},
-							{new FloorTile(l, new Point(4,0), grass), new FloorTile(l, new Point(4,1), grass), new FloorTile(l, new Point(4,2), grass), new FloorTile(l, new Point(4,3), grass), new FloorTile(l, new Point(4,4), grass)}
-						};
+		Tile t = new FloorTile(l, new Point(0,0), grass);
+		Tile[][] tiles = {{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
+				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},};
 		
-		Tile[][] rooms = {	{null,null,null,null,null},
-							{null,null,new BuildingTile(l, new Point(1,2), building), new BuildingTile(l, new Point(1,3), building),null},
-							{null,null,new BuildingTile(l, new Point(2,2), building),new BuildingTile(l, new Point(2,2), building),null},
-							{null,null,null,null,null},
-							{null,null,null,null,null}
+		Tile r = new BuildingTile(l, new Point(1,2), building);
+		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+							{null,null,null,null,r,r,r,r,r,r,r, r,r,null,null},
+							{null,null,null,null,r,r,r,r,r,r,r,r,r,null,null},
+							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,null,null,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,null,null,null,null,null,r,r,r,r,null,null},
+							{null,null,null,null,null,null,null,null,null,r,r,r,r,null,null},
+							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 						};
 		
 		l = new OutsideLocation("Test", "This is a test Location", tiles, rooms);
