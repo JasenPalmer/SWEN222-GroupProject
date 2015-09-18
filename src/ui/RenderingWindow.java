@@ -40,6 +40,10 @@ public class RenderingWindow extends JPanel{
 		}
 	}
 	
+	/**
+	 * Rotates tile arrays depending on the current viewing direction and then calls the isometric
+	 * renderer on the resulting arrays
+	 */
 	public void paint( Graphics g ) { 
 		super.paint(g);
 
@@ -72,7 +76,20 @@ public class RenderingWindow extends JPanel{
 
 		}
 		
-
+	
+		
+		/**
+		 * Iterates through arrays of tiles drawing the map terrain, then iterates through
+		 * room tiles to draw buildings depending on the arrangement of tiles.
+		 * 
+		 * new x position = x/2 + y/2
+		 * new y position = y/2 - x/2
+		 * 
+		 * 
+		 * @param tiles - 2D array of terrain to be drawn
+		 * @param rooms - 2D array of rooms to be drawn
+		 * @param g - the graphics
+		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
 			Image offscreen = createImage(MAP_WIDTH*TILESIZE, MAP_HEIGHT*TILESIZE);
 			Graphics offgc = offscreen.getGraphics();
@@ -148,6 +165,11 @@ public class RenderingWindow extends JPanel{
 			return newTiles;
 		}
 		
+		
+		/**
+		 * Sets direction of renderer. May possibly end up being stored in another class?
+		 * @param d - new direction
+		 */
 		public void setDirection(Game.Direction d){
 			direction = d;
 		}
