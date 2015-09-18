@@ -1,5 +1,7 @@
 package ui;
 
+import gameworld.Game.Direction;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +36,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
-	
+
 	public ApplicationWindow() {
 		//Setup
 		super("Adventure Game");
@@ -43,7 +45,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		
+
 		//Setup frame
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,20 +67,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel = new JLayeredPane();
 		overlayPanel.setBounds(0,0,1050,950);
 		layeredPanel.add(overlayPanel,2,0);
-			
+
 		//Setup Inventory
 		inventPanel = new InventoryPanel();
 		overlayPanel.add(inventPanel,2,0);
 		setInventory();
-				
+
 		//Setup loot inventory
 		lootInventPanel = new LootInventoryPanel();
 		overlayPanel.add(lootInventPanel,2,0);
 		setLootInventory();
-		
+
 		//Setup the menu bar
 		setupMenu();
-		
+
 		//Setup buttons
 		setupButtons();		
 	}
@@ -96,7 +98,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			inventPanel.setFocusable(true);
 		}
 	}
-	
+
 	/**
 	 * Changes visibility of loot inventory panel
 	 */
@@ -110,7 +112,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			lootInventPanel.setFocusable(true);
 		}
 	}
-	
+
 	/**
 	 * Creates and populates the UI Menubar
 	 */
@@ -131,18 +133,18 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 		JMenu option2 = new JMenu("Edit");
 		option2List.add(new JMenuItem("Shank all players"));
-		
+
 		for(JMenuItem jmItem : option2List){
 			option2.add(jmItem);
 			jmItem.addActionListener(this);
 		}
-		
+
 		menuBar.add(option1);
 		menuBar.add(option2);
 
 		this.setJMenuBar(menuBar);		
 	}
-	
+
 	/**
 	 * Creates and positions the UI's buttons
 	 */
@@ -152,18 +154,18 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		addShankButton.addActionListener(this);
 		addShankButton.setFocusable(false);
 		this.add(addShankButton,0);
-		
+
 		JButton addPotionButton = new JButton("Add Potion");
 		addPotionButton.setBounds(650,800,100,30);
 		addPotionButton.addActionListener(this);
 		addPotionButton.setFocusable(false);
 		this.add(addPotionButton,0);
-		
+
 		//Temp label
 		JLabel temp = new JLabel("Press I to open Loot Inventory");
 		temp.setBounds(250,800,200,20);
 		this.add(temp, 0);
-		
+
 		//Test Button
 		JButton testButton = new JButton("Test");
 		testButton.setBounds(800,800,100,30);
@@ -178,21 +180,21 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private static void displaySplash(){
 		JWindow window = new JWindow();
 		window.setLayout(null);
-		
+
 		JLabel loadingTextImage = new JLabel(new ImageIcon("src/ui/images/splashTextImage.gif"));
 		loadingTextImage.setBounds(0,25, 405, 200);
 		window.getContentPane().add(loadingTextImage);
-		
+
 		JLabel loadingLabel = new JLabel(new ImageIcon("src/ui/images/loadingbar.gif"));
 		loadingLabel.setBounds(50,325,305,15);
 		loadingLabel.setOpaque(false);
 		window.getContentPane().add(loadingLabel);
-				
-		
+
+
 		JLabel backgroundLabel = new JLabel(new ImageIcon("src/ui/images/splashBackgroundImageTemp.jpg"));
 		backgroundLabel.setBounds(0,0,400,400);
 		window.getContentPane().add(backgroundLabel);
-		
+
 		window.setBounds(750, 300, 400, 400);
 		window.setVisible(true);
 		try {
@@ -203,11 +205,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		window.setVisible(false);
 		window.dispose();
 	}
-	
+
 	public void repaintRenderingWindow(){
 		rw.repaint();
 	}
-	
+
 	/**
 	 * Launches the application.
 	 */
@@ -275,9 +277,45 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				setLootInventory();
 			}
 			break;
+		case KeyEvent.VK_Q:
+			rw.setDirection(directionSetter("Q"));
+			rw.repaint();
+			break;
+		case KeyEvent.VK_E:
+			rw.setDirection(directionSetter("E"));
+			rw.repaint();
+			break;
 		default:
 			break;
 		}
+	}
+
+	private Direction directionSetter(String key){
+		if(key.equals("Q")){
+			switch(rw.direction){
+			case NORTH:
+				return Direction.EAST;
+			case EAST:
+				return Direction.SOUTH;
+			case SOUTH:
+				return Direction.WEST;
+			case WEST:
+				return Direction.NORTH;
+			}
+		}
+		else{
+			switch(rw.direction){
+			case NORTH:
+				return Direction.WEST;
+			case EAST:
+				return Direction.NORTH;
+			case SOUTH:
+				return Direction.EAST;
+			case WEST:
+				return Direction.SOUTH;
+			}
+		}
+		return null;
 	}
 
 	@Override
