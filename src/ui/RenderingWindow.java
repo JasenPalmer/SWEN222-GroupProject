@@ -59,9 +59,13 @@ public class RenderingWindow extends JPanel{
 		
 		Image grass = null;
 		Image building = null;
+		Image water = null;
+		Image rock = null;
 		try {
 			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
+			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,22 +73,26 @@ public class RenderingWindow extends JPanel{
 		
 		// Example location. To be changed later.
 		Location l = null;
-		Tile t = new FloorTile(l, new Point(0,0), grass);
-		Tile[][] tiles = {{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},
-				{t,t,t,t,t,t,t,t,t,t,t,t,t,t,t},};
+		Tile g1 = new FloorTile(l, new Point(0,0), grass);
+		Tile w1 = new FloorTile(l, new Point(0,0), water);
+		Tile r1 = new FloorTile(l, new Point(0,0), rock);
+		Tile[][] tiles = {
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,g1,g1,g1,g1},
+				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{r1,r1,r1,r1,r1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{w1,w1,w1,r1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,w1,r1,r1,r1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,w1,w1,w1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,w1,w1,g1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				};
 		
 		Tile r = new BuildingTile(l, new Point(1,2), building);
 		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
