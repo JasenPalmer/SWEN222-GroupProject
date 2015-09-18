@@ -80,10 +80,10 @@ public class RenderingWindow extends JPanel{
 		Tile w1 = new FloorTile(l, new Point(0,0), water);
 		Tile r1 = new FloorTile(l, new Point(0,0), rock);
 		Tile[][] tiles = {
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
+				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,w1,g1},
 				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,w1,w1,w1,g1},
 				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,w1,w1,g1},
@@ -183,7 +183,7 @@ public class RenderingWindow extends JPanel{
 							}
 							
 							
-							g.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - playerImage.getHeight(null), null);
+							g.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2, null);
 						}
 						
 						// DRAWING ROOMS
