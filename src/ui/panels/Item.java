@@ -24,6 +24,19 @@ public class Item {
 		}
 	}
 	
+	public Item(String n, String d, int x, int y){
+		this.Name = n;
+		this.Description = d;
+		this.x = x;
+		this.y = y;
+		if(n.equals("Shank")){
+			image = new ImageIcon(shankImage);
+		}
+		else{
+			image = new ImageIcon(potionImage);
+		}
+	}
+	
 	//Getters and Setters
 	public String getName(){return this.Name;}
 	public String getDesciption(){return this.Description;}
