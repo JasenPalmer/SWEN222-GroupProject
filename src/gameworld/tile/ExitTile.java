@@ -2,6 +2,7 @@ package gameworld.tile;
 
 import gameworld.location.Location;
 
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -13,8 +14,8 @@ public class ExitTile extends AbstractTile {
 
 	private EntranceTile exitPoint;
 
-	public ExitTile(Location location, Point pos) {
-		super(location, pos);
+	public ExitTile(Location location, Point pos, Image image) {
+		super(location, pos, image);
 	}
 
 	/**

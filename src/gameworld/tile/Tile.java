@@ -2,9 +2,9 @@ package gameworld.tile;
 
 import gameworld.Player;
 import gameworld.entity.Entity;
-import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -34,5 +34,11 @@ public interface Tile {
 	 */
 	public Location getLocation();
 
+
 	public Player getPlayer();
+	
+	/**
+	 * @return the image of the tile
+	 */
+	public Image getImg();
 }

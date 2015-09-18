@@ -2,6 +2,7 @@ package gameworld.tile;
 
 import gameworld.location.InsideLocation;
 
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -11,7 +12,7 @@ import java.awt.Point;
  */
 public class EntranceTile extends AbstractTile{
 
-	public EntranceTile(InsideLocation location, Point pos) {
-		super(location, pos);
+	public EntranceTile(InsideLocation location, Point pos, Image image) {
+		super(location, pos, image);
 	}
 }

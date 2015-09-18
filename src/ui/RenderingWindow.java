@@ -50,26 +50,35 @@ public class RenderingWindow extends JPanel{
 		
 		Image offscreen = createImage(this.getWidth(), this.getHeight());
 		Graphics offgc = offscreen.getGraphics();
-		
 
-		offgc.fillRect(0,0,this.getWidth(), this.getHeight());
-		offgc.drawImage(backgroundImage, 0,0, null);
 //		Location l = player.getLocation();
 //		Tile[][] tiles = l.getTiles();
 //		//Tile[][] rooms = l.getRooms();
 //		//Item[][] items = l.getItems();
 //		
+		
+		Image grass = null;
+		Image building = null;
+		try {
+			grass = ImageIO.read(new File("src/main/terrain/Grass.png"));
+			building = ImageIO.read(new File("src/main/buildings/Room.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		Location l = null;
-		Tile[][] tiles = {	{new FloorTile(l, new Point(0,0)), new FloorTile(l, new Point(0,1)), new FloorTile(l, new Point(0,2)), new FloorTile(l, new Point(0,3)), new FloorTile(l, new Point(0,4))},
-							{new FloorTile(l, new Point(1,0)), new FloorTile(l, new Point(1,1)), new FloorTile(l, new Point(1,2)), new FloorTile(l, new Point(1,3)), new FloorTile(l, new Point(1,4))},
-							{new FloorTile(l, new Point(2,0)), new FloorTile(l, new Point(2,1)), new FloorTile(l, new Point(2,2)), new FloorTile(l, new Point(2,3)), new FloorTile(l, new Point(2,4))},
-							{new FloorTile(l, new Point(3,0)), new FloorTile(l, new Point(3,1)), new FloorTile(l, new Point(3,2)), new FloorTile(l, new Point(3,3)), new FloorTile(l, new Point(3,4))},
-							{new FloorTile(l, new Point(4,0)), new FloorTile(l, new Point(4,1)), new FloorTile(l, new Point(4,2)), new FloorTile(l, new Point(4,3)), new FloorTile(l, new Point(4,4))}
+		Tile[][] tiles = {	{new FloorTile(l, new Point(0,0), grass), new FloorTile(l, new Point(0,1), grass), new FloorTile(l, new Point(0,2), grass), new FloorTile(l, new Point(0,3), grass), new FloorTile(l, new Point(0,4), grass)},
+							{new FloorTile(l, new Point(1,0), grass), new FloorTile(l, new Point(1,1), grass), new FloorTile(l, new Point(1,2), grass), new FloorTile(l, new Point(1,3), grass), new FloorTile(l, new Point(1,4), grass)},
+							{new FloorTile(l, new Point(2,0), grass), new FloorTile(l, new Point(2,1), grass), new FloorTile(l, new Point(2,2), grass), new FloorTile(l, new Point(2,3), grass), new FloorTile(l, new Point(2,4), grass)},
+							{new FloorTile(l, new Point(3,0), grass), new FloorTile(l, new Point(3,1), grass), new FloorTile(l, new Point(3,2), grass), new FloorTile(l, new Point(3,3), grass), new FloorTile(l, new Point(3,4), grass)},
+							{new FloorTile(l, new Point(4,0), grass), new FloorTile(l, new Point(4,1), grass), new FloorTile(l, new Point(4,2), grass), new FloorTile(l, new Point(4,3), grass), new FloorTile(l, new Point(4,4), grass)}
 						};
 		
 		Tile[][] rooms = {	{null,null,null,null,null},
-							{null,null,new BuildingTile(l, new Point(1,2)), new BuildingTile(l, new Point(1,3)),null},
-							{null,null,new BuildingTile(l, new Point(2,2)),new BuildingTile(l, new Point(2,2)),null},
+							{null,null,new BuildingTile(l, new Point(1,2), building), new BuildingTile(l, new Point(1,3), building),null},
+							{null,null,new BuildingTile(l, new Point(2,2), building),new BuildingTile(l, new Point(2,2), building),null},
 							{null,null,null,null,null},
 							{null,null,null,null,null}
 						};
@@ -79,24 +88,24 @@ public class RenderingWindow extends JPanel{
 		
 		
 
-//	
-//		switch(direction){
-//		case NORTH:
-//			//isometric(tiles,rooms, offgc);
-//			break;
-//		case EAST:
-//			//isometric(rotate(tiles), rotate(rooms), offgc);		
-//			break;			
-//		case SOUTH:
-//			//isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);		
-//			break;	
-//		case WEST:
-//			//isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
-//			break;
-//				
-//		}
-//
-//			
+	
+		switch(direction){
+		case NORTH:
+			isometric(tiles,rooms, offgc);
+			break;
+		case EAST:
+			isometric(rotate(tiles), rotate(rooms), offgc);		
+			break;			
+		case SOUTH:
+			isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);		
+			break;	
+		case WEST:
+			isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
+			break;
+				
+		}
+
+			
 			g.drawImage(offscreen,0,0,null);
 
 		}
@@ -116,15 +125,17 @@ public class RenderingWindow extends JPanel{
 		 * @param g - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
-			Image offscreen = createImage(this.getWidth()*TILESIZE, this.getHeight()*TILESIZE);
+			Image offscreen = createImage(30*TILESIZE, 30*TILESIZE);
 			Graphics offgc = offscreen.getGraphics();
 
+			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
+			
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
 					Tile t = tiles[i][j];
 					if(t!=null) {
-						Image image = null; //t.getImg().getImage();
+						Image image = t.getImg();
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + 500 , null);
 
 					}

@@ -2,6 +2,7 @@ package gameworld.tile;
 
 import gameworld.location.Location;
 
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -11,8 +12,8 @@ import java.awt.Point;
  */
 public class FloorTile extends AbstractTile {
 
-	public FloorTile(Location location, Point pos) {
-		super(location, pos);
+	public FloorTile(Location location, Point pos, Image image) {
+		super(location, pos, image);
 	}
 
 }
