@@ -80,8 +80,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setupMenu();
 		
 		//Setup buttons
-		setupButtons();
-			
+		setupButtons();		
 	}
 
 	/**
@@ -161,8 +160,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		this.add(addPotionButton,0);
 		
 		//Temp label
-		JLabel temp = new JLabel("Press I to open Invent");
-		temp.setBounds(300,800,150,20);
+		JLabel temp = new JLabel("Press I to open Loot Inventory");
+		temp.setBounds(250,800,200,20);
 		this.add(temp, 0);
 		
 		//Test Button
@@ -203,6 +202,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 		window.setVisible(false);
 		window.dispose();
+	}
+	
+	public void repaintRenderingWindow(){
+		rw.repaint();
 	}
 	
 	/**
