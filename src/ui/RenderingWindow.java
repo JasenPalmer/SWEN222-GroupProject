@@ -4,11 +4,14 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.location.Location;
+import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
+import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 
@@ -55,7 +58,26 @@ public class RenderingWindow extends JPanel{
 //		Tile[][] tiles = l.getTiles();
 //		//Tile[][] rooms = l.getRooms();
 //		//Item[][] items = l.getItems();
-//			
+//		
+		Location l = null;
+		Tile[][] tiles = {	{new FloorTile(l, new Point(0,0)), new FloorTile(l, new Point(0,1)), new FloorTile(l, new Point(0,2)), new FloorTile(l, new Point(0,3)), new FloorTile(l, new Point(0,4))},
+							{new FloorTile(l, new Point(1,0)), new FloorTile(l, new Point(1,1)), new FloorTile(l, new Point(1,2)), new FloorTile(l, new Point(1,3)), new FloorTile(l, new Point(1,4))},
+							{new FloorTile(l, new Point(2,0)), new FloorTile(l, new Point(2,1)), new FloorTile(l, new Point(2,2)), new FloorTile(l, new Point(2,3)), new FloorTile(l, new Point(2,4))},
+							{new FloorTile(l, new Point(3,0)), new FloorTile(l, new Point(3,1)), new FloorTile(l, new Point(3,2)), new FloorTile(l, new Point(3,3)), new FloorTile(l, new Point(3,4))},
+							{new FloorTile(l, new Point(4,0)), new FloorTile(l, new Point(4,1)), new FloorTile(l, new Point(4,2)), new FloorTile(l, new Point(4,3)), new FloorTile(l, new Point(4,4))}
+						};
+		
+		Tile[][] rooms = {	{null,null,null,null,null},
+							{null,null,new BuildingTile(l, new Point(1,2)), new BuildingTile(l, new Point(1,3)),null},
+							{null,null,new BuildingTile(l, new Point(2,2)),new BuildingTile(l, new Point(2,2)),null},
+							{null,null,null,null,null},
+							{null,null,null,null,null}
+						};
+		
+		l = new OutsideLocation("Test", "This is a test Location", tiles, rooms);
+		
+		
+		
 
 //	
 //		switch(direction){
@@ -86,7 +108,7 @@ public class RenderingWindow extends JPanel{
 		 * room tiles to draw buildings depending on the arrangement of tiles.
 		 * 
 		 * new x position = x/2 + y/2
-		 * new y position = y/2 - x/2
+		 * new y position = y/4 - x/4
 		 * 
 		 * 
 		 * @param tiles - 2D array of terrain to be drawn
