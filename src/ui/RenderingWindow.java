@@ -24,8 +24,6 @@ public class RenderingWindow extends JPanel{
 	private Player player;
 	
 	private int TILESIZE = 64;
-	private int MAP_WIDTH = 30;
-	private int MAP_HEIGHT = 30;
 	
 	Game.Direction direction = Direction.NORTH;
 	
@@ -46,14 +44,19 @@ public class RenderingWindow extends JPanel{
 	 */
 	public void paint( Graphics g ) { 
 		super.paint(g);
+		
+		Image offscreen = createImage(this.getWidth(), this.getHeight());
+		Graphics offgc = offscreen.getGraphics();
+		
 
+		offgc.fillRect(0,0,this.getWidth(), this.getHeight());
+		offgc.drawImage(backgroundImage, 0,0, null);
 //		Location l = player.getLocation();
 //		Tile[][] tiles = l.getTiles();
 //		//Tile[][] rooms = l.getRooms();
 //		//Item[][] items = l.getItems();
 //			
-//		Image offscreen = createImage(MAP_WIDTH*TILESIZE, MAP_HEIGHT*TILESIZE);
-//		Graphics offgc = offscreen.getGraphics();
+
 //	
 //		switch(direction){
 //		case NORTH:
@@ -72,7 +75,7 @@ public class RenderingWindow extends JPanel{
 //		}
 //
 //			
-//			g.drawImage(offscreen,0,0,null);
+			g.drawImage(offscreen,0,0,null);
 
 		}
 		
@@ -91,7 +94,7 @@ public class RenderingWindow extends JPanel{
 		 * @param g - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
-			Image offscreen = createImage(MAP_WIDTH*TILESIZE, MAP_HEIGHT*TILESIZE);
+			Image offscreen = createImage(this.getWidth()*TILESIZE, this.getHeight()*TILESIZE);
 			Graphics offgc = offscreen.getGraphics();
 
 			// outside tiles
