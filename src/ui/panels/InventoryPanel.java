@@ -14,7 +14,7 @@ import javax.swing.JLayeredPane;
 public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	Image backgroundImage; 
-	Item[][] inventArray = new Item[4][7];
+	Item[][] inventArray = new Item[4][2];
 	InventoryBackground inventBackground = new InventoryBackground();
 	private int pressedX, pressedY;
 	private Item movedItem;
@@ -22,7 +22,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	public InventoryPanel(){
 		setLayout(null);
-		setBounds(765, 520, 231, 262);
+		setBounds(765, 517, 231, 262);
 
 		//Add invent background
 		this.add(inventBackground,0,0);
@@ -71,8 +71,8 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] != null){
-					inventArray[i][j].setX(13+(i*49));
-					inventArray[i][j].setY(37+(j*36));
+					inventArray[i][j].setX(11+(i*55));
+					inventArray[i][j].setY(44+(j*70));
 				}
 			}
 		}
@@ -81,21 +81,11 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] != null){
 					JLabel item = new JLabel(inventArray[i][j].getImage());
-					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 35,35);
+					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 42,52);
 					this.add(item,1,0);
 				}
 			}
 		}
-
-		//		for(int i = 0; i < inventArray.length; i++){
-		//			for(int j = 0; j < inventArray[0].length; j++){
-		//				if(inventArray[i][j] != null){
-		//					JLabel item = new JLabel(inventArray[i][j].getImage());
-		//					item.setBounds(13 + (i*49),37 + (j*36),35,35);
-		//					this.add(item,1,0);
-		//				}
-		//			}
-		//		}
 	}
 
 	@Override
