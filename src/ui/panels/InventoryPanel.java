@@ -133,7 +133,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				for(int j = 0; j < inventArray[0].length; j++){
 					if(inventArray[i][j]!= null){
 						if(inventArray[i][j].contains(e.getX(), e.getY())){
-							addItemTo(i,j,(int)getIndexs(movedItem).getX(),(int)getIndexs(movedItem).getY());
+							addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
 						}
 					}
 				}
@@ -141,12 +141,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
-	private Point getIndexs(Item item){
+	private Point getIndices(Item item){
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
-				if(inventArray[i][j].equals(item)){
-					Point indexs = new Point(i, j);
-					return indexs;
+				if(inventArray[i][j] != null){
+					if(inventArray[i][j].equals(item)){
+						Point indexs = new Point(i, j);
+						return indexs;
+					}
 				}
 			}
 		}
