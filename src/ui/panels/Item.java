@@ -24,6 +24,7 @@ public class Item {
 		}
 	}
 	
+	//Maybe redundant? :O
 	public Item(String n, String d, int x, int y){
 		this.Name = n;
 		this.Description = d;
@@ -47,8 +48,8 @@ public class Item {
 	public int getY(){return this.y;}
 	
 	public boolean contains(int x, int y){
-		if(x >= this.x && x <= this.x + 35){
-			if(y >= this.y && y <= this.y + 35){
+		if(x >= this.x && x <= this.x + 42){
+			if(y >= this.y && y <= this.y + 52){
 				return true;
 			}
 		}

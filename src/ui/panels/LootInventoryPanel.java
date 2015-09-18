@@ -22,7 +22,6 @@ public class LootInventoryPanel extends JPanel{
 			System.out.println(e.getLocalizedMessage());
 		}
 		setBorder(new EmptyBorder(0, 5, 5, 5));
-		//Set 330 for center
 		setBounds(330, 100, 360, 240);	
 	}
 	

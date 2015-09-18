@@ -2,6 +2,7 @@ package ui.panels;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -120,11 +121,36 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 			}
 		}
+		if(movedItem != null){
+			System.out.println(movedItem.getName());
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(movedItem != null){
+			for(int i = 0; i < inventArray.length; i++){
+				for(int j = 0; j < inventArray[0].length; j++){
+					if(inventArray[i][j]!= null){
+						if(inventArray[i][j].contains(e.getX(), e.getY())){
+							addItemTo(i,j,(int)getIndexs(movedItem).getX(),(int)getIndexs(movedItem).getY());
+						}
+					}
+				}
+			}
+		}
+	}
 
+	private Point getIndexs(Item item){
+		for(int i = 0; i < inventArray.length; i++){
+			for(int j = 0; j < inventArray[0].length; j++){
+				if(inventArray[i][j].equals(item)){
+					Point indexs = new Point(i, j);
+					return indexs;
+				}
+			}
+		}
+
+		return null;		
 	}
 }
