@@ -209,5 +209,12 @@ public class RenderingWindow extends JPanel{
 		public void setDirection(Game.Direction d){
 			direction = d;
 		}
+		
+		/**
+		 * @return current direction of renderer/camera
+		 */
+		public Direction getDirection(){
+			return direction;
+		}
 }
 
