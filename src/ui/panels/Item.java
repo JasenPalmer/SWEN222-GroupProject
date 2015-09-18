@@ -11,6 +11,7 @@ public class Item {
 	private ImageIcon image;
 	private String potionImage = "src/ui/images/potionInventItem.png";
 	private String shankImage = "src/ui/images/shankInventImageSize.png";
+	private int x,y;
 	
 	public Item(String n, String d){
 		this.Name = n;
@@ -27,4 +28,17 @@ public class Item {
 	public String getName(){return this.Name;}
 	public String getDesciption(){return this.Description;}
 	public ImageIcon getImage(){return this.image;}
+	public void setX(int x){this.x = x;}
+	public void setY(int y){this.y = y;}
+	public int getX(){return this.x;}
+	public int getY(){return this.y;}
+	
+	public boolean contains(int x, int y){
+		if(x >= this.x && x <= this.x + 35){
+			if(y >= this.y && y <= this.y + 35){
+				return true;
+			}
+		}
+		return false;
+	}
 }

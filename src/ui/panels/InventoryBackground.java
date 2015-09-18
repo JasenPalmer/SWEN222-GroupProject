@@ -17,12 +17,12 @@ public class InventoryBackground extends JPanel{
 		setLayout(null);
 		setOpaque(false);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/inventImageTransparent.png"));
+			backgroundImage = ImageIO.read(new File("src/ui/images/inventImageMaster.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
 		setBorder(new EmptyBorder(0, 5, 5, 5));
-		setBounds(0, 0, 210, 330);	
+		setBounds(0, 0, 231, 262);	
 	}
 	
 	public void paintComponent(Graphics g) { 
