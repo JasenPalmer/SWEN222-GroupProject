@@ -60,14 +60,14 @@ public class RenderingWindow extends JPanel{
 		Image grass = null;
 		Image building = null;
 		try {
-			grass = ImageIO.read(new File("src/main/terrain/Grass.png"));
-			building = ImageIO.read(new File("src/main/buildings/Room.png"));
+			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
+			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		
+		// Example location. To be changed later.
 		Location l = null;
 		Tile[][] tiles = {	{new FloorTile(l, new Point(0,0), grass), new FloorTile(l, new Point(0,1), grass), new FloorTile(l, new Point(0,2), grass), new FloorTile(l, new Point(0,3), grass), new FloorTile(l, new Point(0,4), grass)},
 							{new FloorTile(l, new Point(1,0), grass), new FloorTile(l, new Point(1,1), grass), new FloorTile(l, new Point(1,2), grass), new FloorTile(l, new Point(1,3), grass), new FloorTile(l, new Point(1,4), grass)},
@@ -88,7 +88,7 @@ public class RenderingWindow extends JPanel{
 		
 		
 
-	
+		// Rotates array depending on direction and then rendering
 		switch(direction){
 		case NORTH:
 			isometric(tiles,rooms, offgc);
@@ -125,10 +125,8 @@ public class RenderingWindow extends JPanel{
 		 * @param g - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
-			Image offscreen = createImage(30*TILESIZE, 30*TILESIZE);
-			Graphics offgc = offscreen.getGraphics();
 
-			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
+			g.fillRect(0,0,this.getWidth(), this.getHeight());
 			
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
@@ -136,7 +134,7 @@ public class RenderingWindow extends JPanel{
 					Tile t = tiles[i][j];
 					if(t!=null) {
 						Image image = t.getImg();
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + 500 , null);
+						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 
 					}
 				}
@@ -147,41 +145,61 @@ public class RenderingWindow extends JPanel{
 				for(int j = rooms[i].length-1; j >=0 ; j--){
 					BuildingTile r = (BuildingTile) rooms[i][j];
 					if(r!=null) {
-						Image image = new ImageIcon(Main.class.getResource("buildings/Room.png")).getImage();
+						Image image = null;
+						try {
+							image = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						
 
-						// walls
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + 500 -TILESIZE/2, null);
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + 500 -TILESIZE, null);
+						// Drawing 2 block high walls
+						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
 						
 
 
-						// Side of room
+						// Western most point of building
 						if(j-1 >= 0 && rooms[i][j-1] == null){
-							image = new ImageIcon(Main.class.getResource("buildings/RoofUD.png")).getImage();
+							try {
+								image = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 
-						// Bottom of room
+						// Northern most point of building
 						if(i+1 < rooms.length && rooms[i+1][j]==null){
-							image = new ImageIcon(Main.class.getResource("buildings/RoofLR.png")).getImage();
+							try {
+								image = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 
 						// Outwards corner roof
 						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-							image = new ImageIcon(Main.class.getResource("buildings/RoofCornerO.png")).getImage();
+							try {
+								image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 						// Inwards corner roof
 						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-							image = new ImageIcon(Main.class.getResource("buildings/RoofCornerI.png")).getImage();
+							try {
+								image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 
 
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + 500 - (TILESIZE*1.5)), null);
+						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
 						
 					}
 				}
 			}
-			g.drawImage(offscreen,0,0,null);
 		}
 
 		/**
@@ -192,7 +210,6 @@ public class RenderingWindow extends JPanel{
 		 */
 		public Tile[][] rotate(Tile[][] tiles){
 			Tile[][] newTiles = new Tile[tiles.length][tiles[0].length];
-			// drawing floor
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = 0; j < tiles[i].length; j++){
 					newTiles[(newTiles.length-1)-j][i] = tiles[i][j];
@@ -208,6 +225,13 @@ public class RenderingWindow extends JPanel{
 		 */
 		public void setDirection(Game.Direction d){
 			direction = d;
+		}
+		
+		/**
+		 * @return current direction of renderer/camera
+		 */
+		public Direction getDirection(){
+			return direction;
 		}
 }
 
