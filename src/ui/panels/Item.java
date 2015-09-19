@@ -19,8 +19,11 @@ public class Item {
 		if(n.equals("Shank")){
 			image = new ImageIcon(shankImage);
 		}
-		else{
+		else if (n.equals("Potion")){
 			image = new ImageIcon(potionImage);
+		}
+		else{
+			image = null;
 		}
 	}
 	

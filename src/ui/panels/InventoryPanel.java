@@ -1,13 +1,11 @@
 package ui.panels;
 
-import java.awt.Color;
+
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
@@ -17,7 +15,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	Image backgroundImage; 
 	Item[][] inventArray = new Item[4][2];
 	InventoryBackground inventBackground = new InventoryBackground();
-	private int pressedX, pressedY;
 	private Item movedItem;
 
 
@@ -30,6 +27,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 		//Add invent items
 		inventArray[0][0] = null;
+		fillAllSlots();
 		populateInvent();
 		addMouseListener(this);
 	}
@@ -37,7 +35,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	public void addItem(Item item){
 		for(int i = 0; i < inventArray[0].length; i++){
 			for(int j = 0; j < inventArray.length; j++){
-				if(inventArray[j][i] == null){
+				if(inventArray[j][i].getName().equals("Empty")){
 					inventArray[j][i] = item;
 					System.out.println(inventArray[j][i].getName() + " Added");
 					populateInvent();
@@ -52,8 +50,15 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	/**
+	 * Swaps 2 elements of the array
+	 * @param x1 - Item 1 array x coordinate
+	 * @param y1 - Item 1 array y coordinate
+	 * @param x2 - Item 2 array x coordinate
+	 * @param y2 - Item 2 array y coordinate
+	 */
 	public void addItemTo(int x1, int y1, int x2, int y2){
-		if(inventArray[x2][y2] == null){
+		if(inventArray[x2][y2].equals(null)){
 			inventArray[x2][y2] = inventArray[x1][y1];
 			inventArray[x1][y1] = null;
 		}
@@ -65,6 +70,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		populateInvent();
 	}
 
+	/**
+	 * Clears the inventory then populates it with elements of the inventory array
+	 */
 	private void populateInvent(){
 		this.removeAll();
 		this.add(inventBackground,0,0);
@@ -87,8 +95,23 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 			}
 		}
+		
+		//fillAllSlots();
 	}
 
+	/**
+	 * Fills all slots with an empty item slot
+	 */
+	private void fillAllSlots(){
+		for(int i = 0; i < inventArray.length; i++){
+			for(int j = 0; j < inventArray[0].length; j++){
+				if(inventArray[i][j] == null){
+					inventArray[i][j] = new Item("Empty", "Placeholder");
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -108,10 +131,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		this.pressedX = e.getX();
-		this.pressedY = e.getY();
-		System.out.println(pressedX);
-		System.out.println(pressedY);
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] != null){
@@ -120,9 +139,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					}
 				}
 			}
-		}
-		if(movedItem != null){
-			System.out.println(movedItem.getName());
 		}
 	}
 
@@ -152,7 +168,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 			}
 		}
-
 		return null;		
 	}
 }
