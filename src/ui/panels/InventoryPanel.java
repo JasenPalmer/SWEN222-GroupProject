@@ -16,6 +16,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	Item[][] inventArray = new Item[4][2];
 	InventoryBackground inventBackground = new InventoryBackground();
 	private Item movedItem;
+	private Item weapon, armour;
 
 
 	public InventoryPanel(){
@@ -29,6 +30,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		inventArray[0][0] = null;
 		fillAllSlots();
 		populateInvent();
+		fillEquipmentSlots();
 		addMouseListener(this);
 	}
 
@@ -95,8 +97,21 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 			}
 		}
-		
-		//fillAllSlots();
+
+		fillEquipmentSlots();
+	}
+
+	private void fillEquipmentSlots(){
+		if(weapon != null){
+			JLabel weaponLabel = new JLabel(weapon.getImage());
+			weaponLabel.setBounds(65,195,42,52);
+			this.add(weaponLabel,1,0);
+		}
+		if(armour != null){
+			JLabel armourLabel = new JLabel(armour.getImage());
+			armourLabel.setBounds(120,195,42,52);
+			this.add(armourLabel,1,0);
+		}
 	}
 
 	/**
@@ -111,10 +126,26 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getButton() == MouseEvent.BUTTON3){
+			System.out.println("Registered Right-Click");
+			for(int i = 0; i < inventArray.length; i++){
+				for(int j = 0; j < inventArray[0].length; j++){
+					if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
+						if(inventArray[i][j].contains(e.getX(), e.getY())){
+							if(weapon != null){
+								addItem(weapon);
+							}
+							weapon = inventArray[i][j];
+							inventArray[i][j] = new Item("Empty", "PlaceHolder");
+						}
+					}
+				}
+			}
+		}
+		populateInvent();
 	}
 
 	@Override
