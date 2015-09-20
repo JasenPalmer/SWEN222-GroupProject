@@ -42,7 +42,7 @@ public class RenderingWindow extends JPanel{
 	
 	public RenderingWindow(){
 		setLayout(null);
-		setBounds(50,30,950,750);
+		setBounds(0,0,1050,750);
 		
 		setImages();
 
