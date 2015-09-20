@@ -33,6 +33,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private InventoryPanel inventPanel;
 	private JLayeredPane overlayPanel;
 	private LootInventoryPanel lootInventPanel;
+	private ChatBoxPanel chatBoxPanel;
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
@@ -49,10 +50,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup frame
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(450, 50, 1050, 950);
+		setBounds(450, 10, 1050, 1020);
 
 		//Setup layered pane
-		layeredPanel.setBounds(0, 0, 1050, 950);
+		layeredPanel.setBounds(0, 0, 1050, 1020);
 		getContentPane().add(layeredPanel);
 
 		//Setup Background Panel
@@ -65,7 +66,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 		//Setup Overlay Panel
 		overlayPanel = new JLayeredPane();
-		overlayPanel.setBounds(0,0,1050,950);
+		overlayPanel.setBounds(0,0,1050,1020);
 		layeredPanel.add(overlayPanel,2,0);
 
 		//Setup Inventory
@@ -77,6 +78,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		lootInventPanel = new LootInventoryPanel();
 		overlayPanel.add(lootInventPanel,2,0);
 		setLootInventory();
+		
+		//Setup chat box
+		chatBoxPanel = new ChatBoxPanel();
+		overlayPanel.add(chatBoxPanel);
 
 		//Setup the menu bar
 		setupMenu();
@@ -160,11 +165,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		addPotionButton.addActionListener(this);
 		addPotionButton.setFocusable(false);
 		this.add(addPotionButton,0);
-
-		//Temp label
-		JLabel temp = new JLabel("Press I to open Loot Inventory");
-		temp.setBounds(250,800,200,20);
-		this.add(temp, 0);
 
 		//Test Button
 		JButton testButton = new JButton("Test");
