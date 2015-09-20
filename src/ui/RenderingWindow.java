@@ -42,10 +42,9 @@ public class RenderingWindow extends JPanel{
 	
 	public RenderingWindow(){
 		setLayout(null);
-		setBounds(50,30,950,750);
+		setBounds(0,0,1050,750);
 		
 		setImages();
-
 	}
 	
 	/**
@@ -96,14 +95,14 @@ public class RenderingWindow extends JPanel{
 		Tile w1 = new FloorTile(l, new Point(0,0), water);
 		Tile r1 = new FloorTile(l, new Point(0,0), rock);
 		Tile[][] tiles = {
-				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
-				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,w1,w1,w1,g1},
-				{g1,g1,r1,g1,g1,r1,r1,r1,g2,g2,g1,w1,w1,w1,g1},
-				{r1,r1,r1,r1,g1,r1,r1,g2,g2,g2,g1,g1,w1,w1,g1},
-				{r1,r1,r1,r1,r1,r1,r1,g2,g2,g2,g1,w1,w1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,g1,g1,g1},
+				{g1,g1,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,w1,g1},
+				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,w1,w1,w1,g1},
+				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,w1,w1,g1},
+				{r1,r1,r1,r1,r1,r1,r1,g1,g2,g1,g1,w1,w1,g1,g1},
 				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,w1,g1,g1,g1},
 				{w1,w1,w1,r1,g1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
 				{g1,w1,r1,r1,r1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
@@ -209,9 +208,7 @@ public class RenderingWindow extends JPanel{
 						if(r!=null) {					
 							// Drawing 2 block high walls
 							if(r instanceof EntranceTile){
-								System.out.println("found door");
 								if(j-1 >= 0 && rooms[i][j-1]==null){
-									System.out.println("pls");
 									g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 								} else {
 									g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
