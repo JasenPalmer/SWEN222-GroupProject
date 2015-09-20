@@ -132,7 +132,6 @@ public class EditorFrame extends JFrame implements MouseListener{
 				String line = "";	
 				BufferedReader br = new BufferedReader(new FileReader(f));
 				
-				Location l = new OutsideLocation("Test", "test", null, null);
 				Tile[][]tiles = new Tile[MAPHEIGHT][MAPWIDTH]; 
 				BuildingTile[][]rooms = new BuildingTile[MAPHEIGHT][MAPWIDTH]; 
 				int i = 0;
@@ -144,9 +143,9 @@ public class EditorFrame extends JFrame implements MouseListener{
 							if(!split[j].equals("0")){
 								URL url =  Main.class.getResource("images/"+split[j]+".png");
 								ImageIcon img = new ImageIcon(url);			
-								tiles[i][j] = new FloorTile(l, new Point(j,i), img.getImage());
+								tiles[i][j] = new FloorTile(map, new Point(j,i), img.getImage());
 								if(split[j].equals("Room")){
-									rooms[i][j] = new BuildingTile(l, new Point(j,i), img.getImage());
+									rooms[i][j] = new BuildingTile(map, new Point(j,i), img.getImage());
 								}
 							} else{
 								tiles[i][j] = null;
