@@ -6,6 +6,7 @@ import gameworld.Player;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -16,14 +17,23 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
-import main.Main;
 
 public class RenderingWindow extends JPanel{
 	
 	private Image backgroundImage;
+	private Image grass;
+	private Image building;
+	private Image water;
+	private Image rock;
+	private Image room;
+	private Image doorUD;
+	private Image doorLR;
+	private Image roofLR;
+	private Image roofUD;
+	private Image roofCornerO;
+	private Image roofCornerI;
+	
 	private Player player;
 	
 	private int TILESIZE = 64;
@@ -34,13 +44,34 @@ public class RenderingWindow extends JPanel{
 		setLayout(null);
 		setBounds(50,30,950,750);
 		
+		setImages();
+
+	}
+	
+	/**
+	 * Setting images to files in images folder. Will be changed when map parser is working for some tiles. (grass, water, rock will be gone).
+	 */
+	private void setImages() {
 		try{
-		backgroundImage = ImageIO.read(new File("src/ui/images/renderingWindowTemp.jpg"));
+			backgroundImage = ImageIO.read(new File("src/ui/images/renderingWindowTemp.jpg"));
+			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
+			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
+			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
+			room = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
+			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
+			roofLR = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
+			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
+			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
+			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
+			
+			
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Rotates tile arrays depending on the current viewing direction and then calls the isometric
 	 * renderer on the resulting arrays
@@ -56,21 +87,6 @@ public class RenderingWindow extends JPanel{
 //		//Tile[][] rooms = l.getRooms();
 //		//Item[][] items = l.getItems();
 //		
-		
-		Image grass = null;
-		Image building = null;
-		Image water = null;
-		Image rock = null;
-		try {
-			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
-			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
-			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-
 
 		
 		// Example location. To be changed later.
@@ -84,10 +100,10 @@ public class RenderingWindow extends JPanel{
 				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
 				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
 				{g2,g2,g2,g2,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,w1,g1},
-				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,w1,w1,w1,g1},
-				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{r1,r1,r1,r1,r1,r1,r1,g1,g2,g1,g1,w1,w1,g1,g1},
+				{g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,w1,w1,w1,g1},
+				{g1,g1,r1,g1,g1,r1,r1,r1,g2,g2,g1,w1,w1,w1,g1},
+				{r1,r1,r1,r1,g1,r1,r1,g2,g2,g2,g1,g1,w1,w1,g1},
+				{r1,r1,r1,r1,r1,r1,r1,g2,g2,g2,g1,w1,w1,g1,g1},
 				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,w1,g1,g1,g1},
 				{w1,w1,w1,r1,g1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
 				{g1,w1,r1,r1,r1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
@@ -98,19 +114,20 @@ public class RenderingWindow extends JPanel{
 				};
 		
 		Tile r = new BuildingTile(l, new Point(1,2), building);
+		Tile d = new EntranceTile(null, new Point(1,2), null);
 		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,r,r,r,r,r,r,r, r,r,null,null},
-							{null,null,null,null,r,r,r,r,r,r,r,r,r,null,null},
+							{null,null,null,null,d,r,r,r,r,r,r,r,r,null,null},
 							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
 							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
 							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
 							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
 							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+							{null,null,null,null,r,d,null,null,null,null,null,r,r,null,null},
 							{null,null,null,null,null,null,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,null,null,null,null,null,r,r,r,r,null,null},
-							{null,null,null,null,null,null,null,null,null,r,r,r,r,null,null},
+							{null,null,null,null,null,null,null,null,null,d,r,r,r,null,null},
+							{null,null,null,null,null,null,null,null,null,r,r,d,r,null,null},
 							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 						};
@@ -148,8 +165,8 @@ public class RenderingWindow extends JPanel{
 		 * Iterates through arrays of tiles drawing the map terrain, then iterates through
 		 * room tiles to draw buildings depending on the arrangement of tiles.
 		 * 
-		 * new x position = x/2 + y/2
-		 * new y position = y/4 - x/4
+		 * new x position = x/2 + y/2 ( + or - constants to fit properly such as imageHeight)
+		 * new y position = y/4 - x/4 ( + or - constants to fit properly such as imageHeight)
 		 * 
 		 * 
 		 * @param tiles - 2D array of terrain to be drawn
@@ -188,56 +205,45 @@ public class RenderingWindow extends JPanel{
 						
 						// DRAWING ROOMS
 						
-						BuildingTile r = (BuildingTile) rooms[i][j];
-						if(r!=null) {
-							image = null;
-							try {
-								image = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							
-
+						Tile r = rooms[i][j];
+						if(r!=null) {					
 							// Drawing 2 block high walls
-							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+							if(r instanceof EntranceTile){
+								System.out.println("found door");
+								if(j-1 >= 0 && rooms[i][j-1]==null){
+									System.out.println("pls");
+									g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+								} else {
+									g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+								}
+							}
+							else{
+								g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+							}
+							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
 							
 
-
+							image = building;
+							
 							// Western most point of building
 							if(j-1 >= 0 && rooms[i][j-1] == null){
-								try {
-									image = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+								image = roofUD;
 							}
 
 							// Northern most point of building
 							if(i+1 < rooms.length && rooms[i+1][j]==null){
-								try {
-									image = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+								image = roofLR;
 							}
 
 							// Outwards corner roof
 							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-								try {
-									image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+								image = roofCornerO;
 							}
 							// Inwards corner roof
 							if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-								try {
-									image = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
+								image = roofCornerI;
 							}
+							
 						
 							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
 
