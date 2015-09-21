@@ -27,6 +27,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 
 		//Set text area
 		textArea.setEditable(false);
+		textArea.append("Welcome to the chat!");
 		 
 		//Setup scroll pane
 		scrollPane = new JScrollPane(textArea);
@@ -48,22 +49,15 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 			appendTextBox();
 		}
 	}
-	
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyPressed(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent arg0) {}
 	
 	private void appendTextBox(){
-		textArea.append(textBox.getText());
+		textArea.append("\n" + textBox.getText());
 		textBox.setText("");
-		textArea.append("\n");
+	}
+	
+	public void displayMessage(String user, String message){
+		textArea.append(user + ": " + message);
 	}
 }
