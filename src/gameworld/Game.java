@@ -9,6 +9,7 @@ import gameworld.tile.Tile;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -17,8 +18,10 @@ import java.util.Set;
 import network.NetworkEvent;
 import network.Server;
 
-public class Game {
-
+public class Game implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	public static enum Direction{NORTH, EAST, SOUTH, WEST};
 
 	/**
