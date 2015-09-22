@@ -1,6 +1,8 @@
 package gameworld;
 
+import gameworld.location.InsideLocation;
 import gameworld.location.Location;
+import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
 import gameworld.tile.Tile;
 
@@ -57,16 +59,8 @@ public class Game {
 			for(File file : locFolder.listFiles()) {
 				// open file
 				fileScan = new Scanner(file);
-				//read name
-				String name = fileScan.nextLine();
-				//read description
-				String desc = fileScan.nextLine();
-				//read size
-				int width = fileScan.nextInt();
-				int height = fileScan.nextInt();
 				// create the tile array for the location
-				Tile[][] locTiles = new Tile[height][width];
-				Location loc = parseLocationTiles(fileScan, locTiles, name, desc);
+				Location loc = parseLocationTiles(fileScan);
 				if(loc != null){locations.add(loc);}
 				fileScan.close();
 			}
@@ -84,11 +78,20 @@ public class Game {
 		}
 	}
 
-	private Location parseLocationTiles(Scanner file, Tile[][] locTiles, String name, String description) throws NoSuchElementException{
+	private Location parseLocationTiles(Scanner file) throws NoSuchElementException{
+		//read name
+		String name = file.nextLine();
+		//read description
+		String desc = file.nextLine();
+		//read size
+		int width = file.nextInt();
+		int height = file.nextInt();
 		Location loc;
-		Tile[][] buildingTiles = new Tile[locTiles.length][locTiles[0].length];
+		Tile[][] locTiles = new Tile[height][width];
+		Tile[][] buildingTiles = new Tile[height][width];
 		//row index
 		int row = 0;
+		boolean outside = false;
 		while(file.hasNextLine()) {
 			// scan line by line
 			Scanner lineScan = new Scanner(file.nextLine());
@@ -98,6 +101,7 @@ public class Game {
 				// create tile at [row][col]
 				Tile tile = parseTile(lineScan.next());
 				if(tile instanceof BuildingTile) {
+					outside = true;
 					buildingTiles[row][col] = tile;
 					locTiles[row][col] = null;
 				}
@@ -110,11 +114,20 @@ public class Game {
 			lineScan.close();
 			row++;
 		}
-		return null;
+		if(outside){
+			loc = new OutsideLocation(name, desc, locTiles, buildingTiles);
+		}
+		else{
+			loc = new InsideLocation(name, desc, locTiles);
+		}
+		return loc;
 	}
 
 	private Tile parseTile(String type) {
-
+		switch(type) {
+		case "building":
+			//return new BuildingTile();
+		}
 		return null;
 	}
 

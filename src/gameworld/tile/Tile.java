@@ -2,43 +2,45 @@ package gameworld.tile;
 
 import gameworld.Player;
 import gameworld.entity.Entity;
-import gameworld.location.Location;
 
 import java.awt.Image;
 import java.awt.Point;
 
 /**
- * Represents a square in a location
+ * A Tile represents a square in a location.
+ * A tile may contain a Player or an Entity
  * @author Jasen
  *
  */
-public interface Tile {
+public abstract class Tile {
 
-	/**
-	 * @return the position of the tile in the location as a Point
-	 */
-	public Point getPos();
+	private Point position;
+	private Entity entity;
+	private Player player;
+	private Image image;
 
-	/**
-	 * @return the entity that is contained in the tile or null if none is contained
-	 */
-	public Entity containedEntity();
+	public Tile(Point pos, Image image) {
+		position = pos;
+		this.image = image;
+	}
 
-	/**
-	 * add an entity to the tile
-	 */
-	public void setEntity(Entity entity);
+	public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
 
-	/**
-	 * @return the location that this tile is in
-	 */
-	public Location getLocation();
+	public Point getPos() {
+		return position;
+	}
 
+	public Entity containedEntity() {
+		return entity;
+	}
 
-	public Player getPlayer();
+	public Player getPlayer() {
+		return player;
+	}
 	
-	/**
-	 * @return the image of the tile
-	 */
-	public Image getImg();
+	public Image getImg(){
+		return image;
+	}
 }

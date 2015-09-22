@@ -1,7 +1,5 @@
 package gameworld.tile;
 
-import gameworld.location.Location;
-
 import java.awt.Image;
 import java.awt.Point;
 
@@ -10,10 +8,10 @@ import java.awt.Point;
  * @author Jasen
  *
  */
-public class FloorTile extends AbstractTile {
+public class FloorTile extends Tile {
 
-	public FloorTile(Location location, Point pos, Image image) {
-		super(location, pos, image);
+	public FloorTile(Point pos, Image image) {
+		super(pos, image);
 	}
 
 }

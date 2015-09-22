@@ -1,7 +1,5 @@
 package gameworld.location;
 
-import java.awt.Point;
-
 import gameworld.tile.Tile;
 
 /**

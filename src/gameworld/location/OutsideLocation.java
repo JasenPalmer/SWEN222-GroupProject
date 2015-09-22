@@ -11,4 +11,7 @@ public class OutsideLocation extends Location {
 		this.buildingTiles = buildingTiles;
 	}
 
+	public Tile[][] getBuildingTiles() {
+		return buildingTiles;
+	}
 }
