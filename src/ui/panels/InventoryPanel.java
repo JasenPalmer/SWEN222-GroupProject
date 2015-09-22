@@ -21,7 +21,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	public InventoryPanel(){
 		setLayout(null);
-		setBounds(765, 517, 231, 262);
+		setBounds(810, 487, 231, 262);
 
 		//Add invent background
 		this.add(inventBackground,0,0);

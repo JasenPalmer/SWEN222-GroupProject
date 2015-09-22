@@ -81,7 +81,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		
 		//Setup chat box
 		chatBoxPanel = new ChatBoxPanel();
-		overlayPanel.add(chatBoxPanel);
+		layeredPanel.add(chatBoxPanel,1,0);
 
 		//Setup the menu bar
 		setupMenu();
