@@ -28,7 +28,7 @@ public class Game implements Serializable {
 	 * Amount of locations there are to create
 	 */
 	private static final int LOCATION_AMOUNT = 5;
-
+//this
 	private Server server;
 
 	private Set<Location> locations;
