@@ -1,21 +1,18 @@
 package mapeditor;
 
 import gameworld.Game;
-import gameworld.Player;
 import gameworld.location.Location;
 import gameworld.tile.BuildingTile;
-import gameworld.tile.EntranceTile;
+import gameworld.tile.EntranceExitTile;
 import gameworld.tile.Tile;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -135,7 +132,7 @@ public class EditorCanvas extends JPanel {
 					Tile r = rooms[i][j];
 					if(r!=null) {					
 						// Drawing 2 block high walls
-						if(r instanceof EntranceTile){
+						if(r instanceof EntranceExitTile){
 							if(j-1 >= 0 && rooms[i][j-1]==null){
 								g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 							} else {

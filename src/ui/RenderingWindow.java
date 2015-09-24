@@ -6,7 +6,7 @@ import gameworld.Player;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
-import gameworld.tile.EntranceTile;
+import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -90,10 +90,10 @@ public class RenderingWindow extends JPanel{
 		
 		// Example location. To be changed later.
 		Location l = null;
-		Tile g1 = new FloorTile(l, new Point(0,0), grass);
-		Tile g2 = new FloorTile(l, new Point(5,5), grass);
-		Tile w1 = new FloorTile(l, new Point(0,0), water);
-		Tile r1 = new FloorTile(l, new Point(0,0), rock);
+		Tile g1 = new FloorTile(new Point(0,0), grass);
+		Tile g2 = new FloorTile(new Point(5,5), grass);
+		Tile w1 = new FloorTile(new Point(0,0), water);
+		Tile r1 = new FloorTile(new Point(0,0), rock);
 		Tile[][] tiles = {
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,g1,g1,g1},
@@ -112,8 +112,8 @@ public class RenderingWindow extends JPanel{
 				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,g1,g1},
 				};
 		
-		Tile r = new BuildingTile(l, new Point(1,2), building);
-		Tile d = new EntranceTile(null, new Point(1,2), null);
+		Tile r = new BuildingTile(new Point(1,2), building);
+		Tile d = new EntranceExitTile(new Point(1,2), null, false);
 		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,r,r,r,r,r,r,r, r,r,null,null},
@@ -207,7 +207,7 @@ public class RenderingWindow extends JPanel{
 						Tile r = rooms[i][j];
 						if(r!=null) {					
 							// Drawing 2 block high walls
-							if(r instanceof EntranceTile){
+							if(r instanceof EntranceExitTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
 									g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 								} else {
