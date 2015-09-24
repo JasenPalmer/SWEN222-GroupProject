@@ -30,21 +30,22 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ui.ApplicationWindow;
 import main.Main;
 
 
 public class EditorFrame extends JFrame implements MouseListener{
 
 
-	private Location map;
+	private OutsideLocation map;
 	private EditorCanvas canvas;
 	private OptionsMenu options;
 	private String currentOption;
 	private JMenuBar bar;
 	
-	private int MAPHEIGHT = 15;
-	private int MAPWIDTH = 15;
-	private int TILESIZE = 64;
+	private static int MAPHEIGHT = 15;
+	private static int MAPWIDTH = 15;
+	private static int TILESIZE = 64;
 	
 	int xClick1;
 	int yClick1;
@@ -54,7 +55,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 	/**
 	 * Create the frame.
 	 */
-	public EditorFrame(Location map) {
+	public EditorFrame(OutsideLocation map) {
 		this.map = map;	
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -159,8 +160,8 @@ public class EditorFrame extends JFrame implements MouseListener{
 					e.printStackTrace();
 				}
 					
-				//map.setTiles(tiles);
-				//map.setRooms(rooms);
+				map.setTiles(tiles);
+				map.setBuildingTiles(rooms);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -186,10 +187,10 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 						if(currentOption.equals("Room")){
 							System.out.println("setting room");
-							//map.setRoom(x,y,new RoomTile(x*TILESIZE,y*TILESIZE, currentOption, img));
+							map.setBuildingTile(x,y,new BuildingTile(new Point(x,y), img.getImage()));
 						} else {
-							//map.setTile(x, y, new FloorTile(x*TILESIZE,y*TILESIZE, currentOption, img));
-							//map.setRoom(x, y, null);
+							map.setTile(x, y, new FloorTile(new Point(x,y), img.getImage()));
+							map.setBuildingTile(x, y, null);
 							System.out.println(currentOption);
 						}
 						y++;
@@ -203,9 +204,9 @@ public class EditorFrame extends JFrame implements MouseListener{
 			} else {
 				if(currentOption.equals("Room")){
 					System.out.println("setting room");
-					//map.setRoom(xClick1,yClick1,new RoomTile(xClick1*TILESIZE,yClick1*TILESIZE, currentOption, img));
+					map.setBuildingTile(xClick1,yClick1,new BuildingTile(new Point(xClick1,yClick1), img.getImage()));
 				}
-				//map.setTile(xClick1, yClick1, new FloorTile(xClick1*TILESIZE,yClick1*TILESIZE,currentOption,img));
+				map.setTile(xClick1, yClick1, new FloorTile(new Point(xClick1,yClick1),img.getImage()));
 			}
 		}
 		repaint();
@@ -265,6 +266,15 @@ public class EditorFrame extends JFrame implements MouseListener{
 				break;
 		}
 		
+	}
+	
+	public static void main(String[] args){
+		try {
+			EditorFrame frame = new EditorFrame(new OutsideLocation("test", "test", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]));
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -6,9 +6,9 @@ import gameworld.tile.Tile;
 
 public abstract class Location {
 
-	private String name;
-	private String description;
-	private Tile[][] tiles;
+	protected String name;
+	protected String description;
+	protected Tile[][] tiles;
 
 	public Location(String name, String description, Tile[][] tiles) {
 		this.name = name;
@@ -58,5 +58,13 @@ public abstract class Location {
 	 */
 	public Tile getTileAt(Point pos) {
 		return tiles[pos.y][pos.x];
+	}
+	
+	public void setTiles(Tile[][] tiles){
+		this.tiles = tiles;
+	}
+	
+	public void setTile(int x, int y, Tile t){
+		tiles[y][x] = t;
 	}
 }
