@@ -2,7 +2,7 @@ package mapeditor;
 
 import gameworld.Game;
 import gameworld.location.Location;
-import gameworld.tile.BuildingTile;
+import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceExitTile;
 import gameworld.tile.Tile;
 
@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 
 public class EditorCanvas extends JPanel {
 
-	private Location location;
+	private OutsideLocation location;
+	private String view = "Shit";
 	
 	private int MAPHEIGHT = 15;
 	private int MAPWIDTH = 15;
@@ -42,7 +43,7 @@ public class EditorCanvas extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public EditorCanvas(Location location) {
+	public EditorCanvas(OutsideLocation location) {
 		this.location = location;
 		setImages();
 	}
@@ -73,7 +74,7 @@ public class EditorCanvas extends JPanel {
 	
 	public void paint(Graphics g){
 		Tile[][] tiles = location.getTiles();
-		Tile[][] rooms = location.getTiles(); // CHANGE TO GET BUILDINGS/ROOM WHEN IMPLEMENTED. THIS IS IMPORTANT.
+		Tile[][] rooms = location.getBuildingTiles(); // CHANGE TO GET BUILDINGS/ROOM WHEN IMPLEMENTED. THIS IS IMPORTANT.
 //		Item[][] items = location.getItems();
 		
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
@@ -81,17 +82,32 @@ public class EditorCanvas extends JPanel {
 		
 		switch(direction){
 		case NORTH:
-			isometric(tiles,rooms, offgc);
-			//drawNorth(tiles,rooms,offgc);	
+			if(view.equals("Render")){
+				isometric(tiles,rooms, offgc);
+			} else {
+				shittyDraw(tiles,rooms,offgc);	
+			}
 			break;
 		case EAST:
-			isometric(rotate(tiles), rotate(rooms), offgc);		
+			if(view.equals("Render")){
+				isometric(rotate(tiles), rotate(rooms), offgc);	
+			} else {
+				shittyDraw(rotate(tiles), rotate(rooms), offgc);
+			}
 			break;			
 		case SOUTH:
-			isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);		
+			if(view.equals("Render")){
+				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);	
+			} else {
+				shittyDraw(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
+			}
 			break;	
 		case WEST:
-			isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
+			if(view.equals("Render")){
+				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
+			} else {
+				shittyDraw(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
+			}
 			break;
 			
 		}
@@ -182,13 +198,18 @@ public class EditorCanvas extends JPanel {
 	 * @param rooms - array of location buildingtiles
 	 * @param offgc - graphics to draw to
 	 */
-	public void shittyDraw(Tile[][] tiles, BuildingTile[][] rooms, Graphics offgc){
+	public void shittyDraw(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){
 				Tile t = tiles[i][j];
+				Tile r = rooms[i][j];
 				if(t!=null){
 					Image image = t.getImg();
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
+				}
+				else if(r!=null){
+					Image image = r.getImg();
+					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);	
 				} else {
 					offgc.setColor(Color.WHITE);
 					offgc.fillRect(j*TILESIZE, i*TILESIZE, TILESIZE, TILESIZE);
@@ -215,6 +236,11 @@ public class EditorCanvas extends JPanel {
 	
 	public void setDirection(Game.Direction d){
 		direction = d;
+	}
+
+	public void setView(String string) {
+		view = string;
+		
 	}
 
 }

@@ -1,13 +1,13 @@
 package mapeditor;
 
 import gameworld.Game.Direction;
-import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -30,7 +31,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import ui.ApplicationWindow;
 import main.Main;
 
 
@@ -52,11 +52,22 @@ public class EditorFrame extends JFrame implements MouseListener{
 	int xClick2;
 	int yClick2;
 	
+	private Image image;
+
+	private Image grass;
+	private Image building;
+	private Image water;
+	private Image rock;
+	private Image room;
+	private Image door;
+
+	
 	/**
 	 * Create the frame.
 	 */
 	public EditorFrame(OutsideLocation map) {
 		this.map = map;	
+		setImages();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -144,9 +155,9 @@ public class EditorFrame extends JFrame implements MouseListener{
 							if(!split[j].equals("0")){
 								URL url =  Main.class.getResource("images/"+split[j]+".png");
 								ImageIcon img = new ImageIcon(url);			
-								tiles[i][j] = new FloorTile(new Point(j,i), img.getImage());
+								tiles[i][j] = new FloorTile(new Point(j,i), image);
 								if(split[j].equals("Room")){
-									rooms[i][j] = new BuildingTile(new Point(j,i), img.getImage());
+									rooms[i][j] = new BuildingTile(new Point(j,i), image);
 								}
 							} else{
 								tiles[i][j] = null;
@@ -173,11 +184,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(currentOption!=null){
-			URL url =  Main.class.getResource("images/"+currentOption+".png");
-			ImageIcon img = new ImageIcon(url);				
-			
-			
+		if(image!=null){		
 			
 			if(xClick1!=xClick2 || yClick1!=yClick2){
 				int x = Math.min(xClick1, xClick2);
@@ -187,9 +194,9 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 						if(currentOption.equals("Room")){
 							System.out.println("setting room");
-							map.setBuildingTile(x,y,new BuildingTile(new Point(x,y), img.getImage()));
+							map.setBuildingTile(x,y,new BuildingTile(new Point(x,y), image));
 						} else {
-							map.setTile(x, y, new FloorTile(new Point(x,y), img.getImage()));
+							map.setTile(x, y, new FloorTile(new Point(x,y), image));
 							map.setBuildingTile(x, y, null);
 							System.out.println(currentOption);
 						}
@@ -204,9 +211,9 @@ public class EditorFrame extends JFrame implements MouseListener{
 			} else {
 				if(currentOption.equals("Room")){
 					System.out.println("setting room");
-					map.setBuildingTile(xClick1,yClick1,new BuildingTile(new Point(xClick1,yClick1), img.getImage()));
+					map.setBuildingTile(xClick1,yClick1,new BuildingTile(new Point(xClick1,yClick1), image));
 				}
-				map.setTile(xClick1, yClick1, new FloorTile(new Point(xClick1,yClick1),img.getImage()));
+				map.setTile(xClick1, yClick1, new FloorTile(new Point(xClick1,yClick1),image));
 			}
 		}
 		repaint();
@@ -243,6 +250,42 @@ public class EditorFrame extends JFrame implements MouseListener{
 	public void optionSelected(String s) {
 		System.out.println(s);
 		currentOption = s;	
+		
+		switch(currentOption){
+		case "Grass":
+			image = grass;
+			break;
+		case "Rock":
+			image = rock;
+			break;
+		case "Water":
+			image = water;
+			break;
+		case "Room":
+			image = building;
+			break;
+		case "Door":
+			image = door;
+			break;
+		}
+		
+	}
+	
+	/**
+	 * Setting images to files in images folder. Will be changed when location parser is working for some tiles. (grass, water, rock will be gone).
+	 */
+	private void setImages() {
+		try{
+			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
+			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
+			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
+			room = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
+			door = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
+			
+		}catch(IOException e){
+			System.out.println(e.getLocalizedMessage());
+		}
 	}
 
 
@@ -275,6 +318,12 @@ public class EditorFrame extends JFrame implements MouseListener{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	public void viewSelected(String string) {
+		canvas.setView(string);
+		repaint();
 	}
 
 }

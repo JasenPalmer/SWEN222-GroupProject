@@ -116,7 +116,7 @@ public class OptionsMenu extends JPanel {
 		GridBagConstraints gbc_lblDirection = new GridBagConstraints();
 		gbc_lblDirection.insets = new Insets(0, 0, 5, 0);
 		gbc_lblDirection.gridx = 0;
-		gbc_lblDirection.gridy = 10;
+		gbc_lblDirection.gridy = 6;
 		add(lblDirection, gbc_lblDirection);
 		
 		String[] directionOptions = {"North", "East", "South", "West"};
@@ -125,7 +125,7 @@ public class OptionsMenu extends JPanel {
 		GridBagConstraints gbc_direction = new GridBagConstraints();
 		gbc_direction.fill = GridBagConstraints.HORIZONTAL;
 		gbc_direction.gridx = 0;
-		gbc_direction.gridy = 11;
+		gbc_direction.gridy = 7;
 		
 		direction.addActionListener(new ActionListener()
 	    {
@@ -136,6 +136,33 @@ public class OptionsMenu extends JPanel {
 		    });
 		
 		add(direction, gbc_direction);
+		
+		// View Menu
+		
+		JLabel lblView = new JLabel("View");
+		GridBagConstraints gbc_lblView = new GridBagConstraints();
+		gbc_lblView.insets = new Insets(0, 0, 5, 0);
+		gbc_lblView.gridx = 0;
+		gbc_lblView.gridy = 8;
+		add(lblView,gbc_lblView);
+		
+		String[] viewOptions = {"Shit", "Render"};
+		
+		final JComboBox view = new JComboBox(viewOptions);
+		GridBagConstraints gbc_view = new GridBagConstraints();
+		gbc_view.fill = GridBagConstraints.HORIZONTAL;
+		gbc_view.gridx = 0;
+		gbc_view.gridy = 9;
+		
+		view.addActionListener(new ActionListener()
+	    {
+		      public void actionPerformed(ActionEvent e)
+		      {
+		    	  frame.viewSelected(view.getSelectedItem().toString());
+		      }
+		    });
+		
+		add(view, gbc_view);
 
 	}
 

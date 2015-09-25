@@ -48,4 +48,5 @@ public class OutsideLocation extends Location {
 	public void setBuildingTile(int x, int y, Tile t){
 		this.buildingTiles[y][x] = t;
 	}
+	
 }
