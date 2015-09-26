@@ -189,6 +189,25 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		addPotionLoot.addActionListener(this);
 		addPotionLoot.setFocusable(false);
 		this.add(addPotionLoot,0);
+		
+		//More buttons
+		JButton addKatana = new JButton("Add Katana");
+		addKatana.setBounds(500,890,100,30);
+		addKatana.addActionListener(this);
+		addKatana.setFocusable(false);
+		this.add(addKatana,0);
+		
+		JButton addHelmet1 = new JButton("Add Helmet1");
+		addHelmet1.setBounds(650,890,100,30);
+		addHelmet1.addActionListener(this);
+		addHelmet1.setFocusable(false);
+		this.add(addHelmet1,0);
+		
+		JButton addHelmet2 = new JButton("Add Helmet2");
+		addHelmet2.setBounds(800,890,100,30);
+		addHelmet2.addActionListener(this);
+		addHelmet2.setFocusable(false);
+		this.add(addHelmet2,0);
 	}
 
 	/**
@@ -198,17 +217,17 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		JWindow window = new JWindow();
 		window.setLayout(null);
 
-		JLabel loadingTextImage = new JLabel(new ImageIcon("src/ui/images/splashTextImage.gif"));
+		JLabel loadingTextImage = new JLabel(new ImageIcon("src/ui/images/splash/splashTextImage.gif"));
 		loadingTextImage.setBounds(0,25, 405, 200);
 		window.getContentPane().add(loadingTextImage);
 
-		JLabel loadingLabel = new JLabel(new ImageIcon("src/ui/images/loadingbar.gif"));
+		JLabel loadingLabel = new JLabel(new ImageIcon("src/ui/images/splash/loadingbar.gif"));
 		loadingLabel.setBounds(50,325,305,15);
 		loadingLabel.setOpaque(false);
 		window.getContentPane().add(loadingLabel);
 
 
-		JLabel backgroundLabel = new JLabel(new ImageIcon("src/ui/images/splashBackgroundImageTemp.jpg"));
+		JLabel backgroundLabel = new JLabel(new ImageIcon("src/ui/images/splash/splashBackgroundImageTemp.jpg"));
 		backgroundLabel.setBounds(0,0,400,400);
 		window.getContentPane().add(backgroundLabel);
 
@@ -262,11 +281,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
+		case "Add Potion loot":
+			lootInventPanel.addItem(new Item("Potion", "Tis a potion mate"));
+			break;
 		case "Add Shank loot":
 			lootInventPanel.addItem(new Item("Shank", "Tis a shank mate"));
 			break;
-		case "Add Potion loot":
-			lootInventPanel.addItem(new Item("Potion", "Tis a potion mate"));
+		case "Add Katana":
+			lootInventPanel.addItem(new Item("Katana", "Tis a katana mate"));
+			break;
+		case "Add Helmet1":
+			lootInventPanel.addItem(new Item("Helmet1", "Tis a helmet1 mate"));
+			break;
+		case "Add Helmet2":
+			lootInventPanel.addItem(new Item("Helmet2", "Tis a helmet2 mate"));
 			break;
 		default:
 			break;

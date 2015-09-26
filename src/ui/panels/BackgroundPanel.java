@@ -16,7 +16,7 @@ public class BackgroundPanel extends JPanel {
 	public BackgroundPanel(){
 		setLayout(null);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/adventureBackgroundImageSize.jpg"));
+			backgroundImage = ImageIO.read(new File("src/ui/images/gui/adventureBackgroundImageSize.jpg"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}

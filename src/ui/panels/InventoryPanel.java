@@ -112,7 +112,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	public void setLootInventPanel(LootInventoryPanel lootInvent){
 		this.lootInvent = lootInvent;
 	}
-	
+
 	private void fillEquipmentSlots(){
 		if(weapon != null){
 			JLabel weaponLabel = new JLabel(weapon.getImage());
@@ -149,13 +149,25 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					for(int j = 0; j < inventArray[0].length; j++){
 						if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
-								if(weapon != null){
-									temp = new Item(weapon.getName(), weapon.getDesciption());
+								if(inventArray[i][j].getType().equals("Weapon")){
+									if(weapon != null){
+										temp = new Item(weapon.getName(), weapon.getDesciption());
+									}
+									weapon = inventArray[i][j];
+									inventArray[i][j] = new Item("Empty", "PlaceHolder");
+									if(temp != null){
+										addItem(temp);
+									}
 								}
-								weapon = inventArray[i][j];
-								inventArray[i][j] = new Item("Empty", "PlaceHolder");
-								if(temp != null){
-									addItem(temp);
+								else if(inventArray[i][j].getType().equals("Armour")){
+									if(armour != null){
+										temp = new Item(armour.getName(), armour.getDesciption());
+									}
+									armour = inventArray[i][j];
+									inventArray[i][j] = new Item("Empty", "PlaceHolder");
+									if(temp != null){
+										addItem(temp);
+									}
 								}
 							}
 						}

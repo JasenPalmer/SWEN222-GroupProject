@@ -52,7 +52,6 @@ public class RenderingWindow extends JPanel{
 	 */
 	private void setImages() {
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/renderingWindowTemp.jpg"));
 			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));

@@ -17,7 +17,7 @@ public class LootInventoryBackground extends JPanel{
 		setLayout(null);
 		setOpaque(false);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/LootInventoryImage.png"));
+			backgroundImage = ImageIO.read(new File("src/ui/images/gui/LootInventoryImage.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
