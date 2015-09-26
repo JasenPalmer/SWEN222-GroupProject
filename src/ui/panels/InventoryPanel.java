@@ -130,16 +130,20 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
+			Item temp = null;
 			System.out.println("Registered Right-Click");
 			for(int i = 0; i < inventArray.length; i++){
 				for(int j = 0; j < inventArray[0].length; j++){
 					if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 						if(inventArray[i][j].contains(e.getX(), e.getY())){
 							if(weapon != null){
-								addItem(weapon);
+								temp = new Item(weapon.getName(), weapon.getDesciption());
 							}
 							weapon = inventArray[i][j];
 							inventArray[i][j] = new Item("Empty", "PlaceHolder");
+							if(temp != null){
+								addItem(temp);
+							}
 						}
 					}
 				}
