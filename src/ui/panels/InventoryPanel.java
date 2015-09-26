@@ -98,6 +98,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					JLabel item = new JLabel(inventArray[i][j].getImage());
 					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 42,52);
 					this.add(item,1,0);
+					if(!inventArray[i][j].getDesciption().equals("Placeholder")){
+						item.setToolTipText(inventArray[i][j].getDesciption());
+					}
 				}
 			}
 		}
@@ -139,6 +142,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	private void setToolTips(){
+		for(int i = 0; i < inventArray.length; i++){
+			for(int j = 0; j < inventArray[0].length; j++){
+				
+			}
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
