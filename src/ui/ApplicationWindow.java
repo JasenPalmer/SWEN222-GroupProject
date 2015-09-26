@@ -172,6 +172,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		testButton.addActionListener(this);
 		testButton.setFocusable(false);
 		this.add(testButton,0);
+		
+		//add shank loot
+		JButton addShankLoot = new JButton("Add Shank loot");
+		addShankLoot.setBounds(500,850,100,30);
+		addShankLoot.addActionListener(this);
+		addShankLoot.setFocusable(false);
+		this.add(addShankLoot,0);
+		
+		//Add potion loot
+		JButton addPotionLoot = new JButton("Add Potion loot");
+		addPotionLoot.setBounds(650,850,100,30);
+		addPotionLoot.addActionListener(this);
+		addPotionLoot.setFocusable(false);
+		this.add(addPotionLoot,0);
 	}
 
 	/**
@@ -244,6 +258,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
+			break;
+		case "Add Shank loot":
+			lootInventPanel.addItem(new Item("Shank", "Tis a shank mate"));
+			break;
+		case "Add Potion loot":
+			lootInventPanel.addItem(new Item("Potion", "Tis a potion mate"));
 			break;
 		default:
 			break;
