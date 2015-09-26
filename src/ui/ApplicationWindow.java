@@ -75,9 +75,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setInventory();
 
 		//Setup loot inventory
-		lootInventPanel = new LootInventoryPanel();
+		lootInventPanel = new LootInventoryPanel(inventPanel);
 		overlayPanel.add(lootInventPanel,2,0);
 		setLootInventory();
+		inventPanel.setLootInventPanel(lootInventPanel);
 		
 		//Setup chat box
 		chatBoxPanel = new ChatBoxPanel();
@@ -111,10 +112,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		if(lootInventOpen == false){
 			lootInventPanel.setVisible(false);
 			lootInventPanel.setFocusable(false);
+			inventPanel.setLootVis(false);
 		}
 		else{
 			lootInventPanel.setVisible(true);
 			lootInventPanel.setFocusable(true);
+			inventPanel.setLootVis(true);
 		}
 	}
 
