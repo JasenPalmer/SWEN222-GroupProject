@@ -56,7 +56,7 @@ public class OptionsMenu extends JPanel {
 		
 		// Building Menu
 		
-		String[] buildingOptions = {"Room", "Door"};
+		String[] buildingOptions = {"Building", "Entrance"};
 		
 		JLabel lblBuildings = new JLabel("Buildings");
 		GridBagConstraints gbc_lblBuildings = new GridBagConstraints();

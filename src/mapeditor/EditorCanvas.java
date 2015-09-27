@@ -1,8 +1,10 @@
 package mapeditor;
 
 import gameworld.Game;
+import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
+import gameworld.tile.BuildingTile;
 import gameworld.tile.EntranceExitTile;
 import gameworld.tile.Tile;
 
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
 
 public class EditorCanvas extends JPanel {
 
-	private OutsideLocation location;
+	private Location location;
 	private String view = "Shit";
 	
 	private int MAPHEIGHT = 15;
@@ -43,7 +45,12 @@ public class EditorCanvas extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public EditorCanvas(OutsideLocation location) {
+	public EditorCanvas(Location location) {
+		if(location instanceof OutsideLocation){
+			location = (OutsideLocation) location;
+		} else {
+			location = (InsideLocation) location;
+		}
 		this.location = location;
 		setImages();
 	}
@@ -74,8 +81,23 @@ public class EditorCanvas extends JPanel {
 	
 	public void paint(Graphics g){
 		Tile[][] tiles = location.getTiles();
-		Tile[][] rooms = location.getBuildingTiles(); // CHANGE TO GET BUILDINGS/ROOM WHEN IMPLEMENTED. THIS IS IMPORTANT.
-//		Item[][] items = location.getItems();
+		Tile[][] rooms = null;
+		//Entity[][] entities = location.getEntities();
+		
+		if(location instanceof OutsideLocation){
+			OutsideLocation l = (OutsideLocation) location;
+			rooms = l.getBuildingTiles();
+			System.out.println("PLS");
+		}
+		
+		if(rooms!=null){
+			for(int i = 0; i < rooms.length; i++){
+				for(int j = 0; j < rooms[i].length ; j++){
+					System.out.print(rooms[i][j]+" ");
+				}
+				System.out.println("");
+			}
+		}
 		
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
 		Graphics offgc = offscreen.getGraphics();
@@ -118,7 +140,7 @@ public class EditorCanvas extends JPanel {
 
 
 	/**
-	 * Iterates through arrays of tiles drawing the location terrain, then iterates through
+	 * Iterates through arrays of tiles drawing the map terrain, then iterates through
 	 * room tiles to draw buildings depending on the arrangement of tiles.
 	 * 
 	 * new x position = x/2 + y/2 ( + or - constants to fit properly such as imageHeight)
@@ -130,63 +152,63 @@ public class EditorCanvas extends JPanel {
 	 * @param g - the graphics
 	 */
 	public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
-
 		g.fillRect(0,0,this.getWidth(), this.getHeight());
 		
 		// outside tiles
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = tiles[i].length-1; j >=0 ; j--){
 				Tile t = tiles[i][j];
+				Tile r = rooms[i][j];
+				Image image = null;
+				
+				// DRAWING TERRAIN
 				if(t!=null) {
-					// DRAWING TERRAIN
-					
-					Image image = t.getImg();
+					image = t.getImg();
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 					
-					// DRAWING ROOMS
-					
-					Tile r = rooms[i][j];
-					if(r!=null) {					
-						// Drawing 2 block high walls
-						if(r instanceof EntranceExitTile){
-							if(j-1 >= 0 && rooms[i][j-1]==null){
-								g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-							} else {
-								g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-							}
-						}
-						else{
-							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-						}
-						g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
-						
-
-						image = building;
-						
-						// Western most point of building
-						if(j-1 >= 0 && rooms[i][j-1] == null){
-							image = roofUD;
-						}
-
-						// Northern most point of building
-						if(i+1 < rooms.length && rooms[i+1][j]==null){
-							image = roofLR;
-						}
-
-						// Outwards corner roof
-						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-							image = roofCornerO;
-						}
-						// Inwards corner roof
-						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-							image = roofCornerI;
-						}
-						
-					
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
-
-					}
 				}
+				
+				// DRAWING ROOMS	
+				if(r!=null) {					
+					// Drawing 2 block high walls
+					if(r instanceof EntranceExitTile){
+						if(j-1 >= 0 && rooms[i][j-1]==null){
+							g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+						} else {
+							g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+						}
+					}
+					else{
+							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+					}
+					
+					// wall block on top of wall / door for 2 high building.
+					g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+					
+					// default img for non edge and corner roofs
+					image = building;
+						
+					// Western most point of building
+					if(j-1 >= 0 && rooms[i][j-1] == null){
+						image = roofUD;
+					}
+
+					// Northern most point of building
+					if(i+1 < rooms.length && rooms[i+1][j]==null){
+						image = roofLR;
+					}
+					// Outwards corner roof
+					if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+						image = roofCornerO;
+					}
+					// Inwards corner roof
+					if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+						image = roofCornerI;
+					}
+						
+					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
+				}
+				
 			}
 
 		}
@@ -207,10 +229,10 @@ public class EditorCanvas extends JPanel {
 					Image image = t.getImg();
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
 				}
-				else if(r!=null){
+				if(r!=null){
 					Image image = r.getImg();
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);	
-				} else {
+				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);
 					offgc.fillRect(j*TILESIZE, i*TILESIZE, TILESIZE, TILESIZE);
 					offgc.setColor(Color.BLACK);

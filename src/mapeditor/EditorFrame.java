@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -104,6 +105,8 @@ public class EditorFrame extends JFrame implements MouseListener{
 		file.add(load);
 		add(bar, BorderLayout.NORTH);
 		
+		
+		
 		canvas = new EditorCanvas(map);
 		canvas.setBorder(new EmptyBorder(5, 5, 5, 5));
 		outerPanel.add(canvas, BorderLayout.CENTER);
@@ -117,6 +120,21 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 	
 	private void save() {
+		String name = null;
+		String description = null;
+		
+		name = JOptionPane.showInputDialog("Map Name: ");
+		
+		description = JOptionPane.showInputDialog("Map Description: ");
+		
+		// name or description not entered so stop saving. this is required.
+		if(name.equals("") || description.equals("")){
+			return;
+		}
+		
+		map.setName(name);
+		map.setDescription(description);
+		
 		JFileChooser save = new JFileChooser();
 		save.setCurrentDirectory(new File("."));
 		String textToSave = map.toString();
@@ -132,74 +150,27 @@ public class EditorFrame extends JFrame implements MouseListener{
 	}
 	
 	private void load() {
-		JFileChooser load = new JFileChooser();
-		
-		load.setCurrentDirectory(new File("."));
-		load.setDialogTitle("Select Map");
-
-		// run the file chooser and check the user didn't hit cancel
-		if (load.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-			File f = load.getSelectedFile();
-			try {			
-				String line = "";	
-				BufferedReader br = new BufferedReader(new FileReader(f));
-				
-				Tile[][]tiles = new Tile[MAPHEIGHT][MAPWIDTH]; 
-				BuildingTile[][]rooms = new BuildingTile[MAPHEIGHT][MAPWIDTH]; 
-				int i = 0;
-				
-				try {
-					while ((line = br.readLine()) != null) {
-						String[] split = line.split(" ");
-						for(int j = 0; j < split.length; j++){
-							if(!split[j].equals("0")){
-								URL url =  Main.class.getResource("images/"+split[j]+".png");
-								ImageIcon img = new ImageIcon(url);			
-								tiles[i][j] = new FloorTile(new Point(j,i), image);
-								if(split[j].equals("Room")){
-									rooms[i][j] = new BuildingTile(new Point(j,i), image);
-								}
-							} else{
-								tiles[i][j] = null;
-							}
-						}
-						i++;
-					}
-					
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-					
-				map.setTiles(tiles);
-				map.setBuildingTiles(rooms);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		repaint();
+		// doesnt load yet
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
 		if(image!=null){		
-			
 			if(xClick1!=xClick2 || yClick1!=yClick2){
+				// MOUSE WAS DRAGGED
 				int x = Math.min(xClick1, xClick2);
 				int y = Math.min(yClick1, yClick2);
 				while(x<=Math.max(xClick1, xClick2)){
 					while(y<=Math.max(yClick1, yClick2)){
-
-						if(currentOption.equals("Room")){
-							System.out.println("setting room");
-							map.setBuildingTile(x,y,new BuildingTile(new Point(x,y), image));
-						} else {
-							map.setTile(x, y, new FloorTile(new Point(x,y), image));
-							map.setBuildingTile(x, y, null);
-							System.out.println(currentOption);
-						}
+						
+						if(currentOption.equals("Building") || currentOption.equals("Entrance")){
+							// making FloorTiles
+							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), image));
+						} else{
+							// making BuildingTiles
+							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), image));
+						} 
 						y++;
 					}
 					y = Math.min(yClick1, yClick2);
@@ -209,11 +180,14 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 
 			} else {
-				if(currentOption.equals("Room")){
-					System.out.println("setting room");
-					map.setBuildingTile(xClick1,yClick1,new BuildingTile(new Point(xClick1,yClick1), image));
+				// MOUSE CLICKED. NOT DRAGGED
+				if(currentOption.equals("Building")  || currentOption.equals("Entrance")){
+					// Making BuildingTile
+					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1), image));
+				} else{
+					// Making FloorTile
+					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1),image));
 				}
-				map.setTile(xClick1, yClick1, new FloorTile(new Point(xClick1,yClick1),image));
 			}
 		}
 		repaint();
@@ -261,10 +235,10 @@ public class EditorFrame extends JFrame implements MouseListener{
 		case "Water":
 			image = water;
 			break;
-		case "Room":
+		case "Building":
 			image = building;
 			break;
-		case "Door":
+		case "Entrance":
 			image = door;
 			break;
 		}
@@ -313,7 +287,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 	
 	public static void main(String[] args){
 		try {
-			EditorFrame frame = new EditorFrame(new OutsideLocation("test", "test", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]));
+			EditorFrame frame = new EditorFrame(new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]));
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

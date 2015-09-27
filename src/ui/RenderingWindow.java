@@ -89,10 +89,10 @@ public class RenderingWindow extends JPanel{
 		
 		// Example location. To be changed later.
 		Location l = null;
-		Tile g1 = new FloorTile(new Point(0,0), grass);
-		Tile g2 = new FloorTile(new Point(5,5), grass);
-		Tile w1 = new FloorTile(new Point(0,0), water);
-		Tile r1 = new FloorTile(new Point(0,0), rock);
+		Tile g1 = new FloorTile(null, new Point(0,0), grass);
+		Tile g2 = new FloorTile(null, new Point(5,5), grass);
+		Tile w1 = new FloorTile(null, new Point(0,0), water);
+		Tile r1 = new FloorTile(null, new Point(0,0), rock);
 		Tile[][] tiles = {
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
 				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,g1,g1,g1},
@@ -111,8 +111,8 @@ public class RenderingWindow extends JPanel{
 				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,g1,g1},
 				};
 		
-		Tile r = new BuildingTile(new Point(1,2), building);
-		Tile d = new EntranceExitTile(new Point(1,2), null, false);
+		Tile r = new BuildingTile(null, new Point(1,2), building);
+		Tile d = new EntranceExitTile(null, new Point(1,2), null, false);
 		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
 							{null,null,null,null,r,r,r,r,r,r,r, r,r,null,null},
@@ -169,14 +169,14 @@ public class RenderingWindow extends JPanel{
 		 * 
 		 * @param tiles - 2D array of terrain to be drawn
 		 * @param rooms - 2D array of rooms to be drawn
-		 * @param g - the graphics
+		 * @param offgc - the graphics
 		 */
-		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
+		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
 
 			Player p = new Player("Jim");
 			Point playerPoint = new Point(5,5);
 			
-			g.fillRect(0,0,this.getWidth(), this.getHeight());
+			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 			
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
@@ -186,7 +186,7 @@ public class RenderingWindow extends JPanel{
 						// DRAWING TERRAIN
 						
 						Image image = t.getImg();
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
+						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 						
 						// DRAWING PLAYER 
 						if(t.getPos().equals(playerPoint)){
@@ -198,7 +198,7 @@ public class RenderingWindow extends JPanel{
 							}
 							
 							
-							g.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2, null);
+							offgc.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2, null);
 						}
 						
 						// DRAWING ROOMS
@@ -208,15 +208,15 @@ public class RenderingWindow extends JPanel{
 							// Drawing 2 block high walls
 							if(r instanceof EntranceExitTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
-									g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+									offgc.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 								} else {
-									g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+									offgc.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 								}
 							}
 							else{
-								g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+								offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 							}
-							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+							offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
 							
 
 							image = building;
@@ -241,7 +241,7 @@ public class RenderingWindow extends JPanel{
 							}
 							
 						
-							g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
 
 						}
 					}

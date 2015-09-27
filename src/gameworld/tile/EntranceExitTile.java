@@ -16,8 +16,8 @@ public class EntranceExitTile extends Tile {
 	
 	private boolean oneWay;
 
-	public EntranceExitTile(Point pos, Image image, boolean oneWay) {
-		super(pos, image);
+	public EntranceExitTile(String name, Point pos, Image image, boolean oneWay) {
+		super(name, pos, image);
 		this.setOneWay(oneWay);
 	}
 

@@ -10,15 +10,12 @@ public class OutsideLocation extends Location {
 		super(name, description, tiles);
 		this.buildingTiles = buildingTiles;
 	}
-
-	public Tile[][] getBuildingTiles() {
-		return buildingTiles;
-	}
 	
 	public String toString(){
 		String toReturn = null;
 		toReturn += ""+name+"\n";
 		toReturn += ""+description+"\n";
+		toReturn += tiles[0].length+" "+tiles.length+"\n";
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){
 				
@@ -27,10 +24,11 @@ public class OutsideLocation extends Location {
 				} else {
 					toReturn += "0";
 				}
+				
 				toReturn+= "-";
 				if(buildingTiles[i][j]!=null){
 					toReturn+= buildingTiles[i][j].toString();
-				} else{
+				} else {
 					toReturn += "0";
 				}
 				toReturn += " ";
@@ -41,12 +39,26 @@ public class OutsideLocation extends Location {
 		return toReturn;
 	}
 	
+	public Tile[][] getBuildingTiles() {
+		return buildingTiles;
+	}
+	
 	public void setBuildingTiles(Tile[][] tiles){
 		this.buildingTiles = tiles;
 	}
 	
 	public void setBuildingTile(int x, int y, Tile t){
 		this.buildingTiles[y][x] = t;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+		
 	}
 	
 }

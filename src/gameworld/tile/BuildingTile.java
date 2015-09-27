@@ -11,8 +11,8 @@ import java.awt.Point;
  */
 public class BuildingTile extends Tile {
 
-	public BuildingTile(Point pos, Image image) {
-		super(pos, image);
+	public BuildingTile(String name, Point pos, Image image) {
+		super(name, pos, image);
 	}
 
 }

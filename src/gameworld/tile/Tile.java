@@ -18,9 +18,11 @@ public abstract class Tile {
 	private Entity entity;
 	private Player player;
 	private Image image;
+	protected String name;
 
-	public Tile(Point pos, Image image) {
-		position = pos;
+	public Tile(String name, Point pos, Image image) {
+		this.name = name;
+		this.position = pos;
 		this.image = image;
 	}
 
@@ -42,5 +44,9 @@ public abstract class Tile {
 	
 	public Image getImg(){
 		return image;
+	}
+	
+	public String toString(){	
+		return name.substring(0,2);
 	}
 }
