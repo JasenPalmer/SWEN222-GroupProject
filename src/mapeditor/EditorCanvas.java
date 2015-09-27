@@ -169,9 +169,11 @@ public class EditorCanvas extends JPanel {
 				}
 				
 				// DRAWING ROOMS	
-				if(r!=null) {					
+				if(r!=null) {
+					System.out.println("THE ROOM IS NOT FUCKING NULL");
 					// Drawing 2 block high walls
 					if(r instanceof EntranceExitTile){
+						System.out.println("AN ENTRANCE");
 						if(j-1 >= 0 && rooms[i][j-1]==null){
 							g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 						} else {
@@ -179,6 +181,7 @@ public class EditorCanvas extends JPanel {
 						}
 					}
 					else{
+						System.out.println("NOT AN ENTRANCE");
 							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 					}
 					
@@ -190,22 +193,26 @@ public class EditorCanvas extends JPanel {
 						
 					// Western most point of building
 					if(j-1 >= 0 && rooms[i][j-1] == null){
+						System.out.println("roofUD");
 						image = roofUD;
 					}
 
 					// Northern most point of building
 					if(i+1 < rooms.length && rooms[i+1][j]==null){
+						System.out.println("roofLR");
 						image = roofLR;
 					}
 					// Outwards corner roof
 					if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+						System.out.println("roofCornerO");
 						image = roofCornerO;
 					}
 					// Inwards corner roof
 					if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+						System.out.println("roofCornerI");
 						image = roofCornerI;
 					}
-						
+					System.out.println("FUCKING DRAWING");
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
 				}
 				
