@@ -2,6 +2,7 @@ package ui.panels;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -11,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 public class LootInventoryPanel extends JLayeredPane implements MouseListener{
@@ -18,6 +20,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	private Item[][] itemList = new Item[6][3];
 	private LootInventoryBackground lootInventBackground = new LootInventoryBackground();
 	private InventoryPanel inventPanel;
+	private LootInventoryPanel self = this;
 
 	public LootInventoryPanel(InventoryPanel invent){
 		//Setup
@@ -71,6 +74,20 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 					JLabel item = new JLabel(itemList[i][j].getImage());
 					item.setBounds(itemList[i][j].getX(), itemList[i][j].getY(), 42,52);
 					this.add(item,1,0);
+					if(!itemList[i][j].getDesciption().equals("Placeholder")){
+						item.setToolTipText(itemList[i][j].getDesciption());
+						item.addMouseListener(new MouseAdapter(){
+							public void mouseClicked(MouseEvent e){
+								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+							}
+							public void mousePressed(MouseEvent e){
+								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+							}
+							public void mouseReleased(MouseEvent e){
+								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+							}
+						});
+					}
 				}
 			}
 		}

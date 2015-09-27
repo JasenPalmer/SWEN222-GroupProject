@@ -40,7 +40,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	public ApplicationWindow() {
 		//Setup
-		super("Adventure Game");
+		super("Shanking PVP Adventure Game");
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
@@ -210,57 +210,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		this.add(addHelmet2,0);
 	}
 
-	/**
-	 * Creates splash loading screen then updates according to loading speed
-	 */
-	private static void displaySplash(){
-		JWindow window = new JWindow();
-		window.setLayout(null);
-
-		JLabel loadingTextImage = new JLabel(new ImageIcon("src/ui/images/splash/splashTextImage.gif"));
-		loadingTextImage.setBounds(0,25, 405, 200);
-		window.getContentPane().add(loadingTextImage);
-
-		JLabel loadingLabel = new JLabel(new ImageIcon("src/ui/images/splash/loadingbar.gif"));
-		loadingLabel.setBounds(50,325,305,15);
-		loadingLabel.setOpaque(false);
-		window.getContentPane().add(loadingLabel);
-
-
-		JLabel backgroundLabel = new JLabel(new ImageIcon("src/ui/images/splash/splashBackgroundImageTemp.jpg"));
-		backgroundLabel.setBounds(0,0,400,400);
-		window.getContentPane().add(backgroundLabel);
-
-		window.setBounds(750, 300, 400, 400);
-		window.setVisible(true);
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		window.setVisible(false);
-		window.dispose();
-	}
-
 	public void repaintRenderingWindow(){
 		rw.repaint();
-	}
-
-	/**
-	 * Launches the application.
-	 */
-	public static void main(String[] args) {
-		//displaySplash();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ApplicationWindow frame = new ApplicationWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	@Override

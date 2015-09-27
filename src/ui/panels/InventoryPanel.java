@@ -3,11 +3,16 @@ package ui.panels;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 
 
 public class InventoryPanel extends JLayeredPane implements MouseListener{
@@ -19,6 +24,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	private Item weapon, armour;
 	private boolean lootOpen;
 	private LootInventoryPanel lootInvent;
+	private InventoryPanel self = this;
 
 
 	public InventoryPanel(){
@@ -100,11 +106,21 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					this.add(item,1,0);
 					if(!inventArray[i][j].getDesciption().equals("Placeholder")){
 						item.setToolTipText(inventArray[i][j].getDesciption());
+						item.addMouseListener(new MouseAdapter(){
+							public void mouseClicked(MouseEvent e){
+								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+							}
+							public void mousePressed(MouseEvent e){
+								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+							}
+							public void mouseReleased(MouseEvent e){
+								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+							}
+						});
 					}
 				}
 			}
 		}
-
 		fillEquipmentSlots();
 	}
 
@@ -142,20 +158,11 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
-	private void setToolTips(){
-		for(int i = 0; i < inventArray.length; i++){
-			for(int j = 0; j < inventArray[0].length; j++){
-				
-			}
-		}
-	}
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3){
 			if(lootOpen == false){
 				Item temp = null;
-				System.out.println("Registered Right-Click");
 				if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 					if(weapon != null && addItem(weapon)){
 						weapon = null;
@@ -183,7 +190,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 											temp = new Item(weapon.getName(), weapon.getDesciption());
 										}
 										weapon = inventArray[i][j];
-										inventArray[i][j] = new Item("Empty", "PlaceHolder");
+										inventArray[i][j] = new Item("Empty", "Placeholder");
 										if(temp != null){
 											addItem(temp);
 										}
@@ -193,7 +200,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 											temp = new Item(armour.getName(), armour.getDesciption());
 										}
 										armour = inventArray[i][j];
-										inventArray[i][j] = new Item("Empty", "PlaceHolder");
+										inventArray[i][j] = new Item("Empty", "Placeholder");
 										if(temp != null){
 											addItem(temp);
 										}
@@ -210,7 +217,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 						if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
 								if(lootInvent.addItem(inventArray[i][j])){		//Null pointer
-									inventArray[i][j] = new Item("Empty", "PlaceHolder");
+									inventArray[i][j] = new Item("Empty", "Placeholder");
 								}
 								else{
 									System.out.println("Loot inventory is full can't swap item");
@@ -239,11 +246,13 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		for(int i = 0; i < inventArray.length; i++){
-			for(int j = 0; j < inventArray[0].length; j++){
-				if(inventArray[i][j] != null){
-					if(inventArray[i][j].contains(e.getX(), e.getY())){
-						movedItem = inventArray[i][j];
+		if(e.getButton() == MouseEvent.BUTTON1){
+			for(int i = 0; i < inventArray.length; i++){
+				for(int j = 0; j < inventArray[0].length; j++){
+					if(inventArray[i][j] != null){
+						if(inventArray[i][j].contains(e.getX(), e.getY())){
+							movedItem = inventArray[i][j];
+						}
 					}
 				}
 			}
@@ -252,12 +261,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(movedItem != null){
-			for(int i = 0; i < inventArray.length; i++){
-				for(int j = 0; j < inventArray[0].length; j++){
-					if(inventArray[i][j]!= null){
-						if(inventArray[i][j].contains(e.getX(), e.getY())){
-							addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
+		if(e.getButton() == MouseEvent.BUTTON1){
+			if(movedItem != null){
+				for(int i = 0; i < inventArray.length; i++){
+					for(int j = 0; j < inventArray[0].length; j++){
+						if(inventArray[i][j]!= null){
+							if(inventArray[i][j].contains(e.getX(), e.getY())){
+								addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
+							}
 						}
 					}
 				}
