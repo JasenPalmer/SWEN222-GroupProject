@@ -46,6 +46,7 @@ public class EditorCanvas extends JPanel {
 	 * Create the panel.
 	 */
 	public EditorCanvas(Location location) {
+		setImages();
 		setLayout(null);
 		setBounds(0,0,1050,750);
 		
@@ -55,7 +56,6 @@ public class EditorCanvas extends JPanel {
 			location = (InsideLocation) location;
 		}
 		this.location = location;
-		setImages();
 	}
 	
 	/**
@@ -241,6 +241,7 @@ public class EditorCanvas extends JPanel {
 				}
 				if(r!=null){
 					Image image = building;
+					System.out.println("PLS DONT BE NULL" + image);
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);	
 				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);

@@ -34,15 +34,16 @@ public class RenderingWindow extends JPanel{
 	private Image roofCornerI;
 	
 	private Player player;
+	private ApplicationWindow applicationWindow;
 	
 	private int TILESIZE = 64;
 	
 	Game.Direction direction = Direction.NORTH;
 	
-	public RenderingWindow(){
+	public RenderingWindow(ApplicationWindow aw){
 		setLayout(null);
 		setBounds(0,0,1050,750);
-		
+		this.applicationWindow = aw;
 		setImages();
 	}
 	
@@ -97,13 +98,8 @@ public class RenderingWindow extends JPanel{
 		super.paint(g);
 		
 		Image offscreen = createImage(this.getWidth(), this.getHeight());
-		Graphics offgc = offscreen.getGraphics();
-
-//		Location l = player.getLocation();
-//		Tile[][] tiles = l.getTiles();
-//		//Tile[][] rooms = l.getRooms();
-//		//Item[][] items = l.getItems();
-//		
+		Graphics offgc = offscreen.getGraphics();		
+		
 		player = null;
 		Location l = player.getLocation();
 		
