@@ -1,10 +1,11 @@
 package gameworld.location;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 import gameworld.tile.Tile;
 
-public abstract class Location {
+public abstract class Location implements Serializable{
 
 	protected String name;
 	protected String description;

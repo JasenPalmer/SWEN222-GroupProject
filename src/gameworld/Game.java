@@ -4,9 +4,12 @@ import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
+import gameworld.tile.EntranceExitTile;
+import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
-import java.awt.event.KeyEvent;
+import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -15,8 +18,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
-import network.NetworkEvent;
-import network.Server;
+import javax.imageio.ImageIO;
 
 public class Game implements Serializable {
 	
@@ -38,6 +40,10 @@ public class Game implements Serializable {
 			parseLocationFolder("locations");
 		}
 	}
+	
+	public static void main(String[] args) {
+		new Game();
+	}
 
 	/**
 	 * Create all locations from a folder
@@ -47,7 +53,7 @@ public class Game implements Serializable {
 		Scanner fileScan = null;
 		try{
 			//create the file holding all the location files
-			File locFolder = new File("/locations");
+			File locFolder = new File("src/"+locationsPath);
 			for(File file : locFolder.listFiles()) {
 				// open file
 				fileScan = new Scanner(file);
@@ -75,9 +81,11 @@ public class Game implements Serializable {
 		String name = file.nextLine();
 		//read description
 		String desc = file.nextLine();
-		//read size
+		//read location size
 		int width = file.nextInt();
 		int height = file.nextInt();
+		System.out.println(width);
+		System.out.println(height);
 		Location loc;
 		Tile[][] locTiles = new Tile[height][width];
 		Tile[][] buildingTiles = new Tile[height][width];
@@ -87,24 +95,30 @@ public class Game implements Serializable {
 		while(file.hasNextLine()) {
 			// scan line by line
 			Scanner lineScan = new Scanner(file.nextLine());
-			// col index
 			int col = 0;
 			while(lineScan.hasNext()) {
-				// create tile at [row][col]
-				Tile tile = parseTile(lineScan.next());
-				if(tile instanceof BuildingTile) {
-					outside = true;
-					buildingTiles[row][col] = tile;
-					locTiles[row][col] = null;
+				// break the line up into blocks
+				Scanner blockScanner = new Scanner(lineScan.next());
+				while(blockScanner.hasNext()) {
+					//break blocks up into tiles to be parsed
+					Tile tile = parseTile(blockScanner.next(), col, row);
+					if(tile instanceof BuildingTile) {
+						outside = true;
+						buildingTiles[row][col] = tile;
+						locTiles[row][col] = null;
+						System.out.println("tile added");
+					}
+					else {
+						locTiles[row][col] = tile;
+						buildingTiles[row][col] = null;
+						System.out.println("tile added");
+					}
 				}
-				else {
-					locTiles[row][col] = tile;
-					buildingTiles[row][col] = null;
-				}
-				col++;
+				blockScanner.close();
+				col += 1;
 			}
 			lineScan.close();
-			row++;
+			row += 1;
 		}
 		if(outside){
 			loc = new OutsideLocation(name, desc, locTiles, buildingTiles);
@@ -115,14 +129,28 @@ public class Game implements Serializable {
 		return loc;
 	}
 
-	private Tile parseTile(String type) {
-		Tile tile;
+	private Tile parseTile(String type, int x, int y) {
+		Tile tile = null;
 		switch(type) {
-		case "GR-0":
-			tile = new FloorTile("Grass", );
+			case "Gr":
+				tile = new FloorTile("Grass", new Point(x,y), createImage(type));
+				break;
+			case "Ro":
+				tile = new FloorTile("Road", new Point(x,y), createImage(type));
+				break;
+			case "Bu":
+				tile = new BuildingTile("Building", new Point(x,y));
+				break;
+			case "Wa":
+				tile = new FloorTile("Water", new Point(x,y), createImage(type));
+			case "En":
+				tile = new EntranceExitTile("Water", new Point(x,y), true);
+			default:
+				break;
 		}
-		return null;
+		return tile;
 	}
+
 
 	/**
 	 * Add a player to the game
@@ -185,4 +213,13 @@ public class Game implements Serializable {
 		return players;
 	}
 
+	
+	public static Image createImage(String filename) {
+		try {
+			return ImageIO.read(new File("src/ui/images/terrain/"+filename+".png"));
+		}catch(Exception e) {
+			System.err.println("Error - "+e);
+		}
+		return null;
+	}
 }

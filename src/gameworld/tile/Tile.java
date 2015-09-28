@@ -3,7 +3,6 @@ package gameworld.tile;
 import gameworld.Player;
 import gameworld.entity.Entity;
 
-import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -17,13 +16,11 @@ public abstract class Tile {
 	private Point position;
 	private Entity entity;
 	private Player player;
-	private Image image;
 	protected String name;
 
-	public Tile(String name, Point pos, Image image) {
+	public Tile(String name, Point pos) {
 		this.name = name;
 		this.position = pos;
-		this.image = image;
 	}
 
 	public void setEntity(Entity entity) {
@@ -40,10 +37,6 @@ public abstract class Tile {
 
 	public Player getPlayer() {
 		return player;
-	}
-	
-	public Image getImg(){
-		return image;
 	}
 	
 	public String toString(){	

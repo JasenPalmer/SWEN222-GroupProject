@@ -3,11 +3,13 @@ package gameworld;
 import gameworld.entity.InteractableEntity;
 import gameworld.entity.Item;
 import gameworld.location.InsideLocation;
+import gameworld.location.Location;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Player {
+public class Player implements Serializable{
 
 	/**
 	 * Default size of the players inventory
@@ -38,7 +40,7 @@ public class Player {
 	/**
 	 * The current location the player is in
 	 */
-	private InsideLocation location;
+	private Location location;
 
 	/**
 	 * The current position of the player
@@ -208,7 +210,7 @@ public class Player {
 		return position;
 	}
 
-	public InsideLocation getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 

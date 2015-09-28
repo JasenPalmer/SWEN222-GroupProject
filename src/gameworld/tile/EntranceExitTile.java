@@ -1,6 +1,5 @@
 package gameworld.tile;
 
-import java.awt.Image;
 import java.awt.Point;
 
 
@@ -16,8 +15,8 @@ public class EntranceExitTile extends Tile {
 	
 	private boolean oneWay;
 
-	public EntranceExitTile(String name, Point pos, Image image, boolean oneWay) {
-		super(name, pos, image);
+	public EntranceExitTile(String name, Point pos, boolean oneWay) {
+		super(name, pos);
 		this.setOneWay(oneWay);
 	}
 
