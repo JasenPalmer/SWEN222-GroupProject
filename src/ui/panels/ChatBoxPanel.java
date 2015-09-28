@@ -64,6 +64,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	}
 
 	public void displayMessage(String user, String message){
+		System.out.println(user + ": " + message);
 		textArea.append("\n" + user + ": " + message);
 	}
 }

@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
 
+import network.Server;
+
 public class MainMenuWindow extends JWindow implements ActionListener{
 	
 	public MainMenuWindow(){
@@ -86,7 +88,7 @@ public class MainMenuWindow extends JWindow implements ActionListener{
 //		splash.dispose();
 //		MainMenuWindow window = new MainMenuWindow();
 //		window.setVisible(true);
-		
+
 		ApplicationWindow game = new ApplicationWindow();
 		game.setVisible(true);
 	}

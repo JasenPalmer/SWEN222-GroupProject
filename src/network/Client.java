@@ -38,6 +38,8 @@ public class Client {
 		this.gui = gui;
 		
 		start();
+		
+		new ServerThread().start();
 	}
 	
 	public void start(){
