@@ -209,7 +209,7 @@ public class Server {
 			try {
 				output.writeObject(new NetworkEvent(gameState));
 			} catch (IOException e) {
-				console.displayError("Failed to write update to client: " + user);
+				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
 		}
 		

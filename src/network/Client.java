@@ -95,6 +95,7 @@ public class Client {
 				try {
 					NetworkEvent event = (NetworkEvent)input.readObject();
 					if(event.getType() == EventType.UPDATE_GUI){
+						System.out.println("Trying to update the gui gee");
 						if(event.getGameState() == null){
 							System.out.println("Game state null doe gee");
 							return;

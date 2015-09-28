@@ -203,4 +203,8 @@ public class Game implements Serializable {
 	public Set<Player> getPlayers() {
 		return players;
 	}
+	
+	public String toString(){
+		return "this is the best game ever";
+	}
 }
