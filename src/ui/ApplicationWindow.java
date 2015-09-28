@@ -43,12 +43,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private Client client;
 	private Game game;
 	private String username;
-	
+
 	public ApplicationWindow(String username) {
 		//Setup
 		super("Shanking PVP Adventure Game");
 		this.username = username;
-		client = new Client("blowfish.ecs.vuw.ac.nz", this.username, this);
+		client = new Client("localhost", this.username, this);
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
@@ -96,7 +96,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setupMenu();
 
 		//Setup buttons
-		setupButtons();		
+		setupButtons();
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		menuBar.add(option1);
 		menuBar.add(option2);
 
-		this.setJMenuBar(menuBar);		
+		this.setJMenuBar(menuBar);
 	}
 
 	/**
@@ -349,14 +349,14 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void keyTyped(KeyEvent e) {
 		//TODO
 	}
-	
+
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
-	
+
 	public Player getPlayer(){
 		return this.game.parsePlayer(username);
 	}
-	
+
 	//Setters
 	public void setGame(Game game){
 		this.game = game;
