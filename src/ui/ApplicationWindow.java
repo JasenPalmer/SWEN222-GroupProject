@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
+import network.Client;
 import ui.panels.*;
 
 
@@ -37,6 +38,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
+	private Client client = new Client("localhost", "Player 1");
 
 	public ApplicationWindow() {
 		//Setup
@@ -79,7 +81,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel.add(lootInventPanel,2,0);
 		setLootInventory();
 		inventPanel.setLootInventPanel(lootInventPanel);
-		
+
 		//Setup chat box
 		chatBoxPanel = new ChatBoxPanel();
 		layeredPanel.add(chatBoxPanel,1,0);
@@ -175,34 +177,34 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		testButton.addActionListener(this);
 		testButton.setFocusable(false);
 		this.add(testButton,0);
-		
+
 		//add shank loot
 		JButton addShankLoot = new JButton("Add Shank loot");
 		addShankLoot.setBounds(500,850,100,30);
 		addShankLoot.addActionListener(this);
 		addShankLoot.setFocusable(false);
 		this.add(addShankLoot,0);
-		
+
 		//Add potion loot
 		JButton addPotionLoot = new JButton("Add Potion loot");
 		addPotionLoot.setBounds(650,850,100,30);
 		addPotionLoot.addActionListener(this);
 		addPotionLoot.setFocusable(false);
 		this.add(addPotionLoot,0);
-		
+
 		//More buttons
 		JButton addKatana = new JButton("Add Katana");
 		addKatana.setBounds(500,890,100,30);
 		addKatana.addActionListener(this);
 		addKatana.setFocusable(false);
 		this.add(addKatana,0);
-		
+
 		JButton addHelmet1 = new JButton("Add Helmet1");
 		addHelmet1.setBounds(650,890,100,30);
 		addHelmet1.addActionListener(this);
 		addHelmet1.setFocusable(false);
 		this.add(addHelmet1,0);
-		
+
 		JButton addHelmet2 = new JButton("Add Helmet2");
 		addHelmet2.setBounds(800,890,100,30);
 		addHelmet2.addActionListener(this);
@@ -286,6 +288,18 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case KeyEvent.VK_E:
 			rw.setDirection(directionSetter("E"));
 			rw.repaint();
+			break;
+		case KeyEvent.VK_W:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_A:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_S:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_D:
+			client.registerKeyPress(e);
 			break;
 		default:
 			break;
