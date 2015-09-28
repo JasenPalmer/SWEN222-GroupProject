@@ -100,7 +100,7 @@ public class RenderingWindow extends JPanel{
 		Image offscreen = createImage(this.getWidth(), this.getHeight());
 		Graphics offgc = offscreen.getGraphics();		
 		
-		player = null;
+		player = applicationWindow.getPlayer();
 		Location l = player.getLocation();
 		
 		Tile[][] tiles = l.getTiles();
