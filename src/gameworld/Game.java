@@ -107,12 +107,10 @@ public class Game implements Serializable {
 						outside = true;
 						buildingTiles[row][col] = tile;
 						locTiles[row][col] = null;
-						System.out.println("tile added");
 					}
 					else {
 						locTiles[row][col] = tile;
 						buildingTiles[row][col] = null;
-						System.out.println("tile added");
 					}
 				}
 				blockScanner.close();
