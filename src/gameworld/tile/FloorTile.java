@@ -13,5 +13,4 @@ public class FloorTile extends Tile {
 	public FloorTile(String name, Point pos, Image image) {
 		super(name, pos, image);
 	}
-
 }

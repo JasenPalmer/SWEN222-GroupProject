@@ -28,8 +28,6 @@ public class Game implements Serializable {
 	 * Amount of locations there are to create
 	 */
 	private static final int LOCATION_AMOUNT = 5;
-//this
-	private Server server;
 
 	private Set<Location> locations;
 	private Set<Player> players;
@@ -39,15 +37,6 @@ public class Game implements Serializable {
 		for(int i = 0; i < LOCATION_AMOUNT; i++) {
 			parseLocationFolder("locations");
 		}
-	}
-
-	/**
-	 * Create a server for a multiplayer game
-	 */
-	public void createServer() {
-		//server = new Server();
-		// create a thread to listen to the server for actions
-		new Thread(new Runnable(){public void run(){listenToServer();}}).start();
 	}
 
 	/**
@@ -127,13 +116,13 @@ public class Game implements Serializable {
 	}
 
 	private Tile parseTile(String type) {
+		Tile tile;
 		switch(type) {
-		case "building":
-			//return new BuildingTile();
+		case "GR-0":
+			tile = new FloorTile("Grass", );
 		}
 		return null;
 	}
-
 
 	/**
 	 * Add a player to the game
@@ -151,50 +140,42 @@ public class Game implements Serializable {
 	 * @param direction to move the player
 	 * @return true if the player moved successfully
 	 */
-	public boolean movePlayer(Player player, Direction direction) {
+	public boolean movePlayer(String playerName, Direction direction) {
+		Player player = parsePlayer(playerName);
 		if(direction == null || player == null) {return false;}
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
 
 	/**
-	 * Listen to the server for events
+	 * Returns the player with the given name
+	 * 
+	 * @param user - name of player
+	 * @return the player object
 	 */
-	private void listenToServer() {
-//		while(server.hasEvent()) {
-//			actionEvent(server.getEvent());
+	private Player parsePlayer(String user) {
+		for(Player p : players) {
+			if(p.getName().equals(user)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+//	private Direction parseDirection(int keyPress) {
+//		switch(keyPress) {
+//		case KeyEvent.VK_W:
+//			return Direction.NORTH;
+//		case KeyEvent.VK_D:
+//			return Direction.EAST;
+//		case KeyEvent.VK_S:
+//			return Direction.SOUTH;
+//		case KeyEvent.VK_A:
+//			return Direction.WEST;
+//			default:
+//				return null;
 //		}
-	}
-
-	/**
-	 * Parse an event from the server
-	 * @param event to be parsed
-	 */
-	private void actionEvent(NetworkEvent event) {
-		switch(event.getType()) {
-		case KEY_PRESS:
-			//movePlayer(event.getPlayer(), parseDirection(event.getKeyCode()));
-			break;
-		default:
-			//throw new InvalidActionException("There was an invalid event recieved from the server");
-			break;
-		}
-	}
-
-	private Direction parseDirection(int keyPress) {
-		switch(keyPress) {
-		case KeyEvent.VK_W:
-			return Direction.NORTH;
-		case KeyEvent.VK_D:
-			return Direction.EAST;
-		case KeyEvent.VK_S:
-			return Direction.SOUTH;
-		case KeyEvent.VK_A:
-			return Direction.WEST;
-			default:
-				return null;
-		}
-	}
+//	}
 
 
 	public Set<Location> getLocations() {
