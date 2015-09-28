@@ -71,6 +71,7 @@ public class MainMenuWindow extends JWindow implements ActionListener{
 			this.dispose();
 			break;
 		case "Host":
+			Server server = new Server();
 			break;
 		case "Join":
 			this.dispose();
@@ -86,10 +87,7 @@ public class MainMenuWindow extends JWindow implements ActionListener{
 //		SplashWindow splash = new SplashWindow();
 //		splash.setVisible(true);
 //		splash.dispose();
-//		MainMenuWindow window = new MainMenuWindow();
-//		window.setVisible(true);
-
-		ApplicationWindow game = new ApplicationWindow();
-		game.setVisible(true);
+		MainMenuWindow window = new MainMenuWindow();
+		window.setVisible(true);
 	}
 }
