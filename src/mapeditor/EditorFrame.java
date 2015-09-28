@@ -166,7 +166,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 						
 						if(currentOption.equals("Building") || currentOption.equals("Entrance")){
 							// making FloorTiles
-							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), image));
+							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y)));
 						} else{
 							// making BuildingTiles
 							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), image));
@@ -183,7 +183,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 				// MOUSE CLICKED. NOT DRAGGED
 				if(currentOption.equals("Building")  || currentOption.equals("Entrance")){
 					// Making BuildingTile
-					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1), image));
+					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1)));
 				} else{
 					// Making FloorTile
 					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1),image));

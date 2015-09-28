@@ -4,8 +4,8 @@ import gameworld.Game;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
-import gameworld.tile.BuildingTile;
 import gameworld.tile.EntranceExitTile;
+import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.Color;
@@ -160,13 +160,13 @@ public class EditorCanvas extends JPanel {
 		// outside tiles
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = tiles[i].length-1; j >=0 ; j--){
-				Tile t = tiles[i][j];
+				FloorTile t = (FloorTile) tiles[i][j];
 				Tile r = rooms[i][j];
 				Image image = null;
 				
 				// DRAWING TERRAIN
 				if(t!=null) {
-					image = t.getImg();
+					image = t.getImage();
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 					
 				}
@@ -233,14 +233,14 @@ public class EditorCanvas extends JPanel {
 	public void shittyDraw(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){
-				Tile t = tiles[i][j];
+				FloorTile t = (FloorTile) tiles[i][j];
 				Tile r = rooms[i][j];
 				if(t!=null){
-					Image image = t.getImg();
+					Image image = t.getImage();
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
 				}
 				if(r!=null){
-					Image image = r.getImg();
+					Image image = building;
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);	
 				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);
