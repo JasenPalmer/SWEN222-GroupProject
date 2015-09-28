@@ -126,6 +126,14 @@ public class Game implements Serializable {
 		else{
 			loc = new InsideLocation(name, desc, locTiles);
 		}
+		
+		System.out.println("GAME PRINTING");
+		for(int i = 0; i < loc.getTiles().length; i++){
+			for(int j = loc.getTiles()[i].length-1; j >=0 ; j--){
+				System.out.print(loc.getTiles()[i][j]+" ");
+			}
+			System.out.println("");
+		}
 		return loc;
 	}
 
