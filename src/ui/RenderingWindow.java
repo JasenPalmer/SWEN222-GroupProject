@@ -119,6 +119,14 @@ public class RenderingWindow extends JPanel{
 			rooms = ol.getBuildingTiles();
 		}
 		
+		System.out.println("RENDER PRINTING");
+		for(int i = 0; i < tiles.length; i++){
+			for(int j = tiles[i].length-1; j >=0 ; j--){
+				System.out.print(tiles[i][j]+" ");
+			}
+			System.out.println("");
+		}
+		
 //		// Example location. To be changed later.
 //		Location l = null;
 //		Tile g1 = new FloorTile(null, new Point(0,0), grass);
