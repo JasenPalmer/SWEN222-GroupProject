@@ -44,4 +44,8 @@ public abstract class Tile implements Serializable{
 	public String toString(){	
 		return name.substring(0,2);
 	}
+	
+	public String getName() {
+		return name;
+	}
 }

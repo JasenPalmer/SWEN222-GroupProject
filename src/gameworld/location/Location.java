@@ -69,4 +69,16 @@ public abstract class Location implements Serializable{
 	public void setTile(int x, int y, Tile t){
 		tiles[y][x] = t;
 	}
+	
+	public String toString() {
+		String s = null;
+		for(int i = 0; i < tiles.length; i++) {
+			for(int j = 0; j < tiles[0].length; j++) {
+				s+=tiles[i][j].getName();
+			}
+			s+="\n";
+		}
+		return s;
+	}
+	
 }

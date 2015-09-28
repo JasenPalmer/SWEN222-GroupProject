@@ -28,20 +28,17 @@ public class Game implements Serializable {
 	
 	public static enum Direction{NORTH, EAST, SOUTH, WEST};
 
-	/**
-	 * Amount of locations there are to create
-	 */
-	private static final int LOCATION_AMOUNT = 5;
-
 	private Set<Location> locations;
 	private Set<Player> players;
 
 	public Game() {
 		players = new HashSet<Player>();
 		locations = new HashSet<Location>();
-		for(int i = 0; i < LOCATION_AMOUNT; i++) {
-			parseLocationFolder("locations");
+		parseLocationFolder("locations");
+		for(Location l : locations) {
+			System.out.println(l.toString());
 		}
+		System.out.println(locations.size());
 	}
 	
 	public static void main(String[] args) {
@@ -104,14 +101,13 @@ public class Game implements Serializable {
 				while(blockScanner.hasNext()) {
 					//break blocks up into tiles to be parsed
 					Tile tile = parseTile(blockScanner.next(), col, row);
+					if(tile == null){continue;}
 					if(tile instanceof BuildingTile || tile instanceof EntranceExitTile) {
 						outside = true;
 						buildingTiles[row][col] = tile;
-						locTiles[row][col] = null;
 					}
 					else {
 						locTiles[row][col] = tile;
-						buildingTiles[row][col] = null;
 					}
 				}
 				blockScanner.close();
@@ -137,15 +133,17 @@ public class Game implements Serializable {
 				tile = new FloorTile("Grass", new Point(x,y), RenderingWindow.createImage("Grass"));
 				break;
 			case "Ro":
-				tile = new FloorTile("Road", new Point(x,y), RenderingWindow.createImage("Rock"));
+				tile = new FloorTile("Rock", new Point(x,y), RenderingWindow.createImage("Rock"));
 				break;
 			case "Bu":
 				tile = new BuildingTile("Building", new Point(x,y));
 				break;
 			case "Wa":
 				tile = new FloorTile("Water", new Point(x,y), RenderingWindow.createImage("Water"));
+				break;
 			case "En":
-				tile = new EntranceExitTile("Water", new Point(x,y), true);
+				tile = new EntranceExitTile("Entrance", new Point(x,y), true);
+				break;
 			default:
 				break;
 		}
