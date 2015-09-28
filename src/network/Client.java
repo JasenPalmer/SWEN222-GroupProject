@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import ui.ApplicationWindow;
+import ui.panels.ChatBoxPanel;
 import network.NetworkEvent.EventType;
 
 /**
@@ -25,12 +27,19 @@ public class Client {
 	//Host's address to connect, User name of the client
 	private final String host, user;
 	
+	private final ApplicationWindow gui;
+	
 	//Game uses a constant port of 9954
 	private static final int PORT = 9954;
 	
-	public Client (String host, String user){
+	public Client (String host, String user, ApplicationWindow gui){
 		this.host = host;
 		this.user = user;
+		this.gui = gui;
+		
+		start();
+		
+		new ServerThread().start();
 	}
 	
 	public void start(){
@@ -89,7 +98,8 @@ public class Client {
 						//TODO Repaint the clients Rendering window
 					}
 					else if(event.getType() == EventType.MESSAGE){
-						//TODO Update the JText Area with the message
+						ChatBoxPanel chatBox = gui.getChatBox();
+						chatBox.displayMessage(user, event.getMessage());
 					}
 				}
 				catch (IOException e){

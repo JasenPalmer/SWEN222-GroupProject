@@ -15,11 +15,11 @@ import javax.swing.JTextField;
 public class ServerWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
-	private final Server server;
-	
+
+	//Text area to display Server events
 	private JTextArea console;
 	
+	//Input for sending messages to clients
 	private JTextField input;
 	
 	/**
@@ -27,11 +27,9 @@ public class ServerWindow extends JFrame {
 	 * plus allow server wide messages to be broadcasted.
 	 * @param server - The Server instance.
 	 */
-	public ServerWindow(Server server){
+	public ServerWindow(){
 		
 		super("Adventure Game Server");
-		
-		this.server = server;
 		
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,8 +57,24 @@ public class ServerWindow extends JFrame {
 	 * @param user - The user that sent the message.
 	 * @param message - The message sent.
 	 */
-	public void displayMessage(String user, String message){
+	public void displayMessage(String message, String user){
 		console.append("\n[MESSAGE] - " + user + ": " + message);
+	}
+	
+	/**
+	 * Displays any important events on the server
+	 * @param event
+	 */
+	public void displayEvent(String event){
+		console.append("\n[EVENT] - " + event);
+	}
+	
+	/**
+	 * Displays any major errors on the server
+	 * @param error
+	 */
+	public void displayError(String error){
+		console.append("\n[ERROR] - " + error);
 	}
 
 }

@@ -13,14 +13,18 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import network.Client;
+
 public class ChatBoxPanel extends JPanel implements KeyListener{
 
 	private Image backgroundImage;
 	private JTextArea textArea = new JTextArea();
 	private JTextField textBox = new JTextField();
 	private JScrollPane scrollPane = new JScrollPane();
+	private Client client;
 
-	public ChatBoxPanel(){
+	public ChatBoxPanel(Client client){
+		this.client = client;
 		setLayout(null);
 
 		setBounds(10, 760, 450, 190);
@@ -28,7 +32,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		//Set text area
 		textArea.setEditable(false);
 		textArea.append("Welcome to the chat!");
-		 
+
 		//Setup scroll pane
 		scrollPane = new JScrollPane(textArea);
 		scrollPane.setBounds(0,0,450,170);
@@ -46,18 +50,21 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	public void keyTyped(KeyEvent e) {
 		if(e.getKeyChar() == '\n'){
 			System.out.println("enter");
-			appendTextBox();
+			if(!textBox.getText().equals("")){
+				sendMessage();
+			}
 		}
 	}
 	public void keyPressed(KeyEvent arg0) {}
 	public void keyReleased(KeyEvent arg0) {}
-	
-	private void appendTextBox(){
-		textArea.append("\n" + textBox.getText());
+
+	private void sendMessage(){
+		client.registerMessage(textBox.getText());
 		textBox.setText("");
 	}
-	
+
 	public void displayMessage(String user, String message){
-		textArea.append(user + ": " + message);
+		System.out.println(user + ": " + message);
+		textArea.append("\n" + user + ": " + message);
 	}
 }

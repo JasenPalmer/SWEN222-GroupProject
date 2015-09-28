@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
+import network.Client;
 import ui.panels.*;
 
 
@@ -37,10 +38,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
+	private Client client = new Client("localhost", "Player 1", this);
 
 	public ApplicationWindow() {
 		//Setup
-		super("Adventure Game");
+		super("Shanking PVP Adventure Game");
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
@@ -79,9 +81,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel.add(lootInventPanel,2,0);
 		setLootInventory();
 		inventPanel.setLootInventPanel(lootInventPanel);
-		
+
 		//Setup chat box
-		chatBoxPanel = new ChatBoxPanel();
+		chatBoxPanel = new ChatBoxPanel(client);
 		layeredPanel.add(chatBoxPanel,1,0);
 
 		//Setup the menu bar
@@ -175,34 +177,34 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		testButton.addActionListener(this);
 		testButton.setFocusable(false);
 		this.add(testButton,0);
-		
+
 		//add shank loot
 		JButton addShankLoot = new JButton("Add Shank loot");
 		addShankLoot.setBounds(500,850,100,30);
 		addShankLoot.addActionListener(this);
 		addShankLoot.setFocusable(false);
 		this.add(addShankLoot,0);
-		
+
 		//Add potion loot
 		JButton addPotionLoot = new JButton("Add Potion loot");
 		addPotionLoot.setBounds(650,850,100,30);
 		addPotionLoot.addActionListener(this);
 		addPotionLoot.setFocusable(false);
 		this.add(addPotionLoot,0);
-		
+
 		//More buttons
 		JButton addKatana = new JButton("Add Katana");
 		addKatana.setBounds(500,890,100,30);
 		addKatana.addActionListener(this);
 		addKatana.setFocusable(false);
 		this.add(addKatana,0);
-		
+
 		JButton addHelmet1 = new JButton("Add Helmet1");
 		addHelmet1.setBounds(650,890,100,30);
 		addHelmet1.addActionListener(this);
 		addHelmet1.setFocusable(false);
 		this.add(addHelmet1,0);
-		
+
 		JButton addHelmet2 = new JButton("Add Helmet2");
 		addHelmet2.setBounds(800,890,100,30);
 		addHelmet2.addActionListener(this);
@@ -210,57 +212,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		this.add(addHelmet2,0);
 	}
 
-	/**
-	 * Creates splash loading screen then updates according to loading speed
-	 */
-	private static void displaySplash(){
-		JWindow window = new JWindow();
-		window.setLayout(null);
-
-		JLabel loadingTextImage = new JLabel(new ImageIcon("src/ui/images/splash/splashTextImage.gif"));
-		loadingTextImage.setBounds(0,25, 405, 200);
-		window.getContentPane().add(loadingTextImage);
-
-		JLabel loadingLabel = new JLabel(new ImageIcon("src/ui/images/splash/loadingbar.gif"));
-		loadingLabel.setBounds(50,325,305,15);
-		loadingLabel.setOpaque(false);
-		window.getContentPane().add(loadingLabel);
-
-
-		JLabel backgroundLabel = new JLabel(new ImageIcon("src/ui/images/splash/splashBackgroundImageTemp.jpg"));
-		backgroundLabel.setBounds(0,0,400,400);
-		window.getContentPane().add(backgroundLabel);
-
-		window.setBounds(750, 300, 400, 400);
-		window.setVisible(true);
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		window.setVisible(false);
-		window.dispose();
-	}
-
 	public void repaintRenderingWindow(){
 		rw.repaint();
-	}
-
-	/**
-	 * Launches the application.
-	 */
-	public static void main(String[] args) {
-		//displaySplash();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ApplicationWindow frame = new ApplicationWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	@Override
@@ -336,6 +289,18 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			rw.setDirection(directionSetter("E"));
 			rw.repaint();
 			break;
+		case KeyEvent.VK_W:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_A:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_S:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_D:
+			client.registerKeyPress(e);
+			break;
 		default:
 			break;
 		}
@@ -378,4 +343,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void keyTyped(KeyEvent e) {
 		//TODO
 	}
+	
+	//Getters
+	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 }
