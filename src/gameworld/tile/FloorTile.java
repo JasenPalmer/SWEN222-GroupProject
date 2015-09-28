@@ -9,15 +9,9 @@ import java.awt.Point;
  *
  */
 public class FloorTile extends Tile {
-	
-	private Image image;
 
-	public FloorTile(String name, Point pos, Image image) {
+	public FloorTile(String name, Point pos) {
 		super(name, pos);
-		this.image = image;
 	}
-	
-	public Image getImage() {
-		return image;
-	}
+
 }

@@ -221,11 +221,12 @@ public class RenderingWindow extends JPanel{
 					if(t!=null) {
 						// DRAWING TERRAIN
 						
-						Image image = t.getImage();
+						Image image = getImage(t.toString());
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 						
 						// DRAWING PLAYER 
 						if(t.getPos().equals(player.getPosition())){
+							System.out.println("WE GOT A PLAYER UP IN HEA");
 							Image playerImage = null;
 							try {
 								playerImage = ImageIO.read(new File("src/ui/images/player/0.png"));
@@ -233,7 +234,7 @@ public class RenderingWindow extends JPanel{
 								e.printStackTrace();
 							}
 							
-							
+							//offgc.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2, 5, null);
 							offgc.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2, null);
 						}
 						

@@ -167,7 +167,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y)));
 						} else{
 							// making BuildingTiles
-							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), image));
+							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y)));
 						} 
 						y++;
 					}
@@ -184,7 +184,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1)));
 				} else{
 					// Making FloorTile
-					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1),image));
+					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1)));
 				}
 			}
 		}

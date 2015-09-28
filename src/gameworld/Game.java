@@ -138,16 +138,16 @@ public class Game implements Serializable {
 		System.out.println(type);
 		switch(type) {
 			case "Gr":
-				tile = new FloorTile("Grass", new Point(x,y), RenderingWindow.createImage("Grass"));
+				tile = new FloorTile("Grass", new Point(x,y));
 				break;
 			case "Ro":
-				tile = new FloorTile("Rock", new Point(x,y), RenderingWindow.createImage("Rock"));
+				tile = new FloorTile("Rock", new Point(x,y));
 				break;
 			case "Bu":
 				tile = new BuildingTile("Building", new Point(x,y));
 				break;
 			case "Wa":
-				tile = new FloorTile("Water", new Point(x,y), RenderingWindow.createImage("Water"));
+				tile = new FloorTile("Water", new Point(x,y));
 				break;
 			case "En":
 				tile = new EntranceExitTile("Entrance", new Point(x,y), true);

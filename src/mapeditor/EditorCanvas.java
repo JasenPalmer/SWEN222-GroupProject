@@ -166,7 +166,7 @@ public class EditorCanvas extends JPanel {
 				
 				// DRAWING TERRAIN
 				if(t!=null) {
-					image = t.getImage();
+					image = null; // THIS WAS TO COMPILE SRY
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 					
 				}
@@ -236,7 +236,7 @@ public class EditorCanvas extends JPanel {
 				FloorTile t = (FloorTile) tiles[i][j];
 				Tile r = rooms[i][j];
 				if(t!=null){
-					Image image = t.getImage();
+					Image image = null; // THIS WAS TO COMPILE SRY
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
 				}
 				if(r!=null){

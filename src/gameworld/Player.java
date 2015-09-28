@@ -57,7 +57,7 @@ public class Player implements Serializable{
 		holding = false;
 		this.game = game;
 		location = game.getLocations().iterator().next();
-		position = new Point(location.width()/2, location.height()/2);
+		position = new Point(2, 2);
 	}
 
 	/**
