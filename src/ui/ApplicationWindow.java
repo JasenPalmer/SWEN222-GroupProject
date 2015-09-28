@@ -38,7 +38,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
-	private Client client = new Client("localhost", "Player 1");
+	private Client client = new Client("localhost", "Player 1", this);
 
 	public ApplicationWindow() {
 		//Setup
@@ -83,7 +83,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		inventPanel.setLootInventPanel(lootInventPanel);
 
 		//Setup chat box
-		chatBoxPanel = new ChatBoxPanel();
+		chatBoxPanel = new ChatBoxPanel(client);
 		layeredPanel.add(chatBoxPanel,1,0);
 
 		//Setup the menu bar
@@ -343,4 +343,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void keyTyped(KeyEvent e) {
 		//TODO
 	}
+	
+	//Getters
+	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 }
