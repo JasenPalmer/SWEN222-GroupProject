@@ -85,8 +85,6 @@ public class Game implements Serializable {
 		//read location size
 		int width = file.nextInt();
 		int height = file.nextInt();
-		System.out.println(width);
-		System.out.println(height);
 		Location loc;
 		Tile[][] locTiles = new Tile[height][width];
 		Tile[][] buildingTiles = new Tile[height][width];

@@ -4,6 +4,7 @@ import gameworld.Player;
 import gameworld.entity.Entity;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  * A Tile represents a square in a location.
@@ -11,8 +12,9 @@ import java.awt.Point;
  * @author Jasen
  *
  */
-public abstract class Tile {
+public abstract class Tile implements Serializable{
 
+	private static final long serialVersionUID = 8870726693571138560L;
 	private Point position;
 	private Entity entity;
 	private Player player;
