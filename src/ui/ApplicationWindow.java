@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import network.Client;
 import ui.panels.*;
 
 
-public class ApplicationWindow extends JFrame implements ActionListener, KeyListener{
+public class ApplicationWindow extends JFrame implements ActionListener, KeyListener, WindowListener{
 
 	private JLayeredPane layeredPanel = new JLayeredPane();
 	private InventoryPanel inventPanel;
@@ -54,10 +56,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
+		addWindowListener(this);
 
 		//Setup frame
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(450, 10, 1050, 1020);
 
 		//Setup layered pane
@@ -361,5 +364,48 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void setGame(Game game){
 		this.game = game;
 		System.out.println("Gamestate has been updated");
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		client.close();
+		System.exit(0);
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }
