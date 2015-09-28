@@ -49,12 +49,11 @@ public class Player implements Serializable{
 	
 	private Game game;
 
-
-
 	public Player(String name, Game game) {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
 		holding = false;
+		this.game = game;
 		location = game.getLocations().iterator().next();
 		position = new Point(location.width()/2, location.height()/2);
 	}

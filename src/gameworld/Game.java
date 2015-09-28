@@ -35,6 +35,7 @@ public class Game implements Serializable {
 	private Set<Player> players;
 
 	public Game() {
+		players = new HashSet<Player>();
 		locations = new HashSet<Location>();
 		for(int i = 0; i < LOCATION_AMOUNT; i++) {
 			parseLocationFolder("locations");
@@ -181,7 +182,7 @@ public class Game implements Serializable {
 	 * @param user - name of player
 	 * @return the player object
 	 */
-	private Player parsePlayer(String user) {
+	public Player parsePlayer(String user) {
 		for(Player p : players) {
 			if(p.getName().equals(user)) {
 				return p;
@@ -189,22 +190,6 @@ public class Game implements Serializable {
 		}
 		return null;
 	}
-
-//	private Direction parseDirection(int keyPress) {
-//		switch(keyPress) {
-//		case KeyEvent.VK_W:
-//			return Direction.NORTH;
-//		case KeyEvent.VK_D:
-//			return Direction.EAST;
-//		case KeyEvent.VK_S:
-//			return Direction.SOUTH;
-//		case KeyEvent.VK_A:
-//			return Direction.WEST;
-//			default:
-//				return null;
-//		}
-//	}
-
 
 	public Set<Location> getLocations() {
 		return locations;
