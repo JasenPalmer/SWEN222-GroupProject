@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class Player implements Serializable{
 
-	private static final long serialVersionUID = 177783549426920209L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default size of the players inventory

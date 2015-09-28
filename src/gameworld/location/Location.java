@@ -7,6 +7,7 @@ import gameworld.tile.Tile;
 
 public abstract class Location implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	protected String name;
 	protected String description;
 	protected Tile[][] tiles;

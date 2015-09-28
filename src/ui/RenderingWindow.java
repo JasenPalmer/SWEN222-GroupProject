@@ -5,14 +5,12 @@ import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
-import gameworld.tile.BuildingTile;
 import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 
@@ -88,6 +86,16 @@ public class RenderingWindow extends JPanel{
 			return doorLR;
 		}
 		return null;
+	}
+	
+	public static Image createImage(String imagename) {
+		Image image = null;
+		try {
+			image = ImageIO.read(new File("src/ui/images/terrain/"+imagename+".png"));
+		}catch(Exception e) {
+			System.err.println("Error: "+e);
+		}
+		return image;
 	}
 
 	/**

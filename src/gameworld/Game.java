@@ -20,6 +20,8 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import ui.RenderingWindow;
+
 public class Game implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -98,10 +100,11 @@ public class Game implements Serializable {
 			while(lineScan.hasNext()) {
 				// break the line up into blocks
 				Scanner blockScanner = new Scanner(lineScan.next());
+				blockScanner.useDelimiter("-");
 				while(blockScanner.hasNext()) {
 					//break blocks up into tiles to be parsed
 					Tile tile = parseTile(blockScanner.next(), col, row);
-					if(tile instanceof BuildingTile) {
+					if(tile instanceof BuildingTile || tile instanceof EntranceExitTile) {
 						outside = true;
 						buildingTiles[row][col] = tile;
 						locTiles[row][col] = null;
@@ -128,18 +131,19 @@ public class Game implements Serializable {
 
 	private Tile parseTile(String type, int x, int y) {
 		Tile tile = null;
+		System.out.println(type);
 		switch(type) {
 			case "Gr":
-				tile = new FloorTile("Grass", new Point(x,y), createImage(type));
+				tile = new FloorTile("Grass", new Point(x,y), RenderingWindow.createImage("Grass"));
 				break;
 			case "Ro":
-				tile = new FloorTile("Road", new Point(x,y), createImage(type));
+				tile = new FloorTile("Road", new Point(x,y), RenderingWindow.createImage("Rock"));
 				break;
 			case "Bu":
 				tile = new BuildingTile("Building", new Point(x,y));
 				break;
 			case "Wa":
-				tile = new FloorTile("Water", new Point(x,y), createImage(type));
+				tile = new FloorTile("Water", new Point(x,y), RenderingWindow.createImage("Water"));
 			case "En":
 				tile = new EntranceExitTile("Water", new Point(x,y), true);
 			default:
@@ -192,15 +196,5 @@ public class Game implements Serializable {
 	}
 	public Set<Player> getPlayers() {
 		return players;
-	}
-
-	
-	public static Image createImage(String filename) {
-		try {
-			return ImageIO.read(new File("src/ui/images/terrain/"+filename+".png"));
-		}catch(Exception e) {
-			System.err.println("Error - "+e);
-		}
-		return null;
 	}
 }
