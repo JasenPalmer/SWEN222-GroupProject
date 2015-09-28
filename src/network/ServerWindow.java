@@ -34,7 +34,7 @@ public class ServerWindow extends JFrame {
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(10, 10, 300, 500);
+		setBounds(10, 10, 500, 500);
 		
 		console = new JTextArea();
 		console.setBounds(5, 5, 290, 480);

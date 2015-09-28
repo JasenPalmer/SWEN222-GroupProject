@@ -95,7 +95,12 @@ public class Client {
 				try {
 					NetworkEvent event = (NetworkEvent)input.readObject();
 					if(event.getType() == EventType.UPDATE_GUI){
-						//TODO Repaint the clients Rendering window
+						if(event.getGameState() == null){
+							System.out.println("Game state null doe gee");
+							return;
+						}
+						gui.setGame(event.getGameState());
+						gui.repaintRenderingWindow();
 					}
 					else if(event.getType() == EventType.MESSAGE){
 						ChatBoxPanel chatBox = gui.getChatBox();

@@ -1,7 +1,10 @@
 package network;
 
 import gameworld.Game;
+import gameworld.Game.Direction;
+import gameworld.Player;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -49,6 +52,9 @@ public class Server {
 		connections = new ArrayList<ClientThread>();
 		eventQueue = new LinkedList<NetworkEvent>();
 		
+		gameState = new Game();
+		
+		new Thread(new Runnable(){public void run(){processEvents();}}).start();
 		start();
 	}
 	
@@ -97,6 +103,36 @@ public class Server {
 		}
 	}
 	
+	public void processEvents(){
+		NetworkEvent toProcess =  eventQueue.poll();
+		if(toProcess == null) return;
+		
+		switch(toProcess.getType()){
+		case KEY_PRESS:
+			if(gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()))) updateGUI();
+			break;
+		case MESSAGE:
+			break;
+		case UPDATE_GUI:
+			break;
+		}
+	}
+	
+	private Direction parseDirection(int keyPress) {
+		switch(keyPress) {
+		case KeyEvent.VK_W:
+			return Direction.NORTH;
+		case KeyEvent.VK_D:
+			return Direction.EAST;
+		case KeyEvent.VK_S:
+			return Direction.SOUTH;
+		case KeyEvent.VK_A:
+			return Direction.WEST;
+		default:
+			return null;
+		}
+	}
+	
 	public void stopServer(){
 		for(ClientThread t : connections){
 			t.close();
@@ -135,8 +171,9 @@ public class Server {
 				console.displayError("Failed to get input/output streams for the client: " + user);
 			}
 			
-			
+			gameState.addPlayer(new Player(user, gameState));
 			console.displayEvent(user + " connected.");
+			this.updateGUI();
 		}
 		
 		public void run(){

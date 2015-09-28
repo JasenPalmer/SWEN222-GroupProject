@@ -219,7 +219,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void repaintRenderingWindow(){
-		rw.repaint();
+		if(rw != null) rw.repaint();
 	}
 
 	@Override
