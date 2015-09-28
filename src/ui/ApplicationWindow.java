@@ -358,5 +358,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 	
 	//Setters
-	public void setGame(Game game){this.game = game;}
+	public void setGame(Game game){
+		this.game = game;
+		System.out.println("Gamestate has been updated");
+	}
 }

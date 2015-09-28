@@ -98,6 +98,7 @@ public class Server {
 	}
 	
 	public void updateGUI(){
+		console.displayEvent("Updating all clients");
 		for(ClientThread client : connections){
 			client.updateGUI();
 		}
@@ -106,10 +107,13 @@ public class Server {
 	public void processEvents(){
 		NetworkEvent toProcess =  eventQueue.poll();
 		if(toProcess == null) return;
-		
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			if(gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()))) updateGUI();
+			console.displayEvent("Got a key press mint");
+			boolean hasMoved = gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()));
+			System.out.println(hasMoved);
+			if(hasMoved) updateGUI();
+			//if(gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()))) updateGUI();
 			break;
 		case MESSAGE:
 			break;
@@ -192,6 +196,7 @@ public class Server {
 					case KEY_PRESS:
 						console.displayEvent(user + " pressed " + currentEvent.getKeyCode() + ".");
 						eventQueue.add(currentEvent);
+						processEvents();
 						break;
 					case MESSAGE:
 						console.displayMessage(currentEvent.getMessage(), user);
@@ -206,7 +211,9 @@ public class Server {
 		}
 		
 		public void updateGUI(){
+			console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
+				output.reset();
 				output.writeObject(new NetworkEvent(gameState));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
@@ -215,6 +222,7 @@ public class Server {
 		
 		public void sendMessage(String message, String senderUser){
 			try {
+				output.reset();
 				output.writeObject(new NetworkEvent(message, senderUser));
 			} catch (IOException e) {
 				console.displayError("Failed to write message to client: " + user);

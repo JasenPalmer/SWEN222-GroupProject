@@ -182,20 +182,25 @@ public class Player implements Serializable{
 	private void moveDir(Game.Direction dir) {
 		switch(dir) {
 		case NORTH:
+			System.out.println("Moving North");
 			position = new Point(position.x, position.y-1);
 			break;
 		case EAST:
+			System.out.println("Moving East");
 			position = new Point(position.x+1, position.y);
 			break;
 		case SOUTH:
+			System.out.println("Moving South");
 			position = new Point(position.x, position.y+1);
 			break;
 		case WEST:
+			System.out.println("Moving West");
 			position = new Point(position.x-1, position.y);
 			break;
 		default:
 			break;
 		}
+		System.out.println(position);
 	}
 
 	// getters and setters

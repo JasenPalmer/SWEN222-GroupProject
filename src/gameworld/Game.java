@@ -35,10 +35,6 @@ public class Game implements Serializable {
 		players = new HashSet<Player>();
 		locations = new HashSet<Location>();
 		parseLocationFolder("locations");
-		for(Location l : locations) {
-			System.out.println(l.toString());
-		}
-		System.out.println(locations.size());
 	}
 	
 	public static void main(String[] args) {
@@ -123,19 +119,12 @@ public class Game implements Serializable {
 			loc = new InsideLocation(name, desc, locTiles);
 		}
 		
-		System.out.println("GAME PRINTING");
-		for(int i = 0; i < loc.getTiles().length; i++){
-			for(int j = loc.getTiles()[i].length-1; j >=0 ; j--){
-				System.out.print(loc.getTiles()[i][j]+" ");
-			}
-			System.out.println("");
-		}
 		return loc;
 	}
 
 	private Tile parseTile(String type, int x, int y) {
 		Tile tile = null;
-		System.out.println(type);
+		//System.out.println(type);
 		switch(type) {
 			case "Gr":
 				tile = new FloorTile("Grass", new Point(x,y));
@@ -176,6 +165,7 @@ public class Game implements Serializable {
 	 * @return true if the player moved successfully
 	 */
 	public boolean movePlayer(String playerName, Direction direction) {
+		System.out.println("The player should be moving unless Jasen fucked up");
 		Player player = parsePlayer(playerName);
 		if(direction == null || player == null) {return false;}
 		if(!player.move(direction)) {return false;}
@@ -204,7 +194,4 @@ public class Game implements Serializable {
 		return players;
 	}
 	
-	public String toString(){
-		return "this is the best game ever";
-	}
 }

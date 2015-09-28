@@ -92,25 +92,26 @@ public class Client {
 	public class ServerThread extends Thread {
 		public void run() {
 			while(true) {
+				NetworkEvent event = null;
+				
 				try {
-					NetworkEvent event = (NetworkEvent)input.readObject();
-					if(event.getType() == EventType.UPDATE_GUI){
-						System.out.println("Trying to update the gui gee");
-						if(event.getGameState() == null){
-							System.out.println("Game state null doe gee");
-							return;
-						}
-						gui.setGame(event.getGameState());
-						gui.repaintRenderingWindow();
-					}
-					else if(event.getType() == EventType.MESSAGE){
-						ChatBoxPanel chatBox = gui.getChatBox();
-						chatBox.displayMessage(user, event.getMessage());
-					}
+					event = (NetworkEvent)input.readObject();
 				}
 				catch (IOException e){
 					System.err.println("Connection to the server has been interrupted..."); } 
 				catch (ClassNotFoundException e) {}
+				
+				if(event == null) return;
+				
+				if(event.getType() == EventType.UPDATE_GUI){
+					if(event.getGameState() == null) return;
+					gui.setGame(event.getGameState());
+					gui.repaintRenderingWindow();
+				}
+				else if(event.getType() == EventType.MESSAGE){
+					ChatBoxPanel chatBox = gui.getChatBox();
+					chatBox.displayMessage(user, event.getMessage());
+				}
 			}
 		}
 	}
