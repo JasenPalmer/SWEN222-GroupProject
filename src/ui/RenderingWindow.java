@@ -27,7 +27,7 @@ public class RenderingWindow extends JPanel{
 	private static Image water;
 	private static Image rock;
 	private Image doorUD;
-	private Image doorLR;
+	private static Image doorLR;
 	private Image roofLR;
 	private Image roofUD;
 	private Image roofCornerO;
@@ -83,6 +83,8 @@ public class RenderingWindow extends JPanel{
 			return water;
 		case "Bu":
 			return building;
+		case "En":
+			return doorLR;
 		}
 		return null;
 	}
