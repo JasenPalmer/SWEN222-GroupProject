@@ -46,6 +46,9 @@ public class EditorCanvas extends JPanel {
 	 * Create the panel.
 	 */
 	public EditorCanvas(Location location) {
+		setLayout(null);
+		setBounds(0,0,1050,750);
+		
 		if(location instanceof OutsideLocation){
 			location = (OutsideLocation) location;
 		} else {

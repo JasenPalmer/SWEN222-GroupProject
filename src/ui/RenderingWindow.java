@@ -22,11 +22,10 @@ import javax.swing.JPanel;
 public class RenderingWindow extends JPanel{
 	
 	private Image backgroundImage;
-	private Image grass;
-	private Image building;
-	private Image water;
-	private Image rock;
-	private Image room;
+	private static Image grass;
+	private static Image building;
+	private static Image water;
+	private static Image rock;
 	private Image doorUD;
 	private Image doorLR;
 	private Image roofLR;
@@ -56,7 +55,6 @@ public class RenderingWindow extends JPanel{
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
 			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-			room = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
 			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
 			roofLR = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
@@ -68,6 +66,25 @@ public class RenderingWindow extends JPanel{
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
+	}
+	
+	/**
+	 * Returns image to match given name
+	 * @param name - type of image wanted
+	 * @return image based on name
+	 */
+	public static Image getImage(String name){
+		switch(name){
+		case "Gr":
+			return grass;
+		case "Ro":
+			return rock;
+		case "Wa":
+			return water;
+		case "Bu":
+			return building;
+		}
+		return null;
 	}
 
 	/**
