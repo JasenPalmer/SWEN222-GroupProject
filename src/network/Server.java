@@ -1,5 +1,7 @@
 package network;
 
+import gameworld.Game;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,6 +10,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import javax.swing.JFrame;
 
 /**
  * 
@@ -23,6 +27,9 @@ public class Server {
 	//Server to accept socket connections
 	private ServerSocket serverSocket;
 	
+	//Server console
+	private ServerWindow console;
+	
 	//All connected clients
 	private ArrayList<ClientThread> connections;
 	
@@ -32,16 +39,23 @@ public class Server {
 	//Running status of server
 	private boolean finished = false;
 	
+	//Main instance of game, that will be sent to clients
+	private Game gameState;
+	
 	
 	public Server(){
+		console = new ServerWindow();
+		
 		connections = new ArrayList<ClientThread>();
 		eventQueue = new LinkedList<NetworkEvent>();
+		
+		start();
 	}
 	
 	public void start(){
 		try {
 			serverSocket= new ServerSocket(PORT);
-			System.out.println("Server started successfully on port number: " + PORT);
+			console.displayEvent("Server started successfully on port number: " + PORT);
 			
 			while(!finished) {
 				
@@ -54,7 +68,7 @@ public class Server {
 				clientThread.start();
 			}
 		} catch (IOException e){
-			System.err.println("Error in main server.");
+			console.displayError("Server failed to start");
 		}
 	}
 	
@@ -62,7 +76,7 @@ public class Server {
 		for(ClientThread client : connections){
 			if(client.getUser().equals(user)) return client;
 		}
-		System.err.println("User: " + user + " not found.");
+		//console.displayError("User: " + user + " not found."); 
 		return null;
 	}
 	
@@ -118,34 +132,36 @@ public class Server {
 				this.user = (String)input.readObject();
 				
 			} catch (Exception e) {
-				System.err.println("Error getting input/output streams for the client: " + user);
+				console.displayError("Failed to get input/output streams for the client: " + user);
 			}
 			
 			
-			System.out.println(user + " connected.");
+			console.displayEvent(user + " connected.");
 		}
 		
 		public void run(){
-			System.out.println("Client thread for " + user + " is running...");
+			console.displayEvent("Client thread for " + user + " is running...");
 			
 			while(!finished){
 			
 				try {
 					currentEvent = (NetworkEvent)input.readObject();
 				} catch (Exception e){
-					System.err.println("Error reading input stream of client: " + user);
+					console.displayError("Failed to read input stream of client: " + user);
 				}
 				
 				if(currentEvent  != null) {
 					switch(currentEvent.getType()){
 					case KEY_PRESS:
+						console.displayEvent(user + " pressed " + currentEvent.getKeyCode() + ".");
 						eventQueue.add(currentEvent);
 						break;
 					case MESSAGE:
+						console.displayMessage(currentEvent.getMessage(), user);
 						broadcastMessage(currentEvent.getMessage(), user);
 						break;
 					case UPDATE_GUI:
-						System.err.println("Unexpected EventType on server-side: UPDATE_GUI");
+						console.displayError("Unexpected EventType on server-side: UPDATE_GUI");
 						break;
 					}
 				}
@@ -154,9 +170,9 @@ public class Server {
 		
 		public void updateGUI(){
 			try {
-				output.writeObject(new NetworkEvent());
+				output.writeObject(new NetworkEvent(gameState));
 			} catch (IOException e) {
-				System.err.println("Error writing update to client: " + user);
+				console.displayError("Failed to write update to client: " + user);
 			}
 		}
 		
@@ -164,7 +180,7 @@ public class Server {
 			try {
 				output.writeObject(new NetworkEvent(message, senderUser));
 			} catch (IOException e) {
-				System.err.println("Error writing update to client: " + user);
+				console.displayError("Failed to write message to client: " + user);
 			}
 		}
 		
@@ -179,5 +195,9 @@ public class Server {
 				socket.close();
 			} catch (Exception e){}
 		}
+	}
+	
+	public static void main(String [] args){
+		new Server();
 	}
 }

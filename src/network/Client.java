@@ -31,6 +31,8 @@ public class Client {
 	public Client (String host, String user){
 		this.host = host;
 		this.user = user;
+		
+		start();
 	}
 	
 	public void start(){
