@@ -46,13 +46,17 @@ public class Player implements Serializable{
 	 * The current position of the player
 	 */
 	private Point position;
+	
+	private Game game;
 
 
 
-	public Player(String name) {
+	public Player(String name, Game game) {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
 		holding = false;
+		location = game.getLocations().iterator().next();
+		position = new Point(location.width()/2, location.height()/2);
 	}
 
 	/**
