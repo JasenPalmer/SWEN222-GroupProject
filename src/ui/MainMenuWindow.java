@@ -8,6 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.JWindow;
 
 import network.Server;
@@ -70,10 +72,12 @@ public class MainMenuWindow extends JWindow implements ActionListener{
 		case "Exit":
 			this.dispose();
 			break;
-		case "Host":
-			Server server = new Server();
+		case "Host":	
 			break;
 		case "Join":
+//			JTextComponent[] menuOptions = {new JTextField(), new  JTextField(), new JTextField()};
+//			JOptionPane.showMessageDialog(this,  menuOptions, "IP and Username plz", JOptionPane.QUESTION_MESSAGE);
+//			
 			this.dispose();
 			ApplicationWindow game = new ApplicationWindow();
 			game.setVisible(true);
