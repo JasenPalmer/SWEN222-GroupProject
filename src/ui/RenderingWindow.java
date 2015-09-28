@@ -104,54 +104,63 @@ public class RenderingWindow extends JPanel{
 //		//Tile[][] rooms = l.getRooms();
 //		//Item[][] items = l.getItems();
 //		
-
+		player = null;
+		Location l = player.getLocation();
 		
-		// Example location. To be changed later.
-		Location l = null;
-		Tile g1 = new FloorTile(null, new Point(0,0), grass);
-		Tile g2 = new FloorTile(null, new Point(5,5), grass);
-		Tile w1 = new FloorTile(null, new Point(0,0), water);
-		Tile r1 = new FloorTile(null, new Point(0,0), rock);
-		Tile[][] tiles = {
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,g1,g1,g1},
-				{g1,g1,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,w1,g1},
-				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,w1,w1,w1,g1},
-				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{r1,r1,r1,r1,r1,r1,r1,g1,g2,g1,g1,w1,w1,g1,g1},
-				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,w1,g1,g1,g1},
-				{w1,w1,w1,r1,g1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
-				{g1,w1,r1,r1,r1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
-				{g1,w1,w1,w1,w1,w1,g1,g1,g1,g1,g1,w1,w1,g1,g1},
-				{g1,w1,w1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
-				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,g1,g1},
-				};
+		Tile[][] tiles = l.getTiles();
+		Tile[][] rooms = null;
 		
-		Tile r = new BuildingTile(null, new Point(1,2), building);
-		Tile d = new EntranceExitTile(null, new Point(1,2), null, false);
-		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
-							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
-							{null,null,null,null,r,r,r,r,r,r,r, r,r,null,null},
-							{null,null,null,null,d,r,r,r,r,r,r,r,r,null,null},
-							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,r,d,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,null,null,null,null,null,null,null,r,r,null,null},
-							{null,null,null,null,null,null,null,null,null,d,r,r,r,null,null},
-							{null,null,null,null,null,null,null,null,null,r,r,d,r,null,null},
-							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
-							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
-						};
+		if(l instanceof OutsideLocation){
+			OutsideLocation ol = (OutsideLocation) l;
+			rooms = ol.getBuildingTiles();
+		}
 		
-		l = new OutsideLocation("Test", "This is a test Location", tiles, rooms);
-		
-		
+//		// Example location. To be changed later.
+//		Location l = null;
+//		Tile g1 = new FloorTile(null, new Point(0,0), grass);
+//		Tile g2 = new FloorTile(null, new Point(5,5), grass);
+//		Tile w1 = new FloorTile(null, new Point(0,0), water);
+//		Tile r1 = new FloorTile(null, new Point(0,0), rock);
+//		Tile[][] tiles = {
+//				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1},
+//				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g2,g1,g1,g1,g1,g1},
+//				{g1,g1,g2,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,g1},
+//				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+//				{g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,g1,w1,w1,w1,g1},
+//				{g1,g1,r1,g1,g1,r1,r1,r1,g1,g1,g1,w1,w1,w1,g1},
+//				{r1,r1,r1,r1,g1,r1,r1,g1,g1,g1,g1,g1,w1,w1,g1},
+//				{r1,r1,r1,r1,r1,r1,r1,g1,g2,g1,g1,w1,w1,g1,g1},
+//				{w1,w1,r1,r1,g1,g1,g1,g1,g1,g1,g1,w1,g1,g1,g1},
+//				{w1,w1,w1,r1,g1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
+//				{g1,w1,r1,r1,r1,g1,g1,g1,g1,w1,w1,w1,g1,g1,g1},
+//				{g1,w1,w1,w1,w1,w1,g1,g1,g1,g1,g1,w1,w1,g1,g1},
+//				{g1,w1,w1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+//				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,w1,g1},
+//				{g1,g1,g1,g1,w1,w1,g1,g1,g1,g1,g1,g1,w1,g1,g1},
+//				};
+//		
+//		Tile r = new BuildingTile(null, new Point(1,2), building);
+//		Tile d = new EntranceExitTile(null, new Point(1,2), null, false);
+//		Tile[][] rooms = {	{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+//							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+//							{null,null,null,null,r,r,r,r,r,r,r, r,r,null,null},
+//							{null,null,null,null,d,r,r,r,r,r,r,r,r,null,null},
+//							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,r,r,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,r,d,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,null,null,null,null,null,null,null,r,r,null,null},
+//							{null,null,null,null,null,null,null,null,null,d,r,r,r,null,null},
+//							{null,null,null,null,null,null,null,null,null,r,r,d,r,null,null},
+//							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+//							{null,null,null,null,null,null,null,null,null,null,null,null,null,null,null},
+//						};
+//		
+//		l = new OutsideLocation("Test", "This is a test Location", tiles, rooms);
+//		
+//		
 		
 
 		// Rotates array depending on direction and then rendering
@@ -190,11 +199,7 @@ public class RenderingWindow extends JPanel{
 		 * @param rooms - 2D array of rooms to be drawn
 		 * @param offgc - the graphics
 		 */
-		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
-
-			Player p = new Player("Jim");
-			Point playerPoint = new Point(5,5);
-			
+		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){			
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 			
 			// outside tiles
@@ -208,7 +213,7 @@ public class RenderingWindow extends JPanel{
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 						
 						// DRAWING PLAYER 
-						if(t.getPos().equals(playerPoint)){
+						if(t.getPos().equals(player.getPosition())){
 							Image playerImage = null;
 							try {
 								playerImage = ImageIO.read(new File("src/ui/images/player/0.png"));
@@ -221,47 +226,48 @@ public class RenderingWindow extends JPanel{
 						}
 						
 						// DRAWING ROOMS
-						
-						Tile r = rooms[i][j];
-						if(r!=null) {					
-							// Drawing 2 block high walls
-							if(r instanceof EntranceExitTile){
-								if(j-1 >= 0 && rooms[i][j-1]==null){
-									offgc.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-								} else {
-									offgc.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+						if(rooms!=null){
+							Tile r = rooms[i][j];
+							if(r!=null) {					
+								// Drawing 2 block high walls
+								if(r instanceof EntranceExitTile){
+									if(j-1 >= 0 && rooms[i][j-1]==null){
+										offgc.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+									} else {
+										offgc.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+									}
 								}
-							}
-							else{
-								offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
-							}
-							offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+								else{
+									offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+								}
+								offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+								
+	
+								image = building;
+								
+								// Western most point of building
+								if(j-1 >= 0 && rooms[i][j-1] == null){
+									image = roofUD;
+								}
+	
+								// Northern most point of building
+								if(i+1 < rooms.length && rooms[i+1][j]==null){
+									image = roofLR;
+								}
+	
+								// Outwards corner roof
+								if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+									image = roofCornerO;
+								}
+								// Inwards corner roof
+								if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+									image = roofCornerI;
+								}
+								
 							
-
-							image = building;
-							
-							// Western most point of building
-							if(j-1 >= 0 && rooms[i][j-1] == null){
-								image = roofUD;
+								offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
+	
 							}
-
-							// Northern most point of building
-							if(i+1 < rooms.length && rooms[i+1][j]==null){
-								image = roofLR;
-							}
-
-							// Outwards corner roof
-							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-								image = roofCornerO;
-							}
-							// Inwards corner roof
-							if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-								image = roofCornerI;
-							}
-							
-						
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
-
 						}
 					}
 				}
