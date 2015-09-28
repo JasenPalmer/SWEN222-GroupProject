@@ -205,11 +205,11 @@ public class RenderingWindow extends JPanel{
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
-					Tile t = tiles[i][j];
+					FloorTile t = (FloorTile) tiles[i][j];
 					if(t!=null) {
 						// DRAWING TERRAIN
 						
-						Image image = t.getImg();
+						Image image = t.getImage();
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 						
 						// DRAWING PLAYER 
