@@ -249,7 +249,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		if(e.getButton() == MouseEvent.BUTTON1){
 			for(int i = 0; i < inventArray.length; i++){
 				for(int j = 0; j < inventArray[0].length; j++){
-					if(inventArray[i][j] != null){
+					if(inventArray[i][j] != null && !inventArray[i][j].getName().equals("Empty")){
 						if(inventArray[i][j].contains(e.getX(), e.getY())){
 							movedItem = inventArray[i][j];
 						}
@@ -268,7 +268,19 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 						if(inventArray[i][j]!= null){
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
 								addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
+								movedItem = null;
 							}
+//							else if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
+//								switch(movedItem.getType()){
+//								case "Weapon":
+//									weapon = movedItem;
+//									inventArray[getIndices(movedItem).x][(int) getIndices(movedItem).y] = new Item("Empty", "Placeholder");
+//									populateInvent();
+//									break;
+//								default:
+//									break;
+//								}
+//							}
 						}
 					}
 				}
