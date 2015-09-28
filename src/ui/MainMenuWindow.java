@@ -75,11 +75,10 @@ public class MainMenuWindow extends JWindow implements ActionListener{
 		case "Host":	
 			break;
 		case "Join":
-//			JTextComponent[] menuOptions = {new JTextField(), new  JTextField(), new JTextField()};
-//			JOptionPane.showMessageDialog(this,  menuOptions, "IP and Username plz", JOptionPane.QUESTION_MESSAGE);
-//			
+//			JComponent[] menuOptions = {new JTextField(), new  JTextField(), new JTextField()};
+//			JOptionPane.showMessageDialog(this,  menuOptions, "IP and Username plz", JOptionPane.QUESTION_MESSAGE);			
 			this.dispose();
-			ApplicationWindow game = new ApplicationWindow();
+			ApplicationWindow game = new ApplicationWindow("Player 1");
 			game.setVisible(true);
 			break;
 		default:

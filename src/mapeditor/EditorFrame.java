@@ -32,8 +32,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import main.Main;
-
 
 public class EditorFrame extends JFrame implements MouseListener{
 

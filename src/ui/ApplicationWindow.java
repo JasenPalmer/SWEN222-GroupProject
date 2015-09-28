@@ -1,6 +1,8 @@
 package ui;
 
+import gameworld.Game;
 import gameworld.Game.Direction;
+import gameworld.Player;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -38,11 +40,15 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
-	private Client client = new Client("localhost", "Player 1", this);
-
-	public ApplicationWindow() {
+	private Client client;
+	private Game game;
+	private String username;
+	
+	public ApplicationWindow(String username) {
 		//Setup
 		super("Shanking PVP Adventure Game");
+		this.username = username;
+		client = new Client("localhost", this.username, this);
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
@@ -63,7 +69,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.add(bgPanel);
 
 		//Setup rendering window
-		rw = new RenderingWindow();
+		rw = new RenderingWindow(this);
 		layeredPanel.add(rw, 1,1);
 
 		//Setup Overlay Panel
@@ -346,4 +352,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
+	public Player getPlayer(){return this.game.parsePlayer(username);}
+	
+	//Setters
+	public void setGame(Game game){this.game = game;}
 }
