@@ -1,6 +1,8 @@
 package network;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -12,7 +14,7 @@ import javax.swing.JTextField;
  * @author Matt Byers
  *
  */
-public class ServerWindow extends JFrame {
+public class ServerWindow extends JFrame implements WindowListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,19 +24,26 @@ public class ServerWindow extends JFrame {
 	//Input for sending messages to clients
 	private JTextField input;
 	
+	//The server instance this window corresponds to
+	private Server server;
+	
 	/**
 	 * Creates server window, that will display messages and other server events,
 	 * plus allow server wide messages to be broadcasted.
 	 * @param server - The Server instance.
 	 */
-	public ServerWindow(){
+	public ServerWindow(Server server){
 		
 		super("Adventure Game Server");
 		
+		this.server = server;
+		
 		getContentPane().setLayout(new BorderLayout());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setBounds(10, 10, 500, 500);
+		
+		addWindowListener(this);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		console = new JTextArea();
 		console.setBounds(5, 5, 290, 480);
@@ -75,6 +84,49 @@ public class ServerWindow extends JFrame {
 	 */
 	public void displayError(String error){
 		console.append("\n[ERROR] - " + error);
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		server.stopServer();
+		System.exit(0);
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -165,7 +165,6 @@ public class Game implements Serializable {
 	 * @return true if the player moved successfully
 	 */
 	public boolean movePlayer(String playerName, Direction direction) {
-		System.out.println("The player should be moving unless Jasen fucked up");
 		Player player = parsePlayer(playerName);
 		if(direction == null || player == null) {return false;}
 		if(!player.move(direction)) {return false;}

@@ -47,7 +47,7 @@ public class Server {
 	
 	
 	public Server(){
-		console = new ServerWindow();
+		console = new ServerWindow(this);
 		
 		connections = new ArrayList<ClientThread>();
 		eventQueue = new LinkedList<NetworkEvent>();
@@ -109,7 +109,6 @@ public class Server {
 		if(toProcess == null) return;
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			console.displayEvent("Got a key press mint");
 			boolean hasMoved = gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()));
 			System.out.println(hasMoved);
 			if(hasMoved) updateGUI();

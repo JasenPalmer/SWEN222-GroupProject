@@ -48,7 +48,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup
 		super("Shanking PVP Adventure Game");
 		this.username = username;
-		client = new Client("localhost", this.username, this);
+		client = new Client("blowfish.ecs.vuw.ac.nz", this.username, this);
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
