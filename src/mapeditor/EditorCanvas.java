@@ -17,31 +17,33 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import ui.RenderingWindow;
+
 
 public class EditorCanvas extends JPanel {
 
 	private Location location;
 	private String view = "Shit";
-	
+
 	private int MAPHEIGHT = 15;
 	private int MAPWIDTH = 15;
 	private int TILESIZE = 64;
-	
+
 	Game.Direction direction = Game.Direction.NORTH;
-	
+
 	private Image backgroundImage;
-	private Image grass;
-	private Image building;
-	private Image water;
-	private Image rock;
+	private static Image grass;
+	private static Image building;
+	private static Image water;
+	private static Image rock;
 	private Image room;
 	private Image doorUD;
-	private Image doorLR;
+	private static Image doorLR;
 	private Image roofLR;
 	private Image roofUD;
 	private Image roofCornerO;
 	private Image roofCornerI;
-	
+
 	/**
 	 * Create the panel.
 	 */
@@ -49,7 +51,7 @@ public class EditorCanvas extends JPanel {
 		setImages();
 		setLayout(null);
 		setBounds(0,0,1050,750);
-		
+
 		if(location instanceof OutsideLocation){
 			location = (OutsideLocation) location;
 		} else {
@@ -57,7 +59,7 @@ public class EditorCanvas extends JPanel {
 		}
 		this.location = location;
 	}
-	
+
 	/**
 	 * Setting images to files in images folder. Will be changed when location parser is working for some tiles. (grass, water, rock will be gone).
 	 */
@@ -75,24 +77,45 @@ public class EditorCanvas extends JPanel {
 			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
 			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
 			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-			
-			
+
+
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
 	
+	/**
+	 * Returns image to match given name
+	 * @param name - type of image wanted
+	 * @return image based on name
+	 */
+	public static Image getImage(String name){
+		switch(name){
+		case "Gr":
+			return grass;
+		case "Ro":
+			return rock;
+		case "Wa":
+			return water;
+		case "Bu":
+			return building;
+		case "En":
+			return doorLR;
+		}
+		return null;
+	}
+
 	public void paint(Graphics g){
 		Tile[][] tiles = location.getTiles();
 		Tile[][] rooms = null;
 		//Entity[][] entities = location.getEntities();
-		
+
 		if(location instanceof OutsideLocation){
 			OutsideLocation l = (OutsideLocation) location;
 			rooms = l.getBuildingTiles();
 			System.out.println("PLS");
 		}
-		
+
 		if(rooms!=null){
 			for(int i = 0; i < rooms.length; i++){
 				for(int j = 0; j < rooms[i].length ; j++){
@@ -101,77 +124,77 @@ public class EditorCanvas extends JPanel {
 				System.out.println("");
 			}
 		}
-		
+
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
 		Graphics offgc = offscreen.getGraphics();
-		
+
 		switch(direction){
 		case NORTH:
 			if(view.equals("Render")){
 				isometric(tiles,rooms, offgc);
 			} else {
-				shittyDraw(tiles,rooms,offgc);	
+				shittyDraw(tiles,rooms,offgc);
 			}
 			break;
 		case EAST:
 			if(view.equals("Render")){
-				isometric(rotate(tiles), rotate(rooms), offgc);	
+				isometric(rotate(tiles), rotate(rooms), offgc);
 			} else {
 				shittyDraw(rotate(tiles), rotate(rooms), offgc);
 			}
-			break;			
+			break;
 		case SOUTH:
 			if(view.equals("Render")){
-				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);	
+				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
 			} else {
 				shittyDraw(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
 			}
-			break;	
+			break;
 		case WEST:
 			if(view.equals("Render")){
-				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);	
+				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
 			} else {
 				shittyDraw(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
 			}
 			break;
-			
+
 		}
 
 		g.drawImage(offscreen,0,0,null);
 	}
-	
+
 
 
 	/**
 	 * Iterates through arrays of tiles drawing the map terrain, then iterates through
 	 * room tiles to draw buildings depending on the arrangement of tiles.
-	 * 
+	 *
 	 * new x position = x/2 + y/2 ( + or - constants to fit properly such as imageHeight)
 	 * new y position = y/4 - x/4 ( + or - constants to fit properly such as imageHeight)
-	 * 
-	 * 
+	 *
+	 *
 	 * @param tiles - 2D array of terrain to be drawn
 	 * @param rooms - 2D array of rooms to be drawn
 	 * @param g - the graphics
 	 */
 	public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
 		g.fillRect(0,0,this.getWidth(), this.getHeight());
-		
+
 		// outside tiles
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = tiles[i].length-1; j >=0 ; j--){
 				FloorTile t = (FloorTile) tiles[i][j];
 				Tile r = rooms[i][j];
 				Image image = null;
-				
+
 				// DRAWING TERRAIN
 				if(t!=null) {
-					image = null; // THIS WAS TO COMPILE SRY
+					image = getImage(t.toString()); // THIS WAS TO COMPILE SRY
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
-					
+
 				}
-				
-				// DRAWING ROOMS	
+
+				// DRAWING ROOMS
 				if(r!=null) {
 					System.out.println("THE ROOM IS NOT FUCKING NULL");
 					// Drawing 2 block high walls
@@ -187,13 +210,13 @@ public class EditorCanvas extends JPanel {
 						System.out.println("NOT AN ENTRANCE");
 							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
 					}
-					
+
 					// wall block on top of wall / door for 2 high building.
 					g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
-					
+
 					// default img for non edge and corner roofs
 					image = building;
-						
+
 					// Western most point of building
 					if(j-1 >= 0 && rooms[i][j-1] == null){
 						System.out.println("roofUD");
@@ -218,12 +241,12 @@ public class EditorCanvas extends JPanel {
 					System.out.println("FUCKING DRAWING");
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
 				}
-				
+
 			}
 
 		}
 	}
-	
+
 	/**
 	 * Draws the map from a BOV for making maps because I couldn't get clicking on positions working properly. :~(
 	 * @param tiles - array of location tiles
@@ -236,13 +259,14 @@ public class EditorCanvas extends JPanel {
 				FloorTile t = (FloorTile) tiles[i][j];
 				Tile r = rooms[i][j];
 				if(t!=null){
-					Image image = null; // THIS WAS TO COMPILE SRY
+					System.out.println(t.toString());
+					Image image = getImage(t.toString());; // THIS WAS TO COMPILE SRY
 					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
 				}
 				if(r!=null){
 					Image image = building;
 					System.out.println("PLS DONT BE NULL" + image);
-					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);	
+					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
 				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);
 					offgc.fillRect(j*TILESIZE, i*TILESIZE, TILESIZE, TILESIZE);
@@ -251,9 +275,9 @@ public class EditorCanvas extends JPanel {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public Tile[][] rotate(Tile[][] tiles){
 		Tile[][] newTiles = new Tile[tiles.length][tiles[0].length];
 		// drawing floor
@@ -264,16 +288,16 @@ public class EditorCanvas extends JPanel {
 		}
 		return newTiles;
 	}
-	
 
-	
+
+
 	public void setDirection(Game.Direction d){
 		direction = d;
 	}
 
 	public void setView(String string) {
 		view = string;
-		
+
 	}
 
 }
