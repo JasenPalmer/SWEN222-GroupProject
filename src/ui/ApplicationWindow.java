@@ -48,7 +48,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	public ApplicationWindow(String username) {
 		//Setup
-		super("Shanking PVP Adventure Game");
+		super("Shank the world");
 		this.username = username;
 		client = new Client("localhost", this.username, this);
 		setLayout(null);
