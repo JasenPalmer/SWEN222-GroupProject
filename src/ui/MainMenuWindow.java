@@ -133,6 +133,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(this,  menuOptions, "Join server", JOptionPane.QUESTION_MESSAGE);		
 
 			if(!usernameText.getText().equals("") && !serverText.getText().equals("")){
+				stopMusic();
 				this.dispose();
 				ApplicationWindow game = new ApplicationWindow(usernameText.getText());
 				game.setVisible(true);
