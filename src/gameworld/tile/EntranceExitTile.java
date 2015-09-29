@@ -10,13 +10,15 @@ import java.awt.Point;
  *
  */
 public class EntranceExitTile extends Tile {
-	
+
+	private static final long serialVersionUID = 3137127703217079080L;
+
 	private EntranceExitTile exit;
 	
 	private boolean oneWay;
 
-	public EntranceExitTile(String name, Point pos, boolean oneWay) {
-		super(name, pos);
+	public EntranceExitTile(String name, Point pos, boolean passable, boolean oneWay) {
+		super(name, pos, passable);
 		this.setOneWay(oneWay);
 	}
 

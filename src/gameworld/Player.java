@@ -4,6 +4,7 @@ import gameworld.entity.InteractableEntity;
 import gameworld.entity.Item;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
+import gameworld.location.OutsideLocation;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
@@ -164,8 +165,17 @@ public class Player implements Serializable{
 	public boolean move(Game.Direction dir) {
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
+		if(!tile.isPassable()){return false;}
 		if(tile.containedEntity() != null){
 			if(!(tile.containedEntity() instanceof Item)) {
+				return false;
+			}
+		}
+		// if there is a building tile in front of the player return false
+		if(location instanceof OutsideLocation) {
+			OutsideLocation out = (OutsideLocation) location;
+			Tile[][] tiles = out.getBuildingTiles();
+			if(tiles[tile.getPos().y][tile.getPos().x] != null) {
 				return false;
 			}
 		}

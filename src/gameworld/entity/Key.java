@@ -1,7 +1,6 @@
 package gameworld.entity;
 
 import gameworld.Player;
-import gameworld.tile.Tile;
 
 
 /**

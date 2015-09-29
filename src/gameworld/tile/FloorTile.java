@@ -1,6 +1,5 @@
 package gameworld.tile;
 
-import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -10,8 +9,10 @@ import java.awt.Point;
  */
 public class FloorTile extends Tile {
 
-	public FloorTile(String name, Point pos) {
-		super(name, pos);
+	private static final long serialVersionUID = -8663027195457766041L;
+
+	public FloorTile(String name, Point pos, boolean passable) {
+		super(name, pos, passable);
 	}
 
 }

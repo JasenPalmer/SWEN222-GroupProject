@@ -10,8 +10,10 @@ import java.awt.Point;
  */
 public class BuildingTile extends Tile {
 
-	public BuildingTile(String name, Point pos) {
-		super(name, pos);
+	private static final long serialVersionUID = -7878335571226880684L;
+
+	public BuildingTile(String name, Point pos, boolean passable) {
+		super(name, pos, passable);
 	}
 
 }

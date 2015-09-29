@@ -19,10 +19,12 @@ public abstract class Tile implements Serializable{
 	private Entity entity;
 	private Player player;
 	protected String name;
+	private boolean passable;
 
-	public Tile(String name, Point pos) {
+	public Tile(String name, Point pos, boolean passable) {
 		this.name = name;
 		this.position = pos;
+		this.setPassable(passable);
 	}
 
 	public void setEntity(Entity entity) {
@@ -47,5 +49,13 @@ public abstract class Tile implements Serializable{
 	
 	public String getName() {
 		return name;
+	}
+
+	public boolean isPassable() {
+		return passable;
+	}
+
+	public void setPassable(boolean passable) {
+		this.passable = passable;
 	}
 }

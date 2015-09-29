@@ -4,6 +4,8 @@ import gameworld.tile.Tile;
 
 public class OutsideLocation extends Location {
 
+	private static final long serialVersionUID = 1991918042442774460L;
+	
 	private Tile[][] buildingTiles;
 
 	public OutsideLocation(String name, String description, Tile[][] tiles, Tile[][] buildingTiles) {

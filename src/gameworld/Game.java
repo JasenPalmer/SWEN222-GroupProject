@@ -8,7 +8,6 @@ import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
-import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,10 +16,6 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
-
-import javax.imageio.ImageIO;
-
-import ui.RenderingWindow;
 
 public class Game implements Serializable {
 	
@@ -127,19 +122,19 @@ public class Game implements Serializable {
 		//System.out.println(type);
 		switch(type) {
 			case "Gr":
-				tile = new FloorTile("Grass", new Point(x,y));
+				tile = new FloorTile("Grass", new Point(x,y), true);
 				break;
 			case "Ro":
-				tile = new FloorTile("Rock", new Point(x,y));
+				tile = new FloorTile("Rock", new Point(x,y), true);
 				break;
 			case "Bu":
-				tile = new BuildingTile("Building", new Point(x,y));
+				tile = new BuildingTile("Building", new Point(x,y), false);
 				break;
 			case "Wa":
-				tile = new FloorTile("Water", new Point(x,y));
+				tile = new FloorTile("Water", new Point(x,y), false);
 				break;
 			case "En":
-				tile = new EntranceExitTile("Entrance", new Point(x,y), true);
+				tile = new EntranceExitTile("Entrance", new Point(x,y), false, true);
 				break;
 			default:
 				break;
