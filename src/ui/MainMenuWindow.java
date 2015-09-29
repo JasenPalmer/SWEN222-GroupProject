@@ -117,6 +117,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		switch(e.getActionCommand()){
 		case "Exit":
 			playSound("Button");
+			stopMusic();
 			this.dispose();
 			break;
 		case "Host":
