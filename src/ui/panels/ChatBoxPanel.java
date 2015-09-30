@@ -69,4 +69,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		textArea.append("\n" + user + ": " + message);
 		textArea.setCaretPosition(textArea.getDocument().getLength());
 	}
+	
+	//Getters
+	public JTextField getTextField(){return this.textBox;}
 }
