@@ -141,10 +141,6 @@ public class Server {
 		}
 	}
 	
-	private Direction parseDirection(int keyPress) {
-		
-		}
-	}
 	
 	public void stopServer(){
 		for(ClientThread t : connections){
