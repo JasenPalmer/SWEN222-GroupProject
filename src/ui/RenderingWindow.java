@@ -34,6 +34,8 @@ public class RenderingWindow extends JPanel{
 
 	private int cameraX;
 	private int cameraY;
+	
+	private Tile[][] locationTiles;
 
 	private Player player;
 	private ApplicationWindow applicationWindow;
@@ -117,6 +119,7 @@ public class RenderingWindow extends JPanel{
 		Location l = player.getLocation();
 
 		Tile[][] tiles = l.getTiles();
+		locationTiles = tiles;
 		Tile[][] rooms = null;
 
 		if(l instanceof OutsideLocation){
@@ -161,17 +164,18 @@ public class RenderingWindow extends JPanel{
 		 * @param offgc - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
-			updateCamera();
+			updateCamera(getRealPlayerCoords(tiles));
 
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
+					
 					FloorTile t = (FloorTile) tiles[i][j];
 					if(t!=null) {
 						// DRAWING TERRAIN
-
+						
 						Image image = getImage(t.toString());
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
 
@@ -231,6 +235,19 @@ public class RenderingWindow extends JPanel{
 			}
 		}
 
+		private int[] getRealPlayerCoords(Tile[][] tiles) {
+			int[] xy = new int[2];
+			for(int i = 0; i < tiles.length; i++){
+				for(int j = tiles[i].length-1; j >=0 ; j--){
+					if(tiles[i][j]!=null && tiles[i][j].getPos().equals(player.getPosition())){
+						xy[0] = j;
+						xy[1] = i;
+					}
+				}
+			}
+			return xy;
+		}
+
 		/**
 		 *
 		 * Rotates given array of tiles 90 degrees counter-clockwise.
@@ -263,9 +280,20 @@ public class RenderingWindow extends JPanel{
 			return direction;
 		}
 
-		public void updateCamera(){
-			cameraX = (int) ((player.getPosition().getX()*TILESIZE/2) + (player.getPosition().getY()*TILESIZE/2) + playerImage.getWidth(null)/2 - this.getWidth()/2);
-			cameraY = (int) ((player.getPosition().getY()*TILESIZE/4)-(player.getPosition().getX()*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
-		}
+		public void updateCamera(int[] realCoord){
+			int playerX = realCoord[0];
+			int playerY = realCoord[1];
+		
+			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
+			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
+			
+			System.out.println("PLAYER X: "+playerX + ", PLAYER Y: "+playerY);
+			System.out.println("CAMERA X: "+cameraX + ", CAMERA Y: "+cameraY);
+			
+			int diffX = playerX - cameraX;
+			int diffY = playerY - cameraY;
+			
+			System.out.println("difference X: "+ diffX + ", Difference Y: "+diffY);
+	}
 }
 
