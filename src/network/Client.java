@@ -128,7 +128,7 @@ public class Client {
 				}
 				else if(event.getType() == EventType.MESSAGE){
 					ChatBoxPanel chatBox = gui.getChatBox();
-					chatBox.displayMessage(user, event.getMessage());
+					chatBox.displayMessage(event.getUser(), event.getMessage());
 				}
 			}
 		}

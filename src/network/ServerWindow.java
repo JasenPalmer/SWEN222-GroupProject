@@ -68,6 +68,7 @@ public class ServerWindow extends JFrame implements WindowListener {
 	 */
 	public void displayMessage(String message, String user){
 		console.append("\n[MESSAGE] - " + user + ": " + message);
+		console.setCaretPosition(console.getDocument().getLength());
 	}
 	
 	/**
@@ -76,6 +77,7 @@ public class ServerWindow extends JFrame implements WindowListener {
 	 */
 	public void displayEvent(String event){
 		console.append("\n[EVENT] - " + event);
+		console.setCaretPosition(console.getDocument().getLength());
 	}
 	
 	/**
@@ -84,6 +86,7 @@ public class ServerWindow extends JFrame implements WindowListener {
 	 */
 	public void displayError(String error){
 		console.append("\n[ERROR] - " + error);
+		console.setCaretPosition(console.getDocument().getLength());
 	}
 
 	@Override
