@@ -3,19 +3,26 @@ package ui.panels;
 
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
+import java.awt.dnd.DragSourceContext;
+import java.awt.dnd.DragSourceDragEvent;
+import java.awt.dnd.DragSourceDropEvent;
+import java.awt.dnd.DragSourceEvent;
+import java.awt.dnd.DragSourceListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
-import javax.swing.JButton;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
-import javax.swing.ToolTipManager;
+import javax.swing.TransferHandler;
 
 
-public class InventoryPanel extends JLayeredPane implements MouseListener{
+public class InventoryPanel extends JLayeredPane implements MouseListener, DragSourceListener{
 
 	Image backgroundImage; 
 	Item[][] inventArray = new Item[4][2];
@@ -25,7 +32,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	private boolean lootOpen;
 	private LootInventoryPanel lootInvent;
 	private InventoryPanel self = this;
-
+	
+	//Sound paths
+		private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
 	public InventoryPanel(){
 		setLayout(null);
@@ -105,7 +114,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 42,52);
 					this.add(item,1,0);
 					if(!inventArray[i][j].getDesciption().equals("Placeholder")){
-						item.setToolTipText(inventArray[i][j].getDesciption());
+						item.setToolTipText(inventArray[i][j].getDesciption());						
 						item.addMouseListener(new MouseAdapter(){
 							public void mouseClicked(MouseEvent e){
 								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -166,6 +175,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 					if(weapon != null && addItem(weapon)){
 						weapon = null;
+						playSound("Button");
 					}
 					else{
 						System.out.println("Inventory full can't dequip weapon");
@@ -174,6 +184,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
 					if(armour != null && addItem(armour)){
 						armour = null;
+						playSound("Button");
 					}
 					else{
 						System.out.println("Inventory full can't dequip armour");
@@ -194,6 +205,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 										if(temp != null){
 											addItem(temp);
 										}
+										playSound("Button");
 									}
 									else if(inventArray[i][j].getType().equals("Armour")){
 										if(armour != null){
@@ -204,6 +216,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 										if(temp != null){
 											addItem(temp);
 										}
+										playSound("Button");
 									}
 								}
 							}
@@ -216,8 +229,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					for(int j = 0; j < inventArray[0].length; j++){
 						if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
-								if(lootInvent.addItem(inventArray[i][j])){		//Null pointer
+								if(lootInvent.addItem(inventArray[i][j])){
 									inventArray[i][j] = new Item("Empty", "Placeholder");
+									playSound("Button");
 								}
 								else{
 									System.out.println("Loot inventory is full can't swap item");
@@ -258,7 +272,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 	}
-
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1){
@@ -266,9 +280,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				for(int i = 0; i < inventArray.length; i++){
 					for(int j = 0; j < inventArray[0].length; j++){
 						if(inventArray[i][j]!= null){
-							if(inventArray[i][j].contains(e.getX(), e.getY())){
+							if(inventArray[i][j].contains(e.getX(), e.getY()) && !inventArray[i][j].getName().equals(movedItem.getName())){
 								addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
 								movedItem = null;
+								playSound("Button");
 							}
 //							else if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 //								switch(movedItem.getType()){
@@ -288,6 +303,25 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	private void playSound(String sound){
+		String soundPath = null;
+		switch(sound){
+		case "Button":
+			soundPath = buttonSound;
+			break;
+		default:
+			break;
+		}
+		try{
+			File file = new File(soundPath);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(file));
+			clip.start();
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+	
 	private Point getIndices(Item item){
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
@@ -300,5 +334,34 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 		return null;		
+	}
+
+	@Override
+	public void dragDropEnd(DragSourceDropEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dragEnter(DragSourceDragEvent e) {
+		System.out.println(e.toString());
+	}
+
+	@Override
+	public void dragExit(DragSourceEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dragOver(DragSourceDragEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dropActionChanged(DragSourceDragEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

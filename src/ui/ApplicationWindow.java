@@ -4,32 +4,32 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JWindow;
-import javax.swing.SwingConstants;
 
 import network.Client;
-import ui.panels.*;
+import ui.panels.BackgroundPanel;
+import ui.panels.ChatBoxPanel;
+import ui.panels.InventoryPanel;
+import ui.panels.Item;
+import ui.panels.LootInventoryPanel;
+import ui.panels.SettingsMenu;
 
 
 public class ApplicationWindow extends JFrame implements ActionListener, KeyListener, WindowListener{
@@ -39,12 +39,23 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private JLayeredPane overlayPanel;
 	private LootInventoryPanel lootInventPanel;
 	private ChatBoxPanel chatBoxPanel;
+	private SettingsMenu settings;
 	private RenderingWindow rw;
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
 	private Client client;
 	private Game game;
 	private String username;
+	private Clip musicClip;
+	private boolean showSettings = false;
+	private String track = null;
+	private int initVolume = -30;
+
+	//Sound paths
+	private String buttonSound = "src/ui/sounds/buttonSound.wav";
+	private String track1 = "src/ui/sounds/track1.wav";
+	private String track2 = "src/ui/sounds/track2.wav";
+	private String fighting = "src/ui/sounds/fighting.wav";
 
 	public ApplicationWindow(String username) {
 		//Setup
@@ -57,6 +68,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		addWindowListener(this);
+		playMusic("Track 1");
+		track = "Track 1";
 
 		//Setup frame
 		setResizable(false);
@@ -98,10 +111,26 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup the menu bar
 		setupMenu();
 
+		//Setup settings menu
+		settings = new SettingsMenu(this);
+		layeredPanel.add(settings,3,0);
+		setSettings();
+
 		//Setup buttons
 		setupButtons();
 	}
 
+	private void setSettings(){
+		if(showSettings == true){
+			settings.setVisible(true);
+			settings.setFocusable(true);
+		}
+		else{
+			settings.setVisible(false);
+			settings.setFocusable(false);
+		}
+	}
+	
 	/**
 	 * Changes visibility of the inventory panel
 	 */
@@ -225,6 +254,69 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		if(rw != null) rw.repaint();
 	}
 
+	private void playSound(String sound){
+		String soundPath = null;
+		switch(sound){
+		case "Button":
+			soundPath = buttonSound;
+			break;
+		default:
+			break;
+		}
+		try{
+			File file = new File(soundPath);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(file));
+			clip.start();
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+
+	private void playMusic(String music){
+		switch(music){
+		case "Track 1":
+			track = track1;
+			break;
+		case "Track 2":
+			track = track2;
+			break;
+		case "Fighting":
+			track = fighting;
+			break;
+		}
+		try{
+			File file = new File(track);
+			musicClip = AudioSystem.getClip();
+			musicClip.open(AudioSystem.getAudioInputStream(file));
+			changeVolume(initVolume);
+			musicClip.start();
+			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+
+	private void stopMusic(){
+		musicClip.stop();
+	}
+
+	public void toggleMusic(){
+		stopMusic();
+		if(track.equals("Track 1")){
+			playMusic("Track 2");
+			track = "Track 2";
+		}
+		else if(track.equals("Track 2")){
+			playMusic("Fighting");
+			track = "Fighting";
+		}
+		else{
+			playMusic("Track 1");
+			track = "Track 1";
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
@@ -310,9 +402,25 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case KeyEvent.VK_D:
 			client.registerKeyPress(e);
 			break;
+		case KeyEvent.VK_ESCAPE:
+			if(showSettings == true){
+				showSettings = false;
+			}
+			else{
+				showSettings = true;
+			}
+			setSettings();
+			break;
 		default:
 			break;
 		}
+	}
+
+	public void changeVolume(int change){
+		//-60 to 6
+		FloatControl volume = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
+		volume.setValue(change);
+		initVolume = change;
 	}
 
 	private Direction directionSetter(String key){

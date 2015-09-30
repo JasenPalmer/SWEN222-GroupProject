@@ -181,6 +181,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			musicClip = AudioSystem.getClip();
 			musicClip.open(AudioSystem.getAudioInputStream(file));
 			musicClip.start();
+			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		}catch(Exception e){
 			System.out.println(e.getLocalizedMessage());
 		}

@@ -26,7 +26,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		//Setup
 		this.inventPanel = invent;
 		setLayout(null);
-		setBounds(330, 100, 360, 240);
+		setBounds(345, 100, 360, 240);
 
 		//Add background
 		this.add(lootInventBackground,0,0);
