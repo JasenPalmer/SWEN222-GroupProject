@@ -274,7 +274,6 @@ public class RenderingWindow extends JPanel{
 		 */
 		public void setDirection(Game.Direction d){
 			direction = d;
-			player.setDirection(d);
 		}
 
 		/**
