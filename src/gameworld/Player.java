@@ -9,6 +9,7 @@ import gameworld.location.OutsideLocation;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
 public class Player implements Serializable{
@@ -188,22 +189,23 @@ public class Player implements Serializable{
 	}
 
 
+	/**
+	 * Calculates the direction the player should move based on the direction of the camera(direction field)
+	 * @param dir - the direction the player is trying to move in
+	 * @return the direction the player should move in
+	 */
 	private Direction calcDir(Direction dir) {
-		System.out.println(dir.ordinal());
+		System.out.println(direction);
 		switch(direction) {
 		case EAST:
-			System.out.println(Direction.EAST.ordinal() + dir.ordinal());
 			return Direction.values()[Direction.EAST.ordinal() + dir.ordinal()];
 		case NORTH:
-			System.out.println(Direction.NORTH.ordinal() + dir.ordinal());
 			return Direction.values()[Direction.NORTH.ordinal() + dir.ordinal()];
 		case SOUTH:
-			System.out.println(Direction.SOUTH.ordinal() + dir.ordinal());
 			int i = Direction.SOUTH.ordinal() + dir.ordinal();
 			if(i > 3) { i = i - 4;}
 			return Direction.values()[i];
 		case WEST:
-			System.out.println(Direction.WEST.ordinal() + dir.ordinal());
 			int j = Direction.WEST.ordinal() + dir.ordinal();
 			if(j > 3) { j = j - 4;}
 			return Direction.values()[j];
@@ -266,9 +268,31 @@ public class Player implements Serializable{
 		this.location = location;
 	}
 	
-	public void setDirection(Direction dir) {
-		this.direction = dir;
+	public void changeDirection(int key) {
+		switch(key) {
+		case KeyEvent.VK_E:
+			switch(direction){
+			case NORTH:
+				direction = Direction.WEST;
+			case EAST:
+				direction = Direction.NORTH;
+			case SOUTH:
+				direction = Direction.EAST;
+			case WEST:
+				direction = Direction.SOUTH;
+			}
+		case KeyEvent.VK_Q:
+			switch(direction){
+			case NORTH:
+				direction = Direction.EAST;
+			case EAST:
+				direction = Direction.SOUTH;
+			case SOUTH:
+				direction = Direction.WEST;
+			case WEST:
+				direction = Direction.NORTH;
+			}
+		}
 	}
-
 
 }

@@ -31,10 +31,6 @@ public class Game implements Serializable {
 		locations = new HashSet<Location>();
 		parseLocationFolder("locations");
 	}
-	
-	public static void main(String[] args) {
-		new Game();
-	}
 
 	/**
 	 * Create all locations from a folder
