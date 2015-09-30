@@ -468,11 +468,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
-
-	public Player getPlayer(){
-		return this.game.parsePlayer(username);
-	}
-
+	public Player getPlayer(){return this.game.parsePlayer(username);}
+	public Game getGame(){ return this.game;}
+	
 	//Setters
 	public void setGame(Game game){
 		this.game = game;
