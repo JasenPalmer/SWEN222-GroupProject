@@ -149,8 +149,6 @@ public class RenderingWindow extends JPanel{
 
 		}
 
-
-
 		/**
 		 * Iterates through arrays of tiles drawing the map terrain, then iterates through
 		 * room tiles to draw buildings depending on the arrangement of tiles.
@@ -181,7 +179,6 @@ public class RenderingWindow extends JPanel{
 
 						// DRAWING PLAYER
 						if(t.getPos().equals(player.getPosition())){
-							System.out.println(player.getPosition());
 							offgc.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 
@@ -235,6 +232,12 @@ public class RenderingWindow extends JPanel{
 			}
 		}
 
+		
+		/**
+		 * gets the player x and y in the current tile array regardless of rotation.
+		 * @param tiles
+		 * @return int of player x and y
+		 */
 		private int[] getRealPlayerCoords(Tile[][] tiles) {
 			int[] xy = new int[2];
 			for(int i = 0; i < tiles.length; i++){
@@ -271,6 +274,7 @@ public class RenderingWindow extends JPanel{
 		 */
 		public void setDirection(Game.Direction d){
 			direction = d;
+			player.setDirection(d);
 		}
 
 		/**
@@ -280,20 +284,18 @@ public class RenderingWindow extends JPanel{
 			return direction;
 		}
 
+		/**
+		 * changes the camera coords to the fit player in middle of screen
+		 * camera x = player rendering x position - (renderwindow size / 2)
+		 * 
+		 * @param realCoord - int array of player x and y in the tile array
+		 */
 		public void updateCamera(int[] realCoord){
 			int playerX = realCoord[0];
 			int playerY = realCoord[1];
 		
 			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
 			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
-			
-			System.out.println("PLAYER X: "+playerX + ", PLAYER Y: "+playerY);
-			System.out.println("CAMERA X: "+cameraX + ", CAMERA Y: "+cameraY);
-			
-			int diffX = playerX - cameraX;
-			int diffY = playerY - cameraY;
-			
-			System.out.println("difference X: "+ diffX + ", Difference Y: "+diffY);
 	}
 }
 
