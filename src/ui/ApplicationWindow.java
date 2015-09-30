@@ -75,7 +75,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 		//Setup frame
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(450, 10, 1050, 1020);
 
 		//Setup layered pane
@@ -386,10 +386,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case KeyEvent.VK_Q:
 			rw.setDirection(directionSetter("Q"));
+			client.registerKeyPress(e);
 			rw.repaint();
 			break;
 		case KeyEvent.VK_E:
 			rw.setDirection(directionSetter("E"));
+			client.registerKeyPress(e);
 			rw.repaint();
 			break;
 		case KeyEvent.VK_W:
@@ -481,7 +483,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -493,30 +494,25 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 }
