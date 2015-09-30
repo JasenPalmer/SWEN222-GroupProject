@@ -107,7 +107,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		inventPanel.setLootInventPanel(lootInventPanel);
 
 		//Setup chat box
-		chatBoxPanel = new ChatBoxPanel(client);
+		chatBoxPanel = new ChatBoxPanel(client, this);
 		layeredPanel.add(chatBoxPanel,1,0);
 
 		//Setup the menu bar

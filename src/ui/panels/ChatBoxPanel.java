@@ -1,19 +1,17 @@
 package ui.panels;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import network.Client;
+import ui.ApplicationWindow;
 
 public class ChatBoxPanel extends JPanel implements KeyListener{
 
@@ -22,9 +20,11 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	private JTextField textBox = new JTextField();
 	private JScrollPane scrollPane = new JScrollPane();
 	private Client client;
+	private ApplicationWindow window;
 
-	public ChatBoxPanel(Client client){
+	public ChatBoxPanel(Client client, ApplicationWindow window){
 		this.client = client;
+		this.window = window;
 		setLayout(null);
 
 		setBounds(10, 760, 450, 190);
@@ -61,10 +61,12 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	private void sendMessage(){
 		client.registerMessage(textBox.getText());
 		textBox.setText("");
+		window.requestFocus();
 	}
 
 	public void displayMessage(String user, String message){
 		System.out.println(user + ": " + message);
 		textArea.append("\n" + user + ": " + message);
+		textArea.setCaretPosition(textArea.getDocument().getLength());
 	}
 }
