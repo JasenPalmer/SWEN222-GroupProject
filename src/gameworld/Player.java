@@ -54,7 +54,7 @@ public class Player implements Serializable{
 	/**
 	 * Direction that the screen is facing
 	 */
-	private Direction direction = Game.Direction.WEST;
+	private Direction direction = Game.Direction.NORTH;
 
 	public Player(String name, Game game) {
 		this.name = name;
