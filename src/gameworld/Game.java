@@ -119,7 +119,6 @@ public class Game implements Serializable {
 
 	private Tile parseTile(String type, int x, int y) {
 		Tile tile = null;
-		//System.out.println(type);
 		switch(type) {
 			case "Gr":
 				tile = new FloorTile("Grass", new Point(x,y), true);

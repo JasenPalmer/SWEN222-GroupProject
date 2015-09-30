@@ -1,5 +1,6 @@
 package gameworld;
 
+import gameworld.Game.Direction;
 import gameworld.entity.InteractableEntity;
 import gameworld.entity.Item;
 import gameworld.location.InsideLocation;
@@ -50,13 +51,15 @@ public class Player implements Serializable{
 	 */
 	private Point position;
 	
-	private Game game;
+	/**
+	 * Direction that the screen is facing
+	 */
+	private Direction direction = Game.Direction.WEST;
 
 	public Player(String name, Game game) {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
 		holding = false;
-		this.game = game;
 		location = game.getLocations().iterator().next();
 		position = new Point(2, 2);
 	}
@@ -163,6 +166,7 @@ public class Player implements Serializable{
 	 * @return true if the player moved otherwise false
 	 */
 	public boolean move(Game.Direction dir) {
+		dir = calcDir(dir);
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
 		if(!tile.isPassable()){return false;}
@@ -183,6 +187,30 @@ public class Player implements Serializable{
 		return true;
 	}
 
+
+	private Direction calcDir(Direction dir) {
+		System.out.println(dir.ordinal());
+		switch(direction) {
+		case EAST:
+			System.out.println(Direction.EAST.ordinal() + dir.ordinal());
+			return Direction.values()[Direction.EAST.ordinal() + dir.ordinal()];
+		case NORTH:
+			System.out.println(Direction.NORTH.ordinal() + dir.ordinal());
+			return Direction.values()[Direction.NORTH.ordinal() + dir.ordinal()];
+		case SOUTH:
+			System.out.println(Direction.SOUTH.ordinal() + dir.ordinal());
+			int i = Direction.SOUTH.ordinal() + dir.ordinal();
+			if(i > 3) { i = i - 4;}
+			return Direction.values()[i];
+		case WEST:
+			System.out.println(Direction.WEST.ordinal() + dir.ordinal());
+			int j = Direction.WEST.ordinal() + dir.ordinal();
+			if(j > 3) { j = j - 4;}
+			return Direction.values()[j];
+		default:
+			return Direction.NORTH;
+		}
+	}
 
 	/**
 	 * updates the players position field to one tile in a direction
@@ -236,6 +264,10 @@ public class Player implements Serializable{
 
 	public void setLocation(InsideLocation location) {
 		this.location = location;
+	}
+	
+	public void setDirection(Direction dir) {
+		this.direction = dir;
 	}
 
 
