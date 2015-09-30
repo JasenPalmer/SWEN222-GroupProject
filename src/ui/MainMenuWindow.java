@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 import network.Server;
@@ -39,11 +40,12 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 
 	public MainMenuWindow(){
 		super("");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		playMusic();
 		this.setResizable(false);
 		setLayout(null);
 		setBounds(450, 10, 1050, 1020);
-		addBackground();
+		addBackground();	
 	}
 
 	private void addBackground(){
@@ -132,13 +134,19 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			Component[] menuOptions = {serverLabel, serverText, usernameLabel, usernameText};
 			JOptionPane.showMessageDialog(this,  menuOptions, "Join server", JOptionPane.QUESTION_MESSAGE);		
 
-			if(!usernameText.getText().equals("") && !serverText.getText().equals("")){
+			String defaultServer = "localhost";
+			if(!usernameText.getText().equals("")  && serverText.getText().equals("")){
 				stopMusic();
 				this.dispose();
-				ApplicationWindow game = new ApplicationWindow(usernameText.getText());
+				ApplicationWindow game = new ApplicationWindow(defaultServer,usernameText.getText());
 				game.setVisible(true);
 			}
-
+			else if(!usernameText.getText().equals("") && !serverText.getText().equals("")){
+				stopMusic();
+				this.dispose();
+				ApplicationWindow game = new ApplicationWindow(serverText.getText(),usernameText.getText());
+				game.setVisible(true);
+			}
 			break;
 		case "Mute":
 			if(muted == true){

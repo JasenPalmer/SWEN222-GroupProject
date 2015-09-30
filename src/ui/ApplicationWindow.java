@@ -46,6 +46,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private Client client;
 	private Game game;
 	private String username;
+	private String host;
 	private Clip musicClip;
 	private boolean showSettings = false;
 	private String track = null;
@@ -57,11 +58,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private String track2 = "src/ui/sounds/track2.wav";
 	private String fighting = "src/ui/sounds/fighting.wav";
 
-	public ApplicationWindow(String username) {
+	public ApplicationWindow(String host, String username) {
 		//Setup
 		super("Shank the world");
+		this.host = host;
 		this.username = username;
-		client = new Client("localhost", this.username, this);
+		client = new Client(this.host, this.username, this);
 		setLayout(null);
 		setResizable(false);
 		addKeyListener(this);
@@ -73,7 +75,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 		//Setup frame
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(450, 10, 1050, 1020);
 
 		//Setup layered pane
