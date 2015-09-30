@@ -109,10 +109,30 @@ public class Server {
 		if(toProcess == null) return;
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			boolean hasMoved = gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()));
-			System.out.println(hasMoved);
+			boolean hasMoved = false;
+			switch(toProcess.getKeyCode()) {
+			case KeyEvent.VK_W:
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
+				break;
+			case KeyEvent.VK_D:
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
+				break;
+			case KeyEvent.VK_S:
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
+				break;
+			case KeyEvent.VK_A:
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
+				break;
+			case KeyEvent.VK_Q:
+				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
+				break;
+			case KeyEvent.VK_E:
+				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
+				break;
+			default:
+				break;
+			}
 			if(hasMoved) updateGUI();
-			//if(gameState.movePlayer(toProcess.getUser(), parseDirection(toProcess.getKeyCode()))) updateGUI();
 			break;
 		case MESSAGE:
 			break;
@@ -122,17 +142,7 @@ public class Server {
 	}
 	
 	private Direction parseDirection(int keyPress) {
-		switch(keyPress) {
-		case KeyEvent.VK_W:
-			return Direction.NORTH;
-		case KeyEvent.VK_D:
-			return Direction.EAST;
-		case KeyEvent.VK_S:
-			return Direction.SOUTH;
-		case KeyEvent.VK_A:
-			return Direction.WEST;
-		default:
-			return null;
+		
 		}
 	}
 	
