@@ -1,14 +1,19 @@
 package ui.panels;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
+import javax.swing.border.Border;
 
 import network.Client;
 import ui.ApplicationWindow;
@@ -19,31 +24,50 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	private JTextArea textArea = new JTextArea();
 	private JTextField textBox = new JTextField();
 	private JScrollPane scrollPane = new JScrollPane();
+	private JViewport vp = new JViewport();
 	private Client client;
 	private ApplicationWindow window;
 
 	public ChatBoxPanel(Client client, ApplicationWindow window){
 		this.client = client;
 		this.window = window;
+		setOpaque(false);
 		setLayout(null);
 
-		setBounds(10, 760, 450, 190);
+		setBounds(0, 535, 458, 215);
 
+		//Setup background
+		ChatBoxBackground background = new ChatBoxBackground();
+		this.add(background,0,0);
+		
 		//Set text area
 		textArea.setEditable(false);
 		textArea.append("Welcome to the chat!");
-
+		Font font = new Font("Verdana", Font.BOLD, 12);
+		textArea.setFont(font);
+		textArea.setForeground(Color.YELLOW);
+		textArea.setOpaque(false);
+		
 		//Setup scroll pane
 		scrollPane = new JScrollPane(textArea);
-		scrollPane.setBounds(0,0,450,170);
+		scrollPane.getViewport().setOpaque(false);
+		Border border = BorderFactory.createEmptyBorder(0,0,0,0);
+		scrollPane.setViewportBorder(border);
+		scrollPane.setBorder(border);
+		scrollPane.setBounds(10,15,450,170);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
-		this.add(scrollPane);	
+		scrollPane.setOpaque(false);
+		this.add(scrollPane,2,0);	
 
 		//Setup text field
 		textBox = new JTextField();
-		textBox.setBounds(0, 170, 450, 20);
+		textBox.setBounds(10, 185, 450, 20);
 		textBox.addKeyListener(this);
-		this.add(textBox);
+		textBox.setOpaque(false);
+		textBox.setBorder(border);
+		textBox.setFont(font);
+		textBox.setForeground(Color.YELLOW);
+		this.add(textBox,2,0);
 	}
 
 	@Override
@@ -52,6 +76,9 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 			System.out.println("enter");
 			if(!textBox.getText().equals("")){
 				sendMessage();
+			}
+			else{
+				window.requestFocus();
 			}
 		}
 	}

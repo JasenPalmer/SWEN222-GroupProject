@@ -7,6 +7,7 @@ import java.io.File;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -188,6 +189,8 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			File file = new File(music);
 			musicClip = AudioSystem.getClip();
 			musicClip.open(AudioSystem.getAudioInputStream(file));
+			FloatControl volume = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
+			volume.setValue(-15);
 			musicClip.start();
 			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		}catch(Exception e){
