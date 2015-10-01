@@ -125,6 +125,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			break;
 		case "Host":
 			playSound("Button");
+			new Server();
 			break;
 		case "Join":
 			playSound("Button");
