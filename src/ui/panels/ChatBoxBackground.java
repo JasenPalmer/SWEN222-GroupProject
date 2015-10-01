@@ -21,7 +21,7 @@ public class ChatBoxBackground extends JPanel{
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
-		setBounds(0, 0, 450, 250);	
+		setBounds(0, 0, 470, 250);	
 	}
 	
 	public void paintComponent(Graphics g) { 

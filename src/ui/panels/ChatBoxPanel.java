@@ -1,13 +1,13 @@
 package ui.panels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,7 +34,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		setOpaque(false);
 		setLayout(null);
 
-		setBounds(0, 535, 458, 215);
+		setBounds(0, 535, 470, 215);
 
 		//Setup background
 		ChatBoxBackground background = new ChatBoxBackground();
@@ -47,6 +47,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		textArea.setFont(font);
 		textArea.setForeground(Color.YELLOW);
 		textArea.setOpaque(false);
+		textArea.setLineWrap(true);
 		
 		//Setup scroll pane
 		scrollPane = new JScrollPane(textArea);
@@ -56,6 +57,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		scrollPane.setBorder(border);
 		scrollPane.setBounds(10,15,450,170);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
+		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
 		scrollPane.setOpaque(false);
 		this.add(scrollPane,2,0);	
 
