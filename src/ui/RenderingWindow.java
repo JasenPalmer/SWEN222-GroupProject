@@ -31,6 +31,9 @@ public class RenderingWindow extends JPanel{
 	private Image roofUD;
 	private Image roofCornerO;
 	private Image roofCornerI;
+	
+	private Image[][] robewalk = new Image[4][9];
+	
 
 	private int cameraX;
 	private int cameraY;
@@ -68,6 +71,16 @@ public class RenderingWindow extends JPanel{
 			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
 			playerImage = ImageIO.read(new File("src/ui/images/player/0.png"));
 
+			
+//			// robewalking
+//			for(int i  = 0; i < robewalk.length; i++){
+//				for(int j = 0; j < robewalk[i].length; i++){
+//					Image img = ImageIO.read(new File("src/ui/images/player/robe/robe-"+i+"move-"+j+".png"));
+//					robewalk[i][j] = img; 
+//				}
+//			}
+//			
+			
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
