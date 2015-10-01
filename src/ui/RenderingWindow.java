@@ -75,7 +75,6 @@ public class RenderingWindow extends JPanel{
 //			robewalking
 			for(int i  = 0; i < robewalk.length; i++){
 				for(int j = 0; j < robewalk[i].length; j++){
-					System.out.println("i: "+i+" j: "+j);
 					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
 					robewalk[i][j] = img; 
 				}
@@ -84,7 +83,6 @@ public class RenderingWindow extends JPanel{
 //			leatherwalking
 			for(int i  = 0; i < leatherwalk.length; i++){
 				for(int j = 0; j < leatherwalk[i].length; j++){
-					System.out.println("i: "+i+" j: "+j);
 					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
 					leatherwalk[i][j] = img; 
 				}
@@ -92,7 +90,6 @@ public class RenderingWindow extends JPanel{
 			
 			
 		}catch(IOException e){
-			System.out.println("FUCK");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
@@ -231,11 +228,11 @@ public class RenderingWindow extends JPanel{
 		private Image getPlayerImage(){
 			int directionInt = player.getDirectionMoved();
 			Image image = null;
-			if(directionInt==1){
-				image = leatherwalk[directionInt][player.getWalkPoint()];
-			} else {
+//			if(directionInt==1){
+//				image = leatherwalk[directionInt][player.getWalkPoint()];
+//			} else {
 				image = robewalk[directionInt][player.getWalkPoint()];
-			}
+//			}
 			
 			return image;
 		}

@@ -231,12 +231,12 @@ public class Player implements Serializable{
 		case NORTH:
 			System.out.println("Moving North");
 			position = new Point(position.x, position.y-1);
-			walkDir = 3;
+			walkDir = 0;
 			break;
 		case EAST:
 			System.out.println("Moving East");
 			position = new Point(position.x+1, position.y);
-			walkDir = 1;
+			walkDir = 0;
 			break;
 		case SOUTH:
 			System.out.println("Moving South");
