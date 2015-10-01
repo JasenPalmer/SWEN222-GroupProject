@@ -117,9 +117,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		settings = new SettingsMenu(this);
 		layeredPanel.add(settings,3,0);
 		setSettings();
-
-		//Setup buttons
-		setupButtons();
 	}
 
 	private void setSettings(){
@@ -183,6 +180,13 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 		JMenu option2 = new JMenu("Edit");
 		option2List.add(new JMenuItem("Shank all players"));
+		option2List.add(new JMenuItem("Add Shank"));
+		option2List.add(new JMenuItem("Add Potion"));
+		option2List.add(new JMenuItem("Add Shank loot"));
+		option2List.add(new JMenuItem("Add Potion loot"));
+		option2List.add(new JMenuItem("Add Katana"));
+		option2List.add(new JMenuItem("Add Helmet1"));
+		option2List.add(new JMenuItem("Add Helmet2"));
 
 		for(JMenuItem jmItem : option2List){
 			option2.add(jmItem);
@@ -193,63 +197,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		menuBar.add(option2);
 
 		this.setJMenuBar(menuBar);
-	}
-
-	/**
-	 * Creates and positions the UI's buttons
-	 */
-	private void setupButtons(){
-		JButton addShankButton = new JButton("Add Shank");
-		addShankButton.setBounds(500,800,100,30);
-		addShankButton.addActionListener(this);
-		addShankButton.setFocusable(false);
-		this.add(addShankButton,0);
-
-		JButton addPotionButton = new JButton("Add Potion");
-		addPotionButton.setBounds(650,800,100,30);
-		addPotionButton.addActionListener(this);
-		addPotionButton.setFocusable(false);
-		this.add(addPotionButton,0);
-
-		//Test Button
-		JButton testButton = new JButton("Test");
-		testButton.setBounds(800,800,100,30);
-		testButton.addActionListener(this);
-		testButton.setFocusable(false);
-		this.add(testButton,0);
-
-		//add shank loot
-		JButton addShankLoot = new JButton("Add Shank loot");
-		addShankLoot.setBounds(500,850,100,30);
-		addShankLoot.addActionListener(this);
-		addShankLoot.setFocusable(false);
-		this.add(addShankLoot,0);
-
-		//Add potion loot
-		JButton addPotionLoot = new JButton("Add Potion loot");
-		addPotionLoot.setBounds(650,850,100,30);
-		addPotionLoot.addActionListener(this);
-		addPotionLoot.setFocusable(false);
-		this.add(addPotionLoot,0);
-
-		//More buttons
-		JButton addKatana = new JButton("Add Katana");
-		addKatana.setBounds(500,890,100,30);
-		addKatana.addActionListener(this);
-		addKatana.setFocusable(false);
-		this.add(addKatana,0);
-
-		JButton addHelmet1 = new JButton("Add Helmet1");
-		addHelmet1.setBounds(650,890,100,30);
-		addHelmet1.addActionListener(this);
-		addHelmet1.setFocusable(false);
-		this.add(addHelmet1,0);
-
-		JButton addHelmet2 = new JButton("Add Helmet2");
-		addHelmet2.setBounds(800,890,100,30);
-		addHelmet2.addActionListener(this);
-		addHelmet2.setFocusable(false);
-		this.add(addHelmet2,0);
 	}
 
 	public void repaintRenderingWindow(){

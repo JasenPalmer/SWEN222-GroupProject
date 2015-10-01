@@ -34,7 +34,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		setOpaque(false);
 		setLayout(null);
 
-		setBounds(0, 535, 470, 215);
+		setBounds(0, 530, 470, 215);
 
 		//Setup background
 		ChatBoxBackground background = new ChatBoxBackground();
@@ -55,7 +55,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		Border border = BorderFactory.createEmptyBorder(0,0,0,0);
 		scrollPane.setViewportBorder(border);
 		scrollPane.setBorder(border);
-		scrollPane.setBounds(10,15,450,170);
+		scrollPane.setBounds(10,15,450,175);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
 		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
 		scrollPane.setOpaque(false);
@@ -75,7 +75,6 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if(e.getKeyChar() == '\n'){
-			System.out.println("enter");
 			if(!textBox.getText().equals("")){
 				sendMessage();
 			}
