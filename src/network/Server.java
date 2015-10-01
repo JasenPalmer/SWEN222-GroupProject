@@ -210,6 +210,9 @@ public class Server {
 					case UPDATE_GUI:
 						console.displayError("Unexpected EventType on server-side: UPDATE_GUI");
 						break;
+					case CLOSE:
+						if(!currentEvent.getUser().equals("Server")) close();
+						break;
 					}
 				}
 			}
@@ -239,11 +242,15 @@ public class Server {
 		
 		public void close(){
 			
+			finished = true;
+			
 			try {
 				output.close();
 				input.close();
 				socket.close();
 			} catch (Exception e){}
+			
+			connections.remove(this);
 		}
 	}
 	

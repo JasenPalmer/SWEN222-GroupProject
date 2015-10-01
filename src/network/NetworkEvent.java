@@ -8,7 +8,11 @@ import java.io.Serializable;
 /**
  * 
  * @author Matt Byers
- *
+ * 
+ * Network Events are used for transferring data through the socket input/output streams.
+ * 
+ * Network Events can be of various types that hold different types of data therefore
+ * the EventType must be checked before calling any of the getters as they will be null if the type is incorrect.
  */
 public class NetworkEvent implements Serializable {
 
@@ -69,6 +73,15 @@ public class NetworkEvent implements Serializable {
 		this.message = null;
 	}
 	
+	public NetworkEvent(String user){
+		this.type = EventType.CLOSE;
+		this.user = user;
+		
+		this.gameState = null;
+		this.keyCode = -1;
+		this.message = null;
+	}
+	
 	//Getters
 	public String getUser() { return user; }
 	public EventType getType() { return type; }
@@ -80,7 +93,8 @@ public class NetworkEvent implements Serializable {
 	public enum EventType{
 		KEY_PRESS,
 		MESSAGE,
-		UPDATE_GUI;
+		UPDATE_GUI,
+		CLOSE;
 	}
 	
 }

@@ -93,9 +93,10 @@ public class Client {
 	}
 
 	public void close(){
-		serverConnection.close();
-
+		serverConnection.finish();
+		
 		try{
+			output.writeObject(new NetworkEvent(user));
 			output.close();
 			input.close();
 			socket.close();
@@ -120,19 +121,23 @@ public class Client {
 				catch (ClassNotFoundException e) {}
 
 				if(event == null) return;
-
-				if(event.getType() == EventType.UPDATE_GUI){
+				switch(event.getType()){
+				case UPDATE_GUI:
 					if(event.getGameState() == null) return;
 					gui.setGame(event.getGameState());
 					gui.repaintRenderingWindow();
-				}
-				else if(event.getType() == EventType.MESSAGE){
+					break;
+				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();
 					chatBox.displayMessage(event.getUser(), event.getMessage());
+					break;
+				case CLOSE:
+					if(event.getUser().equals("Server")) close();
+					break;
 				}
 			}
 		}
-		public void close(){
+		public void finish(){
 			finished = true;
 		}
 	}
