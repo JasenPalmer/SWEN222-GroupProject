@@ -75,7 +75,6 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if(e.getKeyChar() == '\n'){
-			System.out.println("enter");
 			if(!textBox.getText().equals("")){
 				sendMessage();
 			}
