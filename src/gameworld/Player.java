@@ -57,6 +57,14 @@ public class Player implements Serializable{
 	 */
 	private Direction direction = Game.Direction.NORTH;
 
+	/**
+	 * cycles through 9 points from 0-8. this is for walking animation
+	 */
+	private int walkPoint = 0;
+	
+	private int walkDir = 0;
+	
+	
 	public Player(String name, Game game) {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
@@ -188,7 +196,6 @@ public class Player implements Serializable{
 		return true;
 	}
 
-
 	/**
 	 * Calculates the direction the player should move based on the direction of the camera(direction field)
 	 * @param dir - the direction the player is trying to move in
@@ -224,22 +231,27 @@ public class Player implements Serializable{
 		case NORTH:
 			System.out.println("Moving North");
 			position = new Point(position.x, position.y-1);
+			walkDir = 3;
 			break;
 		case EAST:
 			System.out.println("Moving East");
 			position = new Point(position.x+1, position.y);
+			walkDir = 1;
 			break;
 		case SOUTH:
 			System.out.println("Moving South");
 			position = new Point(position.x, position.y+1);
+			walkDir = 1;
 			break;
 		case WEST:
 			System.out.println("Moving West");
 			position = new Point(position.x-1, position.y);
+			walkDir = 3;
 			break;
 		default:
 			break;
 		}
+		cycleWalk();
 		System.out.println(position);
 	}
 
@@ -293,6 +305,22 @@ public class Player implements Serializable{
 				direction = Direction.NORTH;
 			}
 		}
+	}
+
+	public int getWalkPoint() {
+		return walkPoint;
+	}
+	
+	public void cycleWalk(){
+		if(walkPoint==8){
+			walkPoint = 0;
+		} else{
+			walkPoint++;
+		}
+	}
+
+	public int getDirectionMoved() {
+		return walkDir;
 	}
 
 }

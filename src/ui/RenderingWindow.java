@@ -33,7 +33,7 @@ public class RenderingWindow extends JPanel{
 	private Image roofCornerI;
 	
 	private Image[][] robewalk = new Image[4][9];
-	
+	private Image[][] leatherwalk = new Image[4][9];
 
 	private int cameraX;
 	private int cameraY;
@@ -72,50 +72,32 @@ public class RenderingWindow extends JPanel{
 			playerImage = ImageIO.read(new File("src/ui/images/player/0.png"));
 
 			
-//			// robewalking
-//			for(int i  = 0; i < robewalk.length; i++){
-//				for(int j = 0; j < robewalk[i].length; i++){
-//					Image img = ImageIO.read(new File("src/ui/images/player/robe/robe-"+i+"move-"+j+".png"));
-//					robewalk[i][j] = img; 
-//				}
-//			}
-//			
+//			robewalking
+			for(int i  = 0; i < robewalk.length; i++){
+				for(int j = 0; j < robewalk[i].length; j++){
+					System.out.println("i: "+i+" j: "+j);
+					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
+					robewalk[i][j] = img; 
+				}
+			}
+			
+//			leatherwalking
+			for(int i  = 0; i < leatherwalk.length; i++){
+				for(int j = 0; j < leatherwalk[i].length; j++){
+					System.out.println("i: "+i+" j: "+j);
+					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
+					leatherwalk[i][j] = img; 
+				}
+			}
+			
 			
 		}catch(IOException e){
+			System.out.println("FUCK");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
 
-	/**
-	 * Returns image to match given name
-	 * @param name - type of image wanted
-	 * @return image based on name
-	 */
-	public static Image getImage(String name){
-		switch(name){
-		case "Gr":
-			return grass;
-		case "Ro":
-			return rock;
-		case "Wa":
-			return water;
-		case "Bu":
-			return building;
-		case "En":
-			return doorLR;
-		}
-		return null;
-	}
 
-	public static Image createImage(String imagename) {
-		Image image = null;
-		try {
-			image = ImageIO.read(new File("src/ui/images/terrain/"+imagename+".png"));
-		}catch(Exception e) {
-			System.err.println("Error: "+e);
-		}
-		return image;
-	}
 
 	/**
 	 * Rotates tile arrays depending on the current viewing direction and then calls the isometric
@@ -192,7 +174,7 @@ public class RenderingWindow extends JPanel{
 
 						// DRAWING PLAYER
 						if(t.getPos().equals(player.getPosition())){
-							offgc.drawImage(playerImage, (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
+							offgc.drawImage(getPlayerImage(), (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 
 						// DRAWING ROOMS
@@ -245,6 +227,18 @@ public class RenderingWindow extends JPanel{
 			}
 		}
 
+		
+		private Image getPlayerImage(){
+			int directionInt = player.getDirectionMoved();
+			Image image = null;
+			if(directionInt==1){
+				image = leatherwalk[directionInt][player.getWalkPoint()];
+			} else {
+				image = robewalk[directionInt][player.getWalkPoint()];
+			}
+			
+			return image;
+		}
 		
 		/**
 		 * gets the player x and y in the current tile array regardless of rotation.
@@ -309,5 +303,36 @@ public class RenderingWindow extends JPanel{
 			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
 			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
 	}
+		
+		/**
+		 * Returns image to match given name
+		 * @param name - type of image wanted
+		 * @return image based on name
+		 */
+		public static Image getImage(String name){
+			switch(name){
+			case "Gr":
+				return grass;
+			case "Ro":
+				return rock;
+			case "Wa":
+				return water;
+			case "Bu":
+				return building;
+			case "En":
+				return doorLR;
+			}
+			return null;
+		}
+
+		public static Image createImage(String imagename) {
+			Image image = null;
+			try {
+				image = ImageIO.read(new File("src/ui/images/terrain/"+imagename+".png"));
+			}catch(Exception e) {
+				System.err.println("Error: "+e);
+			}
+			return image;
+		}
 }
 
