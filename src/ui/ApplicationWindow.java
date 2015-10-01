@@ -76,10 +76,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup frame
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(450, 10, 1050, 1020);
+		setBounds(450, 10, 1050, 950);
 
 		//Setup layered pane
-		layeredPanel.setBounds(0, 0, 1050, 1020);
+		layeredPanel.setBounds(0, 0, 1050, 950);
 		getContentPane().add(layeredPanel);
 
 		//Setup Background Panel

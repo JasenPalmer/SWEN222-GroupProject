@@ -45,14 +45,14 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		playMusic();
 		this.setResizable(false);
 		setLayout(null);
-		setBounds(450, 10, 1050, 1020);
+		setBounds(450, 10, 1050, 950);
 		addBackground();	
 	}
 
 	private void addBackground(){
 		//Add background
 		JLabel background = new JLabel(new ImageIcon(backgroundImage));
-		background.setBounds(0,0,1050,1020);
+		background.setBounds(0,0,1050,950);
 		this.add(background,0,0);
 
 		//Add Title
@@ -98,7 +98,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		//Mute
 		muteButton = new JButton(new ImageIcon(unmute));
 		muteButton.addActionListener(this);
-		muteButton.setBounds(850,900,300,79);
+		muteButton.setBounds(850,840,300,79);
 		muteButton.setContentAreaFilled(false);
 		muteButton.setActionCommand("Mute");
 		muteButton.setBorderPainted(false);

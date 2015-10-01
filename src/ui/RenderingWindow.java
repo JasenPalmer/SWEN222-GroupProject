@@ -49,7 +49,7 @@ public class RenderingWindow extends JPanel{
 
 	public RenderingWindow(ApplicationWindow aw){
 		setLayout(null);
-		setBounds(0,0,1050,750);
+		setBounds(0,0,1050,950);
 		this.applicationWindow = aw;
 		setImages();
 	}

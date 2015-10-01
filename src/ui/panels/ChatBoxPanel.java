@@ -34,7 +34,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		setOpaque(false);
 		setLayout(null);
 
-		setBounds(0, 530, 470, 215);
+		setBounds(0, 685, 470, 215);
 
 		//Setup background
 		ChatBoxBackground background = new ChatBoxBackground();
@@ -63,7 +63,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 
 		//Setup text field
 		textBox = new JTextField();
-		textBox.setBounds(10, 185, 450, 20);
+		textBox.setBounds(10, 190, 450, 20);
 		textBox.addKeyListener(this);
 		textBox.setOpaque(false);
 		textBox.setBorder(border);
