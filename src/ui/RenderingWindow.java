@@ -32,8 +32,10 @@ public class RenderingWindow extends JPanel{
 	private Image roofCornerO;
 	private Image roofCornerI;
 	
-	private Image[][] robewalk = new Image[4][9];
-	private Image[][] leatherwalk = new Image[4][9];
+	private Image[][] robeWalk = new Image[4][9];
+	private Image[][] leatherWalk = new Image[4][9];
+	private Image[][] chainWalk = new Image[4][9];
+	private Image[][] plateWalk = new Image[4][9];
 
 	private int cameraX;
 	private int cameraY;
@@ -69,22 +71,38 @@ public class RenderingWindow extends JPanel{
 			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
 			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
 			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-			playerImage = ImageIO.read(new File("src/ui/images/player/0.png"));
+			playerImage = ImageIO.read(new File("src/ui/images/player/robe/0.png"));
 
 			
 //			robewalking
-			for(int i  = 0; i < robewalk.length; i++){
-				for(int j = 0; j < robewalk[i].length; j++){
+			for(int i  = 0; i < robeWalk.length; i++){
+				for(int j = 0; j < robeWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
-					robewalk[i][j] = img; 
+					robeWalk[i][j] = img; 
 				}
 			}
 			
 //			leatherwalking
-			for(int i  = 0; i < leatherwalk.length; i++){
-				for(int j = 0; j < leatherwalk[i].length; j++){
+			for(int i  = 0; i < leatherWalk.length; i++){
+				for(int j = 0; j < leatherWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
-					leatherwalk[i][j] = img; 
+					leatherWalk[i][j] = img; 
+				}
+			}
+			
+//			chainwalking
+			for(int i  = 0; i < leatherWalk.length; i++){
+				for(int j = 0; j < leatherWalk[i].length; j++){
+					Image img = ImageIO.read(new File("src/ui/images/player/chain/movement/chain-"+i+"-move-"+j+".png"));
+					chainWalk[i][j] = img; 
+				}
+			}
+			
+//			platewalking
+			for(int i  = 0; i < leatherWalk.length; i++){
+				for(int j = 0; j < leatherWalk[i].length; j++){
+					Image img = ImageIO.read(new File("src/ui/images/player/plate/movement/plate-"+i+"-move-"+j+".png"));
+					plateWalk[i][j] = img; 
 				}
 			}
 			
@@ -227,13 +245,9 @@ public class RenderingWindow extends JPanel{
 		
 		private Image getPlayerImage(){
 			int directionInt = player.getDirectionMoved();
-			Image image = null;
-//			if(directionInt==1){
-//				image = leatherwalk[directionInt][player.getWalkPoint()];
-//			} else {
-				image = robewalk[directionInt][player.getWalkPoint()];
-//			}
+			Image image = plateWalk[directionInt][player.getWalkPoint()];
 			
+			playerImage = image;
 			return image;
 		}
 		
@@ -296,7 +310,6 @@ public class RenderingWindow extends JPanel{
 		public void updateCamera(int[] realCoord){
 			int playerX = realCoord[0];
 			int playerY = realCoord[1];
-		
 			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
 			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
 	}
