@@ -11,18 +11,14 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -33,7 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
-public class EditorFrame extends JFrame implements MouseListener{
+public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 
 	private OutsideLocation map;
@@ -42,8 +38,8 @@ public class EditorFrame extends JFrame implements MouseListener{
 	private String currentOption;
 	private JMenuBar bar;
 
-	private static int MAPHEIGHT = 15;
-	private static int MAPWIDTH = 15;
+	private static int MAPHEIGHT = 30;
+	private static int MAPWIDTH = 30;
 	private static int TILESIZE = 64;
 
 	int xClick1;
@@ -53,23 +49,15 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 	private Image image;
 
-	private Image grass;
-	private Image building;
-	private Image water;
-	private Image rock;
-	private Image room;
-	private Image door;
-
 
 	/**
 	 * Create the frame.
 	 */
 	public EditorFrame(OutsideLocation map) {
 		this.map = map;
-		setImages();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 1280, 720);
 		JPanel outerPanel = new JPanel();
 		setContentPane(outerPanel);
 		outerPanel.setLayout(new BorderLayout(0, 0));
@@ -114,6 +102,9 @@ public class EditorFrame extends JFrame implements MouseListener{
 		outerPanel.add(options, BorderLayout.WEST);
 
 		addMouseListener(this);
+		addKeyListener(this);
+		setFocusable(true);
+		requestFocus();
 	}
 
 
@@ -154,7 +145,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
-		if(image!=null){
+		if(currentOption!=null){
 			if(xClick1!=xClick2 || yClick1!=yClick2){
 				// MOUSE WAS DRAGGED
 				int x = Math.min(xClick1, xClick2);
@@ -167,6 +158,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 						} else{
 							// making BuildingTiles
+							System.out.println("adding floortile");
 							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), true));
 						}
 						y++;
@@ -184,6 +176,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1), false));
 				} else{
 					// Making FloorTile
+					System.out.println("adding floortile");
 					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1), true));
 				}
 			}
@@ -205,16 +198,16 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		xClick1 = (e.getX()-options.getWidth()-13)/TILESIZE;
-		yClick1 = (e.getY()-bar.getHeight()-35)/TILESIZE;
+		xClick1 = ((e.getX()-options.getWidth()-13)/TILESIZE) + canvas.getCameraX()/TILESIZE;
+		yClick1 = ((e.getY()-bar.getHeight()-35)/TILESIZE) + canvas.getCameraY()/TILESIZE;
 	}
 
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		xClick2 = (e.getX()-options.getWidth()-13)/TILESIZE;
-		yClick2 = (e.getY()-bar.getHeight()-35)/TILESIZE;
+		xClick2 = ((e.getX()-options.getWidth()-13)/TILESIZE) + canvas.getCameraX()/TILESIZE;
+		yClick2 = ((e.getY()-bar.getHeight()-35)/TILESIZE) + canvas.getCameraY()/TILESIZE;
 		mouseClicked(e);
 
 	}
@@ -222,42 +215,7 @@ public class EditorFrame extends JFrame implements MouseListener{
 	public void optionSelected(String s) {
 		System.out.println(s);
 		currentOption = s;
-
-		switch(currentOption){
-		case "Grass":
-			image = grass;
-			break;
-		case "Rock":
-			image = rock;
-			break;
-		case "Water":
-			image = water;
-			break;
-		case "Building":
-			image = building;
-			break;
-		case "Entrance":
-			image = door;
-			break;
-		}
-
-	}
-
-	/**
-	 * Setting images to files in images folder. Will be changed when location parser is working for some tiles. (grass, water, rock will be gone).
-	 */
-	private void setImages() {
-		try{
-			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
-			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
-			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-			room = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-			door = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
-
-		}catch(IOException e){
-			System.out.println(e.getLocalizedMessage());
-		}
+		requestFocus();
 	}
 
 
@@ -295,7 +253,47 @@ public class EditorFrame extends JFrame implements MouseListener{
 
 	public void viewSelected(String string) {
 		canvas.setView(string);
+		requestFocus();
 		repaint();
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("hello?");
+		switch(e.getKeyCode()){
+			case KeyEvent.VK_W:
+				canvas.setCameraY(canvas.getCameraY()-20);
+				repaint();
+				break;
+			case KeyEvent.VK_A:
+				canvas.setCameraX(canvas.getCameraX()-20);
+				repaint();
+				break;
+			case KeyEvent.VK_S:
+				canvas.setCameraY(canvas.getCameraY()+20);
+				repaint();
+				break;
+			case KeyEvent.VK_D:
+				canvas.setCameraX(canvas.getCameraX()+20);
+				repaint();
+				break;
+		}
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

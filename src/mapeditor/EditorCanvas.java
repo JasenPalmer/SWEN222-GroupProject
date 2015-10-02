@@ -28,15 +28,15 @@ public class EditorCanvas extends JPanel {
 	private int MAPHEIGHT = 15;
 	private int MAPWIDTH = 15;
 	private int TILESIZE = 64;
+	private static int cameraX = 0;
+	private static int cameraY = 0;
 
 	Game.Direction direction = Game.Direction.NORTH;
-
-	private Image backgroundImage;
+	
 	private static Image grass;
 	private static Image building;
 	private static Image water;
 	private static Image rock;
-	private Image room;
 	private Image doorUD;
 	private static Image doorLR;
 	private Image roofLR;
@@ -50,7 +50,7 @@ public class EditorCanvas extends JPanel {
 	public EditorCanvas(Location location) {
 		setImages();
 		setLayout(null);
-		setBounds(0,0,1050,750);
+		setBounds(0,0,2000,750);
 
 		if(location instanceof OutsideLocation){
 			location = (OutsideLocation) location;
@@ -65,12 +65,10 @@ public class EditorCanvas extends JPanel {
 	 */
 	private void setImages() {
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/renderingWindowTemp.jpg"));
 			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
 			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-			room = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
 			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
 			roofLR = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
@@ -90,6 +88,7 @@ public class EditorCanvas extends JPanel {
 	 * @return image based on name
 	 */
 	public static Image getImage(String name){
+		System.out.println("name:"+ name);
 		switch(name){
 		case "Gr":
 			return grass;
@@ -108,7 +107,6 @@ public class EditorCanvas extends JPanel {
 	public void paint(Graphics g){
 		Tile[][] tiles = location.getTiles();
 		Tile[][] rooms = null;
-		//Entity[][] entities = location.getEntities();
 
 		if(location instanceof OutsideLocation){
 			OutsideLocation l = (OutsideLocation) location;
@@ -189,8 +187,8 @@ public class EditorCanvas extends JPanel {
 
 				// DRAWING TERRAIN
 				if(t!=null) {
-					image = getImage(t.toString()); // THIS WAS TO COMPILE SRY
-					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
+					image = getImage(t.toString());
+					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
 
 				}
 
@@ -201,18 +199,18 @@ public class EditorCanvas extends JPanel {
 					if(r instanceof EntranceExitTile){
 						System.out.println("AN ENTRANCE");
 						if(j-1 >= 0 && rooms[i][j-1]==null){
-							g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+							g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 						} else {
-							g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+							g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 						}
 					}
 					else{
 						System.out.println("NOT AN ENTRANCE");
-							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2, null);
+							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 					}
 
 					// wall block on top of wall / door for 2 high building.
-					g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2), ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE, null);
+					g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
 
 					// default img for non edge and corner roofs
 					image = building;
@@ -239,7 +237,7 @@ public class EditorCanvas extends JPanel {
 						image = roofCornerI;
 					}
 					System.out.println("FUCKING DRAWING");
-					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2), (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)), null);
+					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
 				}
 
 			}
@@ -259,19 +257,18 @@ public class EditorCanvas extends JPanel {
 				FloorTile t = (FloorTile) tiles[i][j];
 				Tile r = rooms[i][j];
 				if(t!=null){
-					System.out.println(t.toString());
-					Image image = getImage(t.toString());; // THIS WAS TO COMPILE SRY
-					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
+					Image image = getImage(t.toString());
+					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
 				}
 				if(r!=null){
 					Image image = building;
 					System.out.println("PLS DONT BE NULL" + image);
-					offgc.drawImage(image, j*TILESIZE, i*TILESIZE-image.getHeight(null)+TILESIZE, null);
+					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
 				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);
-					offgc.fillRect(j*TILESIZE, i*TILESIZE, TILESIZE, TILESIZE);
+					offgc.fillRect(j*TILESIZE - cameraX, i*TILESIZE - cameraY, TILESIZE, TILESIZE);
 					offgc.setColor(Color.BLACK);
-					offgc.drawRect(j*TILESIZE, i*TILESIZE, TILESIZE, TILESIZE);
+					offgc.drawRect(j*TILESIZE - cameraX, i*TILESIZE - cameraY, TILESIZE, TILESIZE);
 				}
 			}
 		}
@@ -299,5 +296,22 @@ public class EditorCanvas extends JPanel {
 		view = string;
 
 	}
+	
+	public int getCameraX() {
+		return cameraX;
+	}
+
+	public void setCameraX(int cameraX) {
+		this.cameraX = cameraX;
+	}
+
+	public int getCameraY() {
+		return cameraY;
+	}
+
+	public void setCameraY(int cameraY) {
+		this.cameraY = cameraY;
+	}
+
 
 }
