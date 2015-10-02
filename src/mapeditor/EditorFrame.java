@@ -198,16 +198,17 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		xClick1 = ((e.getX()-options.getWidth()-13)/TILESIZE) + canvas.getCameraX()/TILESIZE;
-		yClick1 = ((e.getY()-bar.getHeight()-35)/TILESIZE) + canvas.getCameraY()/TILESIZE;
+		System.out.println("X: "+e.getX()+",  "+"Y: "+e.getY());
+		xClick1 = (e.getX()-97)/TILESIZE + canvas.getCameraX()/TILESIZE;
+		yClick1 = (e.getY()-54)/TILESIZE + canvas.getCameraY()/TILESIZE;
 	}
 
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		xClick2 = ((e.getX()-options.getWidth()-13)/TILESIZE) + canvas.getCameraX()/TILESIZE;
-		yClick2 = ((e.getY()-bar.getHeight()-35)/TILESIZE) + canvas.getCameraY()/TILESIZE;
+		xClick2 = (e.getX()-options.getWidth()-13)/TILESIZE + canvas.getCameraX()/TILESIZE;
+		yClick2 = (e.getY()-bar.getHeight()-35)/TILESIZE + canvas.getCameraY()/TILESIZE;
 		mouseClicked(e);
 
 	}
