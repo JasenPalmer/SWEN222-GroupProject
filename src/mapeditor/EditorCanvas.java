@@ -28,8 +28,8 @@ public class EditorCanvas extends JPanel {
 	private int MAPHEIGHT = 15;
 	private int MAPWIDTH = 15;
 	private int TILESIZE = 64;
-	private static int cameraX = 0;
-	private static int cameraY = 0;
+	private int cameraX = 0;
+	private int cameraY = 0;
 
 	Game.Direction direction = Game.Direction.NORTH;
 	
@@ -78,7 +78,7 @@ public class EditorCanvas extends JPanel {
 
 
 		}catch(IOException e){
-			System.out.println(e.getLocalizedMessage());
+			System.err.println(e.getLocalizedMessage());
 		}
 	}
 	
@@ -88,7 +88,6 @@ public class EditorCanvas extends JPanel {
 	 * @return image based on name
 	 */
 	public static Image getImage(String name){
-		System.out.println("name:"+ name);
 		switch(name){
 		case "Gr":
 			return grass;
@@ -111,16 +110,6 @@ public class EditorCanvas extends JPanel {
 		if(location instanceof OutsideLocation){
 			OutsideLocation l = (OutsideLocation) location;
 			rooms = l.getBuildingTiles();
-			System.out.println("PLS");
-		}
-
-		if(rooms!=null){
-			for(int i = 0; i < rooms.length; i++){
-				for(int j = 0; j < rooms[i].length ; j++){
-					System.out.print(rooms[i][j]+" ");
-				}
-				System.out.println("");
-			}
 		}
 
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
@@ -194,10 +183,8 @@ public class EditorCanvas extends JPanel {
 
 				// DRAWING ROOMS
 				if(r!=null) {
-					System.out.println("THE ROOM IS NOT FUCKING NULL");
 					// Drawing 2 block high walls
 					if(r instanceof EntranceExitTile){
-						System.out.println("AN ENTRANCE");
 						if(j-1 >= 0 && rooms[i][j-1]==null){
 							g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 						} else {
@@ -205,7 +192,6 @@ public class EditorCanvas extends JPanel {
 						}
 					}
 					else{
-						System.out.println("NOT AN ENTRANCE");
 							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 					}
 
@@ -217,26 +203,21 @@ public class EditorCanvas extends JPanel {
 
 					// Western most point of building
 					if(j-1 >= 0 && rooms[i][j-1] == null){
-						System.out.println("roofUD");
 						image = roofUD;
 					}
 
 					// Northern most point of building
 					if(i+1 < rooms.length && rooms[i+1][j]==null){
-						System.out.println("roofLR");
 						image = roofLR;
 					}
 					// Outwards corner roof
 					if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-						System.out.println("roofCornerO");
 						image = roofCornerO;
 					}
 					// Inwards corner roof
 					if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-						System.out.println("roofCornerI");
 						image = roofCornerI;
 					}
-					System.out.println("FUCKING DRAWING");
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
 				}
 
@@ -262,7 +243,6 @@ public class EditorCanvas extends JPanel {
 				}
 				if(r!=null){
 					Image image = building;
-					System.out.println("PLS DONT BE NULL" + image);
 					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
 				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);

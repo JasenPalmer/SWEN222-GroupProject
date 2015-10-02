@@ -158,7 +158,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 						} else{
 							// making BuildingTiles
-							System.out.println("adding floortile");
 							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), true));
 						}
 						y++;
@@ -176,7 +175,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1), false));
 				} else{
 					// Making FloorTile
-					System.out.println("adding floortile");
 					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1), true));
 				}
 			}
@@ -198,7 +196,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("X: "+e.getX()+",  "+"Y: "+e.getY());
 		xClick1 = (e.getX()-97)/TILESIZE + canvas.getCameraX()/TILESIZE;
 		yClick1 = (e.getY()-54)/TILESIZE + canvas.getCameraY()/TILESIZE;
 	}
@@ -214,7 +211,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	}
 
 	public void optionSelected(String s) {
-		System.out.println(s);
 		currentOption = s;
 		requestFocus();
 	}
@@ -261,7 +257,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("hello?");
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_W:
 				canvas.setCameraY(canvas.getCameraY()-20);

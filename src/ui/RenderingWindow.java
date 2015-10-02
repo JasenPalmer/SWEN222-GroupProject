@@ -108,7 +108,7 @@ public class RenderingWindow extends JPanel{
 			
 			
 		}catch(IOException e){
-			System.out.println(e.getLocalizedMessage());
+			System.err.println(e.getLocalizedMessage());
 		}
 	}
 
