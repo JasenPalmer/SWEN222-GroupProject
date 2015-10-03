@@ -16,6 +16,7 @@ public class EntranceExitTile extends Tile {
 	private EntranceExitTile exit;
 	
 	private boolean oneWay;
+	private boolean locked;
 
 	public EntranceExitTile(String name, Point pos, boolean passable, boolean oneWay) {
 		super(name, pos, passable);
@@ -36,6 +37,14 @@ public class EntranceExitTile extends Tile {
 
 	public void setExit(EntranceExitTile exit) {
 		this.exit = exit;
+	}
+
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
 	}
 
 }

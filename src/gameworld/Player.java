@@ -1,6 +1,7 @@
 package gameworld;
 
 import gameworld.Game.Direction;
+import gameworld.entity.Entity;
 import gameworld.entity.InteractableEntity;
 import gameworld.entity.Item;
 import gameworld.location.InsideLocation;
@@ -115,16 +116,22 @@ public class Player implements Serializable{
 	}
 
 	/**
-	 * Adds an item to the first available slot in the players inventory
-	 *
-	 * @param item to be added
+	 * Player attempts to pick-up the item on the tile infront of them
 	 * @return true if the item was successfully added
 	 */
-	public boolean pickupItem(Item item) {
-		// if the inventory is full cant pick up item
+	public boolean pickupItem() {
+		// if the inventory is full can't pick up item
 		if(inventoryFull()){return false;}
+		Tile tile = getTile(direction);
+		Entity ent = tile.containedEntity();
+		// if there isn't an item in front of the player don't pick it up
+		if(!(ent instanceof Item)) {return false;}
+		Item item = (Item) ent;
 		for(int i = 0; i < inventory.length; i++) {
 			if(inventory[i] == null) {
+				// remove the item from the tile
+				tile.setEntity(null);
+				// add the item to the players inventory
 				inventory[i] = item;
 				return true;
 			}
@@ -134,11 +141,11 @@ public class Player implements Serializable{
 
 	/**
 	 * check the players inventory for a free space
-	 * @return
+	 * @return true if the players inventory is full
 	 */
 	private boolean inventoryFull() {
 		for(int i = 0; i < inventory.length; i++) {
-			if(inventory[i] != null){return false;}
+			if(inventory[i] == null){return false;}
 		}
 		return true;
 	}
@@ -205,7 +212,9 @@ public class Player implements Serializable{
 		System.out.println(direction);
 		switch(direction) {
 		case EAST:
-			return Direction.values()[Direction.EAST.ordinal() + dir.ordinal()];
+			int k = Direction.EAST.ordinal() + dir.ordinal();
+			if(k>3){k = k - 4;}
+			return Direction.values()[k];
 		case NORTH:
 			return Direction.values()[Direction.NORTH.ordinal() + dir.ordinal()];
 		case SOUTH:
@@ -286,25 +295,37 @@ public class Player implements Serializable{
 			switch(direction){
 			case NORTH:
 				direction = Direction.WEST;
+				break;
 			case EAST:
 				direction = Direction.NORTH;
+				break;
 			case SOUTH:
 				direction = Direction.EAST;
+				break;
 			case WEST:
 				direction = Direction.SOUTH;
+				break;
 			}
 		case KeyEvent.VK_Q:
 			switch(direction){
 			case NORTH:
 				direction = Direction.EAST;
+				break;
 			case EAST:
 				direction = Direction.SOUTH;
+				break;
 			case SOUTH:
 				direction = Direction.WEST;
+				break;
 			case WEST:
 				direction = Direction.NORTH;
+				break;
 			}
 		}
+	}
+	
+	public Direction getDirection() {
+		return direction;
 	}
 
 	public int getWalkPoint() {

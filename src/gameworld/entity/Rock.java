@@ -1,6 +1,6 @@
 package gameworld.entity;
 
-import gameworld.location.InsideLocation;
+import gameworld.location.Location;
 
 import java.awt.Point;
 
@@ -28,7 +28,7 @@ public class Rock implements BasicEntity{
 	}
 
 	@Override
-	public InsideLocation location() {
+	public Location location() {
 		// TODO Auto-generated method stub
 		return null;
 	}

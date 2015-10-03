@@ -1,9 +1,9 @@
 package gameworld.entity;
 
-import java.awt.Point;
-
 import gameworld.Player;
-import gameworld.location.InsideLocation;
+import gameworld.location.Location;
+
+import java.awt.Point;
 
 
 /**
@@ -20,7 +20,7 @@ public abstract class Item implements InteractableEntity{
 	/**
 	 * The location that the item is in
 	 */
-	private InsideLocation location;
+	private Location location;
 	
 	/**
 	 * The position of the item in the location
@@ -34,7 +34,7 @@ public abstract class Item implements InteractableEntity{
 
 
 	@Override
-	public InsideLocation location() {
+	public Location location() {
 		return location;
 	}
 	
@@ -43,17 +43,6 @@ public abstract class Item implements InteractableEntity{
 	 */
 	public Player heldBy() {
 		return heldBy;
-	}
-	
-	public boolean pickup(Player player) {
-		boolean toReturn = player.pickupItem(this);
-		if(toReturn){
-			// player picked up the item so remove location
-			location = null;
-			// and the item is now held by the player
-			heldBy = player;
-		}
-		return toReturn;
 	}
 	
 }

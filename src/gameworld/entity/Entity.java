@@ -1,6 +1,6 @@
 package gameworld.entity;
 
-import gameworld.location.InsideLocation;
+import gameworld.location.Location;
 
 import java.awt.Point;
 
@@ -28,7 +28,7 @@ public interface Entity {
 	/**
 	 * @return the location that the entity is in
 	 */
-	public InsideLocation location();
+	public Location location();
 	
 	
 }
