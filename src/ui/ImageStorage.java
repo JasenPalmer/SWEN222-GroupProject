@@ -7,19 +7,19 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageStorage {
-	static Image grass;
-	static Image building;
-	static Image water;
-	static Image rock;
-	static Image doorLR;
-	static Image playerImage;
-	static Image doorUD;
-	static Image roofLR;
-	static Image roofUD;
-	static Image roofCornerO;
-	static Image roofCornerI;
-	static Image tree;
-	static Image bush;
+	public static Image grass;
+	public static Image building;
+	public static Image water;
+	public static Image rock;
+	public static Image doorLR;
+	public static Image playerImage;
+	public static Image doorUD;
+	public static Image roofLR;
+	public static Image roofUD;
+	public static Image roofCornerO;
+	public static Image roofCornerI;
+	public static Image tree;
+	public static Image bush;
 	
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] leatherWalk = new Image[4][9];

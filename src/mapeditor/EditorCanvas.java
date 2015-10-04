@@ -11,12 +11,10 @@ import gameworld.tile.Tile;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import ui.ImageStorage;
 import ui.RenderingWindow;
 
 
@@ -32,23 +30,11 @@ public class EditorCanvas extends JPanel {
 	private int cameraY = 0;
 
 	Game.Direction direction = Game.Direction.NORTH;
-	
-	private static Image grass;
-	private static Image building;
-	private static Image water;
-	private static Image rock;
-	private Image doorUD;
-	private static Image doorLR;
-	private Image roofLR;
-	private Image roofUD;
-	private Image roofCornerO;
-	private Image roofCornerI;
 
 	/**
 	 * Create the panel.
 	 */
 	public EditorCanvas(Location location) {
-		setImages();
 		setLayout(null);
 		setBounds(0,0,2000,750);
 
@@ -60,27 +46,6 @@ public class EditorCanvas extends JPanel {
 		this.location = location;
 	}
 
-	/**
-	 * Setting images to files in images folder. Will be changed when location parser is working for some tiles. (grass, water, rock will be gone).
-	 */
-	private void setImages() {
-		try{
-			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
-			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
-			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
-			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
-			roofLR = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
-			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
-			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
-			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-
-
-		}catch(IOException e){
-			System.err.println(e.getLocalizedMessage());
-		}
-	}
 	
 	/**
 	 * Returns image to match given name
@@ -90,15 +55,15 @@ public class EditorCanvas extends JPanel {
 	public static Image getImage(String name){
 		switch(name){
 		case "Gr":
-			return grass;
+			return ImageStorage.grass;
 		case "Ro":
-			return rock;
+			return ImageStorage.rock;
 		case "Wa":
-			return water;
+			return ImageStorage.water;
 		case "Bu":
-			return building;
+			return ImageStorage.building;
 		case "En":
-			return doorLR;
+			return ImageStorage.doorLR;
 		}
 		return null;
 	}
@@ -203,37 +168,37 @@ public class EditorCanvas extends JPanel {
 					// Drawing 2 block high walls
 					if(r instanceof EntranceExitTile){
 						if(j-1 >= 0 && rooms[i][j-1]==null){
-							g.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+							g.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 						} else {
-							g.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+							g.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 						}
 					}
 					else{
-							g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+							g.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 					}
 
 					// wall block on top of wall / door for 2 high building.
-					g.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+					g.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
 
 					// default img for non edge and corner roofs
-					image = building;
+					image = ImageStorage.building;
 
 					// Western most point of building
 					if(j-1 >= 0 && rooms[i][j-1] == null){
-						image = roofUD;
+						image = ImageStorage.roofUD;
 					}
 
 					// Northern most point of building
 					if(i+1 < rooms.length && rooms[i+1][j]==null){
-						image = roofLR;
+						image = ImageStorage.roofLR;
 					}
 					// Outwards corner roof
 					if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-						image = roofCornerO;
+						image = ImageStorage.roofCornerO;
 					}
 					// Inwards corner roof
 					if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-						image = roofCornerI;
+						image = ImageStorage.roofCornerI;
 					}
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
 				}
@@ -267,7 +232,7 @@ public class EditorCanvas extends JPanel {
 					}
 				}
 				if(r!=null){
-					Image image = building;
+					Image image = ImageStorage.building;
 					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
 				} if(t==null && r==null) {
 					offgc.setColor(Color.WHITE);

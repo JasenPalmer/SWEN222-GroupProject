@@ -30,5 +30,4 @@ public interface Entity {
 	 */
 	public Location location();
 	
-	
 }

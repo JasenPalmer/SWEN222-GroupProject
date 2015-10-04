@@ -24,8 +24,14 @@ public class OutsideLocation extends Location {
 				
 				if(tiles[i][j]!=null){
 					toReturn+= tiles[i][j].toString();
+					toReturn+="-";
+					if(tiles[i][j].containedEntity()!=null){
+						toReturn+=tiles[i][j].containedEntity().name().substring(0,2);
+					} else{
+						toReturn+="0";
+					}
 				} else {
-					toReturn += "0";
+					toReturn += "0-0";
 				}
 				
 				toReturn+= "-";

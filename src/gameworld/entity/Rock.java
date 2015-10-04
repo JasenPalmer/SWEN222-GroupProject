@@ -32,5 +32,4 @@ public class Rock implements BasicEntity{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
