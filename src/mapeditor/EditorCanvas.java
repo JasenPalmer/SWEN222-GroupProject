@@ -135,11 +135,18 @@ public class EditorCanvas extends JPanel {
 				if(t!=null) {
 					image = ImageStorage.getImage(t.toString());
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
-					
+					if(location instanceof InsideLocation){
+						if(i==0 || tiles[i-1][j]==null){
+							g.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+						}
+						if(j==tiles.length-1|| tiles[i][j+1]==null){
+							g.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+						}
+					}
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
 						image = ImageStorage.getImage(t.containedEntity().name());
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY - image.getHeight(null)/2, null);
+						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 					}
 
 				}
@@ -210,7 +217,7 @@ public class EditorCanvas extends JPanel {
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
 						image = ImageStorage.getImage(t.containedEntity().name());
-						offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY - TILESIZE/2, null);
+						offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 					}
 				}
 				if(r!=null){

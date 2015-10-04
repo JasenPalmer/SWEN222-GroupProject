@@ -151,7 +151,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
 		if(currentOption!=null){
 				int x = Math.min(xClick1, xClick2);
 				int y = Math.min(yClick1, yClick2);
