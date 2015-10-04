@@ -57,13 +57,11 @@ public class Player implements Serializable{
 	 * Direction that the screen is facing
 	 */
 	private Direction direction = Game.Direction.NORTH;
-
-	/**
-	 * cycles through 9 points from 0-8. this is for walking animation
-	 */
-	private int walkPoint = 0;
 	
-	private int walkDir = 0;
+	/**
+	 * Used for storing animation fields for player such as direction and cycle point
+	 */
+	private Animation animation;
 	
 	
 	public Player(String name, Game game) {
@@ -72,6 +70,7 @@ public class Player implements Serializable{
 		holding = false;
 		location = game.getLocations().iterator().next();
 		position = new Point(2, 2);
+		animation = new Animation();
 	}
 
 	/**
@@ -240,27 +239,27 @@ public class Player implements Serializable{
 		case NORTH:
 			System.out.println("Moving North");
 			position = new Point(position.x, position.y-1);
-			walkDir = 0;
+			animation.setAnimationDirection(0); 
 			break;
 		case EAST:
 			System.out.println("Moving East");
 			position = new Point(position.x+1, position.y);
-			walkDir = 0;
+			animation.setAnimationDirection(1); 
 			break;
 		case SOUTH:
 			System.out.println("Moving South");
 			position = new Point(position.x, position.y+1);
-			walkDir = 1;
+			animation.setAnimationDirection(2); 
 			break;
 		case WEST:
 			System.out.println("Moving West");
 			position = new Point(position.x-1, position.y);
-			walkDir = 3;
+			animation.setAnimationDirection(3); 
 			break;
 		default:
 			break;
 		}
-		cycleWalk();
+		animation.cycle();
 		System.out.println(position);
 	}
 
@@ -327,21 +326,9 @@ public class Player implements Serializable{
 	public Direction getDirection() {
 		return direction;
 	}
-
-	public int getWalkPoint() {
-		return walkPoint;
-	}
 	
-	public void cycleWalk(){
-		if(walkPoint==8){
-			walkPoint = 0;
-		} else{
-			walkPoint++;
-		}
-	}
-
-	public int getDirectionMoved() {
-		return walkDir;
+	public Animation getAnimation(){
+		return animation;
 	}
 
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import gameworld.Animation;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
@@ -189,7 +190,7 @@ public class RenderingWindow extends JPanel{
 
 						// DRAWING PLAYER
 						if(t.getPos().equals(player.getPosition())){
-							offgc.drawImage(getPlayerImage(), (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
+							offgc.drawImage(getPlayerImage(player), (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 
 						// DRAWING ROOMS
@@ -242,10 +243,49 @@ public class RenderingWindow extends JPanel{
 			}
 		}
 
+		/**
+		 * Changes walkdirection for drawing depending on camera angle
+		 * @param directionInt - current direction of player
+		 * @param toAdd - amount to add to it (depends on camera angle)
+		 * @return directionInt - directionInt after adding. Wraps around if it goes over 3
+		 */
+		private int addToDirInt(int directionInt, int toAdd){
+			int i = 0;
+			while(i<toAdd){
+				directionInt++;
+				if(directionInt>3){
+					directionInt = 0;
+				}
+				i++;
+			}
+			
+			return directionInt;
+		}
 		
-		private Image getPlayerImage(){
-			int directionInt = player.getDirectionMoved();
-			Image image = plateWalk[directionInt][player.getWalkPoint()];
+		/**
+		 * finds correct image to draw in walk cycle depending on players direction and spot in cycle
+		 * @param p - The player to get image for
+		 * @return image - The image to return
+		 */
+		private Image getPlayerImage(Player p){
+			Animation animation = p.getAnimation();
+			
+			int directionInt = animation.getAnimationDirection();
+			switch(direction){
+				case EAST:
+					directionInt = addToDirInt(directionInt, 1);
+					break;
+				case NORTH:
+					break;
+				case SOUTH:
+					directionInt = addToDirInt(directionInt, 2);
+					break;
+				case WEST:
+					directionInt = addToDirInt(directionInt, 3);
+					break;
+			}
+			
+			Image image = plateWalk[directionInt][animation.getCurrentFrame()];
 			
 			playerImage = image;
 			return image;
