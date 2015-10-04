@@ -57,17 +57,6 @@ public class EditorCanvas extends JPanel {
 
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
 		Graphics offgc = offscreen.getGraphics();
-
-//		for(int i = 0; i < tiles.length; i++){
-//			for(int j = 0; j <tiles.length ; j++){
-//				if(tiles[i][j]!=null){
-//					System.out.print(tiles[i][j].containedEntity()+" ");
-//				} else{
-//					System.out.print("null ");
-//				}
-//			}
-//			System.out.println("");
-//		}
 		
 		switch(direction){
 		case NORTH:

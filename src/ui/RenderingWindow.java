@@ -4,6 +4,7 @@ import gameworld.Animation;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceExitTile;
@@ -24,7 +25,7 @@ public class RenderingWindow extends JPanel{
 	private int cameraY;
 	
 	private Image playerImage;
-	
+	private Location location;
 	private Tile[][] locationTiles;
 
 	private Player player;
@@ -55,14 +56,14 @@ public class RenderingWindow extends JPanel{
 		Graphics offgc = offscreen.getGraphics();
 
 		player = applicationWindow.getPlayer();
-		Location l = player.getLocation();
+		location = player.getLocation();
 
-		Tile[][] tiles = l.getTiles();
+		Tile[][] tiles = location.getTiles();
 		locationTiles = tiles;
 		Tile[][] rooms = null;
 
-		if(l instanceof OutsideLocation){
-			OutsideLocation ol = (OutsideLocation) l;
+		if(location instanceof OutsideLocation){
+			OutsideLocation ol = (OutsideLocation) location;
 			rooms = ol.getBuildingTiles();
 		}
 
@@ -104,7 +105,7 @@ public class RenderingWindow extends JPanel{
 			updateCamera(getRealPlayerCoords(tiles));
 
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
-
+			Image image = null;
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
@@ -112,64 +113,73 @@ public class RenderingWindow extends JPanel{
 					FloorTile t = (FloorTile) tiles[i][j];
 					if(t!=null) {
 						// DRAWING TERRAIN
-						
-						Image image = ImageStorage.getImage(t.toString());
+						image = ImageStorage.getImage(t.toString());
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
-
+						
+						// Drawing walls if inside location
+						if(location instanceof InsideLocation){
+							if(i==0 || tiles[i-1][j]==null){
+								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+							}
+							if(j==tiles.length-1|| tiles[i][j+1]==null){
+								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+							}
+						}
+						// DRAWING ENTITY
+						if(t.containedEntity()!=null){
+							image = ImageStorage.getImage(t.containedEntity().name());
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
+						}
+						
 						// DRAWING PLAYER
 						if(t.getPos().equals(player.getPosition())){
 							offgc.drawImage(getPlayerImage(player), (j*TILESIZE/2) + (i*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
+					}
+					
 
-						// DRAWING ROOMS
-						if(rooms!=null){
-							Tile r = rooms[i][j];
-							if(r!=null) {
-								// Drawing 2 block high walls
-								if(r instanceof EntranceExitTile){
-									if(j-1 >= 0 && rooms[i][j-1]==null){
-										offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
-									} else {
-										offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
-									}
+					// DRAWING ROOMS
+					if(rooms!=null){
+						Tile r = rooms[i][j];
+						if(r!=null) {
+							// Drawing 2 block high walls
+							if(r instanceof EntranceExitTile){
+								if(j-1 >= 0 && rooms[i][j-1]==null){
+									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+								} else {
+									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 								}
-								else{
-									offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
-								}
-								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
-
-
-								image = ImageStorage.building;
-
-								// Western most point of building
-								if(j-1 >= 0 && rooms[i][j-1] == null){
-									image = ImageStorage.roofUD;
-								}
-
-								// Northern most point of building
-								if(i+1 < rooms.length && rooms[i+1][j]==null){
-									image = ImageStorage.roofLR;
-								}
-
-								// Outwards corner roof
-								if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-									image = ImageStorage.roofCornerO;
-								}
-								// Inwards corner roof
-								if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-									image = ImageStorage.roofCornerI;
-								}
-
-
-								offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
-
 							}
-						}
-						
-						// DRAWING ENTITY
-						if(t.containedEntity()!=null){
-							image = ImageStorage.getImage(t.containedEntity().name());
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+							else{
+								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+							}
+							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+
+
+							image = ImageStorage.building;
+
+							// Western most point of building
+							if(j-1 >= 0 && rooms[i][j-1] == null){
+								image = ImageStorage.roofUD;
+							}
+
+							// Northern most point of building
+							if(i+1 < rooms.length && rooms[i+1][j]==null){
+								image = ImageStorage.roofLR;
+							}
+
+							// Outwards corner roof
+							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+								image = ImageStorage.roofCornerO;
+							}
+							// Inwards corner roof
+							if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+								image = ImageStorage.roofCornerI;
+							}
+
+
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
+
 						}
 					}
 				}
@@ -207,9 +217,10 @@ public class RenderingWindow extends JPanel{
 			Animation animation = p.getAnimation();
 			
 			int directionInt = animation.getAnimationDirection();
+			
 			switch(direction){
 				case EAST:
-					directionInt = addToDirInt(directionInt, 1);
+					directionInt = addToDirInt(directionInt, 3);
 					break;
 				case NORTH:
 					break;
@@ -217,7 +228,7 @@ public class RenderingWindow extends JPanel{
 					directionInt = addToDirInt(directionInt, 2);
 					break;
 				case WEST:
-					directionInt = addToDirInt(directionInt, 3);
+					directionInt = addToDirInt(directionInt, 1);
 					break;
 			}
 			

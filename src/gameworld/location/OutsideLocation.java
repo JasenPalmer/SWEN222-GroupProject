@@ -1,6 +1,5 @@
 package gameworld.location;
 
-import gameworld.entity.Entity;
 import gameworld.tile.Tile;
 
 public class OutsideLocation extends Location {
