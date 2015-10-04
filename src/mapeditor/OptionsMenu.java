@@ -1,5 +1,8 @@
 package mapeditor;
 
+import gameworld.location.Location;
+import gameworld.location.OutsideLocation;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,7 +20,7 @@ public class OptionsMenu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public OptionsMenu(final EditorFrame frame) {
+	public OptionsMenu(final EditorFrame frame, Location map) {
 		this.frame = frame;
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -28,35 +31,44 @@ public class OptionsMenu extends JPanel {
 		setLayout(gridBagLayout);
 		
 		// Terrain Menu
-		
-		String[] terrainOptions = {"Grass", "Rock", "Water"};
-		
-		JLabel lblTerrain = new JLabel("Terrain");
-		GridBagConstraints gbc_lblTerrain = new GridBagConstraints();
-		gbc_lblTerrain.insets = new Insets(0, 0, 5, 0);
-		gbc_lblTerrain.gridx = 0;
-		gbc_lblTerrain.gridy = 0;
-		add(lblTerrain, gbc_lblTerrain);
-		final JComboBox terrain = new JComboBox(terrainOptions);
-		GridBagConstraints gbc_terrain = new GridBagConstraints();
-		gbc_terrain.insets = new Insets(0, 0, 5, 0);
-		gbc_terrain.fill = GridBagConstraints.HORIZONTAL;
-		gbc_terrain.gridx = 0;
-		gbc_terrain.gridy = 1;
-		
-		terrain.addActionListener(new ActionListener()
-	    {
-		      public void actionPerformed(ActionEvent e)
-		      {
-		    	  frame.optionSelected(terrain.getSelectedItem().toString());
-		      }
-		    });
-		
-		add(terrain, gbc_terrain);
+		if(map instanceof OutsideLocation){
+			String[] terrainOptions = {"Grass", "Rock", "Water"};
+			
+			JLabel lblTerrain = new JLabel("Terrain");
+			GridBagConstraints gbc_lblTerrain = new GridBagConstraints();
+			gbc_lblTerrain.insets = new Insets(0, 0, 5, 0);
+			gbc_lblTerrain.gridx = 0;
+			gbc_lblTerrain.gridy = 0;
+			add(lblTerrain, gbc_lblTerrain);
+			final JComboBox terrain = new JComboBox(terrainOptions);
+			GridBagConstraints gbc_terrain = new GridBagConstraints();
+			gbc_terrain.insets = new Insets(0, 0, 5, 0);
+			gbc_terrain.fill = GridBagConstraints.HORIZONTAL;
+			gbc_terrain.gridx = 0;
+			gbc_terrain.gridy = 1;
+			
+			terrain.addActionListener(new ActionListener()
+		    {
+			      public void actionPerformed(ActionEvent e)
+			      {
+			    	  frame.optionSelected(terrain.getSelectedItem().toString());
+			      }
+			    });
+			
+			add(terrain, gbc_terrain);
+		}
 		
 		// Building Menu
 		
-		String[] buildingOptions = {"Building", "Entrance"};
+		String[] outsideBuilding = {"Building", "Entrance"};
+		String[] insideBuilding = {"Floor", "Entrance"};
+		
+		String[] buildingsToUse = null;
+		if(map instanceof OutsideLocation){
+			buildingsToUse = outsideBuilding;
+		} else {
+			buildingsToUse = insideBuilding;
+		}
 		
 		JLabel lblBuildings = new JLabel("Buildings");
 		GridBagConstraints gbc_lblBuildings = new GridBagConstraints();
@@ -65,7 +77,7 @@ public class OptionsMenu extends JPanel {
 		gbc_lblBuildings.gridy = 2;
 		add(lblBuildings, gbc_lblBuildings);
 		
-		final JComboBox buildings = new JComboBox(buildingOptions);
+		final JComboBox buildings = new JComboBox(buildingsToUse);
 		GridBagConstraints gbc_buildings = new GridBagConstraints();
 		gbc_buildings.insets = new Insets(0, 0, 5, 0);
 		gbc_buildings.fill = GridBagConstraints.HORIZONTAL;
@@ -91,9 +103,18 @@ public class OptionsMenu extends JPanel {
 		gbc_lblItems.gridy = 4;
 		add(lblItems, gbc_lblItems);
 		
-		String[] itemOptions = {"Tree"};
 		
-		final JComboBox items = new JComboBox(itemOptions);
+		String[] insideItems = {"Table"};
+		String[] outsideItems = {"Tree"};
+		
+		String[] itemsToUse = null;
+		if(map instanceof OutsideLocation){
+			itemsToUse = outsideItems;
+		} else {
+			itemsToUse = insideItems;
+		}
+		
+		final JComboBox items = new JComboBox(itemsToUse);
 		GridBagConstraints gbc_items = new GridBagConstraints();
 		gbc_items.insets = new Insets(0, 0, 5, 0);
 		gbc_items.fill = GridBagConstraints.HORIZONTAL;

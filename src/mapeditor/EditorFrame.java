@@ -2,7 +2,10 @@ package mapeditor;
 
 import gameworld.Game.Direction;
 import gameworld.entity.Entity;
+import gameworld.entity.Table;
 import gameworld.entity.Tree;
+import gameworld.location.InsideLocation;
+import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
 import gameworld.tile.FloorTile;
@@ -36,7 +39,7 @@ import ui.ImageStorage;
 public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 
-	private OutsideLocation map;
+	private Location map;
 	private EditorCanvas canvas;
 	private OptionsMenu options;
 	private String currentOption;
@@ -57,7 +60,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	/**
 	 * Create the frame.
 	 */
-	public EditorFrame(OutsideLocation map) {
+	public EditorFrame(Location map) {		
 		this.map = map;
 		new ImageStorage();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,7 +104,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		canvas.setBorder(new EmptyBorder(5, 5, 5, 5));
 		outerPanel.add(canvas, BorderLayout.CENTER);
 
-		options = new OptionsMenu(this);
+		options = new OptionsMenu(this, map);
 		options.setBorder(new EmptyBorder(5, 5, 5, 5));
 		outerPanel.add(options, BorderLayout.WEST);
 
@@ -150,18 +153,22 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	public void mouseClicked(MouseEvent e) {
 
 		if(currentOption!=null){
-			if(xClick1!=xClick2 || yClick1!=yClick2){
-				// MOUSE WAS DRAGGED
 				int x = Math.min(xClick1, xClick2);
 				int y = Math.min(yClick1, yClick2);
+			
 				while(x<=Math.max(xClick1, xClick2)){
 					while(y<=Math.max(yClick1, yClick2)){
-
+	
 						if(isBuilding(currentOption)){
 							// making BuildingTile
-							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
-						} else if(isEntity(currentOption)){
-							
+							if(map instanceof OutsideLocation){
+								OutsideLocation oMap = (OutsideLocation) map;
+								oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));	
+							}
+						} 
+						else if(isEntity(currentOption)){
+							System.out.print("current option is entity");
+							map.getTiles()[y][x].setEntitiy(getEntity(currentOption));
 						}
 						else{
 							// making FloorTile
@@ -171,25 +178,10 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 					}
 					y = Math.min(yClick1, yClick2);
 					x++;
-				}
-
-
-
-			} else {
-				// MOUSE CLICKED. NOT DRAGGED
-				if(isBuilding(currentOption)){
-					// Making BuildingTile
-					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1), false));
-				} 
-				else if(isEntity(currentOption)){
-					map.setEntity(xClick1, yClick1, getEntity(currentOption));
-				}
-				else{
-					// Making FloorTile
-					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1), true));
-				}
-			}
+				}	
 		}
+		
+		
 		repaint();
 	}
 
@@ -197,6 +189,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		switch(name){
 		case "Tree":
 			return new Tree();
+		case "Table":
+			return new Table();
 		}
 		return null;
 	}
@@ -258,16 +252,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	}
 
-	public static void main(String[] args){
-		try {
-			EditorFrame frame = new EditorFrame(new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]));
-			frame.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
 	public void viewSelected(String string) {
 		canvas.setView(string);
 		requestFocus();
@@ -316,6 +300,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 				return true;
 			case "Water":
 				return true;
+			case "Floor":
+				return true;
 		}
 		return false;
 	}
@@ -327,6 +313,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 			case "Bush":
 				return true;
 			case "Boulder":
+				return true;
+			case "Table":
 				return true;
 		}
 		return false;
@@ -345,5 +333,26 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public static void main(String[] args){
+		try {
+			String outOrIn = "";
+			
+			while(!outOrIn.equals("outside") && !outOrIn.equalsIgnoreCase("inside")){
+				outOrIn = (String)JOptionPane.showInputDialog(null, "Outside or Inside Location? ", "Location Select", JOptionPane.QUESTION_MESSAGE, null, null, null);
+			}
+			
+			Location l = null;
+			if(outOrIn.equalsIgnoreCase("inside")){
+				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT]);
+			} else{
+				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]);
+			}
+			
+			EditorFrame frame = new EditorFrame(l);
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

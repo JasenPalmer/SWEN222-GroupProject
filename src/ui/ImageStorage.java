@@ -20,6 +20,12 @@ public class ImageStorage {
 	public static Image roofCornerI;
 	public static Image tree;
 	public static Image bush;
+	public static Image floor;
+	public static Image wallL;
+	public static Image wallR;
+	public static Image wallCorner;
+	public static Image table;
+	
 	
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] leatherWalk = new Image[4][9];
@@ -41,7 +47,7 @@ public class ImageStorage {
 			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
 			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
 			
-			// building images
+			// outside building images
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
 			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
@@ -50,12 +56,20 @@ public class ImageStorage {
 			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
 			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
 			
+			// inside building images
+			floor = ImageIO.read(new File("src/ui/images/inside/Floor.png"));
+			wallL = ImageIO.read(new File("src/ui/images/inside/WallLeft.png"));
+			wallR = ImageIO.read(new File("src/ui/images/inside/WallRight.png"));
+			wallCorner = ImageIO.read(new File("src/ui/images/inside/WallCorner.png"));
+
+			
 			// player images
 			playerImage = ImageIO.read(new File("src/ui/images/player/robe/0.png"));
 			
 			// entity images
 			tree = ImageIO.read(new File("src/ui/images/entities/tree.png"));
 			bush = ImageIO.read(new File("src/ui/images/entities/tree.png"));
+			table = ImageIO.read(new File("src/ui/images/entities/Table.png"));
 			
 //			robewalking
 			for(int i  = 0; i < robeWalk.length; i++){
@@ -93,5 +107,34 @@ public class ImageStorage {
 		}catch(IOException e){
 			System.err.println(e.getLocalizedMessage());
 		}
+	}
+	
+	/**
+	 * Returns image to match given name
+	 * @param name - type of image wanted
+	 * @return image based on name
+	 */
+	public static Image getImage(String name){
+		switch(name){
+			case "Gr":
+				return grass;
+			case "Ro":
+				return rock;
+			case "Wa":
+				return water;
+			case "Bu":
+				return building;
+			case "En":
+				return doorLR;
+			case "Fl":
+				return floor;
+				
+			// ENTITIES
+			case "Tree":
+				return tree;
+			case "Table":
+				return table;
+		}
+		return null;
 	}
 }

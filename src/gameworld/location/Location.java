@@ -3,6 +3,7 @@ package gameworld.location;
 import java.awt.Point;
 import java.io.Serializable;
 
+import gameworld.entity.Entity;
 import gameworld.tile.Tile;
 
 public abstract class Location implements Serializable{
@@ -79,6 +80,23 @@ public abstract class Location implements Serializable{
 			s+="\n";
 		}
 		return s;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+		
+	}
+
+	public void setEntity(int x, int y, Entity entity) {
+		System.out.println("Setting entity");
+		if(tiles[y][x]!=null){
+			tiles[y][x].setEntitiy(entity);
+		}
 	}
 	
 }

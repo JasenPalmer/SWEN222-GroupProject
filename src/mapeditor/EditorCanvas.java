@@ -46,28 +46,6 @@ public class EditorCanvas extends JPanel {
 		this.location = location;
 	}
 
-	
-	/**
-	 * Returns image to match given name
-	 * @param name - type of image wanted
-	 * @return image based on name
-	 */
-	public static Image getImage(String name){
-		switch(name){
-		case "Gr":
-			return ImageStorage.grass;
-		case "Ro":
-			return ImageStorage.rock;
-		case "Wa":
-			return ImageStorage.water;
-		case "Bu":
-			return ImageStorage.building;
-		case "En":
-			return ImageStorage.doorLR;
-		}
-		return null;
-	}
-
 	public void paint(Graphics g){
 		Tile[][] tiles = location.getTiles();
 		Tile[][] rooms = null;
@@ -147,17 +125,20 @@ public class EditorCanvas extends JPanel {
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = tiles[i].length-1; j >=0 ; j--){
 				FloorTile t = (FloorTile) tiles[i][j];
-				Tile r = rooms[i][j];
+				Tile r = null;
+				if(rooms!=null){
+					r = rooms[i][j];
+				}
 				Image image = null;
 
 				// DRAWING TERRAIN
 				if(t!=null) {
-					image = getImage(t.toString());
+					image = ImageStorage.getImage(t.toString());
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
 					
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
-						image = RenderingWindow.getImage(t.containedEntity().name());
+						image = ImageStorage.getImage(t.containedEntity().name());
 						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY - image.getHeight(null)/2, null);
 					}
 
@@ -218,16 +199,17 @@ public class EditorCanvas extends JPanel {
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){
 				FloorTile t = (FloorTile) tiles[i][j];
-				Tile r = rooms[i][j];
+				Tile r = null;
+				if(rooms!=null){
+					r = rooms[i][j];
+				}
 				if(t!=null){
-					Image image = getImage(t.toString());
+					Image image = ImageStorage.getImage(t.toString());
 					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
 					
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
-						System.out.println("DRAWING IMG");
-						image = RenderingWindow.getImage(t.containedEntity().name());
-						System.out.println(image);
+						image = ImageStorage.getImage(t.containedEntity().name());
 						offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY - TILESIZE/2, null);
 					}
 				}

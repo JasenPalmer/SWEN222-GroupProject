@@ -113,7 +113,7 @@ public class RenderingWindow extends JPanel{
 					if(t!=null) {
 						// DRAWING TERRAIN
 						
-						Image image = getImage(t.toString());
+						Image image = ImageStorage.getImage(t.toString());
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
 
 						// DRAWING PLAYER
@@ -168,7 +168,7 @@ public class RenderingWindow extends JPanel{
 						
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
-							image = getImage(t.containedEntity().name());
+							image = ImageStorage.getImage(t.containedEntity().name());
 							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
 						}
 					}
@@ -288,31 +288,6 @@ public class RenderingWindow extends JPanel{
 			int playerY = realCoord[1];
 			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
 			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
-	}
-		
-		/**
-		 * Returns image to match given name
-		 * @param name - type of image wanted
-		 * @return image based on name
-		 */
-		public static Image getImage(String name){
-			switch(name){
-				case "Gr":
-					return ImageStorage.grass;
-				case "Ro":
-					return ImageStorage.rock;
-				case "Wa":
-					return ImageStorage.water;
-				case "Bu":
-					return ImageStorage.building;
-				case "En":
-					return ImageStorage.doorLR;
-					
-				// ENTITIES
-				case "Tree":
-					return ImageStorage.tree;
-			}
-			return null;
 		}
 
 		public static Image createImage(String imagename) {
