@@ -1,6 +1,8 @@
 package mapeditor;
 
 import gameworld.Game.Direction;
+import gameworld.entity.Entity;
+import gameworld.entity.Tree;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
 import gameworld.tile.FloorTile;
@@ -27,6 +29,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ui.ImageStorage;
 
 
 public class EditorFrame extends JFrame implements MouseListener, KeyListener{
@@ -55,7 +59,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	 */
 	public EditorFrame(OutsideLocation map) {
 		this.map = map;
-
+		new ImageStorage();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
 		JPanel outerPanel = new JPanel();
@@ -153,11 +157,14 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 				while(x<=Math.max(xClick1, xClick2)){
 					while(y<=Math.max(yClick1, yClick2)){
 
-						if(currentOption.equals("Building") || currentOption.equals("Entrance")){
-							// making FloorTiles
+						if(isBuilding(currentOption)){
+							// making BuildingTile
 							map.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
-						} else{
-							// making BuildingTiles
+						} else if(isEntity(currentOption)){
+							
+						}
+						else{
+							// making FloorTile
 							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), true));
 						}
 						y++;
@@ -170,10 +177,14 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 			} else {
 				// MOUSE CLICKED. NOT DRAGGED
-				if(currentOption.equals("Building")  || currentOption.equals("Entrance")){
+				if(isBuilding(currentOption)){
 					// Making BuildingTile
 					map.setBuildingTile(xClick1,yClick1,new BuildingTile(currentOption, new Point(xClick1,yClick1), false));
-				} else{
+				} 
+				else if(isEntity(currentOption)){
+					map.setEntity(xClick1, yClick1, getEntity(currentOption));
+				}
+				else{
 					// Making FloorTile
 					map.setTile(xClick1, yClick1, new FloorTile(currentOption, new Point(xClick1,yClick1), true));
 				}
@@ -181,6 +192,15 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		}
 		repaint();
 	}
+
+	private Entity getEntity(String name) {
+		switch(name){
+		case "Tree":
+			return new Tree();
+		}
+		return null;
+	}
+
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -276,6 +296,40 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 				break;
 		}
 		
+	}
+	
+	public boolean isBuilding(String name){
+		switch(name){
+			case "Building":
+				return true;
+			case "Entrance":
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean isTerrain(String name){
+		switch(name){
+			case "Grass":
+				return true;
+			case "Rock":
+				return true;
+			case "Water":
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean isEntity(String name){
+		switch(name){
+			case "Tree":
+				return true;
+			case "Bush":
+				return true;
+			case "Boulder":
+				return true;
+		}
+		return false;
 	}
 
 

@@ -7,5 +7,4 @@ package gameworld.entity;
  */
 public interface BasicEntity extends Entity {
 
-	
 }

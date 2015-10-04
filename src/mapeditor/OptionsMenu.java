@@ -84,14 +84,14 @@ public class OptionsMenu extends JPanel {
 		
 		// Items Menu
 		
-		JLabel lblItems = new JLabel("Items");
+		JLabel lblItems = new JLabel("Entities");
 		GridBagConstraints gbc_lblItems = new GridBagConstraints();
 		gbc_lblItems.insets = new Insets(0, 0, 5, 0);
 		gbc_lblItems.gridx = 0;
 		gbc_lblItems.gridy = 4;
 		add(lblItems, gbc_lblItems);
 		
-		String[] itemOptions = {"Drawers", "Barrel", "Chest"};
+		String[] itemOptions = {"Tree"};
 		
 		final JComboBox items = new JComboBox(itemOptions);
 		GridBagConstraints gbc_items = new GridBagConstraints();

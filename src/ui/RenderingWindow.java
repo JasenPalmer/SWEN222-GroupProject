@@ -20,26 +20,10 @@ import javax.swing.JPanel;
 
 public class RenderingWindow extends JPanel{
 
-	private Image backgroundImage;
-	private static Image grass;
-	private static Image building;
-	private static Image water;
-	private static Image rock;
-	private static Image doorLR;
-	private Image playerImage;
-	private Image doorUD;
-	private Image roofLR;
-	private Image roofUD;
-	private Image roofCornerO;
-	private Image roofCornerI;
-	
-	private Image[][] robeWalk = new Image[4][9];
-	private Image[][] leatherWalk = new Image[4][9];
-	private Image[][] chainWalk = new Image[4][9];
-	private Image[][] plateWalk = new Image[4][9];
-
 	private int cameraX;
 	private int cameraY;
+	
+	private Image playerImage;
 	
 	private Tile[][] locationTiles;
 
@@ -51,66 +35,11 @@ public class RenderingWindow extends JPanel{
 	Game.Direction direction = Direction.NORTH;
 
 	public RenderingWindow(ApplicationWindow aw){
+		new ImageStorage();
+		playerImage = ImageStorage.playerImage;
 		setLayout(null);
 		setBounds(0,0,1050,950);
 		this.applicationWindow = aw;
-		setImages();
-	}
-
-	/**
-	 * Setting images to files in images folder. Will be changed when map parser is working for some tiles. (grass, water, rock will be gone).
-	 */
-	private void setImages() {
-		try{
-			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
-			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
-			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
-			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
-			roofLR = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
-			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
-			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
-			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-			playerImage = ImageIO.read(new File("src/ui/images/player/robe/0.png"));
-
-			
-//			robewalking
-			for(int i  = 0; i < robeWalk.length; i++){
-				for(int j = 0; j < robeWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
-					robeWalk[i][j] = img; 
-				}
-			}
-			
-//			leatherwalking
-			for(int i  = 0; i < leatherWalk.length; i++){
-				for(int j = 0; j < leatherWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
-					leatherWalk[i][j] = img; 
-				}
-			}
-			
-//			chainwalking
-			for(int i  = 0; i < leatherWalk.length; i++){
-				for(int j = 0; j < leatherWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/chain/movement/chain-"+i+"-move-"+j+".png"));
-					chainWalk[i][j] = img; 
-				}
-			}
-			
-//			platewalking
-			for(int i  = 0; i < leatherWalk.length; i++){
-				for(int j = 0; j < leatherWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/plate/movement/plate-"+i+"-move-"+j+".png"));
-					plateWalk[i][j] = img; 
-				}
-			}
-			
-			
-		}catch(IOException e){
-			System.err.println(e.getLocalizedMessage());
-		}
 	}
 
 
@@ -122,7 +51,6 @@ public class RenderingWindow extends JPanel{
 	public void paint( Graphics g ) {
 
 		super.paint(g);
-
 		Image offscreen = createImage(this.getWidth(), this.getHeight());
 		Graphics offgc = offscreen.getGraphics();
 
@@ -190,7 +118,7 @@ public class RenderingWindow extends JPanel{
 
 						// DRAWING PLAYER
 						if(t.getPos().equals(player.getPosition())){
-							offgc.drawImage(getPlayerImage(player), (j*TILESIZE/2) + (i*TILESIZE/2) + playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
+							offgc.drawImage(getPlayerImage(player), (j*TILESIZE/2) + (i*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 
 						// DRAWING ROOMS
@@ -200,36 +128,36 @@ public class RenderingWindow extends JPanel{
 								// Drawing 2 block high walls
 								if(r instanceof EntranceExitTile){
 									if(j-1 >= 0 && rooms[i][j-1]==null){
-										offgc.drawImage(doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+										offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 									} else {
-										offgc.drawImage(doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+										offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 									}
 								}
 								else{
-									offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 								}
-								offgc.drawImage(building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
 
 
-								image = building;
+								image = ImageStorage.building;
 
 								// Western most point of building
 								if(j-1 >= 0 && rooms[i][j-1] == null){
-									image = roofUD;
+									image = ImageStorage.roofUD;
 								}
 
 								// Northern most point of building
 								if(i+1 < rooms.length && rooms[i+1][j]==null){
-									image = roofLR;
+									image = ImageStorage.roofLR;
 								}
 
 								// Outwards corner roof
 								if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-									image = roofCornerO;
+									image = ImageStorage.roofCornerO;
 								}
 								// Inwards corner roof
 								if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-									image = roofCornerI;
+									image = ImageStorage.roofCornerI;
 								}
 
 
@@ -237,11 +165,19 @@ public class RenderingWindow extends JPanel{
 
 							}
 						}
+						
+						// DRAWING ENTITY
+						if(t.containedEntity()!=null){
+							image = getImage(t.containedEntity().name());
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+						}
 					}
 				}
 
 			}
 		}
+
+
 
 		/**
 		 * Changes walkdirection for drawing depending on camera angle
@@ -285,7 +221,7 @@ public class RenderingWindow extends JPanel{
 					break;
 			}
 			
-			Image image = plateWalk[directionInt][animation.getCurrentFrame()];
+			Image image = ImageStorage.plateWalk[directionInt][animation.getCurrentFrame()];
 			
 			playerImage = image;
 			return image;
@@ -361,16 +297,20 @@ public class RenderingWindow extends JPanel{
 		 */
 		public static Image getImage(String name){
 			switch(name){
-			case "Gr":
-				return grass;
-			case "Ro":
-				return rock;
-			case "Wa":
-				return water;
-			case "Bu":
-				return building;
-			case "En":
-				return doorLR;
+				case "Gr":
+					return ImageStorage.grass;
+				case "Ro":
+					return ImageStorage.rock;
+				case "Wa":
+					return ImageStorage.water;
+				case "Bu":
+					return ImageStorage.building;
+				case "En":
+					return ImageStorage.doorLR;
+					
+				// ENTITIES
+				case "Tree":
+					return ImageStorage.tree;
 			}
 			return null;
 		}

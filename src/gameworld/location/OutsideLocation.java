@@ -1,5 +1,6 @@
 package gameworld.location;
 
+import gameworld.entity.Entity;
 import gameworld.tile.Tile;
 
 public class OutsideLocation extends Location {
@@ -61,6 +62,13 @@ public class OutsideLocation extends Location {
 	public void setDescription(String description) {
 		this.description = description;
 		
+	}
+
+	public void setEntity(int x, int y, Entity entity) {
+		System.out.println("doubt we got here");
+		if(tiles[y][x]!=null){
+			tiles[y][x].setEntitiy(entity);
+		}
 	}
 	
 }

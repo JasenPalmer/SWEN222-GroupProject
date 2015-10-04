@@ -115,6 +115,17 @@ public class EditorCanvas extends JPanel {
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
 		Graphics offgc = offscreen.getGraphics();
 
+//		for(int i = 0; i < tiles.length; i++){
+//			for(int j = 0; j <tiles.length ; j++){
+//				if(tiles[i][j]!=null){
+//					System.out.print(tiles[i][j].containedEntity()+" ");
+//				} else{
+//					System.out.print("null ");
+//				}
+//			}
+//			System.out.println("");
+//		}
+		
 		switch(direction){
 		case NORTH:
 			if(view.equals("Render")){
@@ -178,6 +189,12 @@ public class EditorCanvas extends JPanel {
 				if(t!=null) {
 					image = getImage(t.toString());
 					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+					
+					// DRAWING ENTITY
+					if(t.containedEntity()!=null){
+						image = RenderingWindow.getImage(t.containedEntity().name());
+						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY - image.getHeight(null)/2, null);
+					}
 
 				}
 
@@ -240,6 +257,14 @@ public class EditorCanvas extends JPanel {
 				if(t!=null){
 					Image image = getImage(t.toString());
 					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
+					
+					// DRAWING ENTITY
+					if(t.containedEntity()!=null){
+						System.out.println("DRAWING IMG");
+						image = RenderingWindow.getImage(t.containedEntity().name());
+						System.out.println(image);
+						offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY - TILESIZE/2, null);
+					}
 				}
 				if(r!=null){
 					Image image = building;

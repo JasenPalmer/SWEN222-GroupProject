@@ -38,6 +38,10 @@ public abstract class Tile implements Serializable{
 	public Entity containedEntity() {
 		return entity;
 	}
+	
+	public void setEntitiy(Entity e){
+		this.entity = e;
+	}
 
 	public Player getPlayer() {
 		return player;
