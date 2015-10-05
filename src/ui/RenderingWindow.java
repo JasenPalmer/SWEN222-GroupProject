@@ -14,7 +14,6 @@ import gameworld.tile.Tile;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -127,7 +126,7 @@ public class RenderingWindow extends JPanel{
 						}
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
-							image = ImageStorage.getImage(t.containedEntity().name());
+							image = ImageStorage.getImage(t.containedEntity().getName());
 							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
 

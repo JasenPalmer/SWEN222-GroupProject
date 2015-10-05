@@ -2,14 +2,10 @@ package mapeditor;
 
 import gameworld.Game.Direction;
 import gameworld.entity.Entity;
-import gameworld.entity.Table;
-import gameworld.entity.Tree;
-import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
 import gameworld.tile.FloorTile;
-import gameworld.tile.Tile;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -60,7 +56,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	/**
 	 * Create the frame.
 	 */
-	public EditorFrame(Location map) {		
+	public EditorFrame(Location map) {
 		this.map = map;
 		new ImageStorage();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,17 +150,17 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		if(currentOption!=null){
 				int x = Math.min(xClick1, xClick2);
 				int y = Math.min(yClick1, yClick2);
-			
+
 				while(x<=Math.max(xClick1, xClick2)){
 					while(y<=Math.max(yClick1, yClick2)){
-	
+
 						if(isBuilding(currentOption)){
 							// making BuildingTile
 							if(map instanceof OutsideLocation){
 								OutsideLocation oMap = (OutsideLocation) map;
-								oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));	
+								oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 							}
-						} 
+						}
 						else if(isEntity(currentOption)){
 							System.out.print("current option is entity");
 							map.getTiles()[y][x].setEntitiy(getEntity(currentOption));
@@ -177,19 +173,19 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 					}
 					y = Math.min(yClick1, yClick2);
 					x++;
-				}	
+				}
 		}
-		
-		
+
+
 		repaint();
 	}
 
 	private Entity getEntity(String name) {
 		switch(name){
-		case "Tree":
-			return new Tree();
-		case "Table":
-			return new Table();
+//		case "Tree":
+//			return new BasicEntity("Tree", "This is a tree. Just a tree.");
+//		case "Table":
+//			return new Table();
 		}
 		return null;
 	}
@@ -278,9 +274,9 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 				repaint();
 				break;
 		}
-		
+
 	}
-	
+
 	public boolean isBuilding(String name){
 		switch(name){
 			case "Building":
@@ -290,7 +286,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		}
 		return false;
 	}
-	
+
 	public boolean isTerrain(String name){
 		switch(name){
 			case "Grass":
@@ -304,7 +300,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		}
 		return false;
 	}
-	
+
 	public boolean isEntity(String name){
 		switch(name){
 			case "Tree":
@@ -323,31 +319,31 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public static void main(String[] args){
 		try {
 			String outOrIn = "";
-			
+
 			while(!outOrIn.equals("outside") && !outOrIn.equalsIgnoreCase("inside")){
 				outOrIn = (String)JOptionPane.showInputDialog(null, "Outside or Inside Location? ", "Location Select", JOptionPane.QUESTION_MESSAGE, null, null, null);
 			}
-			
+
 			Location l = null;
 			if(outOrIn.equalsIgnoreCase("inside")){
-				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT]);
+				//l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT]);
 			} else{
-				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]);
+				//l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]);
 			}
-			
+
 			EditorFrame frame = new EditorFrame(l);
 			frame.setVisible(true);
 		} catch (Exception e) {

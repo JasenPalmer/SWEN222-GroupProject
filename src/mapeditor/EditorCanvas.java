@@ -57,7 +57,7 @@ public class EditorCanvas extends JPanel {
 
 		Image offscreen = createImage(MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE);
 		Graphics offgc = offscreen.getGraphics();
-		
+
 		switch(direction){
 		case NORTH:
 			if(view.equals("Render")){
@@ -134,7 +134,7 @@ public class EditorCanvas extends JPanel {
 					}
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
-						image = ImageStorage.getImage(t.containedEntity().name());
+						image = ImageStorage.getImage(t.containedEntity().getName());
 						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 					}
 
@@ -202,10 +202,10 @@ public class EditorCanvas extends JPanel {
 				if(t!=null){
 					Image image = ImageStorage.getImage(t.toString());
 					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
-					
+
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
-						image = ImageStorage.getImage(t.containedEntity().name());
+						image = ImageStorage.getImage(t.containedEntity().getName());
 						offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 					}
 				}
@@ -244,7 +244,7 @@ public class EditorCanvas extends JPanel {
 		view = string;
 
 	}
-	
+
 	public int getCameraX() {
 		return cameraX;
 	}
