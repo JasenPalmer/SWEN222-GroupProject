@@ -52,24 +52,27 @@ public class Player implements Serializable{
 	 * The current position of the player
 	 */
 	private Point position;
-	
+
 	/**
 	 * Direction that the screen is facing
 	 */
 	private Direction direction = Game.Direction.NORTH;
-	
+
 	/**
 	 * Used for storing animation fields for player such as direction and cycle point
 	 */
 	private Animation animation;
-	
-	
+
+	private Tile standingOn;
+
+
 	public Player(String name, Game game) {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
 		holding = false;
 		location = game.getLocations().iterator().next();
 		position = new Point(2, 2);
+		standingOn = location.getTileAt(position);
 		animation = new Animation();
 	}
 
@@ -199,6 +202,8 @@ public class Player implements Serializable{
 			}
 		}
 		moveDir(dir);
+		tile.setPlayer(this);
+		this.standingOn.setPlayer(null);
 		return true;
 	}
 
@@ -239,22 +244,22 @@ public class Player implements Serializable{
 		case NORTH:
 			System.out.println("Moving North");
 			position = new Point(position.x, position.y-1);
-			animation.setAnimationDirection(0); 
+			animation.setAnimationDirection(0);
 			break;
 		case EAST:
 			System.out.println("Moving East");
 			position = new Point(position.x+1, position.y);
-			animation.setAnimationDirection(1); 
+			animation.setAnimationDirection(1);
 			break;
 		case SOUTH:
 			System.out.println("Moving South");
 			position = new Point(position.x, position.y+1);
-			animation.setAnimationDirection(2); 
+			animation.setAnimationDirection(2);
 			break;
 		case WEST:
 			System.out.println("Moving West");
 			position = new Point(position.x-1, position.y);
-			animation.setAnimationDirection(3); 
+			animation.setAnimationDirection(3);
 			break;
 		default:
 			break;
@@ -287,7 +292,13 @@ public class Player implements Serializable{
 	public void setLocation(InsideLocation location) {
 		this.location = location;
 	}
-	
+
+
+	/**
+	 * Change the direction of the player based on the key that was pressed and the direction the camera is currently facing.
+	 * Accepts KeyEvent.VK_E and KeyEvent.VK_Q
+	 * @param key - key press
+	 */
 	public void changeDirection(int key) {
 		switch(key) {
 		case KeyEvent.VK_E:
@@ -322,11 +333,11 @@ public class Player implements Serializable{
 			}
 		}
 	}
-	
+
 	public Direction getDirection() {
 		return direction;
 	}
-	
+
 	public Animation getAnimation(){
 		return animation;
 	}

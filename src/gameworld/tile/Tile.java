@@ -38,7 +38,7 @@ public abstract class Tile implements Serializable{
 	public Entity containedEntity() {
 		return entity;
 	}
-	
+
 	public void setEntitiy(Entity e){
 		this.entity = e;
 	}
@@ -46,11 +46,15 @@ public abstract class Tile implements Serializable{
 	public Player getPlayer() {
 		return player;
 	}
-	
-	public String toString(){	
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public String toString(){
 		return name.substring(0,2);
 	}
-	
+
 	public String getName() {
 		return name;
 	}
