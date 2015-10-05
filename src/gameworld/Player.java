@@ -188,6 +188,7 @@ public class Player implements Serializable{
 		dir = calcDir(dir);
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
+		if(tile.getPlayer() != null){return false;}
 		if(!tile.isPassable()){return false;}
 		if(tile.containedEntity() != null){
 			if(!(tile.containedEntity() instanceof Item)) {
