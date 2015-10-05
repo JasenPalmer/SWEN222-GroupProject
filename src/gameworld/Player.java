@@ -259,7 +259,6 @@ public class Player implements Serializable{
 	 * @param dir to move
 	 */
 	private void moveDir(Game.Direction dir) {
-		System.out.println("1");
 		switch(dir) {
 		case NORTH:
 			System.out.println("Moving North");
@@ -284,7 +283,6 @@ public class Player implements Serializable{
 		default:
 			break;
 		}
-		System.out.println("2");
 		animation.cycle();
 		System.out.println(position);
 	}
