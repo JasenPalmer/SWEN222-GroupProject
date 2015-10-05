@@ -7,14 +7,15 @@ import java.awt.Point;
 
 public class Chest extends Container {
 
+	private Player openedBy;
+
 	public Chest(int size) {
 		super(size);
-		
 	}
 
 	@Override
 	public void interact(Player player) {
-		//probably should display the inventory of the chest when it is interacted with
+		openedBy = player;
 	}
 
 	@Override
@@ -35,6 +36,10 @@ public class Chest extends Container {
 	@Override
 	public Location getLocation() {
 		return null;
+	}
+
+	public Player getOpenedBy() {
+		return openedBy;
 	}
 
 }

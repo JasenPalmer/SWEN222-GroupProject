@@ -69,6 +69,10 @@ public class Player implements Serializable{
 
 	private boolean isDead;
 
+	private double x,y;
+
+	private static final int TILESIZE = 64;
+
 	private Direction facing = Game.Direction.NORTH;
 
 	public Player(String name, Game game) {
@@ -231,7 +235,10 @@ public class Player implements Serializable{
 		facing = moveDir(dir);
 		//update the tile the player is standing on
 		// and the tile's player
+
+		// need method to get the tile the player is on
 		tile.setPlayer(this);
+
 		standingOn.setPlayer(null);
 		standingOn = tile;
 		return true;
@@ -273,26 +280,26 @@ public class Player implements Serializable{
 		Direction newDir = null;
 		switch(dir) {
 		case NORTH:
-			System.out.println("Moving North");
-			position = new Point(position.x, position.y-1);
+			y -= 10;
+			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(0);
 			newDir = Direction.NORTH;
 			break;
 		case EAST:
-			System.out.println("Moving East");
-			position = new Point(position.x+1, position.y);
+			x += 10;
+			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(1);
 			newDir = Direction.EAST;
 			break;
 		case SOUTH:
-			System.out.println("Moving South");
-			position = new Point(position.x, position.y+1);
+			y += 10;
+			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(2);
 			newDir = Direction.SOUTH;
 			break;
 		case WEST:
-			System.out.println("Moving West");
-			position = new Point(position.x-1, position.y);
+			x -= 10;
+			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(3);
 			newDir = Direction.WEST;
 			break;
@@ -300,7 +307,6 @@ public class Player implements Serializable{
 			break;
 		}
 		animation.cycle();
-		System.out.println(position);
 		return newDir;
 	}
 
