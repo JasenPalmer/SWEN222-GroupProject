@@ -95,7 +95,7 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-		opponent.setHealth(opponent.getHealth()-25);
+		opponent.setHealth(opponent.getHealth()-100);
 		System.out.println("Player: "+opponent.getName()+" was attacked");
 		System.out.println("Health remaining: "+opponent.getHealth());
 		return true;
