@@ -23,7 +23,7 @@ public class RenderingWindow extends JPanel{
 
 	private int cameraX;
 	private int cameraY;
-	
+
 	private Image playerImage;
 	private Location location;
 	private Tile[][] locationTiles;
@@ -109,13 +109,13 @@ public class RenderingWindow extends JPanel{
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
-					
+
 					FloorTile t = (FloorTile) tiles[i][j];
 					if(t!=null) {
 						// DRAWING TERRAIN
 						image = ImageStorage.getImage(t.toString());
 						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
-						
+
 						// Drawing walls if inside location
 						if(location instanceof InsideLocation){
 							if(i==0 || tiles[i-1][j]==null){
@@ -130,13 +130,14 @@ public class RenderingWindow extends JPanel{
 							image = ImageStorage.getImage(t.containedEntity().name());
 							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
-						
+
 						// DRAWING PLAYER
-						if(t.getPos().equals(player.getPosition())){
-							offgc.drawImage(getPlayerImage(player), (j*TILESIZE/2) + (i*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
+						if(t.getPlayer()!=null){
+							Player p = t.getPlayer();
+							offgc.drawImage(getPlayerImage(p), (j*TILESIZE/2) + (i*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 					}
-					
+
 
 					// DRAWING ROOMS
 					if(rooms!=null){
@@ -204,10 +205,10 @@ public class RenderingWindow extends JPanel{
 				}
 				i++;
 			}
-			
+
 			return directionInt;
 		}
-		
+
 		/**
 		 * finds correct image to draw in walk cycle depending on players direction and spot in cycle
 		 * @param p - The player to get image for
@@ -215,9 +216,9 @@ public class RenderingWindow extends JPanel{
 		 */
 		private Image getPlayerImage(Player p){
 			Animation animation = p.getAnimation();
-			
+
 			int directionInt = animation.getAnimationDirection();
-			
+
 			switch(direction){
 				case EAST:
 					directionInt = addToDirInt(directionInt, 3);
@@ -231,13 +232,13 @@ public class RenderingWindow extends JPanel{
 					directionInt = addToDirInt(directionInt, 1);
 					break;
 			}
-			
+
 			Image image = ImageStorage.plateWalk[directionInt][animation.getCurrentFrame()];
-			
+
 			playerImage = image;
 			return image;
 		}
-		
+
 		/**
 		 * gets the player x and y in the current tile array regardless of rotation.
 		 * @param tiles
@@ -291,7 +292,7 @@ public class RenderingWindow extends JPanel{
 		/**
 		 * changes the camera coords to the fit player in middle of screen
 		 * camera x = player rendering x position - (renderwindow size / 2)
-		 * 
+		 *
 		 * @param realCoord - int array of player x and y in the tile array
 		 */
 		public void updateCamera(int[] realCoord){

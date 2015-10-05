@@ -94,7 +94,7 @@ public class Client {
 
 	public void close(){
 		serverConnection.finish();
-		
+
 		try{
 			output.writeObject(new NetworkEvent(user));
 			output.close();
@@ -125,7 +125,7 @@ public class Client {
 				case UPDATE_GUI:
 					if(event.getGameState() == null) return;
 					gui.setGame(event.getGameState());
-					gui.repaintRenderingWindow();
+					//gui.repaintRenderingWindow();
 					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();
@@ -135,6 +135,7 @@ public class Client {
 					if(event.getUser().equals("Server")) close();
 					break;
 				}
+				gui.repaintRenderingWindow();
 			}
 		}
 		public void finish(){

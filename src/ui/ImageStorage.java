@@ -25,14 +25,14 @@ public class ImageStorage {
 	public static Image wallR;
 	public static Image wallCorner;
 	public static Image table;
-	
-	
+
+
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] leatherWalk = new Image[4][9];
 	static Image[][] chainWalk = new Image[4][9];
 	static Image[][] plateWalk = new Image[4][9];
 
-	
+
 	public ImageStorage(){
 		setImages();
 	}
@@ -46,7 +46,7 @@ public class ImageStorage {
 			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
 			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
 			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
-			
+
 			// outside building images
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
@@ -55,60 +55,58 @@ public class ImageStorage {
 			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
 			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
 			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
-			
+
 			// inside building images
 			floor = ImageIO.read(new File("src/ui/images/inside/Floor.png"));
 			wallL = ImageIO.read(new File("src/ui/images/inside/WallLeft.png"));
 			wallR = ImageIO.read(new File("src/ui/images/inside/WallRight.png"));
 			wallCorner = ImageIO.read(new File("src/ui/images/inside/WallCorner.png"));
-
-			
 			// player images
 			playerImage = ImageIO.read(new File("src/ui/images/player/robe/0.png"));
-			
+
+
 			// entity images
-			tree = ImageIO.read(new File("src/ui/images/entities/tree.png"));
-			bush = ImageIO.read(new File("src/ui/images/entities/tree.png"));
+			tree = ImageIO.read(new File("src/ui/images/entities/Tree.png"));
+			bush = ImageIO.read(new File("src/ui/images/entities/Bush.png"));
 			table = ImageIO.read(new File("src/ui/images/entities/Table.png"));
-			
 //			robewalking
 			for(int i  = 0; i < robeWalk.length; i++){
 				for(int j = 0; j < robeWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
-					robeWalk[i][j] = img; 
+					robeWalk[i][j] = img;
 				}
 			}
-			
+
 //			leatherwalking
 			for(int i  = 0; i < leatherWalk.length; i++){
 				for(int j = 0; j < leatherWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
-					leatherWalk[i][j] = img; 
+					leatherWalk[i][j] = img;
 				}
 			}
-			
+
 //			chainwalking
 			for(int i  = 0; i < leatherWalk.length; i++){
 				for(int j = 0; j < leatherWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/chain/movement/chain-"+i+"-move-"+j+".png"));
-					chainWalk[i][j] = img; 
+					chainWalk[i][j] = img;
 				}
 			}
-			
+
 //			platewalking
 			for(int i  = 0; i < leatherWalk.length; i++){
 				for(int j = 0; j < leatherWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/plate/movement/plate-"+i+"-move-"+j+".png"));
-					plateWalk[i][j] = img; 
+					plateWalk[i][j] = img;
 				}
 			}
-			
-			
+
+
 		}catch(IOException e){
 			System.err.println(e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * Returns image to match given name
 	 * @param name - type of image wanted
@@ -128,7 +126,7 @@ public class ImageStorage {
 				return doorLR;
 			case "Fl":
 				return floor;
-				
+
 			// ENTITIES
 			case "Tree":
 				return tree;
