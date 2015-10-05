@@ -233,7 +233,7 @@ public class RenderingWindow extends JPanel{
 			}
 			Image image = null;
 
-			if(player.getName().equals("King Jake")){
+			if(p.getName().equals("King Jake")){
 			image = ImageStorage.plateWalk[directionInt][animation.getCurrentFrame()];
 			} else {
 				image = ImageStorage.robeWalk[directionInt][animation.getCurrentFrame()];
