@@ -234,7 +234,10 @@ public class RenderingWindow extends JPanel{
 
 			if(p.getName().equals("King Jake")){
 			image = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()];
-			} else {
+			} else if(p.isDead()){
+				image = ImageStorage.bush;
+			}
+				else {
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
