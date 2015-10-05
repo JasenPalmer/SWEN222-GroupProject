@@ -132,6 +132,8 @@ public class Server {
 			case KeyEvent.VK_E:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
 				break;
+			case KeyEvent.VK_SPACE:
+				gameState.attackPlayer(toProcess.getUser());
 			default:
 				break;
 			}
