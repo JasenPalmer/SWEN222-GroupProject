@@ -137,7 +137,6 @@ public class RenderingWindow extends JPanel{
 						}
 					}
 
-
 					// DRAWING ROOMS
 					if(rooms!=null){
 						Tile r = rooms[i][j];
@@ -234,9 +233,9 @@ public class RenderingWindow extends JPanel{
 			Image image = null;
 
 			if(p.getName().equals("King Jake")){
-			image = ImageStorage.plateWalk[directionInt][animation.getCurrentFrame()];
+			image = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()];
 			} else {
-				image = ImageStorage.robeWalk[directionInt][animation.getCurrentFrame()];
+				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
 			playerImage = image;

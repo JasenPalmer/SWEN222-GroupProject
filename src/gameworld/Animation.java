@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 public class Animation implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	
+
+
 	private int animationDirection;
-	private int currentFrame;
-	
+	private int walkFrame;
+	private int attackFrame;
+
 	public Animation(){
 		animationDirection = 0;
-		currentFrame = 0;
+		walkFrame = 0;
 	}
 
 	public int getAnimationDirection() {
@@ -22,18 +23,22 @@ public class Animation implements Serializable{
 		this.animationDirection = animationDirection;
 	}
 
-	public int getCurrentFrame() {
-		return currentFrame;
+	public int getWalkFrame() {
+		return walkFrame;
 	}
 
-	public void setCurrentFrame(int currentFrame) {
-		this.currentFrame = currentFrame;
+	public void setWalkFrame(int walkFrame) {
+		this.walkFrame = walkFrame;
 	}
 
 	public void cycle() {
-		currentFrame++;
-		if(currentFrame==8){
-			currentFrame = 0;
+		walkFrame++;
+		if(walkFrame==8){
+			walkFrame = 0;
 		}
+	}
+
+	public void resetWalk(){
+		walkFrame = 0;
 	}
 }

@@ -365,6 +365,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case KeyEvent.VK_ENTER:
 			chatBoxPanel.getTextField().requestFocus();
 			break;
+		case KeyEvent.VK_SPACE:
+			client.registerKeyPress(e);
+			break;
 		default:
 			break;
 		}
