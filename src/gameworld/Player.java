@@ -73,6 +73,7 @@ public class Player implements Serializable{
 		location = game.getLocations().iterator().next();
 		position = new Point(2, 2);
 		standingOn = location.getTileAt(position);
+		standingOn.setPlayer(this);
 		animation = new Animation();
 	}
 
@@ -203,7 +204,8 @@ public class Player implements Serializable{
 		}
 		moveDir(dir);
 		tile.setPlayer(this);
-		this.standingOn.setPlayer(null);
+		standingOn.setPlayer(null);
+		standingOn = tile;
 		return true;
 	}
 
