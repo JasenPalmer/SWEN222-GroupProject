@@ -39,16 +39,16 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		//Setup background
 		ChatBoxBackground background = new ChatBoxBackground();
 		this.add(background,0,0);
-		
+
 		//Set text area
 		textArea.setEditable(false);
-		textArea.append("Welcome to the chat!");
+		textArea.append("\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to the chat!");
 		Font font = new Font("Verdana", Font.BOLD, 12);
 		textArea.setFont(font);
 		textArea.setForeground(Color.YELLOW);
 		textArea.setOpaque(false);
 		textArea.setLineWrap(true);
-		
+
 		//Setup scroll pane
 		scrollPane = new JScrollPane(textArea);
 		scrollPane.getViewport().setOpaque(false);
@@ -59,7 +59,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
 		scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
 		scrollPane.setOpaque(false);
-		this.add(scrollPane,2,0);	
+		this.add(scrollPane,2,0);
 
 		//Setup text field
 		textBox = new JTextField();
@@ -97,7 +97,7 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		textArea.append("\n" + user + ": " + message);
 		textArea.setCaretPosition(textArea.getDocument().getLength());
 	}
-	
+
 	//Getters
 	public JTextField getTextField(){return this.textBox;}
 }
