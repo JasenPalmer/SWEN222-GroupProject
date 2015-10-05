@@ -8,7 +8,6 @@ import java.net.Socket;
 
 import ui.ApplicationWindow;
 import ui.panels.ChatBoxPanel;
-import network.NetworkEvent.EventType;
 
 /**
  *
@@ -133,6 +132,10 @@ public class Client {
 					break;
 				case CLOSE:
 					if(event.getUser().equals("Server")) close();
+					break;
+				case KEY_PRESS:
+					break;
+				default:
 					break;
 				}
 				gui.repaintRenderingWindow();
