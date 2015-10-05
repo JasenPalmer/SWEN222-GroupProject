@@ -21,9 +21,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Game implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public static enum Direction{NORTH, EAST, SOUTH, WEST};
 
 	private Set<Location> locations;
@@ -96,7 +96,7 @@ public class Game implements Serializable {
 					if(ent != null){
 						entities[row][col] = ent;
 						continue;
-					} 
+					}
 					//otherwise create a tile
 					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
@@ -120,7 +120,7 @@ public class Game implements Serializable {
 		else{
 			loc = new InsideLocation(name, desc, locTiles, entities);
 		}
-		
+
 		return loc;
 	}
 
@@ -147,7 +147,7 @@ public class Game implements Serializable {
 		}
 		return tile;
 	}
-	
+
 	private Entity parseEntity(String type, int col, int row) {
 		Entity ent = null;
 		switch(type) {
@@ -160,7 +160,7 @@ public class Game implements Serializable {
 		case "key":
 			ent = new Key();
 		}
-		
+
 		return ent;
 	}
 
@@ -171,6 +171,10 @@ public class Game implements Serializable {
 	 */
 	public void addPlayer(Player player) {
 		players.add(player);
+	}
+
+	public void removePlayer(Player player) {
+		players.remove(player);
 	}
 
 
@@ -187,19 +191,25 @@ public class Game implements Serializable {
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
-	
+
 	public boolean playerPickup(String playerName) {
 		Player player = parsePlayer(playerName);
 		if(player == null){return false;}
 		if(!player.pickupItem()){return false;}
 		return true;
 	}
-	
-	
+
+	public boolean attackPlayer(Player attacker, Player defender) {
+		if(attacker.attack(defender)){
+			removePlayer(defender);
+		}
+		return true;
+	}
+
 
 	/**
 	 * Returns the player with the given name
-	 * 
+	 *
 	 * @param user - name of player
 	 * @return the player object
 	 */
@@ -218,5 +228,5 @@ public class Game implements Serializable {
 	public Set<Player> getPlayers() {
 		return players;
 	}
-	
+
 }

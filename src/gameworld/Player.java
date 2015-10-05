@@ -65,6 +65,7 @@ public class Player implements Serializable{
 
 	private Tile standingOn;
 
+	private int health;
 
 	public Player(String name, Game game) {
 		this.name = name;
@@ -75,7 +76,22 @@ public class Player implements Serializable{
 		standingOn = location.getTileAt(position);
 		standingOn.setPlayer(this);
 		animation = new Animation();
+		setHealth(100);
 	}
+
+	/**
+	 * Make this player attack another player
+	 * @param player to attack
+	 * @return true if the attacked player has died
+	 */
+	public boolean attack(Player player) {
+		player.setHealth(player.getHealth()-10);
+		if(player.getHealth() <= 0){
+			return true;
+		}
+		return false;
+	}
+
 
 	/**
 	 * Removes the entity held by the player
@@ -343,6 +359,16 @@ public class Player implements Serializable{
 
 	public Animation getAnimation(){
 		return animation;
+	}
+
+
+	public int getHealth() {
+		return health;
+	}
+
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 
 }
