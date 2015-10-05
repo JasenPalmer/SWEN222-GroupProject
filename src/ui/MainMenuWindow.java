@@ -23,7 +23,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 	//Sound paths
 	private static final String buttonSound = "src/ui/sounds/buttonSound.wav";
 	private static final String music = "src/ui/sounds/mainMenuMusic.wav";
-	
+
 	//Button image paths
 	private static String join = "src/ui/images/gui/joinButtonImage.png";
 	private static String  host = "src/ui/images/gui/hostButtonImage.png";
@@ -34,7 +34,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 	//Image paths
 	private static String backgroundImage = "src/ui/images/gui/backgroundImage.gif";
 	private static String titleImage = "src/ui/images/gui/title.png";
-	
+
 	private Clip musicClip;
 	private boolean muted = false;
 	JButton muteButton;
@@ -46,7 +46,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		this.setResizable(false);
 		setLayout(null);
 		setBounds(450, 10, 1050, 950);
-		addBackground();	
+		addBackground();
 	}
 
 	private void addBackground(){
@@ -114,7 +114,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			muteButton.setIcon(new ImageIcon(unmute));
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
@@ -125,7 +125,8 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			break;
 		case "Host":
 			playSound("Button");
-			new Server();
+
+			new Thread(new Runnable(){public void run(){new Server();}}).start();
 			break;
 		case "Join":
 			playSound("Button");
@@ -134,7 +135,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			JLabel usernameLabel = new JLabel("Username:");
 			JTextField usernameText = new JTextField();
 			Component[] menuOptions = {serverLabel, serverText, usernameLabel, usernameText};
-			JOptionPane.showMessageDialog(this,  menuOptions, "Join server", JOptionPane.QUESTION_MESSAGE);		
+			JOptionPane.showMessageDialog(this,  menuOptions, "Join server", JOptionPane.QUESTION_MESSAGE);
 
 			String defaultServer = "localhost";
 			if(!usernameText.getText().equals("")  && serverText.getText().equals("")){

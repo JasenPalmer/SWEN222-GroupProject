@@ -280,8 +280,4 @@ public class Server {
 			connections.remove(this);
 		}
 	}
-
-	public static void main(String [] args){
-		new Server();
-	}
 }
