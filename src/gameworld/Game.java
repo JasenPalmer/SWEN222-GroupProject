@@ -173,6 +173,10 @@ public class Game implements Serializable {
 		players.add(player);
 	}
 
+	/**
+	 * Remove the player from the game
+	 * @param player to remove
+	 */
 	public void removePlayer(Player player) {
 		players.remove(player);
 	}
@@ -192,6 +196,11 @@ public class Game implements Serializable {
 		return true;
 	}
 
+	/**
+	 * Tell the player to attempt to pickup the item in the tile in front of them
+	 * @param playerName - player to pickup the item
+	 * @return true if the player picked up the item
+	 */
 	public boolean playerPickup(String playerName) {
 		Player player = parsePlayer(playerName);
 		if(player == null){return false;}
@@ -199,9 +208,21 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	public boolean attackPlayer(Player attacker, Player defender) {
-		if(attacker.attack(defender)){
-			removePlayer(defender);
+	/**
+	 * Attack the player in front of the player
+	 *
+	 * @param attacker - player that is doing the attacking
+	 * @param defender - player that is being attacked
+	 * @return true if the attack was successful
+	 */
+	public boolean attackPlayer(String player) {
+		Player attacker = parsePlayer(player);
+		if(attacker.attack()) {
+			for(Player p : players) {
+				if(p.getHealth() <= 0) {
+					p.setDead(true);
+				}
+			}
 		}
 		return true;
 	}

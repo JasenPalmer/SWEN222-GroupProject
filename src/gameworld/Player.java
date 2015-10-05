@@ -66,6 +66,8 @@ public class Player implements Serializable{
 	private Tile standingOn;
 
 	private int health;
+	
+	private boolean isDead;
 
 	public Player(String name, Game game) {
 		this.name = name;
@@ -77,19 +79,20 @@ public class Player implements Serializable{
 		standingOn.setPlayer(this);
 		animation = new Animation();
 		setHealth(100);
+		setDead(false);
 	}
 
 	/**
-	 * Make this player attack another player
-	 * @param player to attack
-	 * @return true if the attacked player has died
+	 * Make this player attack the player in the tile in fron of them
+	 * @return true if the attack was successful
 	 */
-	public boolean attack(Player player) {
-		player.setHealth(player.getHealth()-10);
-		if(player.getHealth() <= 0){
-			return true;
-		}
-		return false;
+	public boolean attack() {
+		Tile tile = getTile(direction);
+		// if there is no player in front of the player return false
+		if(tile.getPlayer() == null){return false;}
+		Player opponent = tile.getPlayer();
+		opponent.setHealth(opponent.getHealth()-10);
+		return true;
 	}
 
 
@@ -220,6 +223,8 @@ public class Player implements Serializable{
 			}
 		}
 		moveDir(dir);
+		//update the tile the player is standing on
+		// and the tile's player
 		tile.setPlayer(this);
 		standingOn.setPlayer(null);
 		standingOn = tile;
@@ -369,6 +374,14 @@ public class Player implements Serializable{
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 
 }
