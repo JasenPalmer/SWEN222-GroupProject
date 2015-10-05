@@ -69,6 +69,8 @@ public class Player implements Serializable{
 
 	private boolean isDead;
 
+	private Direction facing = Game.Direction.NORTH;
+
 	public Player(String name, Game game) {
 		this.name = name;
 		inventory = new Item[DEFAULT_INV_SIZE];
@@ -87,7 +89,7 @@ public class Player implements Serializable{
 	 * @return true if the attack was successful
 	 */
 	public boolean attack() {
-		Tile tile = getTile(direction);
+		Tile tile = getTile(facing);
 		// nothing in front of the player
 		if(tile == null){return false;}
 		// if there is no player in front of the player return false
@@ -148,7 +150,7 @@ public class Player implements Serializable{
 	public boolean pickupItem() {
 		// if the inventory is full can't pick up item
 		if(inventoryFull()){return false;}
-		Tile tile = getTile(direction);
+		Tile tile = getTile(facing);
 		Entity ent = tile.containedEntity();
 		// if there isn't an item in front of the player don't pick it up
 		if(!(ent instanceof Item)) {return false;}
@@ -226,7 +228,7 @@ public class Player implements Serializable{
 				return false;
 			}
 		}
-		moveDir(dir);
+		facing = moveDir(dir);
 		//update the tile the player is standing on
 		// and the tile's player
 		tile.setPlayer(this);
@@ -267,33 +269,39 @@ public class Player implements Serializable{
 	 *
 	 * @param dir to move
 	 */
-	private void moveDir(Game.Direction dir) {
+	private Direction moveDir(Game.Direction dir) {
+		Direction newDir = null;
 		switch(dir) {
 		case NORTH:
 			System.out.println("Moving North");
 			position = new Point(position.x, position.y-1);
 			animation.setAnimationDirection(0);
+			newDir = Direction.NORTH;
 			break;
 		case EAST:
 			System.out.println("Moving East");
 			position = new Point(position.x+1, position.y);
 			animation.setAnimationDirection(1);
+			newDir = Direction.EAST;
 			break;
 		case SOUTH:
 			System.out.println("Moving South");
 			position = new Point(position.x, position.y+1);
 			animation.setAnimationDirection(2);
+			newDir = Direction.SOUTH;
 			break;
 		case WEST:
 			System.out.println("Moving West");
 			position = new Point(position.x-1, position.y);
 			animation.setAnimationDirection(3);
+			newDir = Direction.WEST;
 			break;
 		default:
 			break;
 		}
 		animation.cycle();
 		System.out.println(position);
+		return newDir;
 	}
 
 	// getters and setters
