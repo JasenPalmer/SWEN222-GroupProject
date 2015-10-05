@@ -88,6 +88,8 @@ public class Player implements Serializable{
 	 */
 	public boolean attack() {
 		Tile tile = getTile(direction);
+		// nothing in front of the player
+		if(tile == null){return false;}
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
