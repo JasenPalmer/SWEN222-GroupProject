@@ -18,22 +18,22 @@ public class Chest extends Container {
 	}
 
 	@Override
-	public String name() {
+	public String getName() {
 		return "A Chest";
 	}
 
 	@Override
-	public String description() {
+	public String getDescription() {
 		return "Could container sick loot";
 	}
 
 	@Override
-	public Point position() {
+	public Point getPosition() {
 		return null;
 	}
 
 	@Override
-	public Location location() {
+	public Location getLocation() {
 		return null;
 	}
 

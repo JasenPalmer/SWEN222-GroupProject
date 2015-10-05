@@ -1,5 +1,6 @@
 package gameworld.location;
 
+import gameworld.entity.Entity;
 import gameworld.tile.Tile;
 
 public class OutsideLocation extends Location {
@@ -8,8 +9,8 @@ public class OutsideLocation extends Location {
 	
 	private Tile[][] buildingTiles;
 
-	public OutsideLocation(String name, String description, Tile[][] tiles, Tile[][] buildingTiles) {
-		super(name, description, tiles);
+	public OutsideLocation(String name, String description, Tile[][] tiles, Tile[][] buildingTiles, Entity[][] entities) {
+		super(name, description, tiles, entities);
 		this.buildingTiles = buildingTiles;
 	}
 	
@@ -26,7 +27,7 @@ public class OutsideLocation extends Location {
 					toReturn+= tiles[i][j].toString();
 					toReturn+="-";
 					if(tiles[i][j].containedEntity()!=null){
-						toReturn+=tiles[i][j].containedEntity().name().substring(0,2);
+						toReturn+=tiles[i][j].containedEntity().getName().substring(0,2);
 					} else{
 						toReturn+="0";
 					}

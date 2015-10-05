@@ -8,26 +8,26 @@ import java.awt.Point;
  * An entity is any object in the game eg. a chest, a rock or a key
  * @author Jasen
  */
-public interface Entity {
+public interface Entity{
 	
 	/**
 	 * @return the name of the entity
 	 */
-	public String name();
+	public String getName();
 	
 	/**
 	 * @return the description of the entity
 	 */
-	public String description();
+	public String getDescription();
 
 	/**
 	 * @return the position of the entity in the world as a point
 	 */
-	public Point position();
+	public Point getPosition();
 	
 	/**
 	 * @return the location that the entity is in
 	 */
-	public Location location();
+	public Location getLocation();
 	
 }

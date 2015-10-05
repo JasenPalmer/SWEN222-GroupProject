@@ -12,11 +12,13 @@ public abstract class Location implements Serializable{
 	protected String name;
 	protected String description;
 	protected Tile[][] tiles;
+	protected Entity[][] entities;
 
-	public Location(String name, String description, Tile[][] tiles) {
+	public Location(String name, String description, Tile[][] tiles, Entity[][] entities) {
 		this.name = name;
 		this.description = description;
 		this.tiles = tiles;
+		this.entities = entities;
 	}
 
 	/**

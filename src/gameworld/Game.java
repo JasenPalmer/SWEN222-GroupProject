@@ -1,5 +1,8 @@
 package gameworld;
 
+import gameworld.entity.BasicEntity;
+import gameworld.entity.Entity;
+import gameworld.entity.Key;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
@@ -74,6 +77,7 @@ public class Game implements Serializable {
 		Location loc;
 		Tile[][] locTiles = new Tile[height][width];
 		Tile[][] buildingTiles = new Tile[height][width];
+		Entity[][] entities = new Entity[height][width];
 		//row index
 		int row = 0;
 		boolean outside = false;
@@ -86,8 +90,15 @@ public class Game implements Serializable {
 				Scanner blockScanner = new Scanner(lineScan.next());
 				blockScanner.useDelimiter("-");
 				while(blockScanner.hasNext()) {
-					//break blocks up into tiles to be parsed
-					Tile tile = parseTile(blockScanner.next(), col, row);
+					String temp =  blockScanner.next();
+					//if the next block segment is an entity create it
+					Entity ent = parseEntity(temp,col,row);
+					if(ent != null){
+						entities[row][col] = ent;
+						continue;
+					} 
+					//otherwise create a tile
+					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
 					if(tile instanceof BuildingTile || tile instanceof EntranceExitTile) {
 						outside = true;
@@ -104,10 +115,10 @@ public class Game implements Serializable {
 			row += 1;
 		}
 		if(outside){
-			loc = new OutsideLocation(name, desc, locTiles, buildingTiles);
+			loc = new OutsideLocation(name, desc, locTiles, buildingTiles, entities);
 		}
 		else{
-			loc = new InsideLocation(name, desc, locTiles);
+			loc = new InsideLocation(name, desc, locTiles, entities);
 		}
 		
 		return loc;
@@ -136,6 +147,22 @@ public class Game implements Serializable {
 		}
 		return tile;
 	}
+	
+	private Entity parseEntity(String type, int col, int row) {
+		Entity ent = null;
+		switch(type) {
+		case "Rock":
+			ent = new BasicEntity("Rock", "A rock", new Point(col, row));
+		case "Tree":
+			ent = new BasicEntity("Tree","A tree", new Point(col, row));
+		case "Table":
+			ent = new BasicEntity("Table","A table", new Point(col, row));
+		case "key":
+			ent = new Key();
+		}
+		
+		return ent;
+	}
 
 
 	/**
@@ -160,6 +187,15 @@ public class Game implements Serializable {
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
+	
+	public boolean playerPickup(String playerName) {
+		Player player = parsePlayer(playerName);
+		if(player == null){return false;}
+		if(!player.pickupItem()){return false;}
+		return true;
+	}
+	
+	
 
 	/**
 	 * Returns the player with the given name

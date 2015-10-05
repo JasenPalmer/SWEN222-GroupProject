@@ -13,13 +13,16 @@ import gameworld.tile.Tile;
  */
 public class Key extends Item {
 	
+	private static final long serialVersionUID = -1062125803835909442L;
+
+
 	@Override
-	public String name() {
+	public String getName() {
 		return "A Key";
 	}
 	
 	@Override
-	public String description() {
+	public String getDescription() {
 		return "Used to open doors or chests";
 	}
 
