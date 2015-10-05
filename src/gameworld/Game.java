@@ -192,6 +192,7 @@ public class Game implements Serializable {
 	public boolean movePlayer(String playerName, Direction direction) {
 		Player player = parsePlayer(playerName);
 		if(direction == null || player == null) {return false;}
+		if(player.isDead()){return false;}
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
@@ -204,6 +205,7 @@ public class Game implements Serializable {
 	public boolean playerPickup(String playerName) {
 		Player player = parsePlayer(playerName);
 		if(player == null){return false;}
+		if(player.isDead()){return false;}
 		if(!player.pickupItem()){return false;}
 		return true;
 	}
@@ -217,6 +219,7 @@ public class Game implements Serializable {
 	 */
 	public boolean attackPlayer(String player) {
 		Player attacker = parsePlayer(player);
+		if(attacker.isDead()){return false;}
 		if(attacker.attack()) {
 			for(Player p : players) {
 				if(p.getHealth() <= 0) {

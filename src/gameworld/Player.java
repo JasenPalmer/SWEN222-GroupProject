@@ -66,7 +66,7 @@ public class Player implements Serializable{
 	private Tile standingOn;
 
 	private int health;
-	
+
 	private boolean isDead;
 
 	public Player(String name, Game game) {
@@ -92,6 +92,8 @@ public class Player implements Serializable{
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
 		opponent.setHealth(opponent.getHealth()-10);
+		System.out.println("Player: "+opponent.getName()+" was attacked");
+		System.out.println("Health remaining: "+opponent.getHealth());
 		return true;
 	}
 
