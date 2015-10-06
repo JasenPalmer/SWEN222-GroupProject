@@ -86,6 +86,8 @@ public class Player implements Serializable{
 		animation = new Animation();
 		setHealth(100);
 		setDead(false);
+		x = position.x*TILESIZE;
+		y = position.y*TILESIZE;
 	}
 
 	/**
@@ -235,41 +237,15 @@ public class Player implements Serializable{
 		facing = moveDir(dir);
 		//update the tile the player is standing on
 		// and the tile's player
-
-		// need method to get the tile the player is on
-		tile.setPlayer(this);
-
-		standingOn.setPlayer(null);
-		standingOn = tile;
+		
+		standingOn = calculateTile();
 		return true;
 	}
-
-	/**
-	 * Calculates the direction the player should move based on the direction of the camera(direction field)
-	 * @param dir - the direction the player is trying to move in
-	 * @return the direction the player should move in
-	 */
-	private Direction calcDir(Direction dir) {
-		System.out.println(direction);
-		switch(direction) {
-		case EAST:
-			int k = Direction.EAST.ordinal() + dir.ordinal();
-			if(k>3){k = k - 4;}
-			return Direction.values()[k];
-		case NORTH:
-			return Direction.values()[Direction.NORTH.ordinal() + dir.ordinal()];
-		case SOUTH:
-			int i = Direction.SOUTH.ordinal() + dir.ordinal();
-			if(i > 3) { i = i - 4;}
-			return Direction.values()[i];
-		case WEST:
-			int j = Direction.WEST.ordinal() + dir.ordinal();
-			if(j > 3) { j = j - 4;}
-			return Direction.values()[j];
-		default:
-			return Direction.NORTH;
-		}
+	
+	private Tile calculateTile() {
+		return location.getTileAt(position);
 	}
+	
 
 	/**
 	 * updates the players position field to one tile in a direction
@@ -308,6 +284,33 @@ public class Player implements Serializable{
 		}
 		animation.cycle();
 		return newDir;
+	}
+	
+	/**
+	 * Calculates the direction the player should move based on the direction of the camera(direction field)
+	 * @param dir - the direction the player is trying to move in
+	 * @return the direction the player should move in
+	 */
+	private Direction calcDir(Direction dir) {
+		System.out.println(direction);
+		switch(direction) {
+		case EAST:
+			int k = Direction.EAST.ordinal() + dir.ordinal();
+			if(k>3){k = k - 4;}
+			return Direction.values()[k];
+		case NORTH:
+			return Direction.values()[Direction.NORTH.ordinal() + dir.ordinal()];
+		case SOUTH:
+			int i = Direction.SOUTH.ordinal() + dir.ordinal();
+			if(i > 3) { i = i - 4;}
+			return Direction.values()[i];
+		case WEST:
+			int j = Direction.WEST.ordinal() + dir.ordinal();
+			if(j > 3) { j = j - 4;}
+			return Direction.values()[j];
+		default:
+			return Direction.NORTH;
+		}
 	}
 
 	// getters and setters
