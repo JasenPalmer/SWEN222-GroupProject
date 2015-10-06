@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
@@ -26,6 +25,7 @@ import javax.swing.JMenuItem;
 import network.Client;
 import ui.panels.BackgroundPanel;
 import ui.panels.ChatBoxPanel;
+import ui.panels.HealthBarPanel;
 import ui.panels.InventoryPanel;
 import ui.panels.Item;
 import ui.panels.LootInventoryPanel;
@@ -117,6 +117,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		settings = new SettingsMenu(this);
 		layeredPanel.add(settings,3,0);
 		setSettings();
+		
+		//Setup HP Bar
+		this.add(new HealthBarPanel(),2,0);
 	}
 
 	private void setSettings(){
