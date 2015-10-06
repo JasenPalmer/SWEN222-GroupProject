@@ -11,12 +11,16 @@ import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.sun.scenario.effect.Color4f;
 
 public class RenderingWindow extends JPanel{
 
@@ -51,6 +55,7 @@ public class RenderingWindow extends JPanel{
 	public void paint( Graphics g ) {
 
 		super.paint(g);
+
 		Image offscreen = createImage(this.getWidth(), this.getHeight());
 		Graphics offgc = offscreen.getGraphics();
 
@@ -83,8 +88,12 @@ public class RenderingWindow extends JPanel{
 
 		}
 
-
 			g.drawImage(offscreen,0,0,null);
+			Color c = new Color(0,0,0,128);
+			g.setColor(c);
+			g.fillRect(0,0,this.getWidth(),this.getHeight());
+			// do lighting here and draw final img over it.
+
 
 		}
 
