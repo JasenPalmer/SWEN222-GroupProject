@@ -85,7 +85,7 @@ public class Player implements Serializable{
 		position = new Point(2, 2);
 		standingOn = location.getTileAt(position);
 		standingOn.setPlayer(this);
-		animation = new Animation();
+		animation = new Animation(this);
 		setHealth(100);
 		setDead(false);
 		x = (position.x*TILESIZE)+(TILESIZE/2);
@@ -264,8 +264,10 @@ public class Player implements Serializable{
 //		switch(dir) {
 //		case EAST:
 //			newX += 10;
-//			if()
-//			break;
+//			if((newX/TILESIZE) < 0) {
+//				return false;
+//			}
+//			return true;
 //		case NORTH:
 //			break;
 //		case SOUTH:
@@ -277,7 +279,7 @@ public class Player implements Serializable{
 //		}
 //		return false;
 //	}
-//	
+	
 	private Tile calculateTile() {
 		return location.getTileAt(position);
 	}
