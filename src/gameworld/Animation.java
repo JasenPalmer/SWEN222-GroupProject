@@ -34,12 +34,10 @@ public class Animation implements Serializable{
 	}
 
 	public void cycle() {
-		//System.out.println("before: "+walkFrame);
 		walkFrame++;
 		if(walkFrame==8){
 			walkFrame = 0;
 		}
-		//System.out.println("after: "+walkFrame);
 	}
 
 	public void resetWalk(){

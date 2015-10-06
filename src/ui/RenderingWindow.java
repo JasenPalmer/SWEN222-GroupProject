@@ -113,27 +113,27 @@ public class RenderingWindow extends JPanel{
 					if(t!=null) {
 						// DRAWING TERRAIN
 						image = ImageStorage.getImage(t.toString());
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
+						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
 
 						// Drawing walls if inside location
 						if(location instanceof InsideLocation){
 							if(i==0 || tiles[i-1][j]==null){
-								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
 							}
 							if(j==tiles.length-1|| tiles[i][j+1]==null){
-								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
 							}
 						}
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
 							image = ImageStorage.getImage(t.containedEntity().getName());
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
 
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), (int)((getPlayerX(p)/2) + (getPlayerY(p)/2)  - cameraX + TILESIZE), (int)((p.getY()/4)-(p.getX()/4)) + this.getHeight()/2  - getPlayerImage(p).getHeight(null) - cameraY, null);
+							offgc.drawImage(getPlayerImage(p), (int)((getPlayerX(p)/2) + (getPlayerY(p)/2)  - cameraX), (int)((getPlayerY(p)/4)-(getPlayerX(p)/4)) + this.getHeight()/2  - getPlayerImage(p).getHeight(null) - cameraY, null);
 						}
 					}
 
@@ -144,15 +144,15 @@ public class RenderingWindow extends JPanel{
 							// Drawing 2 block high walls
 							if(r instanceof EntranceExitTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
-									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 								} else {
-									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 								}
 							}
 							else{
-								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 							}
-							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
 
 
 							image = ImageStorage.building;
@@ -177,7 +177,7 @@ public class RenderingWindow extends JPanel{
 							}
 
 
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
 
 						}
 					}
@@ -193,11 +193,11 @@ public class RenderingWindow extends JPanel{
 			switch(direction){
 			case NORTH:
 				return p.getX();
-			case WEST:
+			case EAST:
 				return rotatePlayer(coords)[0];
 			case SOUTH:
 				return rotatePlayer(rotatePlayer(coords))[0];
-			case EAST:
+			case WEST:
 				return rotatePlayer(rotatePlayer(rotatePlayer(coords)))[0];
 			}
 			return null;
@@ -210,11 +210,11 @@ public class RenderingWindow extends JPanel{
 			switch(direction){
 			case NORTH:
 				return p.getY();
-			case WEST:
+			case EAST:
 				return rotatePlayer(coords)[1];
 			case SOUTH:
 				return rotatePlayer(rotatePlayer(coords))[1];
-			case EAST:
+			case WEST:
 				return rotatePlayer(rotatePlayer(rotatePlayer(coords)))[1];
 			}
 			return null;
@@ -222,20 +222,25 @@ public class RenderingWindow extends JPanel{
 
 		private Double[] rotatePlayer(Double[] coords){
 			int mapCenter = location.getTiles().length*64 /2;
-			Double[] toReturn = new Double[2];
-			if(coords[0] <= mapCenter && coords[1] <= mapCenter){
+			Double[] toReturn = coords;
+			
+			if(coords[0] < mapCenter && coords[1] < mapCenter){
+				// top left
 				toReturn[0] = coords[0];
 				toReturn[1] = location.getTiles().length*64 - coords[0];
 			}
-			else if(coords[0] <= mapCenter && coords[1] > mapCenter){
+			else if(coords[0] < mapCenter && coords[1] > mapCenter){
+				// bottom left
 				toReturn[0] = coords[1];
 				toReturn[1] = coords[0];
 			}
 			else if(coords[0] > mapCenter && coords[1] > mapCenter){
+				// bottom right
 				toReturn[0] = coords[0];
 				toReturn[1] = location.getTiles().length*64 - coords[1];
 			}
 			else{
+				// top right
 				toReturn[0] = location.getTiles().length*64 - coords[0];
 				toReturn[1] = toReturn[1];
 			}
@@ -299,10 +304,10 @@ public class RenderingWindow extends JPanel{
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
-			if(player.isAttacking()){
-				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()/2];
-				animation.cycleAttack();
-			}
+//			if(player.isAttacking()){
+//				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()/2];
+//				animation.cycleAttack();
+//			}
 			
 			
 			playerImage = image;
