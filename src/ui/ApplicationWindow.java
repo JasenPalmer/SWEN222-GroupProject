@@ -295,6 +295,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case "Shank all players":
 			System.out.println("All players were ruthlessly shanked, y u do dis?");
+			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
 			inventPanel.addItem(new Item("Shank", "Tis a shank mate"));
