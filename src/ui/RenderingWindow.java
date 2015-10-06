@@ -89,12 +89,17 @@ public class RenderingWindow extends JPanel{
 		}
 
 			g.drawImage(offscreen,0,0,null);
-			Color c = new Color(0,0,0,128);
-			g.setColor(c);
-			g.fillRect(0,0,this.getWidth(),this.getHeight());
+
 			// do lighting here and draw final img over it.
 
-
+			Image lighting = createImage(this.getWidth(), this.getHeight());
+			Graphics lightingGraphic = lighting.getGraphics();
+			Color c = new Color(0,0,0,128);
+			lightingGraphic.setColor(c);
+			lightingGraphic.fillRect(0,0,this.getWidth(),this.getHeight());
+//			int playerX =
+//			int playerY =
+//			lightingGraphic.eraseOval()
 		}
 
 		/**
