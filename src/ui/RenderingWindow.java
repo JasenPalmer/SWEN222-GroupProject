@@ -49,42 +49,43 @@ public class RenderingWindow extends JPanel{
 	 * renderer on the resulting arrays
 	 */
 	public void paint( Graphics g ) {
-
-		super.paint(g);
-		Image offscreen = createImage(this.getWidth(), this.getHeight());
-		Graphics offgc = offscreen.getGraphics();
-
-		player = applicationWindow.getPlayer();
-		location = player.getLocation();
-
-		Tile[][] tiles = location.getTiles();
-		locationTiles = tiles;
-		Tile[][] rooms = null;
-
-		if(location instanceof OutsideLocation){
-			OutsideLocation ol = (OutsideLocation) location;
-			rooms = ol.getBuildingTiles();
-		}
-
-		// Rotates array depending on direction and then rendering
-		switch(direction){
-		case NORTH:
-			isometric(tiles,rooms, offgc);
-			break;
-		case EAST:
-			isometric(rotate(tiles), rotate(rooms), offgc);
-			break;
-		case SOUTH:
-			isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
-			break;
-		case WEST:
-			isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
-			break;
-
-		}
-
-
-			g.drawImage(offscreen,0,0,null);
+			super.paint(g);
+			System.out.println("REPAINTING");
+			Image offscreen = createImage(this.getWidth(), this.getHeight());
+			Graphics offgc = offscreen.getGraphics();
+	
+			player = applicationWindow.getPlayer();
+			location = player.getLocation();
+	
+			Tile[][] tiles = location.getTiles();
+			locationTiles = tiles;
+			Tile[][] rooms = null;
+	
+			if(location instanceof OutsideLocation){
+				OutsideLocation ol = (OutsideLocation) location;
+				rooms = ol.getBuildingTiles();
+			}
+	
+			// Rotates array depending on direction and then rendering
+			switch(direction){
+			case NORTH:
+				isometric(tiles,rooms, offgc);
+				break;
+			case EAST:
+				isometric(rotate(tiles), rotate(rooms), offgc);
+				break;
+			case SOUTH:
+				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
+				break;
+			case WEST:
+				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
+				break;
+	
+			}
+	
+	
+				g.drawImage(offscreen,0,0,null);
+		
 
 		}
 
@@ -299,10 +300,10 @@ public class RenderingWindow extends JPanel{
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
-			if(player.isAttacking()){
-				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
-				animation.cycleAttack();
-			}
+//			if(player.isAttacking()){
+//				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()/2];
+//				animation.cycleAttack();
+//			}
 			
 			
 			playerImage = image;

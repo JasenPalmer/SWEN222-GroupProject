@@ -34,12 +34,12 @@ public class Animation implements Serializable{
 	}
 
 	public void cycle() {
-		System.out.println("before: "+walkFrame);
+		//System.out.println("before: "+walkFrame);
 		walkFrame++;
 		if(walkFrame==8){
 			walkFrame = 0;
 		}
-		System.out.println("after: "+walkFrame);
+		//System.out.println("after: "+walkFrame);
 	}
 
 	public void resetWalk(){
@@ -47,11 +47,13 @@ public class Animation implements Serializable{
 	}
 	
 	public void cycleAttack(){
+		System.out.println("before: "+attackFrame);
 		attackFrame++;
-		if(attackFrame==8){
+		if(attackFrame==7){
 			attackFrame = 0;
 			player.setAttacking(false);
 		}
+		System.out.println("after: "+attackFrame);
 	}
 
 	public int getAttackFrame() {
