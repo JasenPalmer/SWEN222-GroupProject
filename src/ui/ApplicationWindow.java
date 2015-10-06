@@ -143,6 +143,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public class RepaintThread extends Thread{
 		public void run(){
 			while(true){
+				System.out.println("repaint");
 				try{
 					Thread.sleep(50);
 				}catch(Exception e){
