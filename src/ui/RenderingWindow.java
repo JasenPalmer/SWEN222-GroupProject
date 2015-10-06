@@ -133,7 +133,7 @@ public class RenderingWindow extends JPanel{
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), (int)((getPlayerX(p)/2) + (getPlayerY(p)/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX), (int)((p.getY()/4)-(p.getX()/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
+							offgc.drawImage(getPlayerImage(p), (int)((getPlayerX(p)/2) + (getPlayerY(p)/2)  - cameraX), (int)((p.getY()/4)-(p.getX()/4)) + this.getHeight()/2  - getPlayerImage(p).getHeight(null) - cameraY, null);
 						}
 					}
 
