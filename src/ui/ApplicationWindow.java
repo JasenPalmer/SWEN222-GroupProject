@@ -49,6 +49,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private String host;
 	private Clip musicClip;
 	private boolean showSettings = false;
+	private HealthBarPanel hpBar;
 	private String track = null;
 	private int initVolume = -30;
 
@@ -117,9 +118,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		settings = new SettingsMenu(this);
 		layeredPanel.add(settings,3,0);
 		setSettings();
-		
+
 		//Setup HP Bar
-		this.add(new HealthBarPanel(),2,0);
+		hpBar = new HealthBarPanel();
+		overlayPanel.add(hpBar,2,0);
 	}
 
 	private void setSettings(){
@@ -132,7 +134,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			settings.setFocusable(false);
 		}
 	}
-	
+
 	/**
 	 * Changes visibility of the inventory panel
 	 */
@@ -203,7 +205,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void repaintRenderingWindow(){
-		if(rw != null) rw.repaint();
+		if(rw != null){
+			rw.repaint();
+			hpBar.repaint();
+		}
 	}
 
 	private void playSound(String sound){
@@ -268,7 +273,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			track = "Track 1";
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
@@ -426,7 +431,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public Player getPlayer(){return this.game.parsePlayer(username);}
 	public Game getGame(){ return this.game;}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
-	
+
 	//Setters
 	public void setGame(Game game){
 		this.game = game;
