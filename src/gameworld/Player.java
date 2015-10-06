@@ -70,6 +70,8 @@ public class Player implements Serializable{
 	private boolean isDead;
 
 	private double x,y;
+	
+	private boolean attacking;
 
 	private static final int TILESIZE = 64;
 
@@ -256,6 +258,26 @@ public class Player implements Serializable{
 		return true;
 	}
 	
+//	private boolean validMove(Game.Direction dir) {
+//		double newX = x;
+//		double newY = y;
+//		switch(dir) {
+//		case EAST:
+//			newX += 10;
+//			if()
+//			break;
+//		case NORTH:
+//			break;
+//		case SOUTH:
+//			break;
+//		case WEST:
+//			break;
+//		default:
+//			break;
+//		}
+//		return false;
+//	}
+//	
 	private Tile calculateTile() {
 		return location.getTileAt(position);
 	}
@@ -425,6 +447,14 @@ public class Player implements Serializable{
 	
 	public double getY() {
 		return y;
+	}
+
+	public boolean isAttacking() {
+		return attacking;
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
 	}
 
 }
