@@ -13,6 +13,8 @@ public class Animation implements Serializable{
 	public Animation(Player player){
 		animationDirection = 0;
 		walkFrame = 0;
+		attackFrame = 0;
+		this.player = player;
 	}
 
 	public int getAnimationDirection() {
@@ -46,10 +48,10 @@ public class Animation implements Serializable{
 	
 	public void cycleAttack(){
 		attackFrame++;
-		if(walkFrame==8){
-			walkFrame = 0;
+		if(attackFrame==8){
+			attackFrame = 0;
+			player.setAttacking(false);
 		}
-		player.setAttacking(false);
 	}
 
 	public int getAttackFrame() {
