@@ -127,7 +127,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel.add(hpBar,2,0);
 
 		//Setup timer
-		timer = new Timer(50, new ActionListener(){
+		timer = new Timer(10, new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(keyEve != null){
@@ -220,7 +220,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void repaintRenderingWindow(){
 		if(rw != null){
 			rw.repaint();
-			hpBar.repaint();
+			//hpBar.repaint();
 		}
 	}
 
@@ -295,7 +295,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case "Shank all players":
 			System.out.println("All players were ruthlessly shanked, y u do dis?");
-			hpBar.setHealth(0);
+			hpBar.setHealth(-100);
 			break;
 		case "Add Shank":
 			inventPanel.addItem(new Item("Shank", "Tis a shank mate"));
