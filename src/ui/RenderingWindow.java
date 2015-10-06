@@ -295,10 +295,16 @@ public class RenderingWindow extends JPanel{
 			} else if(p.isDead()){
 				image = ImageStorage.bush;
 			}
-				else {
+			else {
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
+			if(player.isAttacking()){
+				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
+				animation.cycleAttack();
+			}
+			
+			
 			playerImage = image;
 			return image;
 		}

@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class Animation implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-
+	private Player player;
 	private int animationDirection;
 	private int walkFrame;
 	private int attackFrame;
 
-	public Animation(){
+	public Animation(Player player){
 		animationDirection = 0;
 		walkFrame = 0;
 	}
@@ -42,5 +42,17 @@ public class Animation implements Serializable{
 
 	public void resetWalk(){
 		walkFrame = 0;
+	}
+	
+	public void cycleAttack(){
+		attackFrame++;
+		if(walkFrame==8){
+			walkFrame = 0;
+		}
+		player.setAttacking(false);
+	}
+
+	public int getAttackFrame() {
+		return attackFrame;
 	}
 }
