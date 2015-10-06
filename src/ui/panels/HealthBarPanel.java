@@ -33,6 +33,8 @@ public class HealthBarPanel extends JPanel{
 	}
 	
 	public void paint(Graphics g){
+		g.setColor(new Color(0,0,0));
+		g.fillRect(55, 10, 140, 20);
 		g.setColor(new Color(255,0,0));
 		g.fillRect(55, 10, (int)(health * 1.4), 20);
 		super.paintComponent(g);
