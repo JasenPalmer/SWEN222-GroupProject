@@ -86,8 +86,8 @@ public class Player implements Serializable{
 		animation = new Animation();
 		setHealth(100);
 		setDead(false);
-		x = position.x*TILESIZE;
-		y = position.y*TILESIZE;
+		x = (position.x*TILESIZE)+(TILESIZE/2);
+		y = (position.y*TILESIZE)+(TILESIZE/2);
 	}
 
 	/**
@@ -102,8 +102,8 @@ public class Player implements Serializable{
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
 		opponent.setHealth(opponent.getHealth()-100);
-		System.out.println("Player: "+opponent.getName()+" was attacked");
-		System.out.println("Health remaining: "+opponent.getHealth());
+		//System.out.println("Player: "+opponent.getName()+" was attacked");
+		//System.out.println("Health remaining: "+opponent.getHealth());
 		return true;
 	}
 
@@ -237,8 +237,12 @@ public class Player implements Serializable{
 		facing = moveDir(dir);
 		//update the tile the player is standing on
 		// and the tile's player
+		Tile newTile = calculateTile();
+		if(newTile != null && !newTile.equals(standingOn)) {
+			standingOn.setPlayer(null);
+			standingOn = newTile;
+		}
 		
-		standingOn = calculateTile();
 		return true;
 	}
 	
@@ -256,25 +260,25 @@ public class Player implements Serializable{
 		Direction newDir = null;
 		switch(dir) {
 		case NORTH:
-			y -= 10;
+			x -= 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(0);
-			newDir = Direction.NORTH;
+			newDir = Direction.SOUTH;
 			break;
 		case EAST:
-			x += 10;
+			y += 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(1);
 			newDir = Direction.EAST;
 			break;
 		case SOUTH:
-			y += 10;
+			x += 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(2);
-			newDir = Direction.SOUTH;
+			newDir = Direction.NORTH;
 			break;
 		case WEST:
-			x -= 10;
+			y -= 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(3);
 			newDir = Direction.WEST;
@@ -292,7 +296,6 @@ public class Player implements Serializable{
 	 * @return the direction the player should move in
 	 */
 	private Direction calcDir(Direction dir) {
-		System.out.println(direction);
 		switch(direction) {
 		case EAST:
 			int k = Direction.EAST.ordinal() + dir.ordinal();
