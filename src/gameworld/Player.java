@@ -404,5 +404,13 @@ public class Player implements Serializable{
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
 	}
+	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
 
 }
