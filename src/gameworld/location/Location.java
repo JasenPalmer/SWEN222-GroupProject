@@ -62,6 +62,9 @@ public abstract class Location implements Serializable{
 	 * @return the tile at the position
 	 */
 	public Tile getTileAt(Point pos) {
+		if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 || pos.y >= tiles.length) {
+			return null;
+		}
 		return tiles[pos.y][pos.x];
 	}
 	

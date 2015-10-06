@@ -194,7 +194,7 @@ public class Player implements Serializable{
 		Tile[][] array = location.getTiles();
 		switch(dir) {
 		case NORTH:
-			if(position.y-1 >= 0){return array[position.y-1][position.x];}
+			if(position.y-1 >= 0 && x >= 0){return array[position.y-1][position.x];}
 			break;
 		case EAST:
 			if(position.x+1 < location.width()){return array[position.y][position.x+1];}
@@ -216,11 +216,20 @@ public class Player implements Serializable{
 	 * @return true if the player moved otherwise false
 	 */
 	public boolean move(Game.Direction dir) {
+		System.out.println(dir);
 		dir = calcDir(dir);
 		Tile tile = getTile(dir);
-		if(tile == null){return false;}
-		if(tile.getPlayer() != null){return false;}
-		if(!tile.isPassable()){return false;}
+		if(tile == null){
+			System.err.println("Cant move - no tile in that direction");
+			return false;}
+		if(tile.getPlayer() != null){
+			System.err.println("Cant move - player in that position");
+			return false;
+		}
+		if(!tile.isPassable()){
+			System.err.println("Cant move - cannot move onto that tile");
+			return false;
+		}
 		if(tile.containedEntity() != null){
 			if(!(tile.containedEntity() instanceof Item)) {
 				return false;
@@ -241,8 +250,8 @@ public class Player implements Serializable{
 		if(newTile != null && !newTile.equals(standingOn)) {
 			standingOn.setPlayer(null);
 			standingOn = newTile;
+			newTile.setPlayer(this);
 		}
-		
 		return true;
 	}
 	
@@ -257,28 +266,29 @@ public class Player implements Serializable{
 	 * @param dir to move
 	 */
 	private Direction moveDir(Game.Direction dir) {
+		System.out.println(dir);
 		Direction newDir = null;
 		switch(dir) {
 		case NORTH:
-			x -= 10;
+			y -= 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(0);
 			newDir = Direction.SOUTH;
 			break;
 		case EAST:
-			y += 10;
+			x += 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(1);
 			newDir = Direction.EAST;
 			break;
 		case SOUTH:
-			x += 10;
+			y += 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(2);
 			newDir = Direction.NORTH;
 			break;
 		case WEST:
-			y -= 10;
+			x -= 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(3);
 			newDir = Direction.WEST;
