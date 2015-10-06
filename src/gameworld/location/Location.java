@@ -65,7 +65,7 @@ public abstract class Location implements Serializable{
 		if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 || pos.y >= tiles.length) {
 			return null;
 		}
-		return tiles[pos.x][pos.y];
+		return tiles[pos.y][pos.x];
 	}
 	
 	public void setTiles(Tile[][] tiles){
