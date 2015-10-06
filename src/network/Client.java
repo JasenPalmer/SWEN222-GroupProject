@@ -138,7 +138,7 @@ public class Client {
 				default:
 					break;
 				}
-				gui.repaintRenderingWindow();
+				//gui.repaintRenderingWindow();
 			}
 		}
 		public void finish(){

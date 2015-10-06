@@ -135,6 +135,27 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				}
 			}});
 		timer.setRepeats(true);
+
+		RepaintThread rt = new RepaintThread();
+		rt.start();
+	}
+
+	public class RepaintThread extends Thread{
+		public void run(){
+			while(true){
+				try{
+					Thread.sleep(50);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				if(game != null && username != null && hpBar != null){
+					hpBar.setHealth(game.parsePlayer(username).getHealth());
+				}
+				if(rw != null && game != null){
+					rw.repaint();
+				}
+			}
+		}
 	}
 
 	private void setSettings(){
