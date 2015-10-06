@@ -49,42 +49,42 @@ public class RenderingWindow extends JPanel{
 	 * renderer on the resulting arrays
 	 */
 	public void paint( Graphics g ) {
-			super.paint(g);
-			Image offscreen = createImage(this.getWidth(), this.getHeight());
-			Graphics offgc = offscreen.getGraphics();
-	
-			player = applicationWindow.getPlayer();
-			location = player.getLocation();
-	
-			Tile[][] tiles = location.getTiles();
-			locationTiles = tiles;
-			Tile[][] rooms = null;
-	
-			if(location instanceof OutsideLocation){
-				OutsideLocation ol = (OutsideLocation) location;
-				rooms = ol.getBuildingTiles();
-			}
-	
-			// Rotates array depending on direction and then rendering
-			switch(direction){
-			case NORTH:
-				isometric(tiles,rooms, offgc);
-				break;
-			case EAST:
-				isometric(rotate(tiles), rotate(rooms), offgc);
-				break;
-			case SOUTH:
-				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
-				break;
-			case WEST:
-				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
-				break;
-	
-			}
-	
-	
-				g.drawImage(offscreen,0,0,null);
-		
+
+		super.paint(g);
+		Image offscreen = createImage(this.getWidth(), this.getHeight());
+		Graphics offgc = offscreen.getGraphics();
+
+		player = applicationWindow.getPlayer();
+		location = player.getLocation();
+
+		Tile[][] tiles = location.getTiles();
+		locationTiles = tiles;
+		Tile[][] rooms = null;
+
+		if(location instanceof OutsideLocation){
+			OutsideLocation ol = (OutsideLocation) location;
+			rooms = ol.getBuildingTiles();
+		}
+
+		// Rotates array depending on direction and then rendering
+		switch(direction){
+		case NORTH:
+			isometric(tiles,rooms, offgc);
+			break;
+		case EAST:
+			isometric(rotate(tiles), rotate(rooms), offgc);
+			break;
+		case SOUTH:
+			isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
+			break;
+		case WEST:
+			isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
+			break;
+
+		}
+
+
+			g.drawImage(offscreen,0,0,null);
 
 		}
 
@@ -101,7 +101,7 @@ public class RenderingWindow extends JPanel{
 		 * @param offgc - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
-			updateCamera();
+			updateCamera(getRealPlayerCoords(tiles));
 
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 			Image image = null;
@@ -133,7 +133,7 @@ public class RenderingWindow extends JPanel{
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), (int)((getPlayerX(p)/2) + (getPlayerY(p)/2)  - cameraX), (int)((getPlayerY(p)/4)-(getPlayerX(p)/4)) + this.getHeight()/2  - getPlayerImage(p).getHeight(null) - cameraY, null);
+							offgc.drawImage(getPlayerImage(p), (j*TILESIZE/2) + (i*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 					}
 
@@ -188,65 +188,6 @@ public class RenderingWindow extends JPanel{
 
 
 
-		private Double getPlayerX(Player p) {
-			Double[] coords = {player.getX(), player.getY()};
-			switch(direction){
-			case NORTH:
-				return p.getX();
-			case EAST:
-				return rotatePlayer(coords)[0];
-			case SOUTH:
-				return rotatePlayer(rotatePlayer(coords))[0];
-			case WEST:
-				return rotatePlayer(rotatePlayer(rotatePlayer(coords)))[0];
-			}
-			return null;
-		}
-
-
-
-		private Double getPlayerY(Player p) {
-			Double[] coords = {player.getX(), player.getY()};
-			switch(direction){
-			case NORTH:
-				return p.getY();
-			case EAST:
-				return rotatePlayer(coords)[1];
-			case SOUTH:
-				return rotatePlayer(rotatePlayer(coords))[1];
-			case WEST:
-				return rotatePlayer(rotatePlayer(rotatePlayer(coords)))[1];
-			}
-			return null;
-		}
-
-		private Double[] rotatePlayer(Double[] coords){
-			int mapCenter = location.getTiles().length*64 /2;
-			Double[] toReturn = coords;
-			
-			if(coords[0] < mapCenter && coords[1] < mapCenter){
-				// top left
-				toReturn[0] = coords[0];
-				toReturn[1] = location.getTiles().length*64 - coords[0];
-			}
-			else if(coords[0] < mapCenter && coords[1] > mapCenter){
-				// bottom left
-				toReturn[0] = coords[1];
-				toReturn[1] = coords[0];
-			}
-			else if(coords[0] > mapCenter && coords[1] > mapCenter){
-				// bottom right
-				toReturn[0] = coords[0];
-				toReturn[1] = location.getTiles().length*64 - coords[1];
-			}
-			else{
-				// top right
-				toReturn[0] = location.getTiles().length*64 - coords[0];
-				toReturn[1] = toReturn[1];
-			}
-			return toReturn;
-		}
-
 		/**
 		 * Changes walkdirection for drawing depending on camera angle
 		 * @param directionInt - current direction of player
@@ -300,18 +241,30 @@ public class RenderingWindow extends JPanel{
 			} else if(p.isDead()){
 				image = ImageStorage.bush;
 			}
-			else {
+				else {
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
-//			if(player.isAttacking()){
-//				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()/2];
-//				animation.cycleAttack();
-//			}
-			
-			
 			playerImage = image;
 			return image;
+		}
+
+		/**
+		 * gets the player x and y in the current tile array regardless of rotation.
+		 * @param tiles
+		 * @return int of player x and y
+		 */
+		private int[] getRealPlayerCoords(Tile[][] tiles) {
+			int[] xy = new int[2];
+			for(int i = 0; i < tiles.length; i++){
+				for(int j = tiles[i].length-1; j >=0 ; j--){
+					if(tiles[i][j]!=null && tiles[i][j].getPos().equals(player.getPosition())){
+						xy[0] = j;
+						xy[1] = i;
+					}
+				}
+			}
+			return xy;
 		}
 
 		/**
@@ -352,9 +305,11 @@ public class RenderingWindow extends JPanel{
 		 *
 		 * @param realCoord - int array of player x and y in the tile array
 		 */
-		public void updateCamera(){
-			cameraX = (int) ((player.getX()/2) + (player.getY()/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
-			cameraY = (int) ((player.getY()/4)-(player.getX()/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
+		public void updateCamera(int[] realCoord){
+			int playerX = realCoord[0];
+			int playerY = realCoord[1];
+			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
+			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
 		}
 
 		public static Image createImage(String imagename) {
@@ -367,4 +322,3 @@ public class RenderingWindow extends JPanel{
 			return image;
 		}
 }
-

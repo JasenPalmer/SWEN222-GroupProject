@@ -69,11 +69,7 @@ public class Player implements Serializable{
 
 	private boolean isDead;
 
-	private double x,y;
-	
 	private boolean attacking;
-
-	private static final int TILESIZE = 64;
 
 	private Direction facing = Game.Direction.NORTH;
 
@@ -88,8 +84,6 @@ public class Player implements Serializable{
 		animation = new Animation(this);
 		setHealth(100);
 		setDead(false);
-		x = (position.x*TILESIZE)+(TILESIZE/2);
-		y = (position.y*TILESIZE)+(TILESIZE/2);
 	}
 
 	/**
@@ -104,8 +98,8 @@ public class Player implements Serializable{
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
 		opponent.setHealth(opponent.getHealth()-100);
-		//System.out.println("Player: "+opponent.getName()+" was attacked");
-		//System.out.println("Health remaining: "+opponent.getHealth());
+		System.out.println("Player: "+opponent.getName()+" was attacked");
+		System.out.println("Health remaining: "+opponent.getHealth());
 		return true;
 	}
 
@@ -196,7 +190,7 @@ public class Player implements Serializable{
 		Tile[][] array = location.getTiles();
 		switch(dir) {
 		case NORTH:
-			if(position.y-1 >= 0 && x >= 0){return array[position.y-1][position.x];}
+			if(position.y-1 >= 0){return array[position.y-1][position.x];}
 			break;
 		case EAST:
 			if(position.x+1 < location.width()){return array[position.y][position.x+1];}
@@ -218,20 +212,11 @@ public class Player implements Serializable{
 	 * @return true if the player moved otherwise false
 	 */
 	public boolean move(Game.Direction dir) {
-		System.out.println(dir);
 		dir = calcDir(dir);
 		Tile tile = getTile(dir);
-		if(tile == null){
-			System.err.println("Cant move - no tile in that direction");
-			return false;}
-		if(tile.getPlayer() != null){
-			System.err.println("Cant move - player in that position");
-			return false;
-		}
-		if(!tile.isPassable()){
-			System.err.println("Cant move - cannot move onto that tile");
-			return false;
-		}
+		if(tile == null){return false;}
+		if(tile.getPlayer() != null){return false;}
+		if(!tile.isPassable()){return false;}
 		if(tile.containedEntity() != null){
 			if(!(tile.containedEntity() instanceof Item)) {
 				return false;
@@ -242,73 +227,25 @@ public class Player implements Serializable{
 			OutsideLocation out = (OutsideLocation) location;
 			Tile[][] tiles = out.getBuildingTiles();
 			if(tiles[tile.getPos().y][tile.getPos().x] != null) {
-				System.err.println("Cant move - building in the way");
 				return false;
 			}
 		}
 		facing = moveDir(dir);
 		//update the tile the player is standing on
 		// and the tile's player
-		Tile newTile = calculateTile();
-		if(newTile != null && !newTile.equals(standingOn)) {
-			standingOn.setPlayer(null);
-			standingOn = newTile;
-			newTile.setPlayer(this);
-		}
+		tile.setPlayer(this);
+		standingOn.setPlayer(null);
+		standingOn = tile;
 		return true;
 	}
-	
-	private Tile calculateTile() {
-		return location.getTileAt(position);
-	}
-	
 
-	/**
-	 * updates the players position field to one tile in a direction
-	 *
-	 * @param dir to move
-	 */
-	private Direction moveDir(Game.Direction dir) {
-		System.out.println(dir);
-		Direction newDir = null;
-		switch(dir) {
-		case NORTH:
-			y -= 10;
-			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
-			animation.setAnimationDirection(0);
-			newDir = Direction.NORTH;
-			break;
-		case EAST:
-			x += 10;
-			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
-			animation.setAnimationDirection(1);
-			newDir = Direction.EAST;
-			break;
-		case SOUTH:
-			y += 10;
-			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
-			animation.setAnimationDirection(2);
-			newDir = Direction.SOUTH;
-			break;
-		case WEST:
-			x -= 10;
-			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
-			animation.setAnimationDirection(3);
-			newDir = Direction.WEST;
-			break;
-		default:
-			break;
-		}
-		animation.cycle();
-		return newDir;
-	}
-	
 	/**
 	 * Calculates the direction the player should move based on the direction of the camera(direction field)
 	 * @param dir - the direction the player is trying to move in
 	 * @return the direction the player should move in
 	 */
 	private Direction calcDir(Direction dir) {
+		System.out.println(direction);
 		switch(direction) {
 		case EAST:
 			int k = Direction.EAST.ordinal() + dir.ordinal();
@@ -327,6 +264,46 @@ public class Player implements Serializable{
 		default:
 			return Direction.NORTH;
 		}
+	}
+
+	/**
+	 * updates the players position field to one tile in a direction
+	 *
+	 * @param dir to move
+	 */
+	private Direction moveDir(Game.Direction dir) {
+		Direction newDir = null;
+		switch(dir) {
+		case NORTH:
+			System.out.println("Moving North");
+			position = new Point(position.x, position.y-1);
+			animation.setAnimationDirection(0);
+			newDir = Direction.NORTH;
+			break;
+		case EAST:
+			System.out.println("Moving East");
+			position = new Point(position.x+1, position.y);
+			animation.setAnimationDirection(1);
+			newDir = Direction.EAST;
+			break;
+		case SOUTH:
+			System.out.println("Moving South");
+			position = new Point(position.x, position.y+1);
+			animation.setAnimationDirection(2);
+			newDir = Direction.SOUTH;
+			break;
+		case WEST:
+			System.out.println("Moving West");
+			position = new Point(position.x-1, position.y);
+			animation.setAnimationDirection(3);
+			newDir = Direction.WEST;
+			break;
+		default:
+			break;
+		}
+		animation.cycle();
+		System.out.println(position);
+		return newDir;
 	}
 
 	// getters and setters
@@ -420,21 +397,13 @@ public class Player implements Serializable{
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
 	}
-	
-	public double getX() {
-		return x;
-	}
-	
-	public double getY() {
-		return y;
-	}
 
-	public boolean isAttacking() {
+	public boolean isAttacking(){
 		return attacking;
 	}
+	public void setAttacking(boolean b) {
+		attacking = b;
 
-	public void setAttacking(boolean attacking) {
-		this.attacking = attacking;
 	}
 
 }
