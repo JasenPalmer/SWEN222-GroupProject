@@ -218,7 +218,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void repaintRenderingWindow(){
-		hpBar.setHealth(game.parsePlayer(username).getHealth());
+		if(game != null){
+			hpBar.setHealth(game.parsePlayer(username).getHealth());
+		}
 		if(rw != null){
 			rw.repaint();
 		}
