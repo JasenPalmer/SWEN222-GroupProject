@@ -90,7 +90,6 @@ public class Player implements Serializable{
 		setDead(false);
 		x = (position.x*TILESIZE)+(TILESIZE/2);
 		y = (position.y*TILESIZE)+(TILESIZE/2);
-		attacking = true;
 	}
 
 	/**
@@ -257,32 +256,6 @@ public class Player implements Serializable{
 			newTile.setPlayer(this);
 		}
 		return true;
-	}
-	
-	private boolean validMove(Game.Direction dir) {
-		double newX = x;
-		double newY = y;
-		switch(dir) {
-		case EAST:
-			newX += 10;
-			if((newX/TILESIZE) > location.width()) {
-				return false;
-			}
-			return true;
-		case NORTH:
-			newY-=10;
-			if(newY/TILESIZE < 0) {
-				return false;
-			}
-			return true;
-		case SOUTH:
-			break;
-		case WEST:
-			break;
-		default:
-			break;
-		}
-		return false;
 	}
 	
 	private Tile calculateTile() {
