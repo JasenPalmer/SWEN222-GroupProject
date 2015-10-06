@@ -113,27 +113,27 @@ public class RenderingWindow extends JPanel{
 					if(t!=null) {
 						// DRAWING TERRAIN
 						image = ImageStorage.getImage(t.toString());
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
+						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 , null);
 
 						// Drawing walls if inside location
 						if(location instanceof InsideLocation){
 							if(i==0 || tiles[i-1][j]==null){
-								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  , null);
 							}
 							if(j==tiles.length-1|| tiles[i][j+1]==null){
-								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  , null);
 							}
 						}
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
 							image = ImageStorage.getImage(t.containedEntity().getName());
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
 
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), (int)((p.getX()/2) + (p.getY()/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX), (int)((p.getX()/4)-(p.getY()/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
+							offgc.drawImage(getPlayerImage(p), (int)((p.getX()/2) + (p.getY()/2) + ImageStorage.playerImage.getWidth(null)/2 ), (int)((p.getX()/4)-(p.getY()/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 , null);
 						}
 					}
 
@@ -144,15 +144,15 @@ public class RenderingWindow extends JPanel{
 							// Drawing 2 block high walls
 							if(r instanceof EntranceExitTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
-									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 , null);
 								} else {
-									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 , null);
 								}
 							}
 							else{
-								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 , null);
 							}
-							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) , ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE , null);
 
 
 							image = ImageStorage.building;
@@ -177,7 +177,7 @@ public class RenderingWindow extends JPanel{
 							}
 
 
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) , (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) , null);
 
 						}
 					}
