@@ -21,6 +21,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.Timer;
 
 import network.Client;
 import ui.panels.BackgroundPanel;
@@ -52,6 +53,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private HealthBarPanel hpBar;
 	private String track = null;
 	private int initVolume = -30;
+	Timer timer;
+	KeyEvent keyEve;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
@@ -122,6 +125,16 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup HP Bar
 		hpBar = new HealthBarPanel();
 		overlayPanel.add(hpBar,2,0);
+
+		//Setup timer
+		timer = new Timer(50, new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(keyEve != null){
+					client.registerKeyPress(keyEve);
+				}
+			}});
+		timer.setRepeats(true);
 	}
 
 	private void setSettings(){
@@ -350,16 +363,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			rw.repaint();
 			break;
 		case KeyEvent.VK_W:
-			client.registerKeyPress(e);
+			keyEve = e;
+			timer.start();
 			break;
 		case KeyEvent.VK_A:
-			client.registerKeyPress(e);
+			keyEve = e;
+			timer.start();
 			break;
 		case KeyEvent.VK_S:
-			client.registerKeyPress(e);
+			keyEve = e;
+			timer.start();
 			break;
 		case KeyEvent.VK_D:
-			client.registerKeyPress(e);
+			keyEve = e;
+			timer.start();
 			break;
 		case KeyEvent.VK_ESCAPE:
 			if(showSettings == true){
@@ -418,7 +435,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//TODO
+		timer.stop();
 	}
 
 	@Override
