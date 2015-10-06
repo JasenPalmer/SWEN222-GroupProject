@@ -240,6 +240,7 @@ public class Player implements Serializable{
 			OutsideLocation out = (OutsideLocation) location;
 			Tile[][] tiles = out.getBuildingTiles();
 			if(tiles[tile.getPos().y][tile.getPos().x] != null) {
+				System.err.println("Cant move - building in the way");
 				return false;
 			}
 		}
@@ -273,7 +274,7 @@ public class Player implements Serializable{
 			y -= 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(0);
-			newDir = Direction.SOUTH;
+			newDir = Direction.NORTH;
 			break;
 		case EAST:
 			x += 10;
@@ -285,7 +286,7 @@ public class Player implements Serializable{
 			y += 10;
 			position = new Point((int)x/TILESIZE, (int)y/TILESIZE);
 			animation.setAnimationDirection(2);
-			newDir = Direction.NORTH;
+			newDir = Direction.SOUTH;
 			break;
 		case WEST:
 			x -= 10;
