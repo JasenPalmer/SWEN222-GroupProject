@@ -47,13 +47,11 @@ public class Animation implements Serializable{
 	}
 	
 	public void cycleAttack(){
-		System.out.println("before: "+attackFrame);
 		attackFrame++;
 		if(attackFrame==7){
 			attackFrame = 0;
 			player.setAttacking(false);
 		}
-		System.out.println("after: "+attackFrame);
 	}
 
 	public int getAttackFrame() {
