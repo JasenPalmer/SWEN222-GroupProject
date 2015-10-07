@@ -92,15 +92,20 @@ public class RenderingWindow extends JPanel{
 
 			// do lighting here and draw final img over it.
 
-			Image lighting = createImage(this.getWidth(), this.getHeight());
-			Graphics lightingGraphic = lighting.getGraphics();
-			Color c = new Color(0,0,0,128);
-			lightingGraphic.setColor(c);
-			lightingGraphic.fillRect(0,0,this.getWidth(),this.getHeight());
-//			int playerX =
-//			int playerY =
-//			lightingGraphic.eraseOval()
-			g.drawImage(lighting,0,0,null);
+//			Image lighting = createImage(this.getWidth(), this.getHeight());
+//			Graphics lightingGraphic = lighting.getGraphics();
+//			Color c = new Color(0,0,0,200);
+//			lightingGraphic.setColor(c);
+//			lightingGraphic.fillRect(0,0,this.getWidth(),this.getHeight());
+//			
+//			int playerX =  (player.getPosition().x*TILESIZE/2) + (player.getPosition().y*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX;
+//			int playerY =  ((player.getPosition().y*TILESIZE/4)-(player.getPosition().x*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY;
+//			
+//			c = new Color(0,0,0,100);
+//			lightingGraphic.setColor(c);
+//			lightingGraphic.fillOval(playerX, playerY, TILESIZE, TILESIZE);
+//			
+//			g.drawImage(lighting, 0, 0, this.getWidth(), this.getHeight(), null);
 		}
 
 		/**
@@ -229,7 +234,6 @@ public class RenderingWindow extends JPanel{
 		 */
 		private Image getPlayerImage(Player p){
 			Animation animation = p.getAnimation();
-
 			int directionInt = animation.getAnimationDirection();
 
 			switch(direction){
@@ -245,6 +249,7 @@ public class RenderingWindow extends JPanel{
 					directionInt = addToDirInt(directionInt, 1);
 					break;
 			}
+			
 			Image image = null;
 
 			if(p.getName().equals("King Jake")){
@@ -255,11 +260,16 @@ public class RenderingWindow extends JPanel{
 
 			} else if(p.isDead()){
 				image = ImageStorage.bush;
-			}
-				else {
+			} else {
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
+			
+			if(player.isAttacking()){
+				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
+				player.getAnimation().cycleAttack();
+			}
+			
 			playerImage = image;
 			return image;
 		}
