@@ -25,7 +25,7 @@ public class ImageStorage {
 	public static Image wallR;
 	public static Image wallCorner;
 	public static Image table;
-	public static Image chest;
+
 
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] robeAttack = new Image[4][8];
@@ -71,7 +71,7 @@ public class ImageStorage {
 			tree = ImageIO.read(new File("src/ui/images/entities/Tree.png"));
 			bush = ImageIO.read(new File("src/ui/images/entities/Bush.png"));
 			table = ImageIO.read(new File("src/ui/images/entities/Table.png"));
-			chest = ImageIO.read(new File("src/ui/images/entities/Table.png"));
+			
 //			robewalking
 			for(int i  = 0; i < robeWalk.length; i++){
 				for(int j = 0; j < robeWalk[i].length; j++){
@@ -120,7 +120,6 @@ public class ImageStorage {
 	 * @return image based on name
 	 */
 	public static Image getImage(String name){
-		System.out.println(name);
 		switch(name){
 			case "Gr":
 				return grass;
@@ -140,10 +139,10 @@ public class ImageStorage {
 				return tree;
 			case "Table":
 				return table;
-			case "Bush":
-				return bush;
 			case "Chest":
-				return chest;
+				return bush;
+			case "Key":
+				return bush;
 		}
 		return null;
 	}

@@ -146,7 +146,7 @@ public class RenderingWindow extends JPanel{
 						}
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
-							image = ImageStorage.getImage(t.containedEntity().getName());
+							image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
 							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
 
