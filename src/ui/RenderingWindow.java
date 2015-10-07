@@ -100,6 +100,7 @@ public class RenderingWindow extends JPanel{
 //			int playerX =
 //			int playerY =
 //			lightingGraphic.eraseOval()
+			g.drawImage(lighting,0,0,null);
 		}
 
 		/**
