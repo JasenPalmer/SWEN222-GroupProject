@@ -1,6 +1,7 @@
 package gameworld;
 
 import gameworld.entity.BasicEntity;
+import gameworld.entity.Chest;
 import gameworld.entity.Entity;
 import gameworld.entity.Key;
 import gameworld.location.InsideLocation;
@@ -15,7 +16,9 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -33,6 +36,7 @@ public class Game implements Serializable {
 		players = new HashSet<Player>();
 		locations = new HashSet<Location>();
 		parseLocationFolder("locations");
+		parseEntityFiles();
 	}
 
 	/**
@@ -77,7 +81,6 @@ public class Game implements Serializable {
 		Location loc;
 		Tile[][] locTiles = new Tile[height][width];
 		Tile[][] buildingTiles = new Tile[height][width];
-		Entity[][] entities = new Entity[height][width];
 		//row index
 		int row = 0;
 		boolean outside = false;
@@ -91,12 +94,6 @@ public class Game implements Serializable {
 				blockScanner.useDelimiter("-");
 				while(blockScanner.hasNext()) {
 					String temp =  blockScanner.next();
-					//if the next block segment is an entity create it
-					Entity ent = parseEntity(temp,col,row);
-					if(ent != null){
-						entities[row][col] = ent;
-						continue;
-					}
 					//otherwise create a tile
 					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
@@ -115,10 +112,10 @@ public class Game implements Serializable {
 			row += 1;
 		}
 		if(outside){
-			loc = new OutsideLocation(name, desc, locTiles, buildingTiles, entities);
+			loc = new OutsideLocation(name, desc, locTiles, buildingTiles);
 		}
 		else{
-			loc = new InsideLocation(name, desc, locTiles, entities);
+			loc = new InsideLocation(name, desc, locTiles);
 		}
 
 		return loc;
@@ -147,22 +144,89 @@ public class Game implements Serializable {
 		}
 		return tile;
 	}
-
-	private Entity parseEntity(String type, int col, int row) {
-		Entity ent = null;
-		switch(type) {
-		case "Rock":
-			ent = new BasicEntity("Rock", "A rock", new Point(col, row));
-		case "Tree":
-			ent = new BasicEntity("Tree","A tree", new Point(col, row));
-		case "Table":
-			ent = new BasicEntity("Table","A table", new Point(col, row));
-		case "key":
-			ent = new Key();
+	
+	
+	private void parseEntityFiles() {
+		Scanner fileScan = null;
+		try {
+			File folder = new File("src/entities");
+			for(File entList : folder.listFiles()) {
+				fileScan = new Scanner(entList);
+				String location = fileScan.next();
+				Location loc = getLocation(location);
+				if(loc == null){
+					System.err.println("Location with the name "+location+" was not found");
+					continue;
+				}
+				List<Entity> ents = parseEntities(fileScan, loc);
+				for(Entity i : ents) {
+					loc.setEntity(i.getPosition(), i);
+				}
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(fileScan != null) {
+				fileScan.close();
+			}
 		}
-
-		return ent;
 	}
+
+	private List<Entity> parseEntities(Scanner fileScan,
+			Location loc) {
+		List<Entity> list = new ArrayList<Entity>();
+		while(fileScan.hasNextLine()) {
+			String line = fileScan.nextLine();
+			//System.out.println("This is the line "+line+ " nothing");
+			Scanner lineScan = new Scanner(line);
+			lineScan.useDelimiter("\\t");
+			if(!lineScan.hasNext()){
+				System.err.println("Entity file formatted incorrectly(maybe?)");
+				continue;
+			}
+			String entType = lineScan.next();
+			Entity entity = parseEntity(entType, lineScan, loc);
+			if(entity == null){System.err.println("Entity format incorrect");}
+			list.add(entity);
+		}
+		return list;
+	}
+	
+	private Entity parseEntity(String type, Scanner scan, Location loc) {
+		if(!scan.hasNext()) {return null;}
+		// get entity name
+		String name = scan.next();
+		if(!scan.hasNext()) {return null;}
+		// get entity description
+		String desc = scan.next();
+		if(!scan.hasNextInt()) {return null;}
+		// x position
+		int xPos = scan.nextInt();
+		if(!scan.hasNextInt()) {return null;}
+		// y position
+		int yPos = scan.nextInt();
+		switch(type) {
+		case "key":
+			return new Key(name, desc, new Point(xPos,yPos), loc);
+		case "chest":
+			return new Chest(name, desc, new Point(xPos, yPos), loc);
+		case "basic":
+			return new BasicEntity(name, desc, new Point(xPos,yPos), loc);
+		}
+		return null;
+	}
+
+	private Location getLocation(String locationName) {
+		for(Location loc : locations) {
+			if(loc.name().equals(locationName)) {
+				return loc;
+			}
+		}
+		return null;
+	}
+
+	
 
 
 	/**

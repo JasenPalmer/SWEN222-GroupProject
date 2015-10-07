@@ -20,7 +20,12 @@ public class Player implements Serializable{
 	/**
 	 * Default size of the players inventory
 	 */
-	private static final int DEFAULT_INV_SIZE = 4;
+	private static final int DEFAULT_INV_SIZE = 8;
+	
+	/**
+	 * Players damage
+	 */
+	private int playerDamage = 100;
 
 	/**
 	 * Players name
@@ -63,14 +68,29 @@ public class Player implements Serializable{
 	 */
 	private Animation animation;
 
+	/**
+	 * The tile that the player is standing on
+	 */
 	private Tile standingOn;
 
+	/**
+	 * Amount of health the player has
+	 */
 	private int health;
 
+	/**
+	 * is the player dead ie health <= 0
+	 */
 	private boolean isDead;
 
+	/**
+	 * Is the player currently attacking
+	 */
 	private boolean attacking;
 
+	/**
+	 * Direction the player is facing
+	 */
 	private Direction facing = Game.Direction.NORTH;
 
 	public Player(String name, Game game) {
@@ -91,13 +111,13 @@ public class Player implements Serializable{
 	 * @return true if the attack was successful
 	 */
 	public boolean attack() {
-		Tile tile = getTile(facing);
+		Tile tile = getTile(getFacing());
 		// nothing in front of the player
 		if(tile == null){return false;}
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-		opponent.setHealth(opponent.getHealth()-100);
+		opponent.setHealth(opponent.getHealth()-playerDamage);
 		System.out.println("Player: "+opponent.getName()+" was attacked");
 		System.out.println("Health remaining: "+opponent.getHealth());
 		return true;
@@ -152,8 +172,9 @@ public class Player implements Serializable{
 	public boolean pickupItem() {
 		// if the inventory is full can't pick up item
 		if(inventoryFull()){return false;}
-		Tile tile = getTile(facing);
+		Tile tile = getTile(getFacing());
 		Entity ent = tile.containedEntity();
+		if(ent == null){return false;}
 		// if there isn't an item in front of the player don't pick it up
 		if(!(ent instanceof Item)) {return false;}
 		Item item = (Item) ent;
@@ -305,33 +326,7 @@ public class Player implements Serializable{
 		System.out.println(position);
 		return newDir;
 	}
-
-	// getters and setters
-
-	/**
-	 * @return if the player is holding an entity
-	 */
-	public boolean isHolding() {
-		return holding;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Point getPosition() {
-		return position;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(InsideLocation location) {
-		this.location = location;
-	}
-
-
+	
 	/**
 	 * Change the direction of the player based on the key that was pressed and the direction the camera is currently facing.
 	 * Accepts KeyEvent.VK_E and KeyEvent.VK_Q
@@ -372,6 +367,34 @@ public class Player implements Serializable{
 		}
 	}
 
+	// getters and setters
+
+	/**
+	 * @return if the player is holding an entity
+	 */
+	public boolean isHolding() {
+		return holding;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Point getPosition() {
+		return position;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(InsideLocation location) {
+		this.location = location;
+	}
+
+
+	
+
 	public Direction getDirection() {
 		return direction;
 	}
@@ -406,4 +429,7 @@ public class Player implements Serializable{
 
 	}
 
+	public Direction getFacing() {
+		return facing;
+	}
 }

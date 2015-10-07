@@ -16,10 +16,11 @@ public class BasicEntity implements Entity {
 	private Point position;
 	private Location location;
 	
-	public BasicEntity(String name, String description, Point position) {
+	public BasicEntity(String name, String description, Point position, Location location) {
 		this.name = name;
 		this.description = description;
 		this.position = position;
+		this.location = location;
 	}
 
 	@Override
