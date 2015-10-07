@@ -1,0 +1,23 @@
+fuck
+chest	Chest	Could container sick loot	13	2
+basic	Tree	This is a tree. Just a tree.	2	3
+basic	Tree	This is a tree. Just a tree.	1	4
+basic	Tree	This is a tree. Just a tree.	1	5
+basic	Bush	Bush	12	5
+chest	Chest	Could container sick loot	13	5
+chest	Chest	Could container sick loot	14	5
+basic	Tree	This is a tree. Just a tree.	2	6
+basic	Tree	This is a tree. Just a tree.	3	6
+basic	Bush	Bush	12	6
+chest	Chest	Could container sick loot	13	6
+chest	Chest	Could container sick loot	14	6
+basic	Tree	This is a tree. Just a tree.	2	7
+basic	Tree	This is a tree. Just a tree.	3	7
+basic	Bush	Bush	9	7
+basic	Bush	Bush	12	7
+basic	Tree	This is a tree. Just a tree.	1	8
+basic	Tree	This is a tree. Just a tree.	2	8
+chest	Chest	Could container sick loot	6	8
+basic	Bush	Bush	10	8
+basic	Bush	Bush	12	8
+chest	Chest	Could container sick loot	13	9

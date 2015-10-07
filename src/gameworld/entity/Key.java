@@ -51,4 +51,9 @@ public class Key extends Item {
 		}
 	}
 
+	@Override
+	public String type() {
+		return "key";
+	}
+
 }

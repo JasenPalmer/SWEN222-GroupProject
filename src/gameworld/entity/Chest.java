@@ -20,7 +20,7 @@ public class Chest extends Container {
 
 	@Override
 	public String getName() {
-		return "A Chest";
+		return "Chest";
 	}
 
 	@Override
@@ -40,6 +40,11 @@ public class Chest extends Container {
 
 	public Player getOpenedBy() {
 		return openedBy;
+	}
+
+	@Override
+	public String type() {
+		return "chest";
 	}
 
 }

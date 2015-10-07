@@ -16,7 +16,6 @@ public class OutsideLocation extends Location {
 	
 	public String toString(){
 		String toReturn = "";
-		toReturn += "Outside\n";
 		toReturn += ""+name+"\n";
 		toReturn += ""+description+"\n";
 		toReturn += tiles[0].length+" "+tiles.length+"\n";
@@ -25,17 +24,12 @@ public class OutsideLocation extends Location {
 				
 				if(tiles[i][j]!=null){
 					toReturn+= tiles[i][j].toString();
-					toReturn+="-";
-					if(tiles[i][j].containedEntity()!=null){
-						toReturn+=tiles[i][j].containedEntity().getName().substring(0,2);
-					} else{
-						toReturn+="0";
-					}
 				} else {
-					toReturn += "0-0";
+					toReturn+="0";
 				}
 				
 				toReturn+= "-";
+				
 				if(buildingTiles[i][j]!=null){
 					toReturn+= buildingTiles[i][j].toString();
 				} else {

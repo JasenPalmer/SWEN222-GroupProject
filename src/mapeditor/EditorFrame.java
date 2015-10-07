@@ -2,6 +2,7 @@ package mapeditor;
 
 import gameworld.Game.Direction;
 import gameworld.entity.BasicEntity;
+import gameworld.entity.Chest;
 import gameworld.entity.Entity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
@@ -133,12 +134,19 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 		JFileChooser save = new JFileChooser();
 		save.setCurrentDirectory(new File("."));
-		String textToSave = map.toString();
+		String mapToSave = map.toString();
+		String entitiesToSave = map.entitiesToString();
 		int selected = save.showSaveDialog(null);
 
 		if(selected == JFileChooser.APPROVE_OPTION) {
 			try(FileWriter fw = new FileWriter(save.getSelectedFile()+".txt")) {
-			    fw.write(textToSave);
+			    fw.write(mapToSave);
+			}
+			catch  (IOException e){
+			}
+			
+			try(FileWriter fw = new FileWriter(save.getSelectedFile()+"-entites.txt")) {
+			    fw.write(entitiesToSave);
 			}
 			catch  (IOException e){
 			}
@@ -196,6 +204,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 			return new BasicEntity("Bush", "Bush", p);
 		case "Table":
 			return new BasicEntity("Table", "This is a table.", p);
+		case "Chest":
+			return new Chest(10);
 		}
 		return null;
 	}
@@ -320,6 +330,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 			case "Boulder":
 				return true;
 			case "Table":
+				return true;
+			case "Chest":
 				return true;
 		}
 		return false;
