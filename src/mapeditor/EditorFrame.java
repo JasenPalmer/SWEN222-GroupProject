@@ -2,10 +2,12 @@ package mapeditor;
 
 import gameworld.Game.Direction;
 import gameworld.entity.Entity;
+import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
 import gameworld.tile.FloorTile;
+import gameworld.tile.Tile;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -339,9 +341,9 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 			Location l = null;
 			if(outOrIn.equalsIgnoreCase("inside")){
-				//l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT]);
+				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Entity[MAPHEIGHT][MAPWIDTH]);
 			} else{
-				//l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPHEIGHT], new Tile[MAPHEIGHT][MAPHEIGHT]);
+				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Tile[MAPHEIGHT][MAPWIDTH], new Entity[MAPHEIGHT][MAPWIDTH]);
 			}
 
 			EditorFrame frame = new EditorFrame(l);

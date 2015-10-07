@@ -11,12 +11,16 @@ import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import com.sun.scenario.effect.Color4f;
 
 public class RenderingWindow extends JPanel{
 
@@ -49,43 +53,53 @@ public class RenderingWindow extends JPanel{
 	 * renderer on the resulting arrays
 	 */
 	public void paint( Graphics g ) {
-			super.paint(g);
-			Image offscreen = createImage(this.getWidth(), this.getHeight());
-			Graphics offgc = offscreen.getGraphics();
-	
-			player = applicationWindow.getPlayer();
-			location = player.getLocation();
-	
-			Tile[][] tiles = location.getTiles();
-			locationTiles = tiles;
-			Tile[][] rooms = null;
-	
-			if(location instanceof OutsideLocation){
-				OutsideLocation ol = (OutsideLocation) location;
-				rooms = ol.getBuildingTiles();
-			}
-	
-			// Rotates array depending on direction and then rendering
-			switch(direction){
-			case NORTH:
-				isometric(tiles,rooms, offgc);
-				break;
-			case EAST:
-				isometric(rotate(tiles), rotate(rooms), offgc);
-				break;
-			case SOUTH:
-				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
-				break;
-			case WEST:
-				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
-				break;
-	
-			}
-	
-	
-				g.drawImage(offscreen,0,0,null);
-		
 
+		super.paint(g);
+
+		Image offscreen = createImage(this.getWidth(), this.getHeight());
+		Graphics offgc = offscreen.getGraphics();
+
+		player = applicationWindow.getPlayer();
+		location = player.getLocation();
+
+		Tile[][] tiles = location.getTiles();
+		locationTiles = tiles;
+		Tile[][] rooms = null;
+
+		if(location instanceof OutsideLocation){
+			OutsideLocation ol = (OutsideLocation) location;
+			rooms = ol.getBuildingTiles();
+		}
+
+		// Rotates array depending on direction and then rendering
+		switch(direction){
+		case NORTH:
+			isometric(tiles,rooms, offgc);
+			break;
+		case EAST:
+			isometric(rotate(tiles), rotate(rooms), offgc);
+			break;
+		case SOUTH:
+			isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
+			break;
+		case WEST:
+			isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
+			break;
+
+		}
+
+			g.drawImage(offscreen,0,0,null);
+
+			// do lighting here and draw final img over it.
+
+			Image lighting = createImage(this.getWidth(), this.getHeight());
+			Graphics lightingGraphic = lighting.getGraphics();
+			Color c = new Color(0,0,0,128);
+			lightingGraphic.setColor(c);
+			lightingGraphic.fillRect(0,0,this.getWidth(),this.getHeight());
+//			int playerX =
+//			int playerY =
+//			lightingGraphic.eraseOval()
 		}
 
 		/**
@@ -101,7 +115,7 @@ public class RenderingWindow extends JPanel{
 		 * @param offgc - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
-			updateCamera();
+			updateCamera(getRealPlayerCoords(tiles));
 
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 			Image image = null;
@@ -113,27 +127,27 @@ public class RenderingWindow extends JPanel{
 					if(t!=null) {
 						// DRAWING TERRAIN
 						image = ImageStorage.getImage(t.toString());
-						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
+						offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY, null);
 
 						// Drawing walls if inside location
 						if(location instanceof InsideLocation){
 							if(i==0 || tiles[i-1][j]==null){
-								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+								offgc.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
 							}
 							if(j==tiles.length-1|| tiles[i][j+1]==null){
-								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+								offgc.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
 							}
 						}
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
 							image = ImageStorage.getImage(t.containedEntity().getName());
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
 
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), (int)((getPlayerX(p)/2) + (getPlayerY(p)/2)  - cameraX + TILESIZE), (int)((p.getY()/4)-(p.getX()/4)) + this.getHeight()/2  - getPlayerImage(p).getHeight(null) - cameraY, null);
+							offgc.drawImage(getPlayerImage(p), (j*TILESIZE/2) + (i*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY, null);
 						}
 					}
 
@@ -144,15 +158,15 @@ public class RenderingWindow extends JPanel{
 							// Drawing 2 block high walls
 							if(r instanceof EntranceExitTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
-									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 								} else {
-									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+									offgc.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 								}
 							}
 							else{
-								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+								offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 							}
-							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
+							offgc.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
 
 
 							image = ImageStorage.building;
@@ -177,7 +191,7 @@ public class RenderingWindow extends JPanel{
 							}
 
 
-							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX + TILESIZE, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
+							offgc.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
 
 						}
 					}
@@ -187,60 +201,6 @@ public class RenderingWindow extends JPanel{
 		}
 
 
-
-		private Double getPlayerX(Player p) {
-			Double[] coords = {player.getX(), player.getY()};
-			switch(direction){
-			case NORTH:
-				return p.getX();
-			case WEST:
-				return rotatePlayer(coords)[0];
-			case SOUTH:
-				return rotatePlayer(rotatePlayer(coords))[0];
-			case EAST:
-				return rotatePlayer(rotatePlayer(rotatePlayer(coords)))[0];
-			}
-			return null;
-		}
-
-
-
-		private Double getPlayerY(Player p) {
-			Double[] coords = {player.getX(), player.getY()};
-			switch(direction){
-			case NORTH:
-				return p.getY();
-			case WEST:
-				return rotatePlayer(coords)[1];
-			case SOUTH:
-				return rotatePlayer(rotatePlayer(coords))[1];
-			case EAST:
-				return rotatePlayer(rotatePlayer(rotatePlayer(coords)))[1];
-			}
-			return null;
-		}
-
-		private Double[] rotatePlayer(Double[] coords){
-			int mapCenter = location.getTiles().length*64 /2;
-			Double[] toReturn = new Double[2];
-			if(coords[0] <= mapCenter && coords[1] <= mapCenter){
-				toReturn[0] = coords[0];
-				toReturn[1] = location.getTiles().length*64 - coords[0];
-			}
-			else if(coords[0] <= mapCenter && coords[1] > mapCenter){
-				toReturn[0] = coords[1];
-				toReturn[1] = coords[0];
-			}
-			else if(coords[0] > mapCenter && coords[1] > mapCenter){
-				toReturn[0] = coords[0];
-				toReturn[1] = location.getTiles().length*64 - coords[1];
-			}
-			else{
-				toReturn[0] = location.getTiles().length*64 - coords[0];
-				toReturn[1] = toReturn[1];
-			}
-			return toReturn;
-		}
 
 		/**
 		 * Changes walkdirection for drawing depending on camera angle
@@ -295,18 +255,30 @@ public class RenderingWindow extends JPanel{
 			} else if(p.isDead()){
 				image = ImageStorage.bush;
 			}
-			else {
+				else {
 				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
 			}
 
-			if(player.isAttacking()){
-				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()/2];
-				animation.cycleAttack();
-			}
-			
-			
 			playerImage = image;
 			return image;
+		}
+
+		/**
+		 * gets the player x and y in the current tile array regardless of rotation.
+		 * @param tiles
+		 * @return int of player x and y
+		 */
+		private int[] getRealPlayerCoords(Tile[][] tiles) {
+			int[] xy = new int[2];
+			for(int i = 0; i < tiles.length; i++){
+				for(int j = tiles[i].length-1; j >=0 ; j--){
+					if(tiles[i][j]!=null && tiles[i][j].getPos().equals(player.getPosition())){
+						xy[0] = j;
+						xy[1] = i;
+					}
+				}
+			}
+			return xy;
 		}
 
 		/**
@@ -347,9 +319,11 @@ public class RenderingWindow extends JPanel{
 		 *
 		 * @param realCoord - int array of player x and y in the tile array
 		 */
-		public void updateCamera(){
-			cameraX = (int) ((player.getX()/2) + (player.getY()/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
-			cameraY = (int) ((player.getY()/4)-(player.getX()/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
+		public void updateCamera(int[] realCoord){
+			int playerX = realCoord[0];
+			int playerY = realCoord[1];
+			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
+			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
 		}
 
 		public static Image createImage(String imagename) {
@@ -362,4 +336,3 @@ public class RenderingWindow extends JPanel{
 			return image;
 		}
 }
-
