@@ -199,13 +199,13 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	private Entity getEntity(String name, Point p) {
 		switch(name){
 		case "Tree":
-			return new BasicEntity("Tree", "This is a tree. Just a tree.", p);
+			return new BasicEntity("Tree", "This is a tree. Just a tree.", p, map);
 		case "Bush":
-			return new BasicEntity("Bush", "Bush", p);
+			return new BasicEntity("Bush", "Bush", p, map);
 		case "Table":
-			return new BasicEntity("Table", "This is a table.", p);
+			return new BasicEntity("Table", "This is a table.", p, map);
 		case "Chest":
-			return new Chest(10);
+			return new Chest("Chest", "This is a chest", p, map);
 		}
 		return null;
 	}
@@ -361,9 +361,9 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 			Location l = null;
 			if(outOrIn.equalsIgnoreCase("inside")){
-				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Entity[MAPHEIGHT][MAPWIDTH]);
+				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH]);
 			} else{
-				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Tile[MAPHEIGHT][MAPWIDTH], new Entity[MAPHEIGHT][MAPWIDTH]);
+				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Tile[MAPHEIGHT][MAPWIDTH]);
 			}
 
 			EditorFrame frame = new EditorFrame(l);
