@@ -14,33 +14,33 @@ public class OutsideLocation extends Location {
 	}
 	
 	public String toString(){
-		  String toReturn = "";
-		  toReturn += ""+name+"\n";
-		  toReturn += ""+description+"\n";
-		  toReturn += tiles[0].length+" "+tiles.length+"\n";
-		  for(int i = 0; i < tiles.length; i++){
-		   for(int j = 0; j < tiles[i].length; j++){
-		    
-		    if(tiles[i][j]!=null){
-		     toReturn+= tiles[i][j].toString();
-		    } else {
-		     toReturn+="0";
-		    }
-		    
-		    toReturn+= "-";
-		    
-		    if(buildingTiles[i][j]!=null){
-		     toReturn+= buildingTiles[i][j].toString();
-		    } else {
-		     toReturn += "0";
-		    }
-		    toReturn += " ";
-		    
-		   }
-		   toReturn += "\n";
-		  }
-		  return toReturn;
-		 }
+		String toReturn = "";
+		toReturn += ""+name+"\n";
+		toReturn += ""+description+"\n";
+		toReturn += tiles[0].length+" "+tiles.length+"\n";
+		for(int i = 0; i < tiles.length; i++){
+			for(int j = 0; j < tiles[i].length; j++){
+				
+				if(tiles[i][j]!=null){
+					toReturn+= tiles[i][j].toString();
+				} else {
+					toReturn+="0";
+				}
+				
+				toReturn+= "-";
+				
+				if(buildingTiles[i][j]!=null){
+					toReturn+= buildingTiles[i][j].toString();
+				} else {
+					toReturn += "0";
+				}
+				toReturn += " ";
+				
+			}
+			toReturn += "\n";
+		}
+		return toReturn;
+	}
 	
 	public Tile[][] getBuildingTiles() {
 		return buildingTiles;

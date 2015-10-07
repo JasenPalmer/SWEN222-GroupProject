@@ -75,20 +75,20 @@ public abstract class Location implements Serializable{
 	}
 	
 	public String entitiesToString(){
-		  String toReturn = "";
-		  toReturn += name+"\n";
-		  for(int i = 0; i < tiles.length; i++){
-		   for(int j = 0; j < tiles.length; j++){
-		    if(tiles[i][j]!=null){
-		     Entity entity = tiles[i][j].containedEntity();
-		     if(entity!=null){    
-		      toReturn += entity.getClass().getSimpleName() +"\t"+ entity.getName() +"\t"+entity.getDescription()+"\t"+j+"\t"+i+"\n";
-		     }
-		    }
-		   }
-		  }
-		  return toReturn;
-		 }
+		String toReturn = "";
+		toReturn += name+"\n";
+		for(int i = 0; i < tiles.length; i++){
+			for(int j = 0; j < tiles.length; j++){
+				if(tiles[i][j]!=null){
+					Entity entity = tiles[i][j].containedEntity();
+					if(entity!=null){				
+						toReturn += entity.getClass().getSimpleName() +"\t"+ entity.getName() +"\t"+entity.getDescription()+"\t"+j+"\t"+i+"\n";
+					}
+				}
+			}
+		}
+		return toReturn;
+	}
 
 	public void setName(String name) {
 		this.name = name;
