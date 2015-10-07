@@ -112,7 +112,7 @@ public abstract class Location implements Serializable{
 				if(tiles[i][j]!=null){
 					Entity entity = tiles[i][j].containedEntity();
 					if(entity!=null){				
-						toReturn += entity.type() +"\t"+ entity.getName() +"\t"+entity.getDescription()+"\t"+j+"\t"+i+"\n";
+						toReturn += entity.getClass().getSimpleName() +"\t"+ entity.getName() +"\t"+entity.getDescription()+"\t"+j+"\t"+i+"\n";
 					}
 				}
 			}

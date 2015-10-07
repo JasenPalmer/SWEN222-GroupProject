@@ -29,11 +29,5 @@ public interface Entity{
 	 * @return the location that the entity is in
 	 */
 	public Location getLocation();
-
-	/**
-	 * 
-	 * @return string to describe type of entity
-	 */
-	public String type();
 	
 }

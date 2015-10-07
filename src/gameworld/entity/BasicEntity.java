@@ -49,9 +49,4 @@ public class BasicEntity implements Entity {
 	public void setPosition(Point position) {
 		this.position = position;
 	}
-
-	@Override
-	public String type() {
-		return "basic";
-	}
 }
