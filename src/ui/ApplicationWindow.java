@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -55,12 +57,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private int initVolume = -30;
 	Timer timer;
 	KeyEvent keyEve;
+	private String direction = "north";
+	JLabel compass;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 	private String track1 = "src/ui/sounds/track1.wav";
 	private String track2 = "src/ui/sounds/track2.wav";
 	private String fighting = "src/ui/sounds/fighting.wav";
+
+	//Images
+	private String northCompass = "src/ui/images/gui/compassNorth.png";
+	private String eastCompass = "src/ui/images/gui/compassEast.png";
+	private String southCompass = "src/ui/images/gui/compassSouth.png";
+	private String westCompass = "src/ui/images/gui/compassWest.png";
 
 	public ApplicationWindow(String host, String username) {
 		//Setup
@@ -125,6 +135,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup HP Bar
 		hpBar = new HealthBarPanel();
 		overlayPanel.add(hpBar,2,0);
+
+		//Setup compass		
+		compass = new JLabel(new ImageIcon(northCompass));
+		compass.setBounds(870, 10, 170,149);
+		overlayPanel.add(compass,2,0);
 
 		//Setup timer
 		timer = new Timer(50, new ActionListener(){
@@ -245,6 +260,25 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 		if(rw != null){
 			rw.repaint();
+		}
+	}
+
+	private void updateCompass(){
+		switch(direction){
+		case "north":
+			compass.setIcon(new ImageIcon(northCompass));
+			break;
+		case "east":
+			compass.setIcon(new ImageIcon(eastCompass));
+			break;
+		case "south":
+			compass.setIcon(new ImageIcon(southCompass));
+			break;
+		case "west":
+			compass.setIcon(new ImageIcon(westCompass));
+			break;
+			default:
+				break;
 		}
 	}
 
@@ -380,11 +414,45 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case KeyEvent.VK_Q:
 			rw.setDirection(directionSetter("Q"));
 			client.registerKeyPress(e);
+			switch(direction){
+			case "north":
+				direction = "east";
+				break;
+			case "east":
+				direction = "south";
+				break;
+			case "south":
+				direction = "west";
+				break;
+			case "west":
+				direction = "north";
+				break;
+			default:
+				break;
+			}
+			updateCompass();
 			rw.repaint();
 			break;
 		case KeyEvent.VK_E:
 			rw.setDirection(directionSetter("E"));
 			client.registerKeyPress(e);
+			switch(direction){
+			case "north":
+				direction = "west";
+				break;
+			case "east":
+				direction = "north";
+				break;
+			case "south":
+				direction = "east";
+				break;
+			case "west":
+				direction = "south";
+				break;
+			default:
+				break;
+			}
+			updateCompass();
 			rw.repaint();
 			break;
 		case KeyEvent.VK_W:
