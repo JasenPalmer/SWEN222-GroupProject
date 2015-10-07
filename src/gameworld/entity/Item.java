@@ -1,6 +1,5 @@
 package gameworld.entity;
 
-import gameworld.Player;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -14,11 +13,6 @@ import java.io.Serializable;
 public abstract class Item implements InteractableEntity, Serializable{
 
 	private static final long serialVersionUID = 6844825781934457545L;
-
-	/**
-	 * Player that is holding the item null if no player is holding it
-	 */
-	private Player heldBy;
 	
 	/**
 	 * The location that the item is in
@@ -29,6 +23,18 @@ public abstract class Item implements InteractableEntity, Serializable{
 	 * The position of the item in the location
 	 */
 	private Point position;
+	
+	private String name;
+	
+	private String description;
+	
+	
+	public Item(String name, String description, Point position, Location location) {
+		this.name = name;
+		this.description = description;
+		this.position = position;
+		this.location = location;
+	}
 	
 	@Override
 	public Point getPosition() {
@@ -41,11 +47,14 @@ public abstract class Item implements InteractableEntity, Serializable{
 		return location;
 	}
 	
-	/**
-	 * @return Player that is holding the item. Null if no player is holding it
-	 */
-	public Player heldBy() {
-		return heldBy;
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	@Override
+	public String getDescription() {
+		return description;
 	}
 	
 }

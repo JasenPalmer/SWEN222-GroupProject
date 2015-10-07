@@ -4,33 +4,20 @@ import gameworld.Player;
 import gameworld.location.Location;
 
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Chest extends Container {
+public class Chest extends Container implements Serializable{
 
+	private static final long serialVersionUID = -1295269831652028875L;
 	private Player openedBy;
 
-	public Chest(int size) {
-		super(size);
+	public Chest(String name, String description, Point position, Location location) {
+		super(name, description, position, location);
 	}
 
 	@Override
 	public void interact(Player player) {
 		openedBy = player;
-	}
-
-	@Override
-	public String getName() {
-		return "A Chest";
-	}
-
-	@Override
-	public String getDescription() {
-		return "Could container sick loot";
-	}
-
-	@Override
-	public Point getPosition() {
-		return null;
 	}
 
 	@Override

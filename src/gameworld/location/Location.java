@@ -1,10 +1,10 @@
 package gameworld.location;
 
-import java.awt.Point;
-import java.io.Serializable;
-
 import gameworld.entity.Entity;
 import gameworld.tile.Tile;
+
+import java.awt.Point;
+import java.io.Serializable;
 
 public abstract class Location implements Serializable{
 
@@ -12,13 +12,11 @@ public abstract class Location implements Serializable{
 	protected String name;
 	protected String description;
 	protected Tile[][] tiles;
-	protected Entity[][] entities;
 
-	public Location(String name, String description, Tile[][] tiles, Entity[][] entities) {
+	public Location(String name, String description, Tile[][] tiles) {
 		this.name = name;
 		this.description = description;
 		this.tiles = tiles;
-		this.entities = entities;
 	}
 
 	/**
@@ -76,15 +74,20 @@ public abstract class Location implements Serializable{
 		tiles[y][x] = t;
 	}
 	
-	public String toString() {
-		String s = null;
-		for(int i = 0; i < tiles.length; i++) {
-			for(int j = 0; j < tiles[0].length; j++) {
-				s+=tiles[i][j].getName();
+	public String entitiesToString(){
+		String toReturn = "";
+		toReturn += name+"\n";
+		for(int i = 0; i < tiles.length; i++){
+			for(int j = 0; j < tiles.length; j++){
+				if(tiles[i][j]!=null){
+					Entity entity = tiles[i][j].containedEntity();
+					if(entity!=null){				
+						toReturn += entity.getClass().getSimpleName() +"\t"+ entity.getName() +"\t"+entity.getDescription()+"\t"+j+"\t"+i+"\n";
+					}
+				}
 			}
-			s+="\n";
 		}
-		return s;
+		return toReturn;
 	}
 
 	public void setName(String name) {
@@ -98,10 +101,18 @@ public abstract class Location implements Serializable{
 	}
 
 	public void setEntity(int x, int y, Entity entity) {
-		System.out.println("Setting entity");
 		if(tiles[y][x]!=null){
+			System.out.println("Setting entity");
 			tiles[y][x].setEntitiy(entity);
 		}
 	}
+	
+	public void setEntity(Point pos, Entity entity) {
+		if(tiles[pos.y][pos.x]!=null){
+			System.out.println("Setting entity");
+			tiles[pos.y][pos.x].setEntitiy(entity);
+		}
+	}
+	
 	
 }

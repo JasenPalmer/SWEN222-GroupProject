@@ -1,8 +1,12 @@
 package gameworld.entity;
 
 import gameworld.Player;
+import gameworld.location.Location;
 import gameworld.tile.EntranceExitTile;
 import gameworld.tile.Tile;
+
+import java.awt.Point;
+import java.io.Serializable;
 
 
 /**
@@ -11,8 +15,13 @@ import gameworld.tile.Tile;
  * @author Jasen
  *
  */
-public class Key extends Item {
+public class Key extends Item implements Serializable{
 	
+	public Key(String name, String description, Point position, Location location) {
+		super(name, description, position, location);
+	}
+
+
 	private static final long serialVersionUID = -1062125803835909442L;
 
 
@@ -29,7 +38,7 @@ public class Key extends Item {
 
 	@Override
 	public void interact(Player player) {
-		Tile tile = player.getTile(player.getDirection());
+		Tile tile = player.getTile(player.getFacing());
 		if(tile == null){return;}
 		if((tile instanceof EntranceExitTile)) {
 			//trying to unlock a door at this point

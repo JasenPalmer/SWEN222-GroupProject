@@ -139,7 +139,9 @@ public class ImageStorage {
 				return tree;
 			case "Table":
 				return table;
-			case "Bush":
+			case "Chest":
+				return bush;
+			case "Key":
 				return bush;
 		}
 		return null;

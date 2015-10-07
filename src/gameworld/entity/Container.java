@@ -1,12 +1,20 @@
 package gameworld.entity;
 
+import gameworld.location.Location;
+
+import java.awt.Point;
+import java.io.Serializable;
+
 
 /**
  * A container is an entity that can hold Items eg. a chest
  * @author Jasen
  */
-public abstract class Container implements InteractableEntity {
+public abstract class Container implements InteractableEntity, Serializable {
 
+	private static final long serialVersionUID = 3833387180228381148L;
+
+	private static final int INV_SIZE = 8;
 
 	/**
 	 * Items that are stored in the container
@@ -18,9 +26,21 @@ public abstract class Container implements InteractableEntity {
 	 */
 	private boolean locked;
 	
-	public Container(int size) {
-		items = new Item[size];
+	private Point position;
+	
+	private String name;
+	
+	private String description;
+	
+	private Location location;
+	
+	public Container(String name, String description, Point position, Location location) {
+		this.name = name;
+		this.description = description;
+		this.position = position;
+		items = new Item[INV_SIZE];
 		locked = true;
+		this.location = location;
 	}
 	
 	/**
@@ -71,5 +91,26 @@ public abstract class Container implements InteractableEntity {
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
+	
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public Point getPosition() {
+		return position;
+	}
+	
+	@Override
+	public Location getLocation() {
+		return location;
+	}
+	
 	
 }

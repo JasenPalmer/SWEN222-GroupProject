@@ -1,6 +1,5 @@
 package gameworld.location;
 
-import gameworld.entity.Entity;
 import gameworld.tile.Tile;
 
 /**
@@ -12,13 +11,12 @@ public class InsideLocation extends Location{
 
 	private static final long serialVersionUID = 43788886124239093L;
 
-	public InsideLocation(String name, String description, Tile[][] tiles, Entity[][] entities) {
-		super(name, description, tiles, entities);
+	public InsideLocation(String name, String description, Tile[][] tiles) {
+		super(name, description, tiles);
 	}
 
 	public String toString(){
 		String toReturn = "";
-		toReturn += "Inside\n";
 		toReturn += ""+name+"\n";
 		toReturn += ""+description+"\n";
 		toReturn += tiles[0].length+" "+tiles.length+"\n";
@@ -27,17 +25,13 @@ public class InsideLocation extends Location{
 				
 				if(tiles[i][j]!=null){
 					toReturn+= tiles[i][j].toString();
-					toReturn+="-";
-					if(tiles[i][j].containedEntity()!=null){
-						toReturn+=tiles[i][j].containedEntity().getName().substring(0,2);
-					} else{
-						toReturn+="0";
-					}
+					toReturn+="-0";
+
 				} else {
 					toReturn += "0-0";
 				}
 				
-				toReturn+= "-0 ";
+				toReturn+= " ";
 				
 			}
 			toReturn += "\n";

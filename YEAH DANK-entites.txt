@@ -1,0 +1,44 @@
+Test Map
+BasicEntity	Tree	This is a tree. Just a tree.	15	1
+BasicEntity	Bush	Bush	25	2
+BasicEntity	Bush	Bush	26	2
+BasicEntity	Tree	This is a tree. Just a tree.	16	3
+BasicEntity	Bush	Bush	10	4
+BasicEntity	Tree	This is a tree. Just a tree.	15	5
+BasicEntity	Tree	This is a tree. Just a tree.	16	9
+BasicEntity	Bush	Bush	16	10
+BasicEntity	Bush	Bush	4	11
+BasicEntity	Bush	Bush	5	11
+BasicEntity	Bush	Bush	6	11
+BasicEntity	Bush	Bush	15	11
+BasicEntity	Bush	Bush	16	11
+BasicEntity	Bush	Bush	17	11
+BasicEntity	Bush	Bush	5	12
+BasicEntity	Bush	Bush	6	12
+BasicEntity	Tree	This is a tree. Just a tree.	20	12
+BasicEntity	Tree	This is a tree. Just a tree.	2	13
+BasicEntity	Bush	Bush	6	13
+BasicEntity	Tree	This is a tree. Just a tree.	22	13
+BasicEntity	Tree	This is a tree. Just a tree.	19	14
+BasicEntity	Tree	This is a tree. Just a tree.	4	15
+BasicEntity	Bush	Bush	21	15
+BasicEntity	Bush	Bush	21	16
+BasicEntity	Tree	This is a tree. Just a tree.	8	17
+BasicEntity	Tree	This is a tree. Just a tree.	12	17
+BasicEntity	Tree	This is a tree. Just a tree.	3	18
+BasicEntity	Tree	This is a tree. Just a tree.	6	18
+BasicEntity	Bush	Bush	13	18
+BasicEntity	Tree	This is a tree. Just a tree.	3	19
+BasicEntity	Bush	Bush	4	19
+BasicEntity	Tree	This is a tree. Just a tree.	9	19
+BasicEntity	Bush	Bush	11	19
+BasicEntity	Bush	Bush	5	20
+BasicEntity	Bush	Bush	8	20
+BasicEntity	Bush	Bush	16	20
+BasicEntity	Bush	Bush	25	24
+BasicEntity	Bush	Bush	27	24
+BasicEntity	Bush	Bush	23	25
+BasicEntity	Bush	Bush	25	25
+BasicEntity	Bush	Bush	21	27
+BasicEntity	Bush	Bush	23	27
+BasicEntity	Bush	Bush	25	27

@@ -2,6 +2,7 @@ package mapeditor;
 
 import gameworld.Game.Direction;
 import gameworld.entity.BasicEntity;
+import gameworld.entity.Chest;
 import gameworld.entity.Entity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
@@ -133,12 +134,19 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 		JFileChooser save = new JFileChooser();
 		save.setCurrentDirectory(new File("."));
-		String textToSave = map.toString();
+		String mapToSave = map.toString();
+		String entitiesToSave = map.entitiesToString();
 		int selected = save.showSaveDialog(null);
 
 		if(selected == JFileChooser.APPROVE_OPTION) {
 			try(FileWriter fw = new FileWriter(save.getSelectedFile()+".txt")) {
-			    fw.write(textToSave);
+			    fw.write(mapToSave);
+			}
+			catch  (IOException e){
+			}
+			
+			try(FileWriter fw = new FileWriter(save.getSelectedFile()+"-entites.txt")) {
+			    fw.write(entitiesToSave);
 			}
 			catch  (IOException e){
 			}
@@ -191,11 +199,13 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	private Entity getEntity(String name, Point p) {
 		switch(name){
 		case "Tree":
-			return new BasicEntity("Tree", "This is a tree. Just a tree.", p);
+			return new BasicEntity("Tree", "This is a tree. Just a tree.", p, map);
 		case "Bush":
-			return new BasicEntity("Bush", "Bush", p);
+			return new BasicEntity("Bush", "Bush", p, map);
 		case "Table":
-			return new BasicEntity("Table", "This is a table.", p);
+			return new BasicEntity("Table", "This is a table.", p, map);
+		case "Chest":
+			return new Chest("Chest", "This is a chest", p, map);
 		}
 		return null;
 	}
@@ -321,6 +331,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 				return true;
 			case "Table":
 				return true;
+			case "Chest":
+				return true;
 		}
 		return false;
 	}
@@ -349,9 +361,9 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 			Location l = null;
 			if(outOrIn.equalsIgnoreCase("inside")){
-				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Entity[MAPHEIGHT][MAPWIDTH]);
+				l = new InsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH]);
 			} else{
-				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Tile[MAPHEIGHT][MAPWIDTH], new Entity[MAPHEIGHT][MAPWIDTH]);
+				l = new OutsideLocation("Test Name", "test description", new Tile[MAPHEIGHT][MAPWIDTH], new Tile[MAPHEIGHT][MAPWIDTH]);
 			}
 
 			EditorFrame frame = new EditorFrame(l);

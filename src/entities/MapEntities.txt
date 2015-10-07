@@ -1,0 +1,3 @@
+DANKLAND
+key	Chest Key	Opens a chest	2	3
+chest	Chest	A chest	3	3
