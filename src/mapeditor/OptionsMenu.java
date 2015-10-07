@@ -105,7 +105,7 @@ public class OptionsMenu extends JPanel {
 		
 		
 		String[] insideItems = {"Table"};
-		String[] outsideItems = {"Tree"};
+		String[] outsideItems = {"Tree", "Bush"};
 		
 		String[] itemsToUse = null;
 		if(map instanceof OutsideLocation){

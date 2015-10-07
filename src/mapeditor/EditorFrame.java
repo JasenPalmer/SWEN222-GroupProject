@@ -1,11 +1,13 @@
 package mapeditor;
 
 import gameworld.Game.Direction;
+import gameworld.entity.BasicEntity;
 import gameworld.entity.Entity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
+import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -160,12 +162,16 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							// making BuildingTile
 							if(map instanceof OutsideLocation){
 								OutsideLocation oMap = (OutsideLocation) map;
-								oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
+								if(currentOption=="Entrance"){
+									oMap.setBuildingTile(x,y,new EntranceExitTile(currentOption, new Point(x,y), false, false));
+								} else {
+									oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
+								}
 							}
 						}
 						else if(isEntity(currentOption)){
 							System.out.print("current option is entity");
-							map.getTiles()[y][x].setEntitiy(getEntity(currentOption));
+							map.getTiles()[y][x].setEntitiy(getEntity(currentOption, new Point(x,y)));
 						}
 						else{
 							// making FloorTile
@@ -182,12 +188,14 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		repaint();
 	}
 
-	private Entity getEntity(String name) {
+	private Entity getEntity(String name, Point p) {
 		switch(name){
-//		case "Tree":
-//			return new BasicEntity("Tree", "This is a tree. Just a tree.");
-//		case "Table":
-//			return new Table();
+		case "Tree":
+			return new BasicEntity("Tree", "This is a tree. Just a tree.", p);
+		case "Bush":
+			return new BasicEntity("Bush", "Bush", p);
+		case "Table":
+			return new BasicEntity("Table", "This is a table.", p);
 		}
 		return null;
 	}
