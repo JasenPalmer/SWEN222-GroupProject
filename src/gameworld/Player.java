@@ -3,9 +3,9 @@ package gameworld;
 import gameworld.Game.Direction;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
-import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
+import gameworld.tile.EntranceExitTile;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
@@ -209,6 +209,10 @@ public class Player implements Serializable{
 		}
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
+		if(tile instanceof EntranceExitTile) {
+			EntranceExitTile ent = (EntranceExitTile) tile;
+			ent.enter(this);
+		}
 		if(tile.getPlayer() != null){return false;}
 		if(!tile.isPassable()){return false;}
 		if(tile.containedEntity() != null){
@@ -348,7 +352,7 @@ public class Player implements Serializable{
 		return location;
 	}
 
-	public void setLocation(InsideLocation location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
@@ -379,6 +383,7 @@ public class Player implements Serializable{
 	public boolean isAttacking(){
 		return attacking;
 	}
+	
 	public void setAttacking(boolean b) {
 		attacking = b;
 
@@ -386,5 +391,13 @@ public class Player implements Serializable{
 
 	public Direction getFacing() {
 		return facing;
+	}
+	
+	public Tile getStandingOn() {
+		return standingOn;
+	}
+
+	public void setStandingOn(Tile standingOn) {
+		this.standingOn = standingOn;
 	}
 }

@@ -1,5 +1,8 @@
 package gameworld.tile;
 
+import gameworld.Player;
+import gameworld.location.Location;
+
 import java.awt.Point;
 
 
@@ -13,30 +16,12 @@ public class EntranceExitTile extends Tile {
 
 	private static final long serialVersionUID = 3137127703217079080L;
 
-	private EntranceExitTile exit;
-	
-	private boolean oneWay;
+	private Tile exit;
 	private boolean locked;
+	private Location exitLocation;
 
-	public EntranceExitTile(String name, Point pos, boolean passable, boolean oneWay) {
+	public EntranceExitTile(String name, Point pos, boolean passable) {
 		super(name, pos, passable);
-		this.setOneWay(oneWay);
-	}
-
-	public boolean isOneWay() {
-		return oneWay;
-	}
-
-	public void setOneWay(boolean oneWay) {
-		this.oneWay = oneWay;
-	}
-
-	public EntranceExitTile getExit() {
-		return exit;
-	}
-
-	public void setExit(EntranceExitTile exit) {
-		this.exit = exit;
 	}
 
 	public boolean isLocked() {
@@ -46,5 +31,26 @@ public class EntranceExitTile extends Tile {
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
+	
+	public void setExitLoc(Location location) {
+		this.exitLocation = location;
+	}
 
+	public void setExitTile(Tile exit) {
+		this.exit = exit;
+	}
+	
+	public boolean enter(Player player) {
+		if(exitLocation == null || locked || exit == null) {
+			return false;
+		}
+		player.getLocation().removePlayer(player);
+		player.setLocation(exitLocation);
+		exitLocation.addPlayer(player);
+		player.getStandingOn().setPlayer(null);
+		player.setStandingOn(exit);
+		exit.setPlayer(player);
+		return true;
+	}
+	
 }
