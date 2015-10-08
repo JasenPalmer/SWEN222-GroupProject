@@ -151,7 +151,7 @@ public class RenderingWindow extends JPanel{
 								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
 							}
 
-							offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE), null);
+							offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
 						}
 
 						// DRAWING PLAYER
