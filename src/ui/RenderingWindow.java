@@ -4,6 +4,7 @@ import gameworld.Animation;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.entity.BasicEntity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
@@ -11,16 +12,12 @@ import gameworld.tile.EntranceExitTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import com.sun.scenario.effect.Color4f;
 
 public class RenderingWindow extends JPanel{
 
@@ -148,7 +145,12 @@ public class RenderingWindow extends JPanel{
 						}
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
-							image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+							if(t.containedEntity() instanceof BasicEntity){
+								image = ImageStorage.getImage(t.containedEntity().getName());
+							} else {
+								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+							}
+
 							offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE), null);
 						}
 
@@ -269,7 +271,6 @@ public class RenderingWindow extends JPanel{
 			
 			if(player.isAttacking()){
 				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
-				player.getAnimation().cycleAttack();
 			}
 			
 			playerImage = image;
