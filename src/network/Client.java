@@ -90,12 +90,21 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	
+	public void cycleAnimations(){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
+		try {
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void close(){
 		serverConnection.finish();
 
 		try{
-			output.writeObject(new NetworkEvent(user));
+			output.writeObject(new NetworkEvent(user, NetworkEvent.EventType.CLOSE));
 			output.close();
 			input.close();
 			socket.close();
@@ -124,7 +133,6 @@ public class Client {
 				case UPDATE_GUI:
 					if(event.getGameState() == null) return;
 					gui.setGame(event.getGameState());
-					//gui.repaintRenderingWindow();
 					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();
@@ -138,7 +146,6 @@ public class Client {
 				default:
 					break;
 				}
-				//gui.repaintRenderingWindow();
 			}
 		}
 		public void finish(){

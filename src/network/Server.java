@@ -139,6 +139,11 @@ public class Server {
 			}
 			if(hasMoved) updateGUI();
 			break;
+		case CYCLE_ANIMATIONS:
+			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
+				this.gameState.parsePlayer(toProcess.getUser()).getAnimation().cycleAttack();
+			}
+			break;
 		case MESSAGE:
 			break;
 		case UPDATE_GUI:
@@ -228,8 +233,9 @@ public class Server {
 					case KEY_PRESS:
 						console.displayEvent(user + " pressed " + currentEvent.getKeyCode() + ".");
 						eventQueue.add(currentEvent);
-						//processEvents();
 						break;
+					case CYCLE_ANIMATIONS:
+						eventQueue.add(currentEvent);
 					case MESSAGE:
 						console.displayMessage(currentEvent.getMessage(), user);
 						broadcastMessage(currentEvent.getMessage(), user);
