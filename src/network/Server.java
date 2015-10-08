@@ -142,6 +142,7 @@ public class Server {
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
 				this.gameState.parsePlayer(toProcess.getUser()).getAnimation().cycleAttack();
+				updateGUI();
 			}
 			break;
 		case MESSAGE:
