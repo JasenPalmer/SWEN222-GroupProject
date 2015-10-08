@@ -171,7 +171,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							if(map instanceof OutsideLocation){
 								OutsideLocation oMap = (OutsideLocation) map;
 								if(currentOption=="Entrance"){
-									oMap.setBuildingTile(x,y,new EntranceExitTile(currentOption, new Point(x,y), false, false));
+									oMap.setBuildingTile(x,y,new EntranceExitTile(currentOption, new Point(x,y), false));
 								} else {
 									oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 								}
