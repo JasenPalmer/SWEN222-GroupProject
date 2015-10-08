@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -94,7 +95,7 @@ public class Parser {
 						outside = true;
 						buildingTiles[row][col] = tile;
 					}
-					else {
+					if(!(tile instanceof BuildingTile)) {
 						locTiles[row][col] = tile;
 					}
 				}
@@ -130,7 +131,7 @@ public class Parser {
 				tile = new FloorTile("Water", new Point(x,y), false);
 				break;
 			case "En":
-				tile = new EntranceExitTile("Entrance", new Point(x,y), false, true);
+				tile = new EntranceExitTile("Entrance", new Point(x,y), false);
 				break;
 			default:
 				break;
@@ -219,5 +220,44 @@ public class Parser {
 		}
 		return null;
 	}
+	
+	//######## Door Parser ########//
+	
+	public static void loadDoors() {
+		Scanner fileScan = null;
+		try {
+			fileScan = new Scanner(new File("src/doors/doors.txt"));
+			while(fileScan.hasNextLine()) {
+				String doorScan = fileScan.nextLine();
+				System.out.println(doorScan);
+				String[] elements = doorScan.split("\\t");
+				Location fromLocation = getLocation(elements[0]);
+				int x1 = Integer.parseInt(elements[1]);
+				int y1 = Integer.parseInt(elements[2]);
+				Tile tile = fromLocation.getTileAt(new Point(x1,y1));
+				if(!(tile instanceof EntranceExitTile)) {
+					System.err.println("Tile wasn't an EntranceExitTile");
+					break;
+				}
+				EntranceExitTile fromTile = (EntranceExitTile) tile;
+				System.out.println(elements[3]);
+				Location toLocation = getLocation(elements[3]);
+				fromTile.setExitLoc(toLocation);
+				int x2 = Integer.parseInt(elements[4]);
+				int y2 = Integer.parseInt(elements[5]);
+				Tile toTile = toLocation.getTileAt(new Point(x2,y2));
+				fromTile.setExitTile(toTile);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(fileScan != null) {
+				fileScan.close();
+			}
+		}
+	}
+	
+	
 	
 }
