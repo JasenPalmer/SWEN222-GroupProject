@@ -76,6 +76,7 @@ public class Client {
 	public void registerKeyPress(KeyEvent event){
 		NetworkEvent toWrite = new NetworkEvent(event, user);
 		try {
+			output.reset();
 			output.writeObject(toWrite);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -85,6 +86,7 @@ public class Client {
 	public void registerMessage(String message){
 		NetworkEvent toWrite = new NetworkEvent(message, user);
 		try {
+			output.reset();
 			output.writeObject(toWrite);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -94,6 +96,7 @@ public class Client {
 	public void cycleAnimations(){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
 		try {
+			output.reset();
 			output.writeObject(toWrite);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -104,6 +107,7 @@ public class Client {
 		serverConnection.finish();
 
 		try{
+			output.reset();
 			output.writeObject(new NetworkEvent(user, NetworkEvent.EventType.CLOSE));
 			output.close();
 			input.close();
@@ -131,8 +135,8 @@ public class Client {
 				if(event == null) return;
 				switch(event.getType()){
 				case UPDATE_GUI:
-					if(event.getGameState() == null) return;
-					gui.setGame(event.getGameState());
+					if(event.getState() == null) return;
+					gui.setState(event.getState());
 					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();

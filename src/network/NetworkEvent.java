@@ -1,6 +1,7 @@
 package network;
 
 import gameworld.Game;
+import gameworld.Player;
 
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
@@ -31,7 +32,7 @@ public class NetworkEvent implements Serializable {
 	private final String user;
 	
 	//Game state used for broadcasting a gui update to clients
-	private Game gameState;
+	private Player state;
 	
 	
 	/**
@@ -64,10 +65,10 @@ public class NetworkEvent implements Serializable {
 	 * Network event with Game parameter signals a server event,
 	 * that tells the clients GUI to update.
 	 */
-	public NetworkEvent(Game gameState){
+	public NetworkEvent(Player state){
 		this.type = EventType.UPDATE_GUI;
 		this.user = "Server";
-		this.gameState = gameState;
+		this.state = state; 
 		
 		this.keyCode = -1;
 		this.message = null;
@@ -82,7 +83,7 @@ public class NetworkEvent implements Serializable {
 		this.type = type;
 		this.user = user;
 		
-		this.gameState = null;
+		this.state = null;
 		this.keyCode = -1;
 		this.message = null;
 	}
@@ -93,7 +94,7 @@ public class NetworkEvent implements Serializable {
 	public EventType getType() { return type; }
 	public int getKeyCode() { return keyCode; }
 	public String getMessage() { return message; }
-	public Game getGameState() { return gameState; }
+	public Player getState() { return state; }
 	
 	//All possible types of NetworkEvents.
 	public enum EventType{

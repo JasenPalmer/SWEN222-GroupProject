@@ -101,7 +101,7 @@ public class Server {
 	}
 
 	public synchronized void updateGUI(){
-		console.displayEvent("Updating all clients");
+		//console.displayEvent("Updating all clients");
 		Iterator<ClientThread> clients = connections.iterator();
 		while(clients.hasNext()){
 			clients.next().updateGUI();
@@ -142,7 +142,7 @@ public class Server {
 			default:
 				break;
 			}
-			if(hasMoved) updateGUI();
+			updateGUI();
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
@@ -235,9 +235,10 @@ public class Server {
 				}
 
 				if(currentEvent  != null) {
+					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
+					
 					switch(currentEvent.getType()){
 					case KEY_PRESS:
-						console.displayEvent(user + " pressed " + currentEvent.getKeyCode() + ".");
 						eventQueue.add(currentEvent);
 						break;
 					case CYCLE_ANIMATIONS:
@@ -247,11 +248,11 @@ public class Server {
 						console.displayMessage(currentEvent.getMessage(), user);
 						broadcastMessage(currentEvent.getMessage(), user);
 						break;
-					case UPDATE_GUI:
-						console.displayError("Unexpected EventType on server-side: UPDATE_GUI");
-						break;
 					case CLOSE:
 						if(!currentEvent.getUser().equals("Server")) close();
+						break;
+					default:
+						console.displayError("Unexpected EventType from " + user + " : " + currentEvent.getType());
 						break;
 					}
 				}
@@ -259,10 +260,10 @@ public class Server {
 		}
 
 		public void updateGUI(){
-			console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
+			//console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
 				output.reset();
-				output.writeObject(new NetworkEvent(gameState));
+				output.writeObject(new NetworkEvent(gameState.parsePlayer(user)));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}

@@ -47,7 +47,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
 	private Client client;
-	private Game game;
+	private Player state;
 	private String username;
 	private String host;
 	private Clip musicClip;
@@ -163,12 +163,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				if(game != null && username != null && hpBar != null){
-					hpBar.setHealth(game.parsePlayer(username).getHealth());
+				if(state != null && username != null && hpBar != null){
+					hpBar.setHealth(state.getHealth());
 				}
-				if(rw != null && game != null){
+				if(rw != null && state != null){
 					rw.repaint();
-					cycleAnimations();
+					//cycleAnimations();
 				}
 			}
 		}
@@ -255,8 +255,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void repaintRenderingWindow(){
-		if(game != null && username != null && hpBar != null){
-			hpBar.setHealth(game.parsePlayer(username).getHealth());
+		if(state != null && username != null && hpBar != null){
+			hpBar.setHealth(state.getHealth());
 		}
 		if(rw != null){
 			rw.repaint();
@@ -540,13 +540,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
-	public Player getPlayer(){return this.game.parsePlayer(username);}
-	public Game getGame(){ return this.game;}
+	public Player getPlayer(){return this.state;}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
 
 	//Setters
-	public void setGame(Game game){
-		this.game = game;
+	public void setState(Player state){
+		this.state = state;
 	}
 
 	@Override
