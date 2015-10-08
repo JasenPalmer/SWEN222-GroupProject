@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -90,7 +91,7 @@ public class Parser {
 					//otherwise create a tile
 					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
-					if(tile instanceof BuildingTile || tile instanceof EntranceExitTile) {
+					if(tile instanceof BuildingTile) {
 						outside = true;
 						buildingTiles[row][col] = tile;
 					}
@@ -219,5 +220,18 @@ public class Parser {
 		}
 		return null;
 	}
+	
+	//######## Door Parser ########//
+	
+	public static Map<EntranceExitTile,EntranceExitTile> loadDoors() {
+		try {
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	
 }

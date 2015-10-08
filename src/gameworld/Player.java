@@ -2,7 +2,6 @@ package gameworld;
 
 import gameworld.Game.Direction;
 import gameworld.entity.Entity;
-import gameworld.entity.InteractableEntity;
 import gameworld.entity.Item;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
@@ -36,18 +35,7 @@ public class Player implements Serializable{
 	 * The items that the player has in their inventory
 	 */
 	private  Item[] inventory;
-
-	/**
-	 * Flag for if the player is holding an entity
-	 */
-	private boolean holding;
-
-	/**
-	 * The entity that the player is holding.
-	 * A player may only hold one Interactable Entity but can store multiple Items in their inventory
-	 */
-	private InteractableEntity held;
-
+	
 	/**
 	 * The current location the player is in
 	 */
@@ -94,16 +82,23 @@ public class Player implements Serializable{
 	private Direction facing = Game.Direction.NORTH;
 
 	public Player(String name, Game game) {
-		this.name = name;
-		inventory = new Item[DEFAULT_INV_SIZE];
-		holding = false;
+		//set user name
+		this.name = name;	
+		//create inventory
+		inventory = new Item[DEFAULT_INV_SIZE];	
+		//set location and add player to location
 		location = game.getLocations().iterator().next();
+		location.addPlayer(this);
+		//players position
 		position = new Point(2, 2);
+		//set the tile's player and the players tile
 		standingOn = location.getTileAt(position);
 		standingOn.setPlayer(this);
+		//give the player animations
 		animation = new Animation(this);
-		setHealth(100);
-		setDead(false);
+		// make the player alive
+		health = 100;
+		isDead = false;
 	}
 
 	/**
@@ -118,31 +113,6 @@ public class Player implements Serializable{
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
 		opponent.setHealth(opponent.getHealth()-playerDamage);
-		return true;
-	}
-
-
-	/**
-	 * Removes the entity held by the player
-	 * @return the entity held by the player or null if the player isn't holding any entity
-	 */
-	public InteractableEntity drop() {
-		InteractableEntity toReturn = held;
-		held = null;
-		holding = false;
-		return toReturn;
-	}
-
-	/**
-	 * Tells the player to hold this item
-	 *
-	 * @param entity for the player to hold
-	 * @return true if the player is now holding the entity or false if the player is already holding an entity
-	 */
-	public boolean hold(InteractableEntity entity) {
-		if(held != null){return false;}
-		held = entity;
-		holding = true;
 		return true;
 	}
 
@@ -365,13 +335,6 @@ public class Player implements Serializable{
 
 	// getters and setters
 
-	/**
-	 * @return if the player is holding an entity
-	 */
-	public boolean isHolding() {
-		return holding;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -388,9 +351,6 @@ public class Player implements Serializable{
 		this.location = location;
 	}
 
-
-	
-
 	public Direction getDirection() {
 		return direction;
 	}
@@ -399,11 +359,9 @@ public class Player implements Serializable{
 		return animation;
 	}
 
-
 	public int getHealth() {
 		return health;
 	}
-
 
 	public void setHealth(int health) {
 		this.health = health;

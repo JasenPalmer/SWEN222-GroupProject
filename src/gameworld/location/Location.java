@@ -1,10 +1,13 @@
 package gameworld.location;
 
+import gameworld.Player;
 import gameworld.entity.Entity;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Location implements Serializable{
 
@@ -12,11 +15,22 @@ public abstract class Location implements Serializable{
 	protected String name;
 	protected String description;
 	protected Tile[][] tiles;
+	protected Set<Player> players;
 
 	public Location(String name, String description, Tile[][] tiles) {
 		this.name = name;
 		this.description = description;
 		this.tiles = tiles;
+		players = new HashSet<Player>();
+	}
+	
+	
+	public void addPlayer(Player player) {
+		players.add(player);
+	}
+	
+	public void removePlayer(Player player) {
+		players.remove(player);
 	}
 
 	/**
