@@ -121,6 +121,8 @@ public class ImageStorage {
 	 */
 	public static Image getImage(String name){
 		switch(name){
+			case "Grass":
+				return grass;
 			case "Gr":
 				return grass;
 			case "Ro":
