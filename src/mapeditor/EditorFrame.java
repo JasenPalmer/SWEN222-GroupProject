@@ -213,6 +213,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 			return new BasicEntity("Table", "This is a table.", p, map);
 		case "Chest":
 			return new Chest("Chest", "This is a chest", p, map);
+		case "Chair":
+			return new BasicEntity("Chair", "This is for sitting!", p, map);
 		}
 		return null;
 	}
@@ -339,6 +341,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 			case "Table":
 				return true;
 			case "Chest":
+				return true;
+			case "Chair":
 				return true;
 		}
 		return false;

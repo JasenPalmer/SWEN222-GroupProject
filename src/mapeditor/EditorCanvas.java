@@ -1,6 +1,7 @@
 package mapeditor;
 
 import gameworld.Game;
+import gameworld.entity.BasicEntity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
@@ -119,69 +120,79 @@ public class EditorCanvas extends JPanel {
 					r = rooms[i][j];
 				}
 				Image image = null;
+				int x =  (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
+				int y =  ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY;
 
 				// DRAWING TERRAIN
 				if(t!=null) {
 					image = ImageStorage.getImage(t.toString());
-					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+					g.drawImage(image, x, y, null);
 					if(location instanceof InsideLocation){
 						if(i==0 || tiles[i-1][j]==null){
-							g.drawImage(ImageStorage.wallL, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+							g.drawImage(ImageStorage.wallL, x, y, null);
 						}
 						if(j==tiles.length-1|| tiles[i][j+1]==null){
-							g.drawImage(ImageStorage.wallR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY, null);
+							g.drawImage(ImageStorage.wallR, x, y, null);
 						}
 					}
 					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
-						image = ImageStorage.getImage(t.containedEntity().getName());
-						g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
-					}
-
-				}
-
-				// DRAWING ROOMS
-				if(r!=null) {
-					// Drawing 2 block high walls
-					if(r instanceof EntranceTile){
-						if(j-1 >= 0 && rooms[i][j-1]==null){
-							g.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+						if(t.containedEntity() instanceof BasicEntity){
+							image = ImageStorage.getImage(t.containedEntity().getName());
 						} else {
-							g.drawImage(ImageStorage.doorLR, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+							image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
 						}
-					}
-					else{
-							g.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
+						
+						if(location instanceof OutsideLocation){
+							g.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
+						} else {
+							g.drawImage(image, x, y, null);
+						}
+
 					}
 
-					// wall block on top of wall / door for 2 high building.
-					g.drawImage(ImageStorage.building, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE - cameraY, null);
-
-					// default img for non edge and corner roofs
-					image = ImageStorage.building;
-
-					// Western most point of building
-					if(j-1 >= 0 && rooms[i][j-1] == null){
-						image = ImageStorage.roofUD;
+					// DRAWING ROOMS
+					if(r!=null) {
+						// Drawing 2 block high walls
+						if(r instanceof EntranceTile){
+							if(j-1 >= 0 && rooms[i][j-1]==null){
+								g.drawImage(ImageStorage.doorUD, x, y, null);
+							} else {
+								g.drawImage(ImageStorage.doorLR, x, y, null);
+							}
+						}
+						else{
+								g.drawImage(ImageStorage.building, x, y -TILESIZE/2, null);
+						}
+	
+						// wall block on top of wall / door for 2 high building.
+						g.drawImage(ImageStorage.building, x, y -TILESIZE, null);
+	
+						// default img for non edge and corner roofs
+						image = ImageStorage.building;
+	
+						// Western most point of building
+						if(j-1 >= 0 && rooms[i][j-1] == null){
+							image = ImageStorage.roofUD;
+						}
+	
+						// Northern most point of building
+						if(i+1 < rooms.length && rooms[i+1][j]==null){
+							image = ImageStorage.roofLR;
+						}
+						// Outwards corner roof
+						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+							image = ImageStorage.roofCornerO;
+						}
+						// Inwards corner roof
+						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+							image = ImageStorage.roofCornerI;
+						}
+						g.drawImage(image, x, (int) (y - (TILESIZE*1.5)), null);
 					}
-
-					// Northern most point of building
-					if(i+1 < rooms.length && rooms[i+1][j]==null){
-						image = ImageStorage.roofLR;
-					}
-					// Outwards corner roof
-					if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-						image = ImageStorage.roofCornerO;
-					}
-					// Inwards corner roof
-					if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-						image = ImageStorage.roofCornerI;
-					}
-					g.drawImage(image, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, (int) (((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - (TILESIZE*1.5)) - cameraY, null);
+				
 				}
-
 			}
-
 		}
 	}
 
@@ -203,10 +214,19 @@ public class EditorCanvas extends JPanel {
 					Image image = ImageStorage.getImage(t.toString());
 					offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE-image.getHeight(null)+TILESIZE - cameraY, null);
 
-					// DRAWING ENTITY
 					if(t.containedEntity()!=null){
-						image = ImageStorage.getImage(t.containedEntity().getName());
-						offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE - cameraY - Math.abs(image.getHeight(null)-TILESIZE), null);
+						if(t.containedEntity() instanceof BasicEntity){
+							image = ImageStorage.getImage(t.containedEntity().getName());
+						} else {
+							image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+						}
+						
+						if(location instanceof OutsideLocation){
+							offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE - cameraY - Math.abs(image.getHeight(null)-TILESIZE/2), null);
+						} else {
+							offgc.drawImage(image, j*TILESIZE - cameraX, i*TILESIZE - cameraY, null);
+						}
+
 					}
 				}
 				if(r!=null){

@@ -150,8 +150,12 @@ public class RenderingWindow extends JPanel{
 							} else {
 								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
 							}
-
-							offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
+							
+							if(location instanceof OutsideLocation){
+								offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
+							} else {
+								offgc.drawImage(image, x, y, null);
+							}
 						}
 
 						// DRAWING PLAYER

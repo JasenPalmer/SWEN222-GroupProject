@@ -104,7 +104,7 @@ public class OptionsMenu extends JPanel {
 		add(lblItems, gbc_lblItems);
 		
 		
-		String[] insideItems = {"Table", "Chest"};
+		String[] insideItems = {"Table", "Chair"};
 		String[] outsideItems = {"Tree", "Bush", "Chest"};
 		
 		String[] itemsToUse = null;

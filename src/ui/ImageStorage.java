@@ -26,7 +26,7 @@ public class ImageStorage {
 	public static Image wallCorner;
 	public static Image table;
 	public static Image chest;
-
+	public static Image chair;
 
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] robeAttack = new Image[4][8];
@@ -75,6 +75,7 @@ public class ImageStorage {
 			bush = ImageIO.read(new File("src/ui/images/entities/Bush.png"));
 			table = ImageIO.read(new File("src/ui/images/entities/Table.png"));
 			chest = ImageIO.read(new File("src/ui/images/entities/Chest.png"));
+			chair = ImageIO.read(new File("src/ui/images/entities/Chair.png"));
 			
 //			robewalking
 			for(int i  = 0; i < robeWalk.length; i++){
@@ -155,6 +156,8 @@ public class ImageStorage {
 				return chest;
 			case "Key":
 				return bush;
+			case "Chair":
+				return chair;
 		}
 		return null;
 	}
