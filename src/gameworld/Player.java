@@ -203,6 +203,7 @@ public class Player implements Serializable{
 	public boolean move(Game.Direction dir) {
 		dir = calcDir(dir);
 		if(dir != facing){
+			animation.setAnimationDirection(dir.ordinal());
 			facing = dir;
 			return true;
 		}
