@@ -164,7 +164,9 @@ public class RenderingWindow extends JPanel{
 							// FLOOR + ENTITES FOR INSIDE
 							if(i==0 || tiles[i-1][j]==null){
 								if(t instanceof EntranceTile){
-									offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
+									if(tiles[i+1][j] instanceof FloorTile){
+										offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
+									}
 								}
 								else {
 									offgc.drawImage(ImageStorage.wallL, x, y, null);
@@ -172,7 +174,9 @@ public class RenderingWindow extends JPanel{
 							}
 							if(j==tiles.length-1|| tiles[i][j+1]==null){
 								if(t instanceof EntranceTile){
-									offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
+									if(tiles[i][j-1] instanceof FloorTile){
+										offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
+									}
 								}
 								else {
 									offgc.drawImage(ImageStorage.wallR, x, y, null);
