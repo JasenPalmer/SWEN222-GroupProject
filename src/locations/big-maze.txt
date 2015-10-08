@@ -1,0 +1,33 @@
+Maze-big
+A big maze
+30 30
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Ro-En Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Ro-En Gr-0 
