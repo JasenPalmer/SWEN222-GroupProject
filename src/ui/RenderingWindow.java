@@ -271,6 +271,7 @@ public class RenderingWindow extends JPanel{
 			
 			if(player.isAttacking()){
 				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
+				applicationWindow.cycleAnimations();
 			}
 			
 			playerImage = image;
