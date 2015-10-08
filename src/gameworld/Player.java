@@ -5,13 +5,20 @@ import gameworld.entity.Entity;
 import gameworld.entity.Item;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
-import gameworld.tile.EntranceExitTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
+
+/**
+ * Represents a user controlled player within the game
+ * 
+ * @author Jasen
+ *
+ */
 public class Player implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -80,6 +87,8 @@ public class Player implements Serializable{
 	 * Direction the player is facing
 	 */
 	private Direction facing = Game.Direction.NORTH;
+	
+	
 
 	public Player(String name, Game game) {
 		//set user name
@@ -102,7 +111,7 @@ public class Player implements Serializable{
 	}
 
 	/**
-	 * Make this player attack the player in the tile in fron of them
+	 * Make this player attack the player in the tile in front of them
 	 * @return true if the attack was successful
 	 */
 	public boolean attack() {
@@ -117,9 +126,10 @@ public class Player implements Serializable{
 	}
 
 	/**
-	 * Removes an item from the players inventory and places it on the ground
+	 * Removes an item from the players inventory and places it on the ground.
+	 * Places the item on the tile the player is standing on
 	 *
-	 * @param item to be removed
+	 * @param index of the item to drop
 	 * @return true if the item was successfully removed
 	 */
 	public boolean dropFromInv(int index) {
@@ -129,19 +139,23 @@ public class Player implements Serializable{
 		// remove the item from the inventory
 		inventory[index] = null;
 		// place the item on the ground
+		Tile tile = location.getTileAt(position);
+		//fail if there is already an item on the ground
+		if(tile.containedEntity() != null) { return false;}
 		location.getTileAt(position).setEntity(item);
 		return true;
 	}
 
 	/**
-	 * Player attempts to pick-up the item on the tile infront of them
+	 * Player attempts to pick-up the item on the tile in front of them
 	 * @return true if the item was successfully added
 	 */
 	public boolean pickupItem() {
 		// if the inventory is full can't pick up item
 		if(inventoryFull()){return false;}
-		Tile tile = getTile(getFacing());
+		Tile tile = getTile(facing);
 		Entity ent = tile.containedEntity();
+		//nothing in front
 		if(ent == null){return false;}
 		// if there isn't an item in front of the player don't pick it up
 		if(!(ent instanceof Item)) {return false;}
@@ -160,6 +174,7 @@ public class Player implements Serializable{
 
 	/**
 	 * check the players inventory for a free space
+	 * 
 	 * @return true if the players inventory is full
 	 */
 	private boolean inventoryFull() {
@@ -172,7 +187,8 @@ public class Player implements Serializable{
 
 	/**
 	 * Get the tile that is in a direction from the player
-	 * @param dir to get the tile from
+	 * 
+	 * @param dir - direction to get the tile from
 	 * @return the tile in the direction
 	 */
 	public Tile getTile(Game.Direction dir) {
@@ -209,8 +225,8 @@ public class Player implements Serializable{
 		}
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
-		if(tile instanceof EntranceExitTile) {
-			EntranceExitTile ent = (EntranceExitTile) tile;
+		if(tile instanceof EntranceTile) {
+			EntranceTile ent = (EntranceTile) tile;
 			ent.enter(this);
 		}
 		if(tile.getPlayer() != null){return false;}
@@ -239,6 +255,7 @@ public class Player implements Serializable{
 
 	/**
 	 * Calculates the direction the player should move based on the direction of the camera(direction field)
+	 * 
 	 * @param dir - the direction the player is trying to move in
 	 * @return the direction the player should move in
 	 */
@@ -299,7 +316,8 @@ public class Player implements Serializable{
 	}
 	
 	/**
-	 * Change the direction of the player based on the key that was pressed and the direction the camera is currently facing.
+	 * Change the direction of the player based on the key that 
+	 * was pressed and the direction the camera is currently facing.
 	 * Accepts KeyEvent.VK_E and KeyEvent.VK_Q
 	 * @param key - key press
 	 */

@@ -22,9 +22,14 @@ public class Game implements Serializable {
 		Parser.loadDoors();
 	}
 	
+	/**
+	 * Get a location from the location name
+	 * @param locationName - name of the location to get
+	 * @return Location 
+	 */
 	public Location getLocation(String locationName) {
 		for(Location loc : locations) {
-			if(loc.name().equals(locationName)) {
+			if(loc.getName().equals(locationName)) {
 				return loc;
 			}
 		}
@@ -113,6 +118,8 @@ public class Game implements Serializable {
 		return null;
 	}
 
+	//Getters
+	
 	public Set<Location> getLocations() {
 		return locations;
 	}

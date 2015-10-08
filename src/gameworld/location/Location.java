@@ -9,6 +9,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Represents a location in the game.
+ * Locations are made from a 2D array of Tiles
+ * @author Jasen
+ *
+ */
 public abstract class Location implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -24,11 +30,18 @@ public abstract class Location implements Serializable{
 		players = new HashSet<Player>();
 	}
 	
-	
+	/**
+	 * Add a player to this location
+	 * @param player to add
+	 */
 	public void addPlayer(Player player) {
 		players.add(player);
 	}
 	
+	/**
+	 * Removes a player from the location
+	 * @param player to remove
+	 */
 	public void removePlayer(Player player) {
 		players.remove(player);
 	}
@@ -36,14 +49,14 @@ public abstract class Location implements Serializable{
 	/**
 	 * @return the name of the location
 	 */
-	public String name() {
+	public String getName() {
 		return name;
 	}
 
 	/**
 	 * @return the description of the location
 	 */
-	public String descritpion() {
+	public String getDescritpion() {
 		return description;
 	}
 
@@ -70,6 +83,7 @@ public abstract class Location implements Serializable{
 
 	/**
 	 * Get the tile at a position in the location
+	 * 
 	 * @param pos - position of the tile
 	 * @return the tile at the position
 	 */
@@ -80,14 +94,19 @@ public abstract class Location implements Serializable{
 		return tiles[pos.y][pos.x];
 	}
 	
-	public void setTiles(Tile[][] tiles){
-		this.tiles = tiles;
-	}
-	
+	/**
+	 * Update the tile at a position with a new tile
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @param t - tile
+	 */
 	public void setTile(int x, int y, Tile t){
 		tiles[y][x] = t;
 	}
 	
+	/**
+	 * @return the entities in the location in the format that the location files use
+	 */
 	public String entitiesToString(){
 		String toReturn = "";
 		toReturn += name+"\n";
@@ -103,6 +122,8 @@ public abstract class Location implements Serializable{
 		}
 		return toReturn;
 	}
+	
+	//setters
 
 	public void setName(String name) {
 		this.name = name;
@@ -114,12 +135,23 @@ public abstract class Location implements Serializable{
 		
 	}
 
+	/**
+	 * Set the entity in a tile
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @param entity to be set
+	 */
 	public void setEntity(int x, int y, Entity entity) {
 		if(tiles[y][x]!=null){
 			tiles[y][x].setEntitiy(entity);
 		}
 	}
 	
+	/**
+	 * Set the entity in a tile 
+	 * @param pos - position of the tile
+	 * @param entity to be set
+	 */
 	public void setEntity(Point pos, Entity entity) {
 		if(tiles[pos.y][pos.x]!=null){
 			tiles[pos.y][pos.x].setEntitiy(entity);

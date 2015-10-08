@@ -8,7 +8,7 @@ import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
-import gameworld.tile.EntranceExitTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -171,7 +171,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							if(map instanceof OutsideLocation){
 								OutsideLocation oMap = (OutsideLocation) map;
 								if(currentOption=="Entrance"){
-									oMap.setBuildingTile(x,y,new EntranceExitTile(currentOption, new Point(x,y), false));
+									oMap.setBuildingTile(x,y,new EntranceTile(currentOption, new Point(x,y), false));
 								} else {
 									oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 								}

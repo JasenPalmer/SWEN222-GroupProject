@@ -24,8 +24,14 @@ public abstract class Item implements InteractableEntity, Serializable{
 	 */
 	private Point position;
 	
+	/**
+	 * Name of the item
+	 */
 	private String name;
 	
+	/**
+	 * Item's description
+	 */
 	private String description;
 	
 	

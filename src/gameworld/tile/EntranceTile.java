@@ -7,20 +7,22 @@ import java.awt.Point;
 
 
 /**
- * Entrance or exit to another Location.
- * An exit maybe one way
+ * Entrance to another Location.
+ * Trying to stand on this tile should move the player to the set exit location.
+ * Before an Entrance is used the exitLocation and exitTile should be set.
+ * The Entrance also will have to be unlocked before it can be used
  * @author Jasen
  *
  */
-public class EntranceExitTile extends Tile {
+public class EntranceTile extends Tile {
 
 	private static final long serialVersionUID = 3137127703217079080L;
 
-	private Tile exit;
+	private Tile exitTile;
 	private boolean locked;
 	private Location exitLocation;
 
-	public EntranceExitTile(String name, Point pos, boolean passable) {
+	public EntranceTile(String name, Point pos, boolean passable) {
 		super(name, pos, passable);
 	}
 
@@ -37,20 +39,20 @@ public class EntranceExitTile extends Tile {
 	}
 
 	public void setExitTile(Tile exit) {
-		this.exit = exit;
+		this.exitTile = exit;
 	}
 	
 	public boolean enter(Player player) {
-		if(exitLocation == null || locked || exit == null) {
+		if(exitLocation == null || locked || exitTile == null) {
 			return false;
 		}
 		player.getLocation().removePlayer(player);
 		player.setLocation(exitLocation);
 		exitLocation.addPlayer(player);
 		player.getStandingOn().setPlayer(null);
-		player.setStandingOn(exit);
-		exit.setPlayer(player);
-		player.setPosition(exit.getPosition());
+		player.setStandingOn(exitTile);
+		exitTile.setPlayer(player);
+		player.setPosition(exitTile.getPosition());
 		return true;
 	}
 	

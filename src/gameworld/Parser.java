@@ -8,7 +8,7 @@ import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.BuildingTile;
-import gameworld.tile.EntranceExitTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -30,14 +30,14 @@ public class Parser {
 	
 	/**
 	 * Create all locations from a folder
-	 * @param locationsPath - path to locations folder
+	 * @param folderName - name of the folder containing location files
 	 */
-	public static Set<Location> loadLocations(String locationsPath) {
+	public static Set<Location> loadLocations(String folderName) {
 		Scanner fileScan = null;
 		Set<Location> locs = new HashSet<Location>();
 		try{
 			//create the file holding all the location files
-			File locFolder = new File("src/"+locationsPath);
+			File locFolder = new File("src/"+folderName);
 			for(File file : locFolder.listFiles()) {
 				// open file
 				fileScan = new Scanner(file);
@@ -61,6 +61,7 @@ public class Parser {
 		locations = locs;
 		return locs;
 	}
+	
 	
 	private static Location parseLocationTiles(Scanner file) throws NoSuchElementException{
 		//read name
@@ -90,7 +91,7 @@ public class Parser {
 					//otherwise create a tile
 					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
-					if(tile instanceof BuildingTile || tile instanceof EntranceExitTile) {
+					if(tile instanceof BuildingTile || tile instanceof EntranceTile) {
 						outside = true;
 						buildingTiles[row][col] = tile;
 					}
@@ -130,7 +131,7 @@ public class Parser {
 				tile = new FloorTile("Water", new Point(x,y), false);
 				break;
 			case "En":
-				tile = new EntranceExitTile("Entrance", new Point(x,y), false);
+				tile = new EntranceTile("Entrance", new Point(x,y), false);
 				break;
 			default:
 				break;
@@ -140,6 +141,10 @@ public class Parser {
 	
 	//######## Entity Parser ########//
 	
+	
+	/**
+	 * Load all the entities for every location
+	 */
 	public static void loadEntityFiles() {
 		Scanner fileScan = null;
 		try {
@@ -169,7 +174,7 @@ public class Parser {
 	
 	private static Location getLocation(String locationName) {
 		for(Location loc : locations) {
-			if(loc.name().equals(locationName)) {
+			if(loc.getName().equals(locationName)) {
 				return loc;
 			}
 		}
@@ -222,6 +227,9 @@ public class Parser {
 	
 	//######## Door Parser ########//
 	
+	/**
+	 * Load all doors for all locations
+	 */
 	public static void loadDoors() {
 		Scanner fileScan = null;
 		try {
@@ -234,11 +242,11 @@ public class Parser {
 				int y1 = Integer.parseInt(elements[1]);
 				int x1 = Integer.parseInt(elements[2]);
 				Tile tile = fromLocation.getTileAt(new Point(y1,x1));
-				if(!(tile instanceof EntranceExitTile)) {
+				if(!(tile instanceof EntranceTile)) {
 					System.err.println("Tile wasn't an EntranceExitTile");
 					break;
 				}
-				EntranceExitTile fromTile = (EntranceExitTile) tile;
+				EntranceTile fromTile = (EntranceTile) tile;
 				System.out.println(elements[3]);
 				Location toLocation = getLocation(elements[3]);
 				fromTile.setExitLoc(toLocation);

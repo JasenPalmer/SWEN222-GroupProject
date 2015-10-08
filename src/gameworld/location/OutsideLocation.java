@@ -2,6 +2,12 @@ package gameworld.location;
 
 import gameworld.tile.Tile;
 
+
+/**
+ * An outside location is a location the can contain a BuildingTiles array
+ * @author Jasen
+ *
+ */
 public class OutsideLocation extends Location {
 
 	private static final long serialVersionUID = 1991918042442774460L;
@@ -42,6 +48,7 @@ public class OutsideLocation extends Location {
 		return toReturn;
 	}
 	
+	// getters/setters
 	public Tile[][] getBuildingTiles() {
 		return buildingTiles;
 	}

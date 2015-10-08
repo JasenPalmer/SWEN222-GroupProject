@@ -8,7 +8,7 @@ import gameworld.entity.BasicEntity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
-import gameworld.tile.EntranceExitTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -166,7 +166,7 @@ public class RenderingWindow extends JPanel{
 						Tile r = rooms[i][j];
 						if(r!=null) {
 							// Drawing 2 block high walls
-							if(r instanceof EntranceExitTile){
+							if(r instanceof EntranceTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
 									offgc.drawImage(ImageStorage.doorUD, x, y-TILESIZE/2, null);
 								} else {
