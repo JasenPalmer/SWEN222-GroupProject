@@ -1,3 +1,6 @@
+#Formatting:
+# (fromLocation)	(EntranceTile x)	(EntranceTile y)	(toLocation)	(exitTile x)	(exitTile y)
+#Note: exitTile is not an EntranceTile but the tile you want the player to move to
 Test Map	8	10	DANKLAND	2	2
 Test Map	11	26	Maze-big	0	1
 Maze-big	28	29	Test Map	12	26

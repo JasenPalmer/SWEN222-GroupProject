@@ -18,13 +18,20 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * The Parser contains static methods used by the game class to load in the locations, entities and doors
+ * 
+ * @author Jasen
+ *
+ */
 public class Parser {
 	
 	private static Set<Location> locations;
+	
+	private static final String entitiesPath = "src/entities";
 	
 	//######## Locations Parser ########//
 	
@@ -44,14 +51,18 @@ public class Parser {
 				// create the tile array for the location
 				Location loc = parseLocationTiles(fileScan);
 				if(loc != null){locs.add(loc);}
+				else {throw new ParserException("Created location was null - parsing failed");}
 				fileScan.close();
 			}
 		}catch(NullPointerException e){
 			System.err.println("Path to location folder is incorrect - "+e);
+			e.printStackTrace();
 		}catch(FileNotFoundException e){
 			System.err.println("File was not found - "+e);
-		}catch(NoSuchElementException e){
-			System.err.println("A location file has incorrect formatting - "+e);
+			e.printStackTrace();
+		}catch(ParserException e) {
+			System.err.println("Parsing error - "+e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			if(fileScan != null) {
@@ -63,20 +74,26 @@ public class Parser {
 	}
 	
 	
-	private static Location parseLocationTiles(Scanner file) throws NoSuchElementException{
+	private static Location parseLocationTiles(Scanner file) throws ParserException{
 		//read name
+		if(!file.hasNextLine()){throw new ParserException("inccorect formatting in location name");}
 		String name = file.nextLine();
 		//read description
+		if(!file.hasNextLine()){throw new ParserException("inccorect formatting in location description");}
 		String desc = file.nextLine();
+		if(!file.hasNextLine()){throw new ParserException("inccorect formatting in location type");}
+		String locType = file.nextLine();
+		locType = locType.toLowerCase();
 		//read location size
+		if(!file.hasNextLine()){throw new ParserException("inccorect formatting in location width");}
 		int width = file.nextInt();
+		if(!file.hasNextLine()){throw new ParserException("inccorect formatting in location hieght");}
 		int height = file.nextInt();
 		Location loc;
 		Tile[][] locTiles = new Tile[height][width];
 		Tile[][] buildingTiles = new Tile[height][width];
 		//row index
 		int row = 0;
-		boolean outside = false;
 		file.nextLine();
 		while(file.hasNextLine()) {
 			// scan line by line
@@ -92,7 +109,6 @@ public class Parser {
 					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
 					if(tile instanceof BuildingTile || tile instanceof EntranceTile) {
-						outside = true;
 						buildingTiles[row][col] = tile;
 					}
 					if(!(tile instanceof BuildingTile)) {
@@ -105,7 +121,7 @@ public class Parser {
 			lineScan.close();
 			row += 1;
 		}
-		if(outside){
+		if(locType.equals("outside")){
 			loc = new OutsideLocation(name, desc, locTiles, buildingTiles);
 		}
 		else{
@@ -148,7 +164,7 @@ public class Parser {
 	public static void loadEntityFiles() {
 		Scanner fileScan = null;
 		try {
-			File folder = new File("src/entities");
+			File folder = new File(entitiesPath);
 			for(File entList : folder.listFiles()) {
 				fileScan = new Scanner(entList);
 				String location = fileScan.nextLine();
@@ -162,8 +178,11 @@ public class Parser {
 					loc.setEntity(i.getPosition(), i);
 				}
 			}
-			
-		}catch(Exception e) {
+		}catch(ParserException e) {
+			System.err.println("Parsing error - "+e.getMessage());
+			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.err.println("Entities file not found");
 			e.printStackTrace();
 		}finally {
 			if(fileScan != null) {
@@ -182,7 +201,8 @@ public class Parser {
 	}
 
 	private static List<Entity> parseEntities(Scanner fileScan,
-			Location loc) {
+			Location loc) throws ParserException{
+		
 		List<Entity> list = new ArrayList<Entity>();
 		while(fileScan.hasNextLine()) {
 			String line = fileScan.nextLine();
@@ -190,18 +210,18 @@ public class Parser {
 			lineScan.useDelimiter("\\t");
 			//lineScan.next();
 			if(!lineScan.hasNext()){
-				System.err.println("Entity file formatted incorrectly(maybe?)");
+				System.err.println("Entity file formatted incorrectly");
 				continue;
 			}
 			String entType = lineScan.next();
 			Entity entity = parseEntity(entType, lineScan, loc);
-			if(entity == null){System.err.println("Entity format incorrect");}
+			if(entity == null){throw new ParserException("Entity format incorrect ");}
 			list.add(entity);
 		}
 		return list;
 	}
 	
-	private static Entity parseEntity(String type, Scanner scan, Location loc) {
+	private static Entity parseEntity(String type, Scanner scan, Location loc)  throws ParserException {
 		if(!scan.hasNext()) {return null;}
 		// get entity name
 		String name = scan.next();
@@ -221,8 +241,9 @@ public class Parser {
 			return new Chest(name, desc, new Point(xPos, yPos), loc);
 		case "BasicEntity":
 			return new BasicEntity(name, desc, new Point(xPos,yPos), loc);
+		default:
+			throw new ParserException("Unknown entity type - "+type);
 		}
-		return null;
 	}
 	
 	//######## Door Parser ########//
@@ -236,27 +257,38 @@ public class Parser {
 			fileScan = new Scanner(new File("src/doors/doors.txt"));
 			while(fileScan.hasNextLine()) {
 				String doorScan = fileScan.nextLine();
-				//System.out.println(doorScan);
+				//skip commented lines
+				if(doorScan.startsWith("#")) {continue;}
 				String[] elements = doorScan.split("\\t");
+				if(elements.length != 6){throw new ParserException("Entrance formatted incorrectly - "+doorScan);}
 				Location fromLocation = getLocation(elements[0]);
+				if(fromLocation == null){throw new ParserException("location -"+elements[0]+" - was not found");}
 				int y1 = Integer.parseInt(elements[1]);
 				int x1 = Integer.parseInt(elements[2]);
 				Tile tile = fromLocation.getTileAt(new Point(y1,x1));
+				if(tile == null){ throw new ParserException("Position ("+x1+","+y1+") was out of bounds for location "+elements[0]);}
 				if(!(tile instanceof EntranceTile)) {
-					System.err.println("Tile wasn't an EntranceExitTile");
-					break;
+					throw new ParserException("Tile at ("+x1+","+y1+") in location "+fromLocation.getName()+" wasn't an EntranceExitTile");
 				}
 				EntranceTile fromTile = (EntranceTile) tile;
-				System.out.println(elements[3]);
 				Location toLocation = getLocation(elements[3]);
+				if(toLocation == null){throw new ParserException("location -"+elements[3]+" - was not found");}
 				fromTile.setExitLoc(toLocation);
 				int y2 = Integer.parseInt(elements[4]);
 				int x2 = Integer.parseInt(elements[5]);
 				Tile toTile = toLocation.getTileAt(new Point(y2,x2));
+				if(toTile == null){ throw new ParserException("Position ("+x2+","+y2+") was out of bounds for location "+elements[3]);}
 				fromTile.setExitTile(toTile);
 			}
 			
-		}catch(Exception e) {
+		}catch(FileNotFoundException e) {
+			System.err.println("Entrance file not found");
+			e.printStackTrace();
+		}catch(ParserException e) {
+			System.err.println("Parsing error - "+e.getMessage());
+			e.printStackTrace();
+		}catch(NumberFormatException e) {
+			System.err.println("Incorrect format with TO and/or FROM positions");
 			e.printStackTrace();
 		}finally {
 			if(fileScan != null) {

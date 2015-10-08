@@ -1,5 +1,6 @@
 Maze-big
 A big maze
+outside
 30 30
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
 Ro-En Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
