@@ -157,7 +157,7 @@ public class RenderingWindow extends JPanel{
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), x, y - TILESIZE/2, null);
+							offgc.drawImage(getPlayerImage(p), x, (int)(y - TILESIZE*0.75), null);
 						}
 					}
 
