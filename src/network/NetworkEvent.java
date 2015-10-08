@@ -73,14 +73,20 @@ public class NetworkEvent implements Serializable {
 		this.message = null;
 	}
 	
-	public NetworkEvent(String user){
-		this.type = EventType.CLOSE;
+	/**
+	 * User events of this type don't require any extra parameters, therefore need to be given a specific type.
+	 * @param user - The user of the event.
+	 * @param type - The event type.
+	 */
+	public NetworkEvent(String user, EventType type){
+		this.type = type;
 		this.user = user;
 		
 		this.gameState = null;
 		this.keyCode = -1;
 		this.message = null;
 	}
+	
 	
 	//Getters
 	public String getUser() { return user; }
@@ -94,6 +100,7 @@ public class NetworkEvent implements Serializable {
 		KEY_PRESS,
 		MESSAGE,
 		UPDATE_GUI,
+		CYCLE_ANIMATIONS,
 		CLOSE;
 	}
 	

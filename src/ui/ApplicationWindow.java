@@ -489,6 +489,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		}
 	}
+	
+	public void cycleAnimations() { this.client.cycleAnimations(); }
 
 	public void changeVolume(int change){
 		//-60 to 6
