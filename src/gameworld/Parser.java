@@ -32,6 +32,7 @@ public class Parser {
 	private static Set<Location> locations;
 	
 	private static final String entitiesPath = "src/entities";
+	private static final String locationsPath = "src/locations";
 	
 	//######## Locations Parser ########//
 	
@@ -149,6 +150,8 @@ public class Parser {
 			case "En":
 				tile = new EntranceTile("Entrance", new Point(x,y), false);
 				break;
+			case "Fl":
+				tile = new FloorTile("Floor", new Point(x,y),true);
 			default:
 				break;
 		}
