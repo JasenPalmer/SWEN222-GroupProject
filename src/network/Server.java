@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -99,11 +100,15 @@ public class Server {
 		}
 	}
 
-	public void updateGUI(){
+	public synchronized void updateGUI(){
 		console.displayEvent("Updating all clients");
-		for(ClientThread client : connections){
-			client.updateGUI();
+		Iterator<ClientThread> clients = connections.iterator();
+		while(clients.hasNext()){
+			clients.next().updateGUI();
 		}
+//		for(ClientThread client : connections){
+//			client.updateGUI();
+//		}
 	}
 
 	public void processEvents(){
@@ -172,7 +177,7 @@ public class Server {
 			while(!finished){
 				processEvents();
 				try {
-					Thread.sleep(10);
+					Thread.sleep(5);
 				} catch (InterruptedException e) {}
 			}
 		}
@@ -287,5 +292,9 @@ public class Server {
 
 			connections.remove(this);
 		}
+	}
+	
+	public static void main(String [] args){
+		new Server();
 	}
 }

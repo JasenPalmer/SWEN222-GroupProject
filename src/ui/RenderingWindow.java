@@ -128,7 +128,7 @@ public class RenderingWindow extends JPanel{
 					int x = (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
 					int y = ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY;
 					
-					FloorTile t = (FloorTile) tiles[i][j];
+					Tile t = tiles[i][j];
 					if(t!=null) {
 						// DRAWING TERRAIN
 						image = ImageStorage.getImage(t.toString());
@@ -271,6 +271,7 @@ public class RenderingWindow extends JPanel{
 			
 			if(player.isAttacking()){
 				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
+				applicationWindow.cycleAnimations();
 			}
 			
 			playerImage = image;
