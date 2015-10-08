@@ -181,9 +181,16 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							System.out.print("current option is entity");
 							map.getTiles()[y][x].setEntitiy(getEntity(currentOption, new Point(x,y)));
 						}
-						else{
+						else if(isTerrain(currentOption)){
 							// making FloorTile
 							map.setTile(x, y, new FloorTile(currentOption, new Point(x,y), true));
+						}
+						else{
+							map.setTile(x, y, null);
+							if(map instanceof OutsideLocation){
+								OutsideLocation oMap = (OutsideLocation) map;
+								oMap.setBuildingTile(x, y, null);
+							}
 						}
 						y++;
 					}
