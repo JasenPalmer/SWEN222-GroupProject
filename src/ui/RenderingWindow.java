@@ -146,8 +146,10 @@ public class RenderingWindow extends JPanel{
 						// DRAWING ENTITY
 						if(t.containedEntity()!=null){
 							if(t.containedEntity() instanceof BasicEntity){
+								System.out.println("basic");
 								image = ImageStorage.getImage(t.containedEntity().getName());
 							} else {
+								System.out.println("NOT basic");	
 								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
 							}
 
