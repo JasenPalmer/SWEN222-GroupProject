@@ -130,39 +130,71 @@ public class RenderingWindow extends JPanel{
 					
 					Tile t = tiles[i][j];
 					if(t!=null) {
-						// DRAWING TERRAIN
 						image = ImageStorage.getImage(t.toString());
-						offgc.drawImage(image, x, y, null);
 
-						// Drawing walls if inside location
-						if(location instanceof InsideLocation){
-							if(i==0 || tiles[i-1][j]==null){
-								offgc.drawImage(ImageStorage.wallL, x, y, null);
+						
+						if(location instanceof OutsideLocation){
+							// FLOOR + ENTITES FOR OUTSIDE
+							offgc.drawImage(image, x, y, null);
+							
+							// DRAWING ENTITY
+							if(t.containedEntity()!=null){
+								if(t.containedEntity() instanceof BasicEntity){
+									image = ImageStorage.getImage(t.containedEntity().getName());
+								} else {
+									image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+								}
+								
+								offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
+
+
 							}
-							if(j==tiles.length-1|| tiles[i][j+1]==null){
-								offgc.drawImage(ImageStorage.wallR, x, y, null);
-							}
-						}
-						// DRAWING ENTITY
-						if(t.containedEntity()!=null){
-							if(t.containedEntity() instanceof BasicEntity){
-								image = ImageStorage.getImage(t.containedEntity().getName());
-							} else {
-								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+
+							// DRAWING PLAYER
+							if(t.getPlayer()!=null){
+								Player p = t.getPlayer();
+								offgc.drawImage(getPlayerImage(p), x, (int)(y - TILESIZE*0.75), null);
 							}
 							
-							if(location instanceof OutsideLocation){
-								offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
-							} else {
+						}
+						else{
+							if(!(t instanceof EntranceTile)){
 								offgc.drawImage(image, x, y, null);
+							}
+							// FLOOR + ENTITES FOR INSIDE
+							if(i==0 || tiles[i-1][j]==null){
+								if(t instanceof EntranceTile){
+									offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
+								}
+								else {
+									offgc.drawImage(ImageStorage.wallL, x, y, null);
+								}
+							}
+							if(j==tiles.length-1|| tiles[i][j+1]==null){
+								if(t instanceof EntranceTile){
+									offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
+								}
+								else {
+									offgc.drawImage(ImageStorage.wallR, x, y, null);
+								}
+							}
+							
+							if(t.containedEntity()!=null){
+								if(t.containedEntity() instanceof BasicEntity){
+									image = ImageStorage.getImage(t.containedEntity().getName());
+								} else {
+									image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+								}
+								offgc.drawImage(image, x, y, null);
+							}
+							
+							// DRAWING PLAYER
+							if(t.getPlayer()!=null){
+								Player p = t.getPlayer();
+								offgc.drawImage(getPlayerImage(p), x, y, null);
 							}
 						}
 
-						// DRAWING PLAYER
-						if(t.getPlayer()!=null){
-							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), x, (int)(y - TILESIZE*0.75), null);
-						}
 					}
 
 					// DRAWING ROOMS

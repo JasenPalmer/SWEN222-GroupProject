@@ -27,6 +27,8 @@ public class ImageStorage {
 	public static Image table;
 	public static Image chest;
 	public static Image chair;
+	public static Image insideDoorL;
+	public static Image insideDoorR;
 
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] robeAttack = new Image[4][8];
@@ -66,6 +68,8 @@ public class ImageStorage {
 			wallL = ImageIO.read(new File("src/ui/images/inside/WallLeft.png"));
 			wallR = ImageIO.read(new File("src/ui/images/inside/WallRight.png"));
 			wallCorner = ImageIO.read(new File("src/ui/images/inside/WallCorner.png"));
+			insideDoorL = ImageIO.read(new File("src/ui/images/inside/DoorL.png"));
+			insideDoorR = ImageIO.read(new File("src/ui/images/inside/DoorR.png"));
 			// player images
 			playerImage = ImageIO.read(new File("src/ui/images/player/robe/0.png"));
 

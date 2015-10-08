@@ -175,6 +175,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 								} else {
 									oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 								}
+							} else {
+								map.setTile(x, y, new EntranceTile(currentOption, new Point(x,y), false));
 							}
 						}
 						else if(isEntity(currentOption)){

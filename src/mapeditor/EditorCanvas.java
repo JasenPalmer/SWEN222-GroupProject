@@ -114,7 +114,7 @@ public class EditorCanvas extends JPanel {
 		// outside tiles
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = tiles[i].length-1; j >=0 ; j--){
-				FloorTile t = (FloorTile) tiles[i][j];
+				Tile t = tiles[i][j];
 				Tile r = null;
 				if(rooms!=null){
 					r = rooms[i][j];
@@ -126,29 +126,57 @@ public class EditorCanvas extends JPanel {
 				// DRAWING TERRAIN
 				if(t!=null) {
 					image = ImageStorage.getImage(t.toString());
-					g.drawImage(image, x, y, null);
-					if(location instanceof InsideLocation){
-						if(i==0 || tiles[i-1][j]==null){
-							g.drawImage(ImageStorage.wallL, x, y, null);
-						}
-						if(j==tiles.length-1|| tiles[i][j+1]==null){
-							g.drawImage(ImageStorage.wallR, x, y, null);
-						}
-					}
-					// DRAWING ENTITY
-					if(t.containedEntity()!=null){
-						if(t.containedEntity() instanceof BasicEntity){
-							image = ImageStorage.getImage(t.containedEntity().getName());
-						} else {
-							image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
-						}
+
+					
+					if(location instanceof OutsideLocation){
+						// FLOOR + ENTITES FOR OUTSIDE
+						g.drawImage(image, x, y, null);
 						
-						if(location instanceof OutsideLocation){
+						// DRAWING ENTITY
+						if(t.containedEntity()!=null){
+							if(t.containedEntity() instanceof BasicEntity){
+								image = ImageStorage.getImage(t.containedEntity().getName());
+							} else {
+								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+							}
+							
 							g.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
-						} else {
-							g.drawImage(image, x, y, null);
+
+
 						}
 
+					}
+					else{
+						if(!(t instanceof EntranceTile)){
+							g.drawImage(image, x, y, null);
+						}
+						// FLOOR + ENTITES FOR INSIDE
+						if(i==0 || tiles[i-1][j]==null){
+							if(t instanceof EntranceTile){
+								g.drawImage(ImageStorage.insideDoorL, x, y, null);
+							}
+							else {
+								g.drawImage(ImageStorage.wallL, x, y, null);
+							}
+						}
+						if(j==tiles.length-1|| tiles[i][j+1]==null){
+							if(t instanceof EntranceTile){
+								g.drawImage(ImageStorage.insideDoorR, x, y, null);
+							}
+							else {
+								g.drawImage(ImageStorage.wallR, x, y, null);
+							}
+						}
+						
+						if(t.containedEntity()!=null){
+							if(t.containedEntity() instanceof BasicEntity){
+								image = ImageStorage.getImage(t.containedEntity().getName());
+							} else {
+								image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
+							}
+							g.drawImage(image, x, y, null);
+						}
+						
 					}
 
 					// DRAWING ROOMS
@@ -156,9 +184,9 @@ public class EditorCanvas extends JPanel {
 						// Drawing 2 block high walls
 						if(r instanceof EntranceTile){
 							if(j-1 >= 0 && rooms[i][j-1]==null){
-								g.drawImage(ImageStorage.doorUD, x, y, null);
+								g.drawImage(ImageStorage.doorUD, x, y - TILESIZE/2, null);
 							} else {
-								g.drawImage(ImageStorage.doorLR, x, y, null);
+								g.drawImage(ImageStorage.doorLR, x, y - TILESIZE/2, null);
 							}
 						}
 						else{
@@ -205,7 +233,7 @@ public class EditorCanvas extends JPanel {
 	public void shittyDraw(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){
-				FloorTile t = (FloorTile) tiles[i][j];
+				Tile t = tiles[i][j];
 				Tile r = null;
 				if(rooms!=null){
 					r = rooms[i][j];
