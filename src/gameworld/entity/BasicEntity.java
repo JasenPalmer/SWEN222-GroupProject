@@ -3,14 +3,16 @@ package gameworld.entity;
 import gameworld.location.Location;
 
 import java.awt.Point;
+import java.io.Serializable;
 
 
 /**
  * A basic entity is an entity that cannot be interacted with eg a tree
  * @author Jasen
  */
-public class BasicEntity implements Entity {
+public class BasicEntity implements Entity, Serializable {
 	
+	private static final long serialVersionUID = 3434114193644905945L;
 	private String name;
 	private String description;
 	private Point position;

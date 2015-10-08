@@ -232,6 +232,10 @@ public class Player implements Serializable{
 	 */
 	public boolean move(Game.Direction dir) {
 		dir = calcDir(dir);
+		if(dir != facing){
+			facing = dir;
+			return true;
+		}
 		Tile tile = getTile(dir);
 		if(tile == null){return false;}
 		if(tile.getPlayer() != null){return false;}
