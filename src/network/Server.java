@@ -99,7 +99,7 @@ public class Server {
 		}
 	}
 
-	public void updateGUI(){
+	public synchronized void updateGUI(){
 		console.displayEvent("Updating all clients");
 		for(ClientThread client : connections){
 			client.updateGUI();
@@ -172,7 +172,7 @@ public class Server {
 			while(!finished){
 				processEvents();
 				try {
-					Thread.sleep(10);
+					Thread.sleep(5);
 				} catch (InterruptedException e) {}
 			}
 		}
@@ -287,5 +287,9 @@ public class Server {
 
 			connections.remove(this);
 		}
+	}
+	
+	public static void main(String [] args){
+		new Server();
 	}
 }
