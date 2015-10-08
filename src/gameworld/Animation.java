@@ -45,7 +45,9 @@ public class Animation implements Serializable{
 	}
 	
 	public void cycleAttack(){
-		attackFrame++;
+		if(player.isAttacking()){
+			attackFrame++;
+		}
 		if(attackFrame==7){
 			attackFrame = 0;
 			player.setAttacking(false);
