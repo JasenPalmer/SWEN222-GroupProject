@@ -259,7 +259,7 @@ public class Server {
 			}
 		}
 
-		public void updateGUI(){
+		public synchronized void updateGUI(){
 			//console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
 				output.reset();
@@ -269,7 +269,7 @@ public class Server {
 			}
 		}
 
-		public void sendMessage(String message, String senderUser){
+		public synchronized void sendMessage(String message, String senderUser){
 			try {
 				output.reset();
 				output.writeObject(new NetworkEvent(message, senderUser));
