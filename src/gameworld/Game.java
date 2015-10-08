@@ -84,6 +84,7 @@ public class Game implements Serializable {
 		//row index
 		int row = 0;
 		boolean outside = false;
+		file.nextLine();
 		while(file.hasNextLine()) {
 			// scan line by line
 			Scanner lineScan = new Scanner(file.nextLine());
@@ -93,15 +94,17 @@ public class Game implements Serializable {
 				Scanner blockScanner = new Scanner(lineScan.next());
 				blockScanner.useDelimiter("-");
 				while(blockScanner.hasNext()) {
-					String temp =  blockScanner.next();
+					String temp = blockScanner.next();
 					//otherwise create a tile
 					Tile tile = parseTile(temp, col, row);
 					if(tile == null){continue;}
 					if(tile instanceof BuildingTile || tile instanceof EntranceExitTile) {
+						System.out.println("row: +"+row+" col: "+col);
 						outside = true;
 						buildingTiles[row][col] = tile;
 					}
 					else {
+						System.out.println("row: +"+row+" col: "+col);
 						locTiles[row][col] = tile;
 					}
 				}
@@ -181,6 +184,7 @@ public class Game implements Serializable {
 			//System.out.println("This is the line "+line+ " nothing");
 			Scanner lineScan = new Scanner(line);
 			lineScan.useDelimiter("\\t");
+			//lineScan.next();
 			if(!lineScan.hasNext()){
 				System.err.println("Entity file formatted incorrectly(maybe?)");
 				continue;
@@ -207,11 +211,11 @@ public class Game implements Serializable {
 		// y position
 		int yPos = scan.nextInt();
 		switch(type) {
-		case "key":
+		case "Key":
 			return new Key(name, desc, new Point(xPos,yPos), loc);
-		case "chest":
+		case "Chest":
 			return new Chest(name, desc, new Point(xPos, yPos), loc);
-		case "basic":
+		case "BasicEntity":
 			return new BasicEntity(name, desc, new Point(xPos,yPos), loc);
 		}
 		return null;
