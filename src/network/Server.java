@@ -237,6 +237,7 @@ public class Server {
 						break;
 					case CYCLE_ANIMATIONS:
 						eventQueue.add(currentEvent);
+						break;
 					case MESSAGE:
 						console.displayMessage(currentEvent.getMessage(), user);
 						broadcastMessage(currentEvent.getMessage(), user);
