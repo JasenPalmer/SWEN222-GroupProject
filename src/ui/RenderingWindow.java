@@ -157,7 +157,7 @@ public class RenderingWindow extends JPanel{
 						// DRAWING PLAYER
 						if(t.getPlayer()!=null){
 							Player p = t.getPlayer();
-							offgc.drawImage(getPlayerImage(p), x + ImageStorage.playerImage.getWidth(null)/2, y  - playerImage.getHeight(null)/2, null);
+							offgc.drawImage(getPlayerImage(p), x, y - TILESIZE/2, null);
 						}
 					}
 
@@ -270,7 +270,8 @@ public class RenderingWindow extends JPanel{
 
 			
 			if(player.isAttacking()){
-				image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];
+				if(p.getName().equals("King Jake")){image = ImageStorage.plateAttack[directionInt][animation.getAttackFrame()];}
+				else{image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];}
 				applicationWindow.cycleAnimations();
 			}
 			
