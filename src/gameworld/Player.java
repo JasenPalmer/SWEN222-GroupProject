@@ -309,31 +309,31 @@ public class Player implements Serializable{
 			switch(direction){
 			case NORTH:
 				direction = Direction.WEST;
-				break;
+				return;
 			case EAST:
 				direction = Direction.NORTH;
-				break;
+				return;
 			case SOUTH:
 				direction = Direction.EAST;
-				break;
+				return;
 			case WEST:
 				direction = Direction.SOUTH;
-				break;
+				return;
 			}
 		case KeyEvent.VK_Q:
 			switch(direction){
 			case NORTH:
 				direction = Direction.EAST;
-				break;
+				return;
 			case EAST:
 				direction = Direction.SOUTH;
-				break;
+				return;
 			case SOUTH:
 				direction = Direction.WEST;
-				break;
+				return;
 			case WEST:
 				direction = Direction.NORTH;
-				break;
+				return;
 			}
 		}
 	}
