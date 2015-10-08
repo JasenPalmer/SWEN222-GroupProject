@@ -1,1 +1,3 @@
 Test Map	8	10	DANKLAND	2	2
+Test Map	11	26	Maze	0	1
+Maze	13	14	Test Map	12	26
