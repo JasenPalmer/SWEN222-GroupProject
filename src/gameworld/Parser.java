@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -234,7 +233,7 @@ public class Parser {
 				Location fromLocation = getLocation(elements[0]);
 				int y1 = Integer.parseInt(elements[1]);
 				int x1 = Integer.parseInt(elements[2]);
-				Tile tile = fromLocation.getTileAt(new Point(x1,y1));
+				Tile tile = fromLocation.getTileAt(new Point(y1,x1));
 				if(!(tile instanceof EntranceExitTile)) {
 					System.err.println("Tile wasn't an EntranceExitTile");
 					break;
