@@ -1,0 +1,17 @@
+Inside Test
+BasicEntity	Chair	This is for sitting!	5	4
+BasicEntity	Table	This is a table.	6	4
+BasicEntity	Table	This is a table.	7	4
+BasicEntity	Table	This is a table.	8	4
+BasicEntity	Table	This is a table.	9	4
+BasicEntity	Chair	This is for sitting!	10	4
+BasicEntity	Chair	This is for sitting!	5	5
+BasicEntity	Table	This is a table.	6	5
+BasicEntity	Table	This is a table.	7	5
+BasicEntity	Table	This is a table.	8	5
+BasicEntity	Table	This is a table.	9	5
+BasicEntity	Chair	This is for sitting!	10	5
+BasicEntity	Chair	This is for sitting!	5	6
+BasicEntity	Table	This is a table.	6	6
+BasicEntity	Table	This is a table.	7	6
+BasicEntity	Chair	This is for sitting!	8	6
