@@ -99,7 +99,7 @@ public class Player implements Serializable{
 		location = game.getLocation("Test Map");
 		location.addPlayer(this);
 		//players position
-		position = new Point(2, 2);
+		position = new Point(location.width()/2, location.height()/2);
 		//set the tile's player and the players tile
 		standingOn = location.getTileAt(position);
 		standingOn.setPlayer(this);

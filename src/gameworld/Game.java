@@ -17,7 +17,7 @@ public class Game implements Serializable {
 
 	public Game() {
 		players = new HashSet<Player>();
-		locations = Parser.loadLocations("locations");
+		locations = Parser.loadLocations();
 		Parser.loadEntityFiles();
 		Parser.loadDoors();
 	}

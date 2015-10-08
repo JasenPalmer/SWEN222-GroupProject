@@ -33,6 +33,7 @@ public class Parser {
 	
 	private static final String entitiesPath = "src/entities";
 	private static final String locationsPath = "src/locations";
+	private static final String entrancePath = "src/doors/doors.txt";
 	
 	//######## Locations Parser ########//
 	
@@ -40,12 +41,12 @@ public class Parser {
 	 * Create all locations from a folder
 	 * @param folderName - name of the folder containing location files
 	 */
-	public static Set<Location> loadLocations(String folderName) {
+	public static Set<Location> loadLocations() {
 		Scanner fileScan = null;
 		Set<Location> locs = new HashSet<Location>();
 		try{
 			//create the file holding all the location files
-			File locFolder = new File("src/"+folderName);
+			File locFolder = new File(locationsPath);
 			for(File file : locFolder.listFiles()) {
 				// open file
 				fileScan = new Scanner(file);
@@ -257,7 +258,7 @@ public class Parser {
 	public static void loadDoors() {
 		Scanner fileScan = null;
 		try {
-			fileScan = new Scanner(new File("src/doors/doors.txt"));
+			fileScan = new Scanner(new File(entrancePath));
 			while(fileScan.hasNextLine()) {
 				String doorScan = fileScan.nextLine();
 				//skip commented lines
