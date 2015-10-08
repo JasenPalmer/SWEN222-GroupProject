@@ -6,6 +6,12 @@ import gameworld.location.Location;
 import java.awt.Point;
 import java.io.Serializable;
 
+/**
+ * A chest it a type of container
+ * 
+ * @author Jasen
+ *
+ */
 public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;

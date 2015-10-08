@@ -4,7 +4,7 @@ import gameworld.Game;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
-import gameworld.tile.EntranceExitTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -143,7 +143,7 @@ public class EditorCanvas extends JPanel {
 				// DRAWING ROOMS
 				if(r!=null) {
 					// Drawing 2 block high walls
-					if(r instanceof EntranceExitTile){
+					if(r instanceof EntranceTile){
 						if(j-1 >= 0 && rooms[i][j-1]==null){
 							g.drawImage(ImageStorage.doorUD, (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX, ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 -TILESIZE/2 - cameraY, null);
 						} else {

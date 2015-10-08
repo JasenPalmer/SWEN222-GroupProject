@@ -9,6 +9,7 @@ import java.io.Serializable;
 /**
  * A Tile represents a square in a location.
  * A tile may contain a Player or an Entity
+ * A tile may also be a building.
  * @author Jasen
  *
  */

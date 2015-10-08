@@ -3,7 +3,7 @@ package gameworld.location;
 import gameworld.tile.Tile;
 
 /**
- * Represents a location that a player or an object can be in
+ * An inside location is a location that does not contain any building tiles array
  * @author Jasen
  *
  */

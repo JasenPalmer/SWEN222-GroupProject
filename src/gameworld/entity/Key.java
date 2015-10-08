@@ -2,7 +2,7 @@ package gameworld.entity;
 
 import gameworld.Player;
 import gameworld.location.Location;
-import gameworld.tile.EntranceExitTile;
+import gameworld.tile.EntranceTile;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
@@ -40,9 +40,9 @@ public class Key extends Item implements Serializable{
 	public void interact(Player player) {
 		Tile tile = player.getTile(player.getFacing());
 		if(tile == null){return;}
-		if((tile instanceof EntranceExitTile)) {
+		if((tile instanceof EntranceTile)) {
 			//trying to unlock a door at this point
-			EntranceExitTile door = (EntranceExitTile) tile;
+			EntranceTile door = (EntranceTile) tile;
 			if(door.isLocked()){
 				//unlock the door
 				door.setLocked(false);
