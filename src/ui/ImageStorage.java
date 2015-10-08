@@ -120,7 +120,6 @@ public class ImageStorage {
 	 * @return image based on name
 	 */
 	public static Image getImage(String name){
-		System.out.println(name);
 		switch(name){
 			case "Grass":
 				return grass;

@@ -168,6 +168,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				}
 				if(rw != null && game != null){
 					rw.repaint();
+					cycleAnimations();
 				}
 			}
 		}
