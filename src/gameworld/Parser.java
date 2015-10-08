@@ -146,7 +146,7 @@ public class Parser {
 			File folder = new File("src/entities");
 			for(File entList : folder.listFiles()) {
 				fileScan = new Scanner(entList);
-				String location = fileScan.next();
+				String location = fileScan.nextLine();
 				Location loc = getLocation(location);
 				if(loc == null){
 					System.err.println("Location with the name "+location+" was not found");
@@ -181,7 +181,6 @@ public class Parser {
 		List<Entity> list = new ArrayList<Entity>();
 		while(fileScan.hasNextLine()) {
 			String line = fileScan.nextLine();
-			//System.out.println("This is the line "+line+ " nothing");
 			Scanner lineScan = new Scanner(line);
 			lineScan.useDelimiter("\\t");
 			//lineScan.next();
