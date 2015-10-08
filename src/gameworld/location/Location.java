@@ -102,14 +102,12 @@ public abstract class Location implements Serializable{
 
 	public void setEntity(int x, int y, Entity entity) {
 		if(tiles[y][x]!=null){
-			System.out.println("Setting entity");
 			tiles[y][x].setEntitiy(entity);
 		}
 	}
 	
 	public void setEntity(Point pos, Entity entity) {
 		if(tiles[pos.y][pos.x]!=null){
-			System.out.println("Setting entity");
 			tiles[pos.y][pos.x].setEntitiy(entity);
 		}
 	}
