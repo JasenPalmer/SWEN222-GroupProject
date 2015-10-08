@@ -87,7 +87,7 @@ public class Player implements Serializable{
 		//create inventory
 		inventory = new Item[DEFAULT_INV_SIZE];	
 		//set location and add player to location
-		location = game.getLocations().iterator().next();
+		location = game.getLocation("Test Map");
 		location.addPlayer(this);
 		//players position
 		position = new Point(2, 2);
@@ -224,7 +224,7 @@ public class Player implements Serializable{
 		if(location instanceof OutsideLocation) {
 			OutsideLocation out = (OutsideLocation) location;
 			Tile[][] tiles = out.getBuildingTiles();
-			if(tiles[tile.getPos().y][tile.getPos().x] != null) {
+			if(tiles[tile.getPosition().y][tile.getPosition().x] != null) {
 				return false;
 			}
 		}
@@ -346,6 +346,10 @@ public class Player implements Serializable{
 
 	public Point getPosition() {
 		return position;
+	}
+	
+	public void setPosition(Point position) {
+		this.position = position;
 	}
 
 	public Location getLocation() {

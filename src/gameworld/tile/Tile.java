@@ -31,7 +31,7 @@ public abstract class Tile implements Serializable{
 		this.entity = entity;
 	}
 
-	public Point getPos() {
+	public Point getPosition() {
 		return position;
 	}
 

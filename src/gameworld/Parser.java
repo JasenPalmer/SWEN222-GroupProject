@@ -229,11 +229,11 @@ public class Parser {
 			fileScan = new Scanner(new File("src/doors/doors.txt"));
 			while(fileScan.hasNextLine()) {
 				String doorScan = fileScan.nextLine();
-				System.out.println(doorScan);
+				//System.out.println(doorScan);
 				String[] elements = doorScan.split("\\t");
 				Location fromLocation = getLocation(elements[0]);
-				int x1 = Integer.parseInt(elements[1]);
-				int y1 = Integer.parseInt(elements[2]);
+				int y1 = Integer.parseInt(elements[1]);
+				int x1 = Integer.parseInt(elements[2]);
 				Tile tile = fromLocation.getTileAt(new Point(x1,y1));
 				if(!(tile instanceof EntranceExitTile)) {
 					System.err.println("Tile wasn't an EntranceExitTile");
@@ -243,8 +243,8 @@ public class Parser {
 				System.out.println(elements[3]);
 				Location toLocation = getLocation(elements[3]);
 				fromTile.setExitLoc(toLocation);
-				int x2 = Integer.parseInt(elements[4]);
-				int y2 = Integer.parseInt(elements[5]);
+				int y2 = Integer.parseInt(elements[4]);
+				int x2 = Integer.parseInt(elements[5]);
 				Tile toTile = toLocation.getTileAt(new Point(x2,y2));
 				fromTile.setExitTile(toTile);
 			}

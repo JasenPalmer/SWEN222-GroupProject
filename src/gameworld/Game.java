@@ -21,6 +21,15 @@ public class Game implements Serializable {
 		Parser.loadEntityFiles();
 		Parser.loadDoors();
 	}
+	
+	public Location getLocation(String locationName) {
+		for(Location loc : locations) {
+			if(loc.name().equals(locationName)) {
+				return loc;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Add a player to the game

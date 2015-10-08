@@ -288,7 +288,7 @@ public class RenderingWindow extends JPanel{
 			int[] xy = new int[2];
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
-					if(tiles[i][j]!=null && tiles[i][j].getPos().equals(player.getPosition())){
+					if(tiles[i][j]!=null && tiles[i][j].getPosition().equals(player.getPosition())){
 						xy[0] = j;
 						xy[1] = i;
 					}

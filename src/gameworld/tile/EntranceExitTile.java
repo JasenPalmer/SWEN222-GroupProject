@@ -50,6 +50,7 @@ public class EntranceExitTile extends Tile {
 		player.getStandingOn().setPlayer(null);
 		player.setStandingOn(exit);
 		exit.setPlayer(player);
+		player.setPosition(exit.getPosition());
 		return true;
 	}
 	
