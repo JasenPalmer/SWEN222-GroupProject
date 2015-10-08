@@ -244,7 +244,7 @@ public class Parser {
 				fromTile.setExitLoc(toLocation);
 				int y2 = Integer.parseInt(elements[4]);
 				int x2 = Integer.parseInt(elements[5]);
-				Tile toTile = toLocation.getTileAt(new Point(x2,y2));
+				Tile toTile = toLocation.getTileAt(new Point(y2,x2));
 				fromTile.setExitTile(toTile);
 			}
 			
