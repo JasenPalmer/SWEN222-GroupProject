@@ -3,6 +3,7 @@ package gameworld;
 import gameworld.Game.Direction;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
+import gameworld.entity.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
@@ -27,6 +28,8 @@ public class Player implements Serializable{
 	 * Default size of the players inventory
 	 */
 	private static final int DEFAULT_INV_SIZE = 8;
+	
+	private int maxHealth;
 	
 	/**
 	 * Players damage
@@ -88,6 +91,11 @@ public class Player implements Serializable{
 	 */
 	private Direction facing = Game.Direction.NORTH;
 	
+	/**
+	 * Weapon the player has equipped 
+	 */
+	private Weapon weapon;
+	
 	
 
 	public Player(String name, Game game) {
@@ -108,13 +116,14 @@ public class Player implements Serializable{
 		// make the player alive
 		health = 100;
 		isDead = false;
+		setMaxHealth(health);
 	}
 
 	/**
 	 * Make this player attack the player in the tile in front of them
 	 * @return true if the attack was successful
 	 */
-	public boolean attack() {
+	protected boolean attack() {
 		Tile tile = getTile(getFacing());
 		// nothing in front of the player
 		if(tile == null){return false;}
@@ -132,7 +141,7 @@ public class Player implements Serializable{
 	 * @param index of the item to drop
 	 * @return true if the item was successfully removed
 	 */
-	public boolean dropFromInv(int index) {
+	protected boolean dropFromInv(int index) {
 		// get the item
 		Item item = inventory[index];
 		if(item == null){return false;}
@@ -150,7 +159,7 @@ public class Player implements Serializable{
 	 * Player attempts to pick-up the item on the tile in front of them
 	 * @return true if the item was successfully added
 	 */
-	public boolean pickupItem() {
+	protected boolean pickupItem() {
 		// if the inventory is full can't pick up item
 		if(inventoryFull()){return false;}
 		Tile tile = getTile(facing);
@@ -216,7 +225,7 @@ public class Player implements Serializable{
 	 * @param dir - direction to move
 	 * @return true if the player moved otherwise false
 	 */
-	public boolean move(Game.Direction dir) {
+	protected boolean move(Game.Direction dir) {
 		dir = calcDir(dir);
 		if(dir != facing){
 			animation.setAnimationDirection(dir.ordinal());
@@ -408,7 +417,6 @@ public class Player implements Serializable{
 	
 	public void setAttacking(boolean b) {
 		attacking = b;
-
 	}
 
 	public Direction getFacing() {
@@ -421,5 +429,22 @@ public class Player implements Serializable{
 
 	public void setStandingOn(Tile standingOn) {
 		this.standingOn = standingOn;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+		this.playerDamage = weapon.getDamage();
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 }

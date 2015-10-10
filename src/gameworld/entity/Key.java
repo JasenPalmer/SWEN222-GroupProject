@@ -24,18 +24,6 @@ public class Key extends Item implements Serializable{
 
 	private static final long serialVersionUID = -1062125803835909442L;
 
-
-	@Override
-	public String getName() {
-		return "A Key";
-	}
-	
-	@Override
-	public String getDescription() {
-		return "Used to open doors or chests";
-	}
-
-
 	@Override
 	public void interact(Player player) {
 		Tile tile = player.getTile(player.getFacing());
