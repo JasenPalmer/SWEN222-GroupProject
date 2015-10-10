@@ -80,6 +80,15 @@ public class Game implements Serializable {
 		if(!player.pickupItem()){return false;}
 		return true;
 	}
+	
+	
+	public boolean playerDropItem(String playerName, int index) {
+		Player player = parsePlayer(playerName);
+		if(player == null){return false;}
+		if(player.isDead()){return false;}
+		if(!player.dropFromInv(index)){return false;}
+		return true;
+	}
 
 	/**
 	 * Attack the player in front of the player

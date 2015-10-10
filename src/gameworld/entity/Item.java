@@ -46,11 +46,19 @@ public abstract class Item implements InteractableEntity, Serializable{
 	public Point getPosition() {
 		return position;
 	}
+	
+	public void setPosition(Point position) {
+		this.position = position;
+	}
 
 
 	@Override
 	public Location getLocation() {
 		return location;
+	}
+	
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
 	@Override

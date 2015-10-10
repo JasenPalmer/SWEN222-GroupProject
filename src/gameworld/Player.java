@@ -151,7 +151,10 @@ public class Player implements Serializable{
 		Tile tile = location.getTileAt(position);
 		//fail if there is already an item on the ground
 		if(tile.containedEntity() != null) { return false;}
-		location.getTileAt(position).setEntity(item);
+		tile.setEntity(item);
+		//update the item data
+		item.setPosition(position);
+		item.setLocation(location);
 		return true;
 	}
 
