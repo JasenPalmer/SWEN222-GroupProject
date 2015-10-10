@@ -71,9 +71,10 @@ public class Server {
 				if(finished) break;
 
 				Socket client = serverSocket.accept();
-
 				ClientThread clientThread = new ClientThread(client);
-				connections.add(clientThread);
+				synchronized(connections){
+					connections.add(clientThread);
+				}
 				clientThread.start();
 			}
 		} catch (IOException e){
@@ -81,7 +82,7 @@ public class Server {
 		}
 	}
 
-	public ClientThread getClient(String user){
+	public synchronized ClientThread getClient(String user){
 		for(ClientThread client : connections){
 			if(client.getUser().equals(user)) return client;
 		}
@@ -89,47 +90,43 @@ public class Server {
 		return null;
 	}
 
-	public void sendMessage(String receiverUser, String message, String senderUser){
+	public synchronized void sendMessage(String receiverUser, String message, String senderUser){
 		ClientThread receiver = getClient(receiverUser);
 		if(receiver != null) receiver.sendMessage(message, senderUser);
 	}
 
-	public void broadcastMessage(String message, String senderUser){
+	public synchronized void broadcastMessage(String message, String senderUser){
 		for(ClientThread client: connections){
 			client.sendMessage(message, senderUser);
 		}
 	}
 
-	public synchronized void updateGUI(){
+	public synchronized void updateGUI(Player madeUpdate){
 		//console.displayEvent("Updating all clients");
-		Iterator<ClientThread> clients = connections.iterator();
-		while(clients.hasNext()){
-			clients.next().updateGUI();
+		for(ClientThread client : connections){
+			if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateGUI();
 		}
-//		for(ClientThread client : connections){
-//			client.updateGUI();
-//		}
 	}
 
-	public void processEvents(){
+	public synchronized void processEvents(){
 		NetworkEvent toProcess =  eventQueue.poll();
 		//System.out.println("Processing");
 		if(toProcess == null) return;
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			boolean hasMoved = false;
+			boolean hasChanged = false;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
 				break;
 			case KeyEvent.VK_D:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
 				break;
 			case KeyEvent.VK_S:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
 				break;
 			case KeyEvent.VK_A:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
@@ -138,16 +135,17 @@ public class Server {
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
 				break;
 			case KeyEvent.VK_SPACE:
-				gameState.attackPlayer(toProcess.getUser());
+				hasChanged = gameState.attackPlayer(toProcess.getUser());
+				break;
 			default:
 				break;
 			}
-			updateGUI();
+			if(hasChanged) updateGUI(gameState.parsePlayer(toProcess.getUser()));
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
 				this.gameState.parsePlayer(toProcess.getUser()).getAnimation().cycleAttack();
-				updateGUI();
+				updateGUI(gameState.parsePlayer(toProcess.getUser()));
 			}
 			break;
 		case MESSAGE:
@@ -162,10 +160,11 @@ public class Server {
 	}
 
 
-	public void stopServer(){
+	public synchronized void stopServer(){
 		for(ClientThread t : connections){
 			t.close();
 		}
+		connections.clear();
 		finished = true;
 		eventHandler.finish();
 	}
@@ -291,7 +290,6 @@ public class Server {
 				socket.close();
 			} catch (Exception e){}
 
-			connections.remove(this);
 		}
 	}
 	

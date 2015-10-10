@@ -1,6 +1,7 @@
 package gameworld;
 
 import gameworld.Game.Direction;
+import gameworld.entity.Armour;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
 import gameworld.entity.Weapon;
@@ -96,7 +97,14 @@ public class Player implements Serializable{
 	 */
 	private Weapon weapon;
 	
+	/**
+	 * Armour the player is wearing
+	 */
+	private Armour armour;
 	
+	
+
+
 
 	public Player(String name, Game game) {
 		//set user name
@@ -130,7 +138,8 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-		opponent.setHealth(opponent.getHealth()-playerDamage);
+		int damage = playerDamage-armour.getArmourRating();
+		opponent.setHealth(opponent.getHealth()-damage);
 		return true;
 	}
 
@@ -449,5 +458,13 @@ public class Player implements Serializable{
 
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
+	}
+	
+	public Armour getArmour() {
+		return armour;
+	}
+
+	public void setArmour(Armour armour) {
+		this.armour = armour;
 	}
 }

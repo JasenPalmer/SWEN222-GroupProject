@@ -123,6 +123,10 @@ public abstract class Location implements Serializable{
 		return toReturn;
 	}
 	
+	public Set<Player> getPlayers() {
+		return players;
+	}
+	
 	//setters
 
 	public void setName(String name) {

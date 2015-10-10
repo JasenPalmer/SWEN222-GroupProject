@@ -81,7 +81,12 @@ public class Game implements Serializable {
 		return true;
 	}
 	
-	
+	/**
+	 * Drop the item in the players inventory at the given index
+	 * @param playerName - name of the player
+	 * @param index - position in the inventory of the item
+	 * @return true if the item was dropped
+	 */
 	public boolean playerDropItem(String playerName, int index) {
 		Player player = parsePlayer(playerName);
 		if(player == null){return false;}
