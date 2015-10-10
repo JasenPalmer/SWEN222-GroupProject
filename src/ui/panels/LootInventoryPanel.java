@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -21,6 +23,12 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	private LootInventoryBackground lootInventBackground = new LootInventoryBackground();
 	private InventoryPanel inventPanel;
 	private LootInventoryPanel self = this;
+	private Item movedItem;
+	private int movedItemI;
+	private int movedItemJ;
+	
+	//Sound paths
+	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
 	public LootInventoryPanel(InventoryPanel invent){
 		//Setup
@@ -95,25 +103,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3){
-			System.out.println("Registered Right-Click");
-			for(int i = 0; i < itemList.length; i++){
-				for(int j = 0; j < itemList[0].length; j++){
-					if(itemList[i][j]!= null && itemList[i][j].getName() != "Empty"){
-						if(itemList[i][j].contains(e.getX(), e.getY())){
-							if(inventPanel.addItem(itemList[i][j])){
-								itemList[i][j] = null;
-							}
-							else{
-								System.out.println("Inveotry full can't swap items");
-							}
 
-						}
-					}
-				}
-			}
-		}
-		populateSlots();
 	}
 
 	@Override
@@ -130,13 +120,54 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		if(e.getButton() == MouseEvent.BUTTON1){
+			for(int i = 0; i < itemList.length; i++){
+				for(int j = 0; j < itemList[0].length; j++){
+					if(itemList[i][j]!= null && itemList[i][j].getName() != "Empty"){
+						if(itemList[i][j].contains(e.getX(), e.getY())){
+							movedItem = itemList[i][j];
+							movedItemI = i;
+							movedItemJ = j;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		System.out.println(e.getX() + " " + e.getY());
+		if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
+			if(inventPanel.addItem(movedItem)){
+				itemList[movedItemI][movedItemJ] = null;
+				playSound("Button");
+				movedItem = null;
+			}
+			else{
+				System.out.println("Inventory full can't swap items");
+			}
+		}
+		populateSlots();
 	}
+	
+	private void playSound(String sound){
+		String soundPath = null;
+		switch(sound){
+		case "Button":
+			soundPath = buttonSound;
+			break;
+		default:
+			break;
+		}
+		try{
+			File file = new File(soundPath);
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(file));
+			clip.start();
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+	
 }

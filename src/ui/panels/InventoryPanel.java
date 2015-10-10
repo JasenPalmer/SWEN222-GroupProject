@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 
 
-public class InventoryPanel extends JLayeredPane implements MouseListener, DragSourceListener{
+public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	Image backgroundImage; 
 	Item[][] inventArray = new Item[4][2];
@@ -32,9 +32,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener, DragS
 	private boolean lootOpen;
 	private LootInventoryPanel lootInvent;
 	private InventoryPanel self = this;
-	
+
 	//Sound paths
-		private String buttonSound = "src/ui/sounds/buttonSound.wav";
+	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
 	public InventoryPanel(){
 		setLayout(null);
@@ -224,23 +224,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener, DragS
 					}
 				}
 			}
-			else{
-				for(int i = 0; i < inventArray.length; i++){
-					for(int j = 0; j < inventArray[0].length; j++){
-						if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
-							if(inventArray[i][j].contains(e.getX(), e.getY())){
-								if(lootInvent.addItem(inventArray[i][j])){
-									inventArray[i][j] = new Item("Empty", "Placeholder");
-									playSound("Button");
-								}
-								else{
-									System.out.println("Loot inventory is full can't swap item");
-								}	
-							}
-						}
-					}
-				}
-			}
 			populateInvent();
 
 		}		
@@ -272,7 +255,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener, DragS
 			}
 		}
 	}
-	
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1){
@@ -284,24 +267,42 @@ public class InventoryPanel extends JLayeredPane implements MouseListener, DragS
 								addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
 								movedItem = null;
 								playSound("Button");
+								return;
 							}
-//							else if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
-//								switch(movedItem.getType()){
-//								case "Weapon":
-//									weapon = movedItem;
-//									inventArray[getIndices(movedItem).x][(int) getIndices(movedItem).y] = new Item("Empty", "Placeholder");
-//									populateInvent();
-//									break;
-//								default:
-//									break;
-//								}
-//							}
+						}
+					}
+				}
+				if(!lootOpen){
+					if(e.getX() < -2 || e.getY() < -3){
+						System.out.println("Dropped");
+					}
+				}
+				else{
+					System.out.println(e.getX() + " " + e.getY());
+					if(e.getX() > -454 && e.getX() < -130 && e.getY() > -521 && e.getY() < -319){
+						System.out.println("Inside");
+						for(int i = 0; i < inventArray.length; i++){
+							for(int j = 0; j < inventArray[0].length; j++){
+								if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
+									if(inventArray[i][j].contains(movedItem.getX(), movedItem.getY())){
+										if(lootInvent.addItem(movedItem)){
+											inventArray[i][j] = new Item("Empty", "Placeholder");
+											playSound("Button");
+										}
+										else{
+											System.out.println("Loot inventory is full can't swap item");
+										}	
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}
+		populateInvent();
 	}
+
 
 	private void playSound(String sound){
 		String soundPath = null;
@@ -321,7 +322,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener, DragS
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
-	
+
 	private Point getIndices(Item item){
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
@@ -336,32 +337,4 @@ public class InventoryPanel extends JLayeredPane implements MouseListener, DragS
 		return null;		
 	}
 
-	@Override
-	public void dragDropEnd(DragSourceDropEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dragEnter(DragSourceDragEvent e) {
-		System.out.println(e.toString());
-	}
-
-	@Override
-	public void dragExit(DragSourceEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dragOver(DragSourceDragEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dropActionChanged(DragSourceDragEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }
