@@ -34,6 +34,10 @@ public class Chest extends Container implements Serializable{
 		}
 	}
 
+	/**
+	 * creates a random item
+	 * @return item created
+	 */
 	private Item createItem() {
 		int itemType = (new Random().nextInt(3))+1;
 		switch(itemType) {
