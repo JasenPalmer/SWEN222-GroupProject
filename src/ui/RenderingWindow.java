@@ -231,14 +231,16 @@ public class RenderingWindow extends JPanel{
 								image = ImageStorage.roofLR;
 							}
 
+							// Inwards corner roof
+							if(j-1 >= 0 && i+1 < rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+								image = ImageStorage.roofCornerI;
+							}
+							
 							// Outwards corner roof
 							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
 								image = ImageStorage.roofCornerO;
 							}
-							// Inwards corner roof
-							if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-								image = ImageStorage.roofCornerI;
-							}
+
 
 
 							offgc.drawImage(image, x, (int) (y - 1.5*TILESIZE), null);
@@ -310,8 +312,8 @@ public class RenderingWindow extends JPanel{
 
 			
 			if(player.isAttacking()){
-				if(p.getName().equals("King Jake")){image = ImageStorage.plateAttack[directionInt][animation.getAttackFrame()];}
-				else{image = ImageStorage.robeAttack[directionInt][animation.getAttackFrame()];}
+				if(p.getName().equals("King Jake")){image = ImageStorage.plateSpear[directionInt][animation.getAttackFrame()];}
+				else{image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];}
 				applicationWindow.cycleAnimations();
 			}
 			
