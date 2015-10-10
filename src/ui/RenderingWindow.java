@@ -344,10 +344,13 @@ public class RenderingWindow extends JPanel{
 		 * @return rotated array
 		 */
 		public Tile[][] rotate(Tile[][] tiles){
-			Tile[][] newTiles = new Tile[tiles.length][tiles[0].length];
-			for(int i = 0; i < tiles.length; i++){
-				for(int j = 0; j < tiles[i].length; j++){
-					newTiles[(newTiles.length-1)-j][i] = tiles[i][j];
+			Tile[][] newTiles = null;
+			if(tiles!=null){
+				newTiles = new Tile[tiles.length][tiles[0].length];
+				for(int i = 0; i < tiles.length; i++){
+					for(int j = 0; j < tiles[i].length; j++){
+						newTiles[(newTiles.length-1)-j][i] = tiles[i][j];
+					}
 				}
 			}
 			return newTiles;

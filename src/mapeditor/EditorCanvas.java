@@ -1,6 +1,7 @@
 package mapeditor;
 
 import gameworld.Game;
+import gameworld.Player;
 import gameworld.entity.BasicEntity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
@@ -110,20 +111,14 @@ public class EditorCanvas extends JPanel {
 	 */
 	public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics g){
 		g.fillRect(0,0,this.getWidth(), this.getHeight());
-
+		Image image = null;
 		// outside tiles
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = tiles[i].length-1; j >=0 ; j--){
+				int x = (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
+				int y = ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY;
+				
 				Tile t = tiles[i][j];
-				Tile r = null;
-				if(rooms!=null){
-					r = rooms[i][j];
-				}
-				Image image = null;
-				int x =  (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
-				int y =  ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2  - cameraY;
-
-				// DRAWING TERRAIN
 				if(t!=null) {
 					image = ImageStorage.getImage(t.toString());
 
@@ -153,7 +148,9 @@ public class EditorCanvas extends JPanel {
 						// FLOOR + ENTITES FOR INSIDE
 						if(i==0 || tiles[i-1][j]==null){
 							if(t instanceof EntranceTile){
-								g.drawImage(ImageStorage.insideDoorL, x, y, null);
+								if(tiles[i+1][j] instanceof FloorTile){
+									g.drawImage(ImageStorage.insideDoorL, x, y, null);
+								}
 							}
 							else {
 								g.drawImage(ImageStorage.wallL, x, y, null);
@@ -161,7 +158,9 @@ public class EditorCanvas extends JPanel {
 						}
 						if(j==tiles.length-1|| tiles[i][j+1]==null){
 							if(t instanceof EntranceTile){
-								g.drawImage(ImageStorage.insideDoorR, x, y, null);
+								if(tiles[i][j-1] instanceof FloorTile){
+									g.drawImage(ImageStorage.insideDoorR, x, y, null);
+								}
 							}
 							else {
 								g.drawImage(ImageStorage.wallR, x, y, null);
@@ -176,38 +175,40 @@ public class EditorCanvas extends JPanel {
 							}
 							g.drawImage(image, x, y, null);
 						}
-						
 					}
 
-					// DRAWING ROOMS
+				}
+
+				// DRAWING ROOMS
+				if(rooms!=null){
+					Tile r = rooms[i][j];
 					if(r!=null) {
 						// Drawing 2 block high walls
 						if(r instanceof EntranceTile){
 							if(j-1 >= 0 && rooms[i][j-1]==null){
-								g.drawImage(ImageStorage.doorUD, x, y - TILESIZE/2, null);
+								g.drawImage(ImageStorage.doorUD, x, y-TILESIZE/2, null);
 							} else {
-								g.drawImage(ImageStorage.doorLR, x, y - TILESIZE/2, null);
+								g.drawImage(ImageStorage.doorLR, x, y-TILESIZE/2, null);
 							}
 						}
 						else{
-								g.drawImage(ImageStorage.building, x, y -TILESIZE/2, null);
+							g.drawImage(ImageStorage.building, x, y-TILESIZE/2, null);
 						}
-	
-						// wall block on top of wall / door for 2 high building.
-						g.drawImage(ImageStorage.building, x, y -TILESIZE, null);
-	
-						// default img for non edge and corner roofs
+						g.drawImage(ImageStorage.building, x, y-TILESIZE, null);
+
+
 						image = ImageStorage.building;
-	
+
 						// Western most point of building
 						if(j-1 >= 0 && rooms[i][j-1] == null){
 							image = ImageStorage.roofUD;
 						}
-	
+
 						// Northern most point of building
 						if(i+1 < rooms.length && rooms[i+1][j]==null){
 							image = ImageStorage.roofLR;
 						}
+
 						// Outwards corner roof
 						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
 							image = ImageStorage.roofCornerO;
@@ -216,12 +217,16 @@ public class EditorCanvas extends JPanel {
 						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
 							image = ImageStorage.roofCornerI;
 						}
-						g.drawImage(image, x, (int) (y - (TILESIZE*1.5)), null);
+
+
+						g.drawImage(image, x, (int) (y - 1.5*TILESIZE), null);
+
 					}
-				
 				}
 			}
+
 		}
+		
 	}
 
 	/**
