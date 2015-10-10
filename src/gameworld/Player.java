@@ -104,6 +104,8 @@ public class Player implements Serializable{
 	
 	
 
+
+
 	public Player(String name, Game game) {
 		//set user name
 		this.name = name;	
@@ -456,5 +458,13 @@ public class Player implements Serializable{
 
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
+	}
+	
+	public Armour getArmour() {
+		return armour;
+	}
+
+	public void setArmour(Armour armour) {
+		this.armour = armour;
 	}
 }
