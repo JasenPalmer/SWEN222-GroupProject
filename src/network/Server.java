@@ -71,9 +71,10 @@ public class Server {
 				if(finished) break;
 
 				Socket client = serverSocket.accept();
-
 				ClientThread clientThread = new ClientThread(client);
-				connections.add(clientThread);
+				synchronized(connections){
+					connections.add(clientThread);
+				}
 				clientThread.start();
 			}
 		} catch (IOException e){
@@ -81,7 +82,7 @@ public class Server {
 		}
 	}
 
-	public ClientThread getClient(String user){
+	public synchronized ClientThread getClient(String user){
 		for(ClientThread client : connections){
 			if(client.getUser().equals(user)) return client;
 		}
@@ -102,7 +103,6 @@ public class Server {
 
 	public synchronized void updateGUI(Player madeUpdate){
 		//console.displayEvent("Updating all clients");
-		
 		for(ClientThread client : connections){
 			if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateGUI();
 		}
