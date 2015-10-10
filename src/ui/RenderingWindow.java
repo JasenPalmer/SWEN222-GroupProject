@@ -281,7 +281,8 @@ public class RenderingWindow extends JPanel{
 		private Image getPlayerImage(Player p){
 			Animation animation = p.getAnimation();
 			int directionInt = animation.getAnimationDirection();
-
+			Image image = null;
+			
 			switch(direction){
 				case EAST:
 					directionInt = addToDirInt(directionInt, 3);
@@ -296,25 +297,35 @@ public class RenderingWindow extends JPanel{
 					break;
 			}
 			
-			Image image = null;
-
-			if(p.getName().equals("King Jake")){
-				if(p.isDead()){
-					image = ImageStorage.tree;
-				}
-				else{image = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()];}
-
-			} else if(p.isDead()){
-				image = ImageStorage.bush;
-			} else {
-				image = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()];
-			}
-
+			switch(p.getArmour().getName()){
+			case "Robe Armour":
+				if(p.isAttacking()){
+					image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
+					applicationWindow.cycleAnimations();
+				} else { image  = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()]; }
+				break;
+			case "Leather Armour":
+				if(p.isAttacking()){
+					image = ImageStorage.leatherSpear[directionInt][animation.getAttackFrame()];
+					applicationWindow.cycleAnimations();
+				} else { image  = ImageStorage.leatherWalk[directionInt][animation.getWalkFrame()]; }
+				break;
+			case "Chain Armour":
+				if(p.isAttacking()){
+					image = ImageStorage.chainSpear[directionInt][animation.getAttackFrame()];
+					applicationWindow.cycleAnimations();
+				} else { image  = ImageStorage.chainWalk[directionInt][animation.getWalkFrame()]; }
+				break;
+			case "Plate Armour":
+				if(p.isAttacking()){
+					image = ImageStorage.plateSpear[directionInt][animation.getAttackFrame()];
+					applicationWindow.cycleAnimations();
+				} else { image  = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()]; }
+				break;
+			}	
 			
-			if(player.isAttacking()){
-				if(p.getName().equals("King Jake")){image = ImageStorage.plateSpear[directionInt][animation.getAttackFrame()];}
-				else{image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];}
-				applicationWindow.cycleAnimations();
+			if(p.isDead()){
+				image = ImageStorage.bush;
 			}
 			
 			playerImage = image;
