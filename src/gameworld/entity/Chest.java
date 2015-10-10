@@ -42,7 +42,7 @@ public class Chest extends Container implements Serializable{
 		int itemType = (new Random().nextInt(3))+1;
 		switch(itemType) {
 		case 1:
-			return new Shank("Shank", "A basic weapon", null, null);
+			return new ShankWeapon("Shank", "A basic weapon", null, null);
 		case 2:
 			return new Potion("Health Potion", "Use this to heal yourself!", null, null);
 		case 3:
