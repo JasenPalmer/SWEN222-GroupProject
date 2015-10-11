@@ -68,18 +68,18 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	/**
-	 * Tell the player to attempt to pickup the item in the tile in front of them
-	 * @param playerName - player to pickup the item
-	 * @return true if the player picked up the item
-	 */
-	public boolean playerPickup(String playerName) {
-		Player player = parsePlayer(playerName);
-		if(player == null){return false;}
-		if(player.isDead()){return false;}
-		if(!player.pickupItem()){return false;}
-		return true;
-	}
+//	/**
+//	 * Tell the player to attempt to pickup the item in the tile in front of them
+//	 * @param playerName - player to pickup the item
+//	 * @return true if the player picked up the item
+//	 */
+//	public boolean playerPickup(String playerName) {
+//		Player player = parsePlayer(playerName);
+//		if(player == null){return false;}
+//		if(player.isDead()){return false;}
+//		if(!player.pickupItem()){return false;}
+//		return true;
+//	}
 	
 	/**
 	 * Drop the item in the players inventory at the given index
@@ -97,6 +97,8 @@ public class Game implements Serializable {
 	
 	public boolean performAction(String playerName){
 		Player player = parsePlayer(playerName);
+		if(player == null){return false;}
+		if(player.isDead()){return false;}
 		if(!player.performAction()){return false;}
 		return true;
 	}

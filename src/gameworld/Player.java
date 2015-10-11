@@ -135,7 +135,11 @@ public class Player implements Serializable{
 		Tile tile = this.getTile(facing);
 		if(tile == null){return false;}
 		if(tile.containedEntity() == null){return false;}
-		if(tile.containedEntity() instanceof Chest) {
+		Entity ent = tile.containedEntity();
+		if(ent instanceof Item){
+			return pickupItem();
+		}
+		else if(tile.containedEntity() instanceof Chest) {
 			Chest chest = (Chest) tile.containedEntity();
 			if(chest.isLocked()){return false;}
 			chest.interact(this);
