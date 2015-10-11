@@ -1,10 +1,12 @@
 package ui.panels;
 
+import gameworld.entity.Item;
+
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-public class Item {
+public class ItemIcon {
 	
 	private String Name;
 	private String Description;
@@ -17,31 +19,33 @@ public class Item {
 	private int x,y;
 	private boolean equipable;
 	private String type;
+	private Item item;
 	
-	public Item(String n, String d){
+	public ItemIcon(Item item , String n, String d){
 		this.Name = n;
 		this.Description = d;
-		if(n.equals("Shank")){
+		this.item = item;
+		if(item.getClass().getSimpleName().equals("Shank")){
 			image = new ImageIcon(shankImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
-		else if (n.equals("Katana")){
+		else if (item.getClass().getSimpleName().equals("Katana")){
 			image = new ImageIcon(katanaImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
-		else if (n.equals("Potion")){
+		else if (item.getClass().getSimpleName().equals("Potion")){
 			image = new ImageIcon(potionImage);
 			this.equipable = false;
 			this.type = "Consumable";
 		}
-		else if (n.equals("Helmet1")){
+		else if (item.getClass().getSimpleName().equals("Helmet1")){
 			image = new ImageIcon(helmet1Image);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("Helmet2")){
+		else if (item.getClass().getSimpleName().equals("Helmet2")){
 			image = new ImageIcon(helmet2Image);
 			this.equipable = true;
 			this.type = "Armour";
@@ -50,11 +54,12 @@ public class Item {
 			image = null;
 			this.equipable = false;
 			this.type = "Empty";
+			System.out.println("Something else added possible null");
 		}
 	}
 	
 	//Maybe redundant? :O
-	public Item(String n, String d, int x, int y){
+	public ItemIcon(String n, String d, int x, int y){
 		this.Name = n;
 		this.Description = d;
 		this.x = x;
