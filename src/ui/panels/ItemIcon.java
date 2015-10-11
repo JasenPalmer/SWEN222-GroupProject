@@ -19,49 +19,47 @@ public class ItemIcon {
 	private int x,y;
 	private boolean equipable;
 	private String type;
-	private Item item;
 	
-	public ItemIcon(Item item , String n, String d){
+	public ItemIcon(String n, String d){
 		this.Name = n;
 		this.Description = d;
-		this.item = item;
-		System.out.println(item.getClass().getSimpleName());
-		if(item.getClass().getSimpleName().equals("ShankWeapon")){
+		System.out.println(n);
+		if(n.equals("ShankWeapon")){
 			image = new ImageIcon(shankImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
-		else if (item.getClass().getSimpleName().equals("SpearWeapon")){
+		else if (n.equals("SpearWeapon")){
 			image = new ImageIcon(katanaImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
-		else if (item.getClass().getSimpleName().equals("Potion")){
+		else if (n.equals("Potion")){
 			image = new ImageIcon(potionImage);
 			this.equipable = false;
 			this.type = "Consumable";
 		}
-		else if (item.getClass().getSimpleName().equals("PlateArmour")){
+		else if (n.equals("PlateArmour")){
 			image = new ImageIcon(helmet1Image);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (item.getClass().getSimpleName().equals("ChainArmour")){
+		else if (n.equals("ChainArmour")){
 			image = new ImageIcon(helmet2Image);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (item.getClass().getSimpleName().equals("RobeArmour")){
+		else if (n.equals("RobeArmour")){
 			image = new ImageIcon(helmet2Image);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (item.getClass().getSimpleName().equals("LeatherArmour")){
+		else if (n.equals("LeatherArmour")){
 			image = new ImageIcon(helmet2Image);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (item.getClass().getSimpleName().equals("Key")){
+		else if (n.equals("Key")){
 			image = new ImageIcon(helmet2Image);
 			this.equipable = true;
 			this.type = "Armour";
