@@ -15,5 +15,15 @@ public class ChainArmour extends Armour {
 		super(name, description, position, location);
 		setArmourRating(armourRating);
 	}
+	
+	private ChainArmour(ChainArmour amour) {
+		super(amour.name, amour.description, amour.position, amour.location);
+		setArmourRating(armourRating);
+	}
+
+	@Override
+	public Item clone() {
+		return new ChainArmour(this);
+	}
 
 }

@@ -20,6 +20,10 @@ public class Key extends Item implements Serializable{
 	public Key(String name, String description, Point position, Location location) {
 		super(name, description, position, location);
 	}
+	
+	private Key(Key key) {
+		super(key.name, key.description, key.position, key.location);
+	}
 
 
 	private static final long serialVersionUID = -1062125803835909442L;
@@ -46,6 +50,11 @@ public class Key extends Item implements Serializable{
 			// unlock the container
 			container.setLocked(false);
 		}
+	}
+	
+	@Override
+	public Item clone() {
+		return new Key(this);
 	}
 
 }

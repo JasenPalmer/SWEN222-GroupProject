@@ -15,5 +15,15 @@ public class PlateArmour extends Armour {
 		super(name, description, position, location);
 		setArmourRating(armourRating);
 	}
+	
+	private PlateArmour(PlateArmour armour) {
+		super(armour.name, armour.description, armour.position, armour.location);
+		setArmourRating(armourRating);
+	}
+
+	@Override
+	public Item clone() {
+		return new PlateArmour(this);
+	}
 
 }

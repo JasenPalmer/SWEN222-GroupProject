@@ -16,4 +16,14 @@ public class SpearWeapon extends Weapon {
 		setDamage(DAMAGE);
 	}
 
+	public SpearWeapon(SpearWeapon spearWeapon) {
+		super(spearWeapon.name, spearWeapon.description, spearWeapon.position, spearWeapon.location);
+		setDamage(DAMAGE);
+	}
+
+	@Override
+	public Item clone() {
+		return new SpearWeapon(this);
+	}
+
 }

@@ -15,4 +15,15 @@ public class LeatherArmour extends Armour {
 		super(name, description, position, location);
 		setArmourRating(armourRating);
 	}
+	
+	private LeatherArmour(LeatherArmour armour) {
+		super(armour.name, armour.description, armour.position, armour.location);
+		setArmourRating(armourRating);
+	}
+
+	@Override
+	public Item clone() {
+		return new LeatherArmour(this);
+	}
+	
 }
