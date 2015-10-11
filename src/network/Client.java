@@ -130,7 +130,10 @@ public class Client {
 					event = (NetworkEvent)input.readObject();
 				}
 				catch (IOException e){
-					System.err.println("Connection to the server has been interrupted..."); }
+					System.err.println("Connection to the server has been interrupted, closing game...");
+					gui.closeAppWindow();
+					close();
+				}
 				catch (ClassNotFoundException e) {}
 
 				if(event == null) return;

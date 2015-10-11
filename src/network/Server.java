@@ -138,7 +138,7 @@ public class Server {
 				hasChanged = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
-				gameState.performAction(toProcess.getUser());
+				hasChanged = gameState.performAction(toProcess.getUser());
 			default:
 				break;
 			}
