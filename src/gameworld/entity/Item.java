@@ -5,6 +5,8 @@ import gameworld.location.Location;
 import java.awt.Point;
 import java.io.Serializable;
 
+import ui.panels.ItemIcon;
+
 
 /**
  * Items are things that a player can store in their inventory eg. a key
@@ -13,6 +15,7 @@ import java.io.Serializable;
 public abstract class Item implements InteractableEntity, Serializable{
 
 	private static final long serialVersionUID = 6844825781934457545L;
+	private ItemIcon icon;
 	
 	/**
 	 * The location that the item is in
@@ -40,6 +43,7 @@ public abstract class Item implements InteractableEntity, Serializable{
 		this.description = description;
 		this.position = position;
 		this.location = location;
+		this.icon = new ItemIcon(this,name,description);
 	}
 	
 	public abstract Item clone();
@@ -75,4 +79,6 @@ public abstract class Item implements InteractableEntity, Serializable{
 	public String toString() {
 		return name;
 	}
+	
+	public ItemIcon getIcon(){return this.icon;}
 }
