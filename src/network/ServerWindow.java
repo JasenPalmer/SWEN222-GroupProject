@@ -1,6 +1,8 @@
 package network;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -14,7 +16,7 @@ import javax.swing.JTextField;
  * @author Matt Byers
  *
  */
-public class ServerWindow extends JFrame implements WindowListener {
+public class ServerWindow extends JFrame implements WindowListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,6 +58,8 @@ public class ServerWindow extends JFrame implements WindowListener {
 		
 		input = new JTextField();
 		input.setBounds(5, 485, 290, 10);
+		input.setText("");
+		input.addKeyListener(this);
 		getContentPane().add(input, BorderLayout.SOUTH);
 		
 		setVisible(true);
@@ -88,6 +92,11 @@ public class ServerWindow extends JFrame implements WindowListener {
 		console.append("\n[ERROR] - " + error);
 		console.setCaretPosition(console.getDocument().getLength());
 	}
+	
+	private void sendServerMessage(String message){
+		displayMessage(message, "Server");
+		server.broadcastMessage(message, "Server");
+	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
@@ -103,33 +112,28 @@ public class ServerWindow extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyChar() == '\n'){
+			if(input.getText() != "") {
+				if(input.getText().split(" ", 2)[0].equals("KICK")){
+					server.kickPlayer(input.getText().split(" ", 2)[1]);
+				}
+				else {
+					sendServerMessage(input.getText());
+				}
+				input.setText("");
+			}
+			
+		}
 	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	//Unused Window and Key Listener events
+	public void windowClosed(WindowEvent e) {}
+	public void windowIconified(WindowEvent e) {}
+	public void windowDeiconified(WindowEvent e) {}
+	public void windowActivated(WindowEvent e) {}
+	public void windowDeactivated(WindowEvent e) {}
+	public void keyTyped(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
 
 }

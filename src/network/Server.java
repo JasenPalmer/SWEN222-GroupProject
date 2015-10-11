@@ -81,6 +81,12 @@ public class Server {
 			console.displayError("Server failed to start");
 		}
 	}
+	
+	public synchronized void kickPlayer(String user){
+		ClientThread toKick = getClient(user);
+		toKick.sendMessage("You have been kicked", "Server");
+		if(toKick != null) toKick.close();
+	}
 
 	public synchronized ClientThread getClient(String user){
 		for(ClientThread client : connections){
@@ -138,7 +144,7 @@ public class Server {
 				hasChanged = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
-				gameState.performAction(toProcess.getUser());
+				hasChanged = gameState.performAction(toProcess.getUser());
 			default:
 				break;
 			}
