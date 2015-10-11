@@ -15,6 +15,7 @@ import ui.panels.ItemIcon;
 public abstract class Item implements InteractableEntity, Serializable{
 
 	private static final long serialVersionUID = 6844825781934457545L;
+	
 	private ItemIcon icon;
 	
 	/**

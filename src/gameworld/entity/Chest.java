@@ -35,6 +35,10 @@ public class Chest extends Container implements Serializable{
 		generateItems();
 	}
 
+	/**
+	 * adds all items to arrays.
+	 * Used when creating random items based on rarity
+	 */
 	private void initializeArrays() {
 		commonItems = new Item[] {
 				//weapons
