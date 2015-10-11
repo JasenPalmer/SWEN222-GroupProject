@@ -233,6 +233,14 @@ public class Player implements Serializable{
 	}
 
 	/**
+	 * Sets specified index to null.
+	 * @param index - Index of array to be removed
+	 */
+	public void removeItem(int index){
+		inventory[index] = null;
+	}
+	
+	/**
 	 * Player attempts to pick-up the item on the tile in front of them
 	 * @return true if the item was successfully added
 	 */
