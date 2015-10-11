@@ -26,9 +26,6 @@ public class Chest extends Container implements Serializable{
 		initializeArray();
 		generateItems();
 	}
-	
-	
-	
 
 	private void initializeArray() {
 		possibleItems = new Item[] {
@@ -45,9 +42,6 @@ public class Chest extends Container implements Serializable{
 				new Potion("Health Potion", "Use this to heal yourself!", null, null)
 				};
 	}
-
-
-
 
 	/**
 	 * Randomly generate 1-5 items in the chest

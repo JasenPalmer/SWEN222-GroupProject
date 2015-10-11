@@ -2,6 +2,7 @@ package gameworld;
 
 import gameworld.Game.Direction;
 import gameworld.entity.Armour;
+import gameworld.entity.Chest;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
 import gameworld.entity.RobeArmour;
@@ -127,6 +128,20 @@ public class Player implements Serializable{
 		isDead = false;
 		setMaxHealth(health);
 		armour = new RobeArmour("Robe Armour", "Provides very basic protection", null, null);
+	}
+	
+	
+	protected boolean performAction() {
+		Tile tile = this.getTile(facing);
+		if(tile == null){return false;}
+		if(tile.containedEntity() == null){return false;}
+		if(tile.containedEntity() instanceof Chest) {
+			Chest chest = (Chest) tile.containedEntity();
+			if(chest.isLocked()){return false;}
+			chest.interact(this);
+			return true;
+		}
+		return false;
 	}
 
 	/**

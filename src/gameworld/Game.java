@@ -94,6 +94,12 @@ public class Game implements Serializable {
 		if(!player.dropFromInv(index)){return false;}
 		return true;
 	}
+	
+	public boolean performAction(String playerName){
+		Player player = parsePlayer(playerName);
+		if(!player.performAction()){return false;}
+		return true;
+	}
 
 	/**
 	 * Attack the player in front of the player
