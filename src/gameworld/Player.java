@@ -151,10 +151,14 @@ public class Player implements Serializable{
 			Chest chest = (Chest) tile.containedEntity();
 			if(chest.isLocked()){return false;}
 			chest.interact(this);
+			System.out.println(chest.toString());
 			return true;
 		}
 		return false;
 	}
+	
+	
+	
 
 	/**
 	 * Make this player attack the player in the tile in front of them
@@ -197,6 +201,18 @@ public class Player implements Serializable{
 		item.setPosition(position);
 		item.setLocation(location);
 		return true;
+	}
+	
+	public boolean addItem(Item item) {
+		if(inventoryFull()){return false;}
+		for(int i = 0; i < inventory.length; i++) {
+			if(inventory[i] == null) {
+				// add the item to the players inventory
+				inventory[i] = item;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

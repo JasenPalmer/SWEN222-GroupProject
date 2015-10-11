@@ -25,28 +25,42 @@ public class Chest extends Container implements Serializable{
 	private static final long serialVersionUID = -1295269831652028875L;
 	private Player openedBy;
 	
-	private Item[]possibleItems;
+	private Item[] epicItems; // 10%
+	private Item[] rareItems; // 30%
+	private Item[] commonItems; // 60%
 
 	public Chest(String name, String description, Point position, Location location) {
 		super(name, description, position, location);
-		initializeArray();
+		initializeArrays();
 		generateItems();
 	}
 
-	private void initializeArray() {
-		possibleItems = new Item[] {
+	private void initializeArrays() {
+		commonItems = new Item[] {
 				//weapons
 				new ShankWeapon("Shank", "A basic weapon", null, null),
+				//armour
+				new RobeArmour("Robe armour", "Provides very basic protection", null, null),
+				new LeatherArmour("Leather armour", "Provides basic protection",null, null),
+				//misc
+				new Potion("Health Potion", "Use this to heal yourself!", null, null)
+		};
+		
+		rareItems = new Item[] {
+				//weapon
 				new SpearWeapon("A spear","Stab stab", null, null),
 				//armour
-				new PlateArmour("Plate armour", "Provides the highest protection", null, null),
 				new ChainArmour("Chain armour", "Provides good protection", null, null),
-				new LeatherArmour("Leather armour", "Provides basic protection",null, null),
-				new RobeArmour("Robe armour", "Provides very basic protection", null, null),
+				// misc
+				new Key("A key", "Used to open doors or chests", null, null),
+		};
+		
+		epicItems = new Item[] {
+				//weapon
+				//armour
+				new PlateArmour("Plate armour", "Provides the highest protection", null, null)
 				//misc
-				//new Key("A key", "Used to open doors or chests", null, null),
-				new Potion("Health Potion", "Use this to heal yourself!", null, null)
-				};
+		};
 	}
 
 	/**
@@ -55,17 +69,40 @@ public class Chest extends Container implements Serializable{
 	private void generateItems() {
 		int itemAmount = (new Random().nextInt(5))+1;
 		for(int i = 0; i < itemAmount; i++) {
-			getItems()[i] = createItem();
+			items[i] = createItem();
 		}
 	}
 
 	/**
-	 * creates a random item
+	 * creates item - takes into account item rarity
 	 * @return item created
 	 */
 	private Item createItem() {
-		int itemType = (new Random().nextInt(possibleItems.length));
-		return possibleItems[itemType].clone();		
+		int itemType = new Random().nextInt(100);
+		if(itemType < 60) {
+			return createCommon();
+		}
+		else if(itemType >=60 && itemType < 90) {
+			return createRare();
+		}
+		else {
+			return createEpic();
+		}
+	}
+	
+	private Item createCommon() {
+		int index = new Random().nextInt(commonItems.length);
+		return commonItems[index].clone();
+	}
+	
+	private Item createRare() {
+		int index = new Random().nextInt(rareItems.length);
+		return rareItems[index].clone();
+	}
+
+	private Item createEpic() {
+		int index = new Random().nextInt(epicItems.length);
+		return epicItems[index].clone();
 	}
 
 	@Override
@@ -85,6 +122,9 @@ public class Chest extends Container implements Serializable{
 	public String toString() {
 		String toReturn = "{";
 		for(Item item : items) {
+			if(item == null){
+				continue;
+			}
 			toReturn = toReturn+","+item.toString();
 		}
 		toReturn = toReturn+"}";
