@@ -315,7 +315,9 @@ public class Player implements Serializable{
 			EntranceTile ent = (EntranceTile) tile;
 			ent.enter(this);
 		}
-		if(tile.getPlayer() != null){return false;}
+		if(tile.getPlayer() != null){
+			if(!(tile.getPlayer().isDead())) {return false;}
+		}
 		if(!tile.isPassable()){return false;}
 		if(tile.containedEntity() != null){
 			if(!(tile.containedEntity() instanceof Item)) {
