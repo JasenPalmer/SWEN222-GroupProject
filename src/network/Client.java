@@ -51,6 +51,7 @@ public class Client {
 		//Create a new Socket to the specified host's server
 		try {
 			socket = new Socket(host, PORT);
+			socket.setTcpNoDelay(true);
 		} catch (IOException e){
 			System.err.println("Error creating new client: " + user);
 			return;
