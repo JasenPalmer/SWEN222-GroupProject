@@ -115,7 +115,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		inventPanel = new InventoryPanel(state);
 		overlayPanel.add(inventPanel,2,0);
 		
-
 		//Setup loot inventory
 		lootInventPanel = new LootInventoryPanel(inventPanel);
 		overlayPanel.add(lootInventPanel,2,0);
