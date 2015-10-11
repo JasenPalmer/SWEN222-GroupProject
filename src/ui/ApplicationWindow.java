@@ -4,6 +4,7 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.Item;
+import gameworld.entity.Potion;
 import gameworld.entity.weapon.ShankWeapon;
 
 import java.awt.event.ActionEvent;
@@ -357,10 +358,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
-			inventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
+			state.addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
 			break;
 		case "Add Potion":
-			inventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
+			state.addItem(new Potion("Potion", "Drink this shit", null, null));
+			System.out.println(state.getInventory());
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
@@ -372,7 +374,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
 		case "Add Katana":
-			lootInventPanel.addItem(new ItemIcon("Katana", "Tis a katana mate"));
+			lootInventPanel.addItem(new ItemIcon("SpearWeapon", "Tis a katana mate"));
 			break;
 		case "Add Helmet1":
 			lootInventPanel.addItem(new ItemIcon("Helmet1", "Tis a helmet1 mate"));
@@ -383,6 +385,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		default:
 			break;
 		}
+		inventPanel.populateInventArray();
 	}
 
 	@Override
@@ -390,24 +393,20 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		switch(e.getKeyCode()){
 		case KeyEvent.VK_TAB:
 			if(inventOpen == true){
-				System.out.println("Close Inventory");
 				inventOpen = false;
 				setInventory();
 			}
 			else{
-				System.out.println("Open Inventory");
 				inventOpen = true;
 				setInventory();
 			}
 			break;
 		case KeyEvent.VK_I:
 			if(lootInventOpen == true){
-				System.out.println("Close Loot Inventory");
 				lootInventOpen = false;
 				setLootInventory();
 			}
 			else{
-				System.out.println("Open Loot Inventory");
 				lootInventOpen = true;
 				setLootInventory();
 			}
@@ -489,6 +488,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case KeyEvent.VK_F:
 			client.registerKeyPress(e);
+			inventPanel.populateInventArray();
 			break;
 		default:
 			break;

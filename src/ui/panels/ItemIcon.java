@@ -1,9 +1,5 @@
 package ui.panels;
 
-import gameworld.entity.Item;
-
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
 
 public class ItemIcon {
@@ -23,7 +19,6 @@ public class ItemIcon {
 	public ItemIcon(String n, String d){
 		this.Name = n;
 		this.Description = d;
-		System.out.println(n);
 		if(n.equals("ShankWeapon")){
 			image = new ImageIcon(shankImage);
 			this.equipable = true;
@@ -62,27 +57,12 @@ public class ItemIcon {
 		else if (n.equals("Key")){
 			image = new ImageIcon(helmet2Image);
 			this.equipable = true;
-			this.type = "Armour";
+			this.type = "Key";
 		}
 		else{
 			image = null;
 			this.equipable = false;
 			this.type = "Empty";
-			System.out.println("plz no");
-		}
-	}
-	
-	//Maybe redundant? :O
-	public ItemIcon(String n, String d, int x, int y){
-		this.Name = n;
-		this.Description = d;
-		this.x = x;
-		this.y = y;
-		if(n.equals("Shank")){
-			image = new ImageIcon(shankImage);
-		}
-		else{
-			image = new ImageIcon(potionImage);
 		}
 	}
 	
