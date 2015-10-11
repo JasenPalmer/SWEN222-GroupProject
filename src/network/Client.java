@@ -131,8 +131,8 @@ public class Client {
 				}
 				catch (IOException e){
 					System.err.println("Connection to the server has been interrupted, closing game...");
-					gui.closeAppWindow();
-					close();
+					//gui.closeAppWindow();
+					//close();
 				}
 				catch (ClassNotFoundException e) {}
 

@@ -77,9 +77,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		return false;
 	}
 
-	private void populateInventArray(){
+	private void populateInventArray(){		
 		Item[] itemList = player.getInventory();
-
+		
+		
 		for(int i = 0; i < itemList.length; i++){
 			if(itemList[i] != null){
 				if(i < 4){

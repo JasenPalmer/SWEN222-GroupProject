@@ -16,7 +16,6 @@ public abstract class Item implements InteractableEntity, Serializable{
 
 	private static final long serialVersionUID = 6844825781934457545L;
 	
-	private ItemIcon icon;
 	
 	/**
 	 * The location that the item is in
@@ -44,7 +43,6 @@ public abstract class Item implements InteractableEntity, Serializable{
 		this.description = description;
 		this.position = position;
 		this.location = location;
-		this.icon = new ItemIcon(this,name,description);
 	}
 	
 	public abstract Item clone();
@@ -81,5 +79,4 @@ public abstract class Item implements InteractableEntity, Serializable{
 		return name;
 	}
 	
-	public ItemIcon getIcon(){return this.icon;}
 }
