@@ -52,8 +52,7 @@ public abstract class Item implements InteractableEntity, Serializable{
 	public void setPosition(Point position) {
 		this.position = position;
 	}
-
-
+	
 	@Override
 	public Location getLocation() {
 		return location;
@@ -72,9 +71,4 @@ public abstract class Item implements InteractableEntity, Serializable{
 	public String getDescription() {
 		return description;
 	}
-	
-	public String toString() {
-		return name;
-	}
-	
 }
