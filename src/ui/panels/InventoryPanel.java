@@ -168,7 +168,8 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {		
+	public void mouseClicked(MouseEvent e) {	
+		
 	}
 
 	@Override

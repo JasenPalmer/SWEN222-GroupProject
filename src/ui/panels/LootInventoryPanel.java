@@ -143,19 +143,21 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		System.out.println(e.getX() + " " + e.getY());
-		if(inventOpen){
-			if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
-				if(inventPanel.addItem(movedItem)){
-					itemList[movedItemI][movedItemJ] = null;
-					playSound("Button");
-					movedItem = null;
+		if(movedItem != null){
+			if(inventOpen){
+				if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
+					if(inventPanel.addItem(movedItem)){
+						itemList[movedItemI][movedItemJ] = null;
+						playSound("Button");
+						movedItem = null;
+					}
+					else{
+						System.out.println("Inventory full can't swap items");
+					}
 				}
-				else{
-					System.out.println("Inventory full can't swap items");
-				}
+				populateSlots();
 			}
 		}
-		populateSlots();
 	}
 
 	private void playSound(String sound){
