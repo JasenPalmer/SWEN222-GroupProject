@@ -114,7 +114,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 42,52);
 					this.add(item,1,0);
 					if(!inventArray[i][j].getDesciption().equals("Placeholder")){
-						item.setToolTipText(inventArray[i][j].getDesciption());						
+						item.setToolTipText(inventArray[i][j].getDesciption());	
 						item.addMouseListener(new MouseAdapter(){
 							public void mouseClicked(MouseEvent e){
 								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -168,65 +168,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3){
-			if(lootOpen == false){
-				Item temp = null;
-				if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
-					if(weapon != null && addItem(weapon)){
-						weapon = null;
-						playSound("Button");
-					}
-					else{
-						System.out.println("Inventory full can't dequip weapon");
-					}
-				}
-				else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
-					if(armour != null && addItem(armour)){
-						armour = null;
-						playSound("Button");
-					}
-					else{
-						System.out.println("Inventory full can't dequip armour");
-					}
-				}
-				else{
-					//Check/Change items in invent
-					for(int i = 0; i < inventArray.length; i++){
-						for(int j = 0; j < inventArray[0].length; j++){
-							if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
-								if(inventArray[i][j].contains(e.getX(), e.getY())){
-									if(inventArray[i][j].getType().equals("Weapon")){
-										if(weapon != null){
-											temp = new Item(weapon.getName(), weapon.getDesciption());
-										}
-										weapon = inventArray[i][j];
-										inventArray[i][j] = new Item("Empty", "Placeholder");
-										if(temp != null){
-											addItem(temp);
-										}
-										playSound("Button");
-									}
-									else if(inventArray[i][j].getType().equals("Armour")){
-										if(armour != null){
-											temp = new Item(armour.getName(), armour.getDesciption());
-										}
-										armour = inventArray[i][j];
-										inventArray[i][j] = new Item("Empty", "Placeholder");
-										if(temp != null){
-											addItem(temp);
-										}
-										playSound("Button");
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			populateInvent();
-
-		}		
+	public void mouseClicked(MouseEvent e) {		
 	}
 
 	@Override
@@ -254,6 +196,62 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 			}
 		}
+		else if(e.getButton() == MouseEvent.BUTTON3){
+			System.out.println(e.getX() + " " + e.getY());
+			Item temp = null;
+			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
+				if(weapon != null && addItem(weapon)){
+					weapon = null;
+					playSound("Button");
+				}
+				else{
+					System.out.println("Inventory full can't dequip weapon");
+				}
+			}
+			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
+				if(armour != null && addItem(armour)){
+					armour = null;
+					playSound("Button");
+				}
+				else{
+					System.out.println("Inventory full can't dequip armour");
+				}
+			}
+			else{
+				//Check/Change items in invent
+				for(int i = 0; i < inventArray.length; i++){
+					for(int j = 0; j < inventArray[0].length; j++){
+						if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
+							if(inventArray[i][j].contains(e.getX(), e.getY())){
+								if(inventArray[i][j].getType().equals("Weapon")){
+									if(weapon != null){
+										temp = new Item(weapon.getName(), weapon.getDesciption());
+									}
+									weapon = inventArray[i][j];
+									inventArray[i][j] = new Item("Empty", "Placeholder");
+									if(temp != null){
+										addItem(temp);
+									}
+									playSound("Button");
+								}
+								else if(inventArray[i][j].getType().equals("Armour")){
+									if(armour != null){
+										temp = new Item(armour.getName(), armour.getDesciption());
+									}
+									armour = inventArray[i][j];
+									inventArray[i][j] = new Item("Empty", "Placeholder");
+									if(temp != null){
+										addItem(temp);
+									}
+									playSound("Button");
+								}
+							}
+						}
+					}
+				}
+			}
+			populateInvent();
+		}
 	}
 
 	@Override
@@ -267,7 +265,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 								addItemTo(i,j,(int)getIndices(movedItem).getX(),(int)getIndices(movedItem).getY());
 								movedItem = null;
 								playSound("Button");
-								return;
 							}
 						}
 					}

@@ -26,7 +26,8 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	private Item movedItem;
 	private int movedItemI;
 	private int movedItemJ;
-	
+	private boolean inventOpen;
+
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
@@ -101,6 +102,10 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	public void setInventVis(boolean change){
+		this.inventOpen = change;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
@@ -138,19 +143,21 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		System.out.println(e.getX() + " " + e.getY());
-		if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
-			if(inventPanel.addItem(movedItem)){
-				itemList[movedItemI][movedItemJ] = null;
-				playSound("Button");
-				movedItem = null;
-			}
-			else{
-				System.out.println("Inventory full can't swap items");
+		if(inventOpen){
+			if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
+				if(inventPanel.addItem(movedItem)){
+					itemList[movedItemI][movedItemJ] = null;
+					playSound("Button");
+					movedItem = null;
+				}
+				else{
+					System.out.println("Inventory full can't swap items");
+				}
 			}
 		}
 		populateSlots();
 	}
-	
+
 	private void playSound(String sound){
 		String soundPath = null;
 		switch(sound){
@@ -169,5 +176,5 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
-	
+
 }

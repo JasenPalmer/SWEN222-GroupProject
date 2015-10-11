@@ -112,11 +112,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup Inventory
 		inventPanel = new InventoryPanel();
 		overlayPanel.add(inventPanel,2,0);
-		setInventory();
+		
 
 		//Setup loot inventory
 		lootInventPanel = new LootInventoryPanel(inventPanel);
 		overlayPanel.add(lootInventPanel,2,0);
+		setInventory();
 		setLootInventory();
 		inventPanel.setLootInventPanel(lootInventPanel);
 
@@ -189,10 +190,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		if(inventOpen == false){
 			inventPanel.setVisible(false);
 			inventPanel.setFocusable(false);
+			lootInventPanel.setInventVis(false);
 		}
 		else{
 			inventPanel.setVisible(true);
 			inventPanel.setFocusable(true);
+			lootInventPanel.setInventVis(true);
 		}
 	}
 
@@ -481,6 +484,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			chatBoxPanel.getTextField().requestFocus();
 			break;
 		case KeyEvent.VK_SPACE:
+			client.registerKeyPress(e);
+			break;
+		case KeyEvent.VK_F:
 			client.registerKeyPress(e);
 			break;
 		default:
