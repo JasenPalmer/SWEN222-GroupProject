@@ -15,5 +15,15 @@ public class RobeArmour extends Armour {
 		super(name, description, position, location);
 		setArmourRating(armourRating);
 	}
+	
+	private RobeArmour(RobeArmour armour) {
+		super(armour.name, armour.description, armour.position, armour.location);
+		setArmourRating(armourRating);
+	}
+
+	@Override
+	public Item clone() {
+		return new RobeArmour(this);
+	}
 
 }

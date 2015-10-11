@@ -15,4 +15,14 @@ public class ShankWeapon extends Weapon {
 		super(name, description, position, location);
 		setDamage(DAMAGE);
 	}
+
+	public ShankWeapon(ShankWeapon shankWeapon) {
+		super(shankWeapon.name, shankWeapon.description, shankWeapon.position, shankWeapon.location);
+		setDamage(DAMAGE);
+	}
+
+	@Override
+	public Item clone() {
+		return new ShankWeapon(this);
+	}
 }

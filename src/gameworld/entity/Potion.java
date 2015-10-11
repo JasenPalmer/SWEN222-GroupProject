@@ -15,6 +15,10 @@ public class Potion extends Item {
 			Location location) {
 		super(name, description, position, location);
 	}
+	
+	private Potion(Potion pot) {
+		super(pot.name, pot.description, pot.position, pot.location);
+	}
 
 	@Override
 	public void interact(Player player) {
@@ -28,6 +32,11 @@ public class Potion extends Item {
 				player.setHealth(health+healAmount);
 			}
 		}
+	}
+
+	@Override
+	public Item clone() {
+		return new Potion(this);
 	}
 
 }

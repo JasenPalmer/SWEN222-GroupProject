@@ -17,22 +17,22 @@ public abstract class Item implements InteractableEntity, Serializable{
 	/**
 	 * The location that the item is in
 	 */
-	private Location location;
+	protected Location location;
 	
 	/**
 	 * The position of the item in the location
 	 */
-	private Point position;
+	protected Point position;
 	
 	/**
 	 * Name of the item
 	 */
-	private String name;
+	protected String name;
 	
 	/**
 	 * Item's description
 	 */
-	private String description;
+	protected String description;
 	
 	
 	public Item(String name, String description, Point position, Location location) {
@@ -41,6 +41,8 @@ public abstract class Item implements InteractableEntity, Serializable{
 		this.position = position;
 		this.location = location;
 	}
+	
+	public abstract Item clone();
 	
 	@Override
 	public Point getPosition() {

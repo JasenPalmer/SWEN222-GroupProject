@@ -4,6 +4,7 @@ import gameworld.Game.Direction;
 import gameworld.entity.Armour;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
+import gameworld.entity.RobeArmour;
 import gameworld.entity.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
@@ -125,6 +126,7 @@ public class Player implements Serializable{
 		health = 100;
 		isDead = false;
 		setMaxHealth(health);
+		armour = new RobeArmour("Robe Armour", "Provides very basic protection", null, null);
 	}
 
 	/**

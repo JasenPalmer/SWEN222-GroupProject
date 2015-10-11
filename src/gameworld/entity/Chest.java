@@ -18,11 +18,36 @@ public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;
 	private Player openedBy;
+	
+	private Item[]possibleItems;
 
 	public Chest(String name, String description, Point position, Location location) {
 		super(name, description, position, location);
+		initializeArray();
 		generateItems();
 	}
+	
+	
+	
+
+	private void initializeArray() {
+		possibleItems = new Item[] {
+				//weapons
+				new ShankWeapon("Shank", "A basic weapon", null, null),
+				new SpearWeapon("A spear","Stab stab", null, null),
+				//armour
+				new PlateArmour("Plate armour", "Provides the highest protection", null, null),
+				new ChainArmour("Chain armour", "Provides good protection", null, null),
+				new LeatherArmour("Leather armour", "Provides basic protection",null, null),
+				new RobeArmour("Robe armour", "Provides very basic protection", null, null),
+				//misc
+				//new Key("A key", "Used to open doors or chests", null, null),
+				new Potion("Health Potion", "Use this to heal yourself!", null, null)
+				};
+	}
+
+
+
 
 	/**
 	 * Randomly generate 1-5 items in the chest
@@ -39,17 +64,8 @@ public class Chest extends Container implements Serializable{
 	 * @return item created
 	 */
 	private Item createItem() {
-		int itemType = (new Random().nextInt(3))+1;
-		switch(itemType) {
-		case 1:
-			return new ShankWeapon("Shank", "A basic weapon", null, null);
-		case 2:
-			return new Potion("Health Potion", "Use this to heal yourself!", null, null);
-		case 3:
-			return new Key("A key", "Used to open doors or chests", null, null);
-			default:
-				return null;
-		}
+		int itemType = (new Random().nextInt(possibleItems.length));
+		return possibleItems[itemType].clone();		
 	}
 
 	@Override
