@@ -81,5 +81,14 @@ public class Chest extends Container implements Serializable{
 	public Player getOpenedBy() {
 		return openedBy;
 	}
+	
+	public String toString() {
+		String toReturn = "{";
+		for(Item item : items) {
+			toReturn = toReturn+","+item.toString();
+		}
+		toReturn = toReturn+"}";
+		return toReturn;
+	}
 
 }

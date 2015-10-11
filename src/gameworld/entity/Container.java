@@ -19,7 +19,7 @@ public abstract class Container implements InteractableEntity, Serializable {
 	/**
 	 * Items that are stored in the container
 	 */
-	private Item[] items;
+	protected Item[] items;
 	
 	/**
 	 * Flag for if the container if locked

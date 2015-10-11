@@ -73,4 +73,8 @@ public abstract class Item implements InteractableEntity, Serializable{
 		return description;
 	}
 	
+	public String toString() {
+		return name;
+	}
+	
 }
