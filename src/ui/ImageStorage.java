@@ -33,16 +33,19 @@ public class ImageStorage {
 
 	static Image[][] robeWalk = new Image[4][9];
 	static Image[][] robeSpear = new Image[4][8];
+	static Image[][] robeShank = new Image[4][6];
 	
 	static Image[][] leatherWalk = new Image[4][9];
 	static Image[][] leatherSpear = new Image[4][8];
+	static Image[][] leatherShank = new Image[4][6];
 	
 	static Image[][] chainWalk = new Image[4][9];
 	static Image[][] chainSpear = new Image[4][8];
+	static Image[][] chainShank = new Image[4][6];
 	
 	static Image[][] plateWalk = new Image[4][9];
 	static Image[][] plateSpear = new Image[4][8];
-
+	static Image[][] plateShank = new Image[4][6];
 
 	public ImageStorage(){
 		setImages();
@@ -91,9 +94,13 @@ public class ImageStorage {
 				for(int j = 0; j < robeWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
 					robeWalk[i][j] = img;
-					if(i<robeSpear.length && j<robeSpear[i].length){
+					if(j<robeSpear[i].length){
 						img = ImageIO.read(new File("src/ui/images/player/robe/attack/robe-"+i+"-attack-"+j+".png"));
 						robeSpear[i][j] = img;
+					}
+					if(j<robeShank[i].length){
+						img = ImageIO.read(new File("src/ui/images/player/robe/attack/robe-"+i+"-shank-"+j+".png"));
+						robeShank[i][j] = img;
 					}
 				}
 			}
@@ -103,9 +110,13 @@ public class ImageStorage {
 				for(int j = 0; j < leatherWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
 					leatherWalk[i][j] = img;
-					if(i<leatherSpear.length && j<leatherSpear[i].length){
+					if(j<leatherSpear[i].length){
 						img = ImageIO.read(new File("src/ui/images/player/leather/attack/leather-"+i+"-attack-"+j+".png"));
 						leatherSpear[i][j] = img;
+					}
+					if(j<leatherShank[i].length){
+						img = ImageIO.read(new File("src/ui/images/player/leather/attack/leather-"+i+"-shank-"+j+".png"));
+						leatherShank[i][j] = img;
 					}
 				}
 			}
@@ -115,9 +126,13 @@ public class ImageStorage {
 				for(int j = 0; j < chainWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/chain/movement/chain-"+i+"-move-"+j+".png"));
 					chainWalk[i][j] = img;
-					if(i<chainSpear.length && j<chainSpear[i].length){
+					if(j<chainSpear[i].length){
 						img = ImageIO.read(new File("src/ui/images/player/chain/attack/chain-"+i+"-attack-"+j+".png"));
 						chainSpear[i][j] = img;
+					}
+					if(j<chainShank[i].length){
+						img = ImageIO.read(new File("src/ui/images/player/chain/attack/chain-"+i+"-shank-"+j+".png"));
+						chainShank[i][j] = img;
 					}
 				}
 			}
@@ -127,9 +142,13 @@ public class ImageStorage {
 				for(int j = 0; j < plateWalk[i].length; j++){
 					Image img = ImageIO.read(new File("src/ui/images/player/plate/movement/plate-"+i+"-move-"+j+".png"));
 					plateWalk[i][j] = img;
-					if(i<plateSpear.length && j<plateSpear[i].length){
+					if(j<plateSpear[i].length){
 						img = ImageIO.read(new File("src/ui/images/player/plate/attack/plate-"+i+"-attack-"+j+".png"));
 						plateSpear[i][j] = img;
+					}
+					if(j<plateShank[i].length){
+						img = ImageIO.read(new File("src/ui/images/player/plate/attack/plate-"+i+"-shank-"+j+".png"));
+						plateShank[i][j] = img;
 					}
 				}
 			}

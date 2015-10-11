@@ -5,7 +5,7 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.BasicEntity;
-import gameworld.location.InsideLocation;
+import gameworld.entity.weapon.ShankWeapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
@@ -298,30 +298,57 @@ public class RenderingWindow extends JPanel{
 			}
 			
 			switch(p.getArmour().getName()){
-			case "Robe Armour":
-				if(p.isAttacking()){
-					image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
-					applicationWindow.cycleAnimations();
-				} else { image  = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()]; }
-				break;
-			case "Leather Armour":
-				if(p.isAttacking()){
-					image = ImageStorage.leatherSpear[directionInt][animation.getAttackFrame()];
-					applicationWindow.cycleAnimations();
-				} else { image  = ImageStorage.leatherWalk[directionInt][animation.getWalkFrame()]; }
-				break;
-			case "Chain Armour":
-				if(p.isAttacking()){
-					image = ImageStorage.chainSpear[directionInt][animation.getAttackFrame()];
-					applicationWindow.cycleAnimations();
-				} else { image  = ImageStorage.chainWalk[directionInt][animation.getWalkFrame()]; }
-				break;
-			case "Plate Armour":
-				if(p.isAttacking()){
-					image = ImageStorage.plateSpear[directionInt][animation.getAttackFrame()];
-					applicationWindow.cycleAnimations();
-				} else { image  = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()]; }
-				break;
+				case "Robe Armour":
+					if(p.isAttacking()){
+						if(p.getWeapon() instanceof ShankWeapon){
+							System.out.println("WE SHANKING: "+animation.getAttackFrame());
+							image = ImageStorage.robeShank[directionInt][animation.getAttackFrame()];
+						} else{
+							image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
+						}
+						applicationWindow.cycleAnimations();
+					} else { image  = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()]; }
+					
+					break;
+					
+				case "Leather Armour":
+					if(p.isAttacking()){
+						if(p.getWeapon() instanceof ShankWeapon){
+							image = ImageStorage.leatherShank[directionInt][animation.getAttackFrame()];
+						} else{
+							image = ImageStorage.leatherSpear[directionInt][animation.getAttackFrame()];
+						}
+						applicationWindow.cycleAnimations();
+						
+					} else { image  = ImageStorage.leatherWalk[directionInt][animation.getWalkFrame()]; }
+					
+					break;
+					
+				case "Chain Armour":
+					if(p.isAttacking()){
+						if(p.getWeapon() instanceof ShankWeapon){
+							image = ImageStorage.chainShank[directionInt][animation.getAttackFrame()];
+						} else{
+							image = ImageStorage.chainSpear[directionInt][animation.getAttackFrame()];
+						}
+						applicationWindow.cycleAnimations();
+						
+					} else { image  = ImageStorage.chainWalk[directionInt][animation.getWalkFrame()]; }
+					break;
+					
+				case "Plate Armour":
+					if(p.isAttacking()){
+						if(p.getWeapon() instanceof ShankWeapon){
+							image = ImageStorage.plateShank[directionInt][animation.getAttackFrame()];
+						} else{
+							image = ImageStorage.plateSpear[directionInt][animation.getAttackFrame()];
+						}
+	
+						applicationWindow.cycleAnimations();
+						
+					} else { image  = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()]; }
+					
+					break;
 			}	
 			
 			if(p.isDead()){
@@ -394,17 +421,10 @@ public class RenderingWindow extends JPanel{
 		public void updateCamera(int[] realCoord){
 			int playerX = realCoord[0];
 			int playerY = realCoord[1];
+			if(playerImage!=null){
 			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
 			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
+			}
 		}
 
-		public static Image createImage(String imagename) {
-			Image image = null;
-			try {
-				image = ImageIO.read(new File("src/ui/images/terrain/"+imagename+".png"));
-			}catch(Exception e) {
-				System.err.println("Error: "+e);
-			}
-			return image;
-		}
 }
