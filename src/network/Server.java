@@ -109,9 +109,11 @@ public class Server {
 
 	public synchronized void updateGUI(Player madeUpdate){
 		//console.displayEvent("Updating all clients");
-		for(ClientThread client : connections){
-			if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateGUI();
-		}
+		 synchronized(connections){
+			 for(ClientThread client : connections){
+				 if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateGUI();
+			 }
+		 }
 	}
 
 	public synchronized void processEvents(){
@@ -172,7 +174,9 @@ public class Server {
 		for(ClientThread t : connections){
 			t.close();
 		}
-		connections.clear();
+		synchronized(connections){
+			connections.clear();
+		}
 		finished = true;
 		eventHandler.finish();
 	}
