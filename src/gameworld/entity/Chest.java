@@ -4,8 +4,6 @@ import gameworld.Player;
 import gameworld.entity.armour.ChainArmour;
 import gameworld.entity.armour.LeatherArmour;
 import gameworld.entity.armour.PlateArmour;
-import gameworld.entity.armour.RobeArmour;
-import gameworld.entity.weapon.ShankWeapon;
 import gameworld.entity.weapon.SpearWeapon;
 import gameworld.location.Location;
 
@@ -42,9 +40,9 @@ public class Chest extends Container implements Serializable{
 	private void initializeArrays() {
 		commonItems = new Item[] {
 				//weapons
-				new ShankWeapon("Shank", "A basic weapon", null, null),
+				//new ShankWeapon("Shank", "A basic weapon", null, null),
 				//armour
-				new RobeArmour("Robe armour", "Provides very basic protection", null, null),
+				//new RobeArmour("Robe armour", "Provides very basic protection", null, null),
 				new LeatherArmour("Leather armour", "Provides basic protection",null, null),
 				//misc
 				new Potion("Health Potion", "Use this to heal yourself!", null, null)
@@ -71,7 +69,7 @@ public class Chest extends Container implements Serializable{
 	 * Randomly generate 1-5 items in the chest
 	 */
 	private void generateItems() {
-		int itemAmount = (new Random().nextInt(5))+1;
+		int itemAmount = (new Random().nextInt(3))+1;
 		for(int i = 0; i < itemAmount; i++) {
 			items[i] = createItem();
 		}

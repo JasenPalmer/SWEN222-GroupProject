@@ -9,7 +9,7 @@ public class SpearWeapon extends Weapon {
 
 	private static final long serialVersionUID = 228225523401044106L;
 	
-	private static final int DAMAGE = 25;
+	private static final int DAMAGE = 40;
 
 	public SpearWeapon(String name, String description, Point position,
 			Location location) {

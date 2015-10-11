@@ -5,8 +5,6 @@ import gameworld.location.Location;
 import java.awt.Point;
 import java.io.Serializable;
 
-import ui.panels.ItemIcon;
-
 
 /**
  * Items are things that a player can store in their inventory eg. a key

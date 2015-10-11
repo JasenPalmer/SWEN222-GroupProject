@@ -9,7 +9,7 @@ public class ShankWeapon extends Weapon {
 
 	private static final long serialVersionUID = 4835987546300861362L;
 	
-	private static final int DAMAGE = 10;
+	private static final int DAMAGE = 15;
 
 	public ShankWeapon(String name, String description, Point position,
 			Location location) {

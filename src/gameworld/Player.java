@@ -134,11 +134,16 @@ public class Player implements Serializable{
 		health = 100;
 		isDead = false;
 		setMaxHealth(health);
+		// set default gear
 		armour = new RobeArmour("Robe Armour", "Provides very basic protection", null, null);
-		weapon = new ShankWeapon("Shank", "A basic weapon", null, null);
+		setWeapon(new ShankWeapon("Shank", "A basic weapon", null, null));
 	}
 	
-	
+	/**
+	 * Should be called when the action button is pressed (default F).
+	 * This method will pick up any item in front of the player or attempt to open a chest if there is one
+	 * @return true is an action was performed
+	 */
 	protected boolean performAction() {
 		Tile tile = this.getTile(facing);
 		if(tile == null){return false;}
@@ -157,7 +162,11 @@ public class Player implements Serializable{
 		return false;
 	}
 	
-	
+	/**
+	 * Swap the items at the given indices in the inventory
+	 * @param first - index of first item
+	 * @param second - index of second item
+	 */
 	public void swapItems(int first, int second) {
 		if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
 			return;
