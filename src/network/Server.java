@@ -89,8 +89,10 @@ public class Server {
 	}
 
 	public synchronized ClientThread getClient(String user){
-		for(ClientThread client : connections){
-			if(client.getUser().equals(user)) return client;
+		synchronized(connections){
+			for(ClientThread client : connections){
+				if(client.getUser().equals(user)) return client;
+			}
 		}
 		//console.displayError("User: " + user + " not found.");
 		return null;
@@ -102,8 +104,10 @@ public class Server {
 	}
 
 	public synchronized void broadcastMessage(String message, String senderUser){
-		for(ClientThread client: connections){
-			client.sendMessage(message, senderUser);
+		synchronized(connections){
+			for(ClientThread client: connections){
+				client.sendMessage(message, senderUser);
+			}
 		}
 	}
 
