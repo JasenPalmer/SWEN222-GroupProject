@@ -39,7 +39,7 @@ public abstract class Container implements InteractableEntity, Serializable {
 		this.description = description;
 		this.position = position;
 		items = new Item[INV_SIZE];
-		locked = true;
+		locked = false;
 		this.location = location;
 	}
 	

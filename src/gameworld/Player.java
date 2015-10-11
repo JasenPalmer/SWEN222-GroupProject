@@ -158,6 +158,14 @@ public class Player implements Serializable{
 	}
 	
 	
+	public void swapItems(int first, int second) {
+		if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
+			return;
+		}
+		Item item = inventory[first];
+		inventory[first] = inventory[second];
+		inventory[second] = item;
+	}
 	
 
 	/**

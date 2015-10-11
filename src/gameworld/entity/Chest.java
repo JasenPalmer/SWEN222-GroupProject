@@ -129,7 +129,7 @@ public class Chest extends Container implements Serializable{
 			if(item == null){
 				continue;
 			}
-			toReturn = toReturn+","+item.toString();
+			toReturn = toReturn+item.toString()+",";
 		}
 		toReturn = toReturn+"}";
 		return toReturn;
