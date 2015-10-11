@@ -1,12 +1,12 @@
 package gameworld;
 
 import gameworld.Game.Direction;
-import gameworld.entity.Armour;
 import gameworld.entity.Chest;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
-import gameworld.entity.RobeArmour;
-import gameworld.entity.Weapon;
+import gameworld.entity.armour.Armour;
+import gameworld.entity.armour.RobeArmour;
+import gameworld.entity.weapon.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
@@ -32,6 +32,14 @@ public class Player implements Serializable{
 	 */
 	private static final int DEFAULT_INV_SIZE = 8;
 	
+	/**
+	 * How many people the player has killed
+	 */
+	private int score;
+	
+	/**
+	 * The maximum health of the player
+	 */
 	private int maxHealth;
 	
 	/**
@@ -49,6 +57,9 @@ public class Player implements Serializable{
 	 */
 	private  Item[] inventory;
 	
+
+
+
 	/**
 	 * The current location the player is in
 	 */
@@ -104,11 +115,9 @@ public class Player implements Serializable{
 	 */
 	private Armour armour;
 	
-	
-
-
 
 	public Player(String name, Game game) {
+		score = 0;
 		//set user name
 		this.name = name;	
 		//create inventory
@@ -161,6 +170,9 @@ public class Player implements Serializable{
 		Player opponent = tile.getPlayer();
 		int damage = playerDamage-armour.getArmourRating();
 		opponent.setHealth(opponent.getHealth()-damage);
+		if(opponent.getHealth() <= 0){
+			score++;
+		}
 		return true;
 	}
 
@@ -433,7 +445,11 @@ public class Player implements Serializable{
 	}
 
 	public void setHealth(int health) {
-		this.health = health;
+		if(this.health - health <= 0){
+			this.health = 0;
+		}else{
+			this.health = health;
+		}
 	}
 
 	public boolean isDead() {
@@ -488,4 +504,14 @@ public class Player implements Serializable{
 	public void setArmour(Armour armour) {
 		this.armour = armour;
 	}
+
+
+	public int getScore() {
+		return score;
+	}
+	
+	public Item[] getInventory() {
+		return inventory;
+	}
+
 }

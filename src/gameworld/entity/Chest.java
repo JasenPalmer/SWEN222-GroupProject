@@ -1,6 +1,12 @@
 package gameworld.entity;
 
 import gameworld.Player;
+import gameworld.entity.armour.ChainArmour;
+import gameworld.entity.armour.LeatherArmour;
+import gameworld.entity.armour.PlateArmour;
+import gameworld.entity.armour.RobeArmour;
+import gameworld.entity.weapon.ShankWeapon;
+import gameworld.entity.weapon.SpearWeapon;
 import gameworld.location.Location;
 
 import java.awt.Point;

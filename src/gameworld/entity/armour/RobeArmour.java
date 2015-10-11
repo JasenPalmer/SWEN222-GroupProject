@@ -1,5 +1,6 @@
-package gameworld.entity;
+package gameworld.entity.armour;
 
+import gameworld.entity.Item;
 import gameworld.location.Location;
 
 import java.awt.Point;
