@@ -19,11 +19,11 @@ import javax.swing.border.EmptyBorder;
 
 public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 
-	private Item[][] itemList = new Item[6][3];
+	private ItemIcon[][] itemList = new ItemIcon[6][3];
 	private LootInventoryBackground lootInventBackground = new LootInventoryBackground();
 	private InventoryPanel inventPanel;
 	private LootInventoryPanel self = this;
-	private Item movedItem;
+	private ItemIcon movedItem;
 	private int movedItemI;
 	private int movedItemJ;
 	private boolean inventOpen;
@@ -44,7 +44,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		addMouseListener(this);
 	}
 
-	public boolean addItem(Item item){
+	public boolean addItem(ItemIcon item){
 		for(int i = 0; i < itemList[0].length; i++){
 			for(int j = 0; j < itemList.length; j++){
 				if(itemList[j][i] == null){

@@ -3,6 +3,8 @@ package ui;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.entity.Item;
+import gameworld.entity.weapon.ShankWeapon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +32,7 @@ import ui.panels.BackgroundPanel;
 import ui.panels.ChatBoxPanel;
 import ui.panels.HealthBarPanel;
 import ui.panels.InventoryPanel;
-import ui.panels.Item;
+import ui.panels.ItemIcon;
 import ui.panels.LootInventoryPanel;
 import ui.panels.SettingsMenu;
 
@@ -356,28 +358,29 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
-			inventPanel.addItem(new Item("Shank", "Tis a shank mate"));
+			state.addItem(new ShankWeapon("Shank", "Tis a shank mate", null, null));
+			//inventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
 		case "Add Potion":
-			inventPanel.addItem(new Item("Potion", "Tis a potion mate"));
+		//	inventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
 		case "Add Potion loot":
-			lootInventPanel.addItem(new Item("Potion", "Tis a potion mate"));
+		//	lootInventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
 			break;
 		case "Add Shank loot":
-			lootInventPanel.addItem(new Item("Shank", "Tis a shank mate"));
+	//		lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
 		case "Add Katana":
-			lootInventPanel.addItem(new Item("Katana", "Tis a katana mate"));
+	//		lootInventPanel.addItem(new ItemIcon("Katana", "Tis a katana mate"));
 			break;
 		case "Add Helmet1":
-			lootInventPanel.addItem(new Item("Helmet1", "Tis a helmet1 mate"));
+	//		lootInventPanel.addItem(new ItemIcon("Helmet1", "Tis a helmet1 mate"));
 			break;
 		case "Add Helmet2":
-			lootInventPanel.addItem(new Item("Helmet2", "Tis a helmet2 mate"));
+	//		lootInventPanel.addItem(new ItemIcon("Helmet2", "Tis a helmet2 mate"));
 			break;
 		default:
 			break;

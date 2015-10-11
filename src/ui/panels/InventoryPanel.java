@@ -2,6 +2,7 @@ package ui.panels;
 
 
 import gameworld.Player;
+import gameworld.entity.Item;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -27,10 +28,10 @@ import javax.swing.TransferHandler;
 public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	Image backgroundImage; 
-	Item[][] inventArray = new Item[4][2];
+	ItemIcon[][] inventArray = new ItemIcon[4][2];
 	InventoryBackground inventBackground = new InventoryBackground();
-	private Item movedItem;
-	private Item weapon, armour;
+	private ItemIcon movedItem;
+	private ItemIcon weapon, armour;
 	private boolean lootOpen;
 	private LootInventoryPanel lootInvent;
 	private InventoryPanel self = this;
@@ -49,13 +50,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 		//Add invent items
 		inventArray[0][0] = null;
+		populateInventArray();
 		fillAllSlots();
 		populateInvent();
 		fillEquipmentSlots();
 		addMouseListener(this);
 	}
 
-	public boolean addItem(Item item){
+	public boolean addItem(ItemIcon item){
 		for(int i = 0; i < inventArray[0].length; i++){
 			for(int j = 0; j < inventArray.length; j++){
 				if(inventArray[j][i].getName().equals("Empty")){
@@ -75,6 +77,22 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		return false;
 	}
 
+	private void populateInventArray(){
+		Item[] itemList = player.getInventory();
+
+		for(int i = 0; i < itemList.length; i++){
+			if(itemList[i] != null){
+				if(i < 4){
+					inventArray[0][i] = itemList[i].getIcon();
+				}
+				else{
+					inventArray[1][i-4] = itemList[i].getIcon();
+				}
+			}
+		}
+		inventArray[0][1] = new ItemIcon(null, "Shank", "WTF MATE");
+	}
+
 	/**
 	 * Swaps 2 elements of the array
 	 * @param x1 - Item 1 array x coordinate
@@ -88,7 +106,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			inventArray[x1][y1] = null;
 		}
 		else{
-			Item temp = inventArray[x2][y2];
+			ItemIcon temp = inventArray[x2][y2];
 			inventArray[x2][y2] = inventArray[x1][y1];
 			inventArray[x1][y1] = temp;
 		}
@@ -165,7 +183,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] == null){
-					inventArray[i][j] = new Item("Empty", "Placeholder");
+					inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
 				}
 			}
 		}
@@ -173,7 +191,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {	
-		
+
 	}
 
 	@Override
@@ -203,7 +221,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 		else if(e.getButton() == MouseEvent.BUTTON3){
 			System.out.println(e.getX() + " " + e.getY());
-			Item temp = null;
+			ItemIcon temp = null;
 			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 				if(weapon != null && addItem(weapon)){
 					weapon = null;
@@ -230,10 +248,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
 								if(inventArray[i][j].getType().equals("Weapon")){
 									if(weapon != null){
-										temp = new Item(weapon.getName(), weapon.getDesciption());
+										temp = new ItemIcon(null, weapon.getName(), weapon.getDesciption());
 									}
 									weapon = inventArray[i][j];
-									inventArray[i][j] = new Item("Empty", "Placeholder");
+									inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
 									if(temp != null){
 										addItem(temp);
 									}
@@ -241,10 +259,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 								}
 								else if(inventArray[i][j].getType().equals("Armour")){
 									if(armour != null){
-										temp = new Item(armour.getName(), armour.getDesciption());
+										temp = new ItemIcon(null, armour.getName(), armour.getDesciption());
 									}
 									armour = inventArray[i][j];
-									inventArray[i][j] = new Item("Empty", "Placeholder");
+									inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
 									if(temp != null){
 										addItem(temp);
 									}
@@ -288,7 +306,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 								if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 									if(inventArray[i][j].contains(movedItem.getX(), movedItem.getY())){
 										if(lootInvent.addItem(movedItem)){
-											inventArray[i][j] = new Item("Empty", "Placeholder");
+											inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
 											playSound("Button");
 										}
 										else{
@@ -325,7 +343,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
-	private Point getIndices(Item item){
+	private Point getIndices(ItemIcon item){
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] != null){
