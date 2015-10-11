@@ -357,29 +357,28 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
-			state.addItem(new ShankWeapon("Shank", "Tis a shank mate", null, null));
-			//inventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
+			inventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
 		case "Add Potion":
-		//	inventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
+			inventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
 		case "Add Potion loot":
-		//	lootInventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
+			lootInventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
 			break;
 		case "Add Shank loot":
-	//		lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
+			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
 		case "Add Katana":
-	//		lootInventPanel.addItem(new ItemIcon("Katana", "Tis a katana mate"));
+			lootInventPanel.addItem(new ItemIcon("Katana", "Tis a katana mate"));
 			break;
 		case "Add Helmet1":
-	//		lootInventPanel.addItem(new ItemIcon("Helmet1", "Tis a helmet1 mate"));
+			lootInventPanel.addItem(new ItemIcon("Helmet1", "Tis a helmet1 mate"));
 			break;
 		case "Add Helmet2":
-	//		lootInventPanel.addItem(new ItemIcon("Helmet2", "Tis a helmet2 mate"));
+			lootInventPanel.addItem(new ItemIcon("Helmet2", "Tis a helmet2 mate"));
 			break;
 		default:
 			break;

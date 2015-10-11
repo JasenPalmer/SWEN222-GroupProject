@@ -81,17 +81,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		Item[] itemList = player.getInventory();
 		
 		
-		for(int i = 0; i < itemList.length; i++){
-			if(itemList[i] != null){
-				if(i < 4){
-					inventArray[0][i] = itemList[i].getIcon();
-				}
-				else{
-					inventArray[1][i-4] = itemList[i].getIcon();
-				}
-			}
-		}
-		inventArray[0][1] = new ItemIcon(null, "Shank", "WTF MATE");
 	}
 
 	/**
@@ -184,7 +173,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		for(int i = 0; i < inventArray.length; i++){
 			for(int j = 0; j < inventArray[0].length; j++){
 				if(inventArray[i][j] == null){
-					inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
+					inventArray[i][j] = new ItemIcon("Empty", "Placeholder");
 				}
 			}
 		}
@@ -249,10 +238,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
 								if(inventArray[i][j].getType().equals("Weapon")){
 									if(weapon != null){
-										temp = new ItemIcon(null, weapon.getName(), weapon.getDesciption());
+										temp = new ItemIcon(weapon.getName(), weapon.getDesciption());
 									}
 									weapon = inventArray[i][j];
-									inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
+									inventArray[i][j] = new ItemIcon("Empty", "Placeholder");
 									if(temp != null){
 										addItem(temp);
 									}
@@ -260,10 +249,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 								}
 								else if(inventArray[i][j].getType().equals("Armour")){
 									if(armour != null){
-										temp = new ItemIcon(null, armour.getName(), armour.getDesciption());
+										temp = new ItemIcon(armour.getName(), armour.getDesciption());
 									}
 									armour = inventArray[i][j];
-									inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
+									inventArray[i][j] = new ItemIcon("Empty", "Placeholder");
 									if(temp != null){
 										addItem(temp);
 									}
@@ -307,7 +296,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 								if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 									if(inventArray[i][j].contains(movedItem.getX(), movedItem.getY())){
 										if(lootInvent.addItem(movedItem)){
-											inventArray[i][j] = new ItemIcon(null, "Empty", "Placeholder");
+											inventArray[i][j] = new ItemIcon("Empty", "Placeholder");
 											playSound("Button");
 										}
 										else{
