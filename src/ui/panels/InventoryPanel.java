@@ -1,6 +1,8 @@
 package ui.panels;
 
 
+import gameworld.Player;
+
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.dnd.DragSourceContext;
@@ -32,13 +34,15 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	private boolean lootOpen;
 	private LootInventoryPanel lootInvent;
 	private InventoryPanel self = this;
+	private Player player;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
-	public InventoryPanel(){
+	public InventoryPanel(Player player){
 		setLayout(null);
 		setBounds(814, 637, 231, 262);
+		this.player = player;
 
 		//Add invent background
 		this.add(inventBackground,0,0);

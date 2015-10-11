@@ -110,7 +110,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.add(overlayPanel,2,0);
 
 		//Setup Inventory
-		inventPanel = new InventoryPanel();
+		inventPanel = new InventoryPanel(state);
 		overlayPanel.add(inventPanel,2,0);
 		
 
@@ -531,6 +531,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		return null;
 	}
 
+	public void closeAppWindow(){
+	System.exit(0);	
+	}
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		timer.stop();
