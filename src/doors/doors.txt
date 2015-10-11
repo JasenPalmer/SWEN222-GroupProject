@@ -3,5 +3,6 @@
 #Note: exitTile is not an EntranceTile but the tile you want the player to move to
 Test Map	8	10	DANKLAND	2	2
 Test Map	11	26	Maze-big	0	1
+Test Map	26	22	Inside Test	14	7
 Maze-big	28	29	Test Map	12	26
-Test Map	26	22	Inside Test	13	6
+Inside Test	15	6	Test Map	25	23
