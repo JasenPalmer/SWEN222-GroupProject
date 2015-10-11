@@ -301,7 +301,6 @@ public class RenderingWindow extends JPanel{
 				case "Robe Armour":
 					if(p.isAttacking()){
 						if(p.getWeapon() instanceof ShankWeapon){
-							System.out.println("WE SHANKING: "+animation.getAttackFrame());
 							image = ImageStorage.robeShank[directionInt][animation.getAttackFrame()];
 						} else{
 							image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
