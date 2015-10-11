@@ -114,8 +114,16 @@ public class ServerWindow extends JFrame implements WindowListener, KeyListener 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == '\n'){
-			if(input.getText() != "") sendServerMessage(input.getText());
-			input.setText("");
+			if(input.getText() != "") {
+				if(input.getText().split(" ", 2)[0].equals("KICK")){
+					server.kickPlayer(input.getText().split(" ", 2)[1]);
+				}
+				else {
+					sendServerMessage(input.getText());
+				}
+				input.setText("");
+			}
+			
 		}
 	}
 	
