@@ -212,6 +212,9 @@ public class Client {
 						}
 					}
 					break;
+				case DISPLAY_CONTAINER:
+					gui.openContainer(event.getContainer());
+					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();
 					chatBox.displayMessage(event.getUser(), event.getMessage());

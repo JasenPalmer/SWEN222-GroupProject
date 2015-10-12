@@ -2,6 +2,7 @@ package network;
 
 import gameworld.Game;
 import gameworld.Player;
+import gameworld.entity.Container;
 import gameworld.entity.Item;
 
 import java.awt.event.KeyEvent;
@@ -46,6 +47,8 @@ public class NetworkEvent implements Serializable {
 	
 	//The destination index of an inventory item to be swapped, stays -1 if to be removed.
 	private int swapIndex2 = -1;
+
+	private Container container;
 	
 	
 	/**
@@ -109,6 +112,12 @@ public class NetworkEvent implements Serializable {
 		this.swapIndex2 = index2;
 	}
 	
+	public NetworkEvent(String user, Container container){
+		this.user = user;
+		this.type = EventType.DISPLAY_CONTAINER;
+		this.container = container;
+	}
+	
 	
 	//Getters
 	public String getUser() { return user; }
@@ -120,6 +129,7 @@ public class NetworkEvent implements Serializable {
 	public Item getItem() { return item; }
 	public int getIndex1() { return swapIndex1; }
 	public int getIndex2() { return swapIndex2; }
+	public Container getContainer() { return container; }
 	
 	//All possible types of NetworkEvents.
 	public enum EventType{
@@ -133,6 +143,7 @@ public class NetworkEvent implements Serializable {
 		SET_ARMOUR,
 		REMOVE_ITEM,
 		SWAP_ITEM,
+		DISPLAY_CONTAINER,
 		CLOSE;
 	}
 	

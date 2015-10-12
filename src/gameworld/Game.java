@@ -1,5 +1,6 @@
 package gameworld;
 
+import gameworld.entity.Container;
 import gameworld.location.Location;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class Game implements Serializable {
 		Parser.loadEntityFiles();
 		Parser.loadDoors();
 	}
-	
+
 	/**
 	 * Get a location from the location name
 	 * @param locationName - name of the location to get
@@ -52,7 +53,6 @@ public class Game implements Serializable {
 		players.remove(player);
 	}
 
-
 	/**
 	 * Move a player in a direction
 	 *
@@ -67,7 +67,7 @@ public class Game implements Serializable {
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
-	
+
 	/**
 	 * Drop the item in the players inventory at the given index
 	 * @param playerName - name of the player
@@ -81,13 +81,12 @@ public class Game implements Serializable {
 		if(!player.dropFromInv(index)){return false;}
 		return true;
 	}
-	
-	public boolean performAction(String playerName){
+
+	public Container performAction(String playerName){
 		Player player = parsePlayer(playerName);
-		if(player == null){return false;}
-		if(player.isDead()){return false;}
-		if(!player.performAction()){return false;}
-		return true;
+		if(player == null){return null;}
+		if(player.isDead()){return null;}
+		return player.performAction();
 	}
 
 	/**

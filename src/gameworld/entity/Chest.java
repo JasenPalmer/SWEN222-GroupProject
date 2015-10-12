@@ -18,6 +18,8 @@ public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;
 	
+	private Key key;
+	
 	private Item[] epicItems; // 10%
 	private Item[] rareItems; // 30%
 	private Item[] commonItems; // 60%
@@ -100,6 +102,18 @@ public class Chest extends Container implements Serializable{
 	private Item createEpic() {
 		int index = new Random().nextInt(epicItems.length);
 		return epicItems[index].clone();
+	}
+	
+	public void setKey(Key key) {
+		this.key = key;
+	}
+	
+	public boolean open(Key key) {
+		if(key == this.key) {
+			locked = false;
+			return true;
+		}
+		return false;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.Armour;
+import gameworld.entity.Container;
 import gameworld.entity.Weapon;
 
 import java.awt.event.KeyEvent;
@@ -144,16 +145,16 @@ public class Server {
 			boolean hasMoved = false;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
 				break;
 			case KeyEvent.VK_D:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
 				break;
 			case KeyEvent.VK_S:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
 				break;
 			case KeyEvent.VK_A:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
@@ -165,7 +166,9 @@ public class Server {
 				hasChanged = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
-				hasChanged = gameState.performAction(toProcess.getUser());
+				Container c = gameState.performAction(toProcess.getUser());
+				if(c != null) getClient(toProcess.getUser()).displayContainer(c);
+				break;
 			default:
 				break;
 			}
@@ -280,6 +283,15 @@ public class Server {
 			try {
 				output.reset();
 				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing()));
+			} catch (IOException e) {
+				console.displayError("Failed to write update to client: " + user + " - " + e);
+			}
+		}
+		
+		public void displayContainer(Container c){
+			try {
+				output.reset();
+				output.writeObject(new NetworkEvent(this.user, c));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
