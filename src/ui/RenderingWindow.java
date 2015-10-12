@@ -180,6 +180,8 @@ public class RenderingWindow extends JPanel{
 								}
 							}
 							
+
+							
 							if(t.containedEntity()!=null){
 								if(t.containedEntity() instanceof BasicEntity){
 									image = ImageStorage.getImage(t.containedEntity().getName());
