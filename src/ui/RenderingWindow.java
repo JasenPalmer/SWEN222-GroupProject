@@ -5,8 +5,6 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.BasicEntity;
-import gameworld.entity.weapon.ShankWeapon;
-import gameworld.entity.weapon.SpearWeapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
