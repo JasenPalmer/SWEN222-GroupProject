@@ -294,8 +294,17 @@ public class RenderingWindow extends JPanel{
 					break;
 			}
 			
-			int armour = p.getArmour().getType().ordinal();
-			int weapon = p.getWeapon().getType().ordinal();
+			int armour = 0;
+			int weapon = 0;
+			
+			if(p.getArmour()!=null){
+				armour = p.getArmour().getType().ordinal();
+			}
+			if(p.getWeapon()!=null){
+				weapon = p.getWeapon().getType().ordinal();
+			}
+
+
 			
 			if(p.isAttacking()){
 				switch(weapon){
