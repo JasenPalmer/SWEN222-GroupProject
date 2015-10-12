@@ -264,7 +264,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	public void repaintRenderingWindow(){
 		if(client.getState() != null && username != null && hpBar != null){
-			hpBar.setHealth(client.getState().getHealth());
+			hpBar.setHealth(client.getState());
 		}
 		if(rw != null){
 			rw.repaint();
@@ -361,7 +361,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case "Shank all players":
 			System.out.println("All players were ruthlessly shanked, y u do dis?");
-			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
 			client.addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
