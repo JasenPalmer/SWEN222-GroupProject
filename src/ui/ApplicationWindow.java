@@ -1,10 +1,10 @@
 package ui;
 
-import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
-import gameworld.entity.Item;
 import gameworld.entity.Potion;
+import gameworld.entity.armour.LeatherArmour;
+import gameworld.entity.armour.PlateArmour;
 import gameworld.entity.weapon.ShankWeapon;
 
 import java.awt.event.ActionEvent;
@@ -367,6 +367,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
+		case "Add Helmet1":
+			state.addItem(new PlateArmour("PlateArmour", "some plate amour", null, null));
+			break;
+		case "Add Helmet2":
+			state.addItem(new LeatherArmour("LeatherArmour", "some leather amour", null, null));
+			break;
 		case "Add Potion loot":
 			lootInventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
 			break;
@@ -375,12 +381,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case "Add Katana":
 			lootInventPanel.addItem(new ItemIcon("SpearWeapon", "Tis a katana mate"));
-			break;
-		case "Add Helmet1":
-			lootInventPanel.addItem(new ItemIcon("Helmet1", "Tis a helmet1 mate"));
-			break;
-		case "Add Helmet2":
-			lootInventPanel.addItem(new ItemIcon("Helmet2", "Tis a helmet2 mate"));
 			break;
 		default:
 			break;
