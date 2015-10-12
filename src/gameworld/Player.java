@@ -32,17 +32,17 @@ public class Player implements Serializable{
 	 * Default size of the players inventory
 	 */
 	private static final int DEFAULT_INV_SIZE = 8;
-	
+
 	/**
 	 * How many people the player has killed
 	 */
 	private int score;
-	
+
 	/**
 	 * The maximum health of the player
 	 */
 	private int maxHealth;
-	
+
 	/**
 	 * Players damage
 	 */
@@ -57,7 +57,7 @@ public class Player implements Serializable{
 	 * The items that the player has in their inventory
 	 */
 	private  Item[] inventory;
-	
+
 	/**
 	 * The current location the player is in
 	 */
@@ -102,17 +102,17 @@ public class Player implements Serializable{
 	 * Direction the player is facing
 	 */
 	private Direction facing = Game.Direction.NORTH;
-	
+
 	/**
 	 * Weapon the player has equipped 
 	 */
 	private Weapon weapon;
-	
+
 	/**
 	 * Armour the player is wearing
 	 */
 	private Armour armour;
-	
+
 
 	public Player(String name, Game game) {
 		score = 0;
@@ -138,7 +138,7 @@ public class Player implements Serializable{
 		armour = new RobeArmour("Robe Armour", "Provides very basic protection", null, null);
 		setWeapon(new ShankWeapon("Shank", "A basic weapon", null, null));
 	}
-	
+
 	/**
 	 * Should be called when the action button is pressed (default F).
 	 * This method will pick up any item in front of the player or attempt to open a chest if there is one
@@ -161,21 +161,26 @@ public class Player implements Serializable{
 		}
 		return false;
 	}
-	
+
 	/**
+	 * Remove item from invent if second is < 0 else
 	 * Swap the items at the given indices in the inventory
 	 * @param first - index of first item
 	 * @param second - index of second item
 	 */
 	public void swapItems(int first, int second) {
-		if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
-			return;
+		if(second < 0){
+			inventory[first] = null;
 		}
-		Item item = inventory[first];
-		inventory[first] = inventory[second];
-		inventory[second] = item;
+		else if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
+			return;
+		}else{
+
+			Item item = inventory[first];
+			inventory[first] = inventory[second];
+			inventory[second] = item;
+		}
 	}
-	
 
 	/**
 	 * Make this player attack the player in the tile in front of them
@@ -219,7 +224,7 @@ public class Player implements Serializable{
 		item.setLocation(location);
 		return true;
 	}
-	
+
 	public boolean addItem(Item item) {
 		if(inventoryFull()){return false;}
 		for(int i = 0; i < inventory.length; i++) {
@@ -232,14 +237,6 @@ public class Player implements Serializable{
 		return false;
 	}
 
-	/**
-	 * Sets specified index to null.
-	 * @param index - Index of array to be removed
-	 */
-	public void removeItem(int index){
-		inventory[index] = null;
-	}
-	
 	/**
 	 * Player attempts to pick-up the item on the tile in front of them
 	 * @return true if the item was successfully added
@@ -410,7 +407,7 @@ public class Player implements Serializable{
 		animation.cycle();
 		return newDir;
 	}
-	
+
 	/**
 	 * Change the direction of the player based on the key that 
 	 * was pressed and the direction the camera is currently facing.
@@ -461,7 +458,7 @@ public class Player implements Serializable{
 	public Point getPosition() {
 		return position;
 	}
-	
+
 	public void setPosition(Point position) {
 		this.position = position;
 	}
@@ -505,7 +502,7 @@ public class Player implements Serializable{
 	public boolean isAttacking(){
 		return attacking;
 	}
-	
+
 	public void setAttacking(boolean b) {
 		attacking = b;
 	}
@@ -513,7 +510,7 @@ public class Player implements Serializable{
 	public Direction getFacing() {
 		return facing;
 	}
-	
+
 	public Tile getStandingOn() {
 		return standingOn;
 	}
@@ -538,7 +535,7 @@ public class Player implements Serializable{
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
-	
+
 	public Armour getArmour() {
 		return armour;
 	}
@@ -551,7 +548,7 @@ public class Player implements Serializable{
 	public int getScore() {
 		return score;
 	}
-	
+
 	public Item[] getInventory() {
 		return inventory;
 	}

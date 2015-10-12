@@ -83,11 +83,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		for(int i = 0; i < 4; i++){
 			if(itemList[i] != null){
 				inventArray[i][0] = new ItemIcon(itemList[i].getClass().getSimpleName(), itemList[i].getDescription());
-				System.out.print(inventArray[i][0].getName() + ",");
 			}
 			else{
 				inventArray[i][0] = null;
-				System.out.print("Null,");
 			}
 		}
 
@@ -96,11 +94,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		for(int i = 0; i < 4; i++){
 			if(itemList[i+4] != null){
 				inventArray[i][1] = new ItemIcon(itemList[i+4].getClass().getSimpleName(), itemList[i+4].getDescription());
-				System.out.print(inventArray[i][1].getName() + ",");
 			}
 			else{
 				inventArray[i][1] = null;
-				System.out.print("Null,");
 			}
 		}
 
@@ -113,7 +109,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	 * Fills all slots with an empty item slot
 	 */
 	private void fillAllSlots(){
-		System.out.println("-----------------");
 
 		for(int j = 0; j < inventArray[0].length; j++){
 			for(int i = 0; i < inventArray.length; i++){
@@ -122,17 +117,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 			}
 		}
-
-		for(int j = 0; j < inventArray[0].length; j++){
-			for(int i = 0; i < inventArray.length; i++){	
-				System.out.print(inventArray[i][j].getName() + ",");
-				if(i == 3){
-					System.out.println();
-				}
-			}
-		}
-		System.out.println();
-		System.out.println("-----------------");
 
 		populateInvent();
 	}
@@ -217,6 +201,20 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			JLabel weaponLabel = new JLabel(weapon.getImage());
 			weaponLabel.setBounds(65,195,42,52);
 			this.add(weaponLabel,1,0);
+			if(player.getWeapon() != null){
+				weaponLabel.setToolTipText(desc);	
+				weaponLabel.addMouseListener(new MouseAdapter(){
+					public void mouseClicked(MouseEvent e){
+						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+					}
+					public void mousePressed(MouseEvent e){
+						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+					}
+					public void mouseReleased(MouseEvent e){
+						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+					}
+				});
+			}
 		}
 		if(player.getArmour() != null){
 			String name = player.getArmour().getClass().getSimpleName();
@@ -225,6 +223,20 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			JLabel armourLabel = new JLabel(armour.getImage());
 			armourLabel.setBounds(120,195,42,52);
 			this.add(armourLabel,1,0);
+			if(player.getArmour() != null){
+				armourLabel.setToolTipText(desc);	
+				armourLabel.addMouseListener(new MouseAdapter(){
+					public void mouseClicked(MouseEvent e){
+						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+					}
+					public void mousePressed(MouseEvent e){
+						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+					}
+					public void mouseReleased(MouseEvent e){
+						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
+					}
+				});
+			}
 		}
 	}
 
@@ -290,9 +302,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				for(int j = 0; j < inventArray[0].length; j++){
 					if(inventArray[i][j] != null && !inventArray[i][j].getName().equals("Empty")){
 						if(inventArray[i][j].contains(e.getX(), e.getY())){
+							System.out.println("Clicked" + " " + inventArray[i][j].getName());
 							movedItem = inventArray[i][j];
 							movedItemIndex = convertIndex(i,j);
+							return;
 						}
+					}
+					else{
+						movedItem = null;
 					}
 				}
 			}
@@ -303,7 +320,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 
 				if(player.getWeapon() != null && player.addItem(player.getWeapon())){
-					player.setWeapon(null);
+					player.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
+					//TODO Uncomment this when players can have no weapon
+					//player.setWeapon(null);
 					playSound("Button");
 				}
 				else{
@@ -313,7 +332,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			//If right click on armour slot
 			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
 				if(player.getArmour() != null && player.addItem(player.getArmour())){
-					player.setArmour(null);
+					player.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
+					//TODO Uncomment this when players can have no armour
+					//player.setArmour(null);
 					playSound("Button");
 				}
 				else{
@@ -332,7 +353,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									}
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
 									player.setWeapon(newWeapon);											
-									player.removeItem(convertIndex(i,j));
+									player.swapItems(convertIndex(i,j), -1);
 									
 									if(temp != null){
 										player.addItem(temp);
@@ -345,7 +366,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									}
 									Armour newArmour = (Armour) makeItem(inventArray[i][j].getName());
 									player.setArmour(newArmour);
-									player.removeItem(convertIndex(i,j));
+									player.swapItems(convertIndex(i,j), -1);
 									
 									if(temp != null){
 										player.addItem(temp);
@@ -357,8 +378,8 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					}
 				}
 			}
+			populateInventArray();
 		}
-		populateInventArray();
 	}
 
 	@Override
@@ -402,8 +423,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 						}
 					}
 				}
+				populateInventArray();
 			}
-			populateInventArray();
+			
 		}
 	}
 
