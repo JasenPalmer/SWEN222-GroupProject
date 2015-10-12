@@ -353,7 +353,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									}
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
 									player.setWeapon(newWeapon);											
-									player.removeItem(convertIndex(i,j));
+									player.swapItems(convertIndex(i,j), -1);
 									
 									if(temp != null){
 										player.addItem(temp);
@@ -366,7 +366,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									}
 									Armour newArmour = (Armour) makeItem(inventArray[i][j].getName());
 									player.setArmour(newArmour);
-									player.removeItem(convertIndex(i,j));
+									player.swapItems(convertIndex(i,j), -1);
 									
 									if(temp != null){
 										player.addItem(temp);

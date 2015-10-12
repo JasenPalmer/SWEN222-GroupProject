@@ -2,6 +2,7 @@ package ui;
 
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.entity.Key;
 import gameworld.entity.Potion;
 import gameworld.entity.armour.LeatherArmour;
 import gameworld.entity.armour.PlateArmour;
@@ -368,13 +369,13 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			inventPanel.addItemTo(0,0,1,0);
 			break;
 		case "Add Helmet1":
-			state.addItem(new PlateArmour("PlateArmour", "some plate amour", null, null));
+			client.getState().addItem(new PlateArmour("PlateArmour", "some plate amour", null, null));
 			break;
 		case "Add Helmet2":
-			state.addItem(new LeatherArmour("LeatherArmour", "some leather amour", null, null));
+			client.getState().addItem(new LeatherArmour("LeatherArmour", "some leather amour", null, null));
 			break;
 		case "Add Potion loot":
-			lootInventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
+			client.getState().addItem(new Key("Key", "WTF", null, null));
 			break;
 		case "Add Shank loot":
 			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
