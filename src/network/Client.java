@@ -1,5 +1,8 @@
 package network;
 
+import gameworld.Game;
+import gameworld.Player;
+
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -32,6 +35,8 @@ public class Client {
 	private static final int PORT = 9954;
 
 	private ServerThread serverConnection;
+	
+	private Player state;
 
 	public Client (String host, String user, ApplicationWindow gui){
 		this.host = host;
@@ -118,6 +123,9 @@ public class Client {
 			System.err.println("Error closing the client socket: " + e);
 		}
 	}
+	
+	//Getters
+	public Player getState(){ return state; }
 
 	public class ServerThread extends Thread {
 		private boolean finished = false;
@@ -138,9 +146,13 @@ public class Client {
 
 				if(event == null) return;
 				switch(event.getType()){
-				case UPDATE_GUI:
+				case UPDATE_GAME:
 					if(event.getState() == null) return;
-					gui.setState(event.getState());
+					state = event.getState();
+					//gui.setState(event.getState());
+					break;
+				case MOVE_PLAYER:
+					//gameState.move(null)
 					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();
