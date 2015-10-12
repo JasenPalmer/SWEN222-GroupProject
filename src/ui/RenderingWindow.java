@@ -6,6 +6,7 @@ import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.BasicEntity;
 import gameworld.entity.weapon.ShankWeapon;
+import gameworld.entity.weapon.SpearWeapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
@@ -14,9 +15,7 @@ import gameworld.tile.Tile;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class RenderingWindow extends JPanel{
@@ -297,56 +296,24 @@ public class RenderingWindow extends JPanel{
 					break;
 			}
 			
-			switch(p.getArmour().getName()){
-				case "Leather Armour":
-					if(p.isAttacking()){
-						if(p.getWeapon() instanceof ShankWeapon){
-							image = ImageStorage.leatherShank[directionInt][animation.getAttackFrame()];
-						} else{
-							image = ImageStorage.leatherSpear[directionInt][animation.getAttackFrame()];
-						}
-						applicationWindow.cycleAnimations();
-						
-					} else { image  = ImageStorage.leatherWalk[directionInt][animation.getWalkFrame()]; }
-					
-					break;
-					
-				case "Chain Armour":
-					if(p.isAttacking()){
-						if(p.getWeapon() instanceof ShankWeapon){
-							image = ImageStorage.chainShank[directionInt][animation.getAttackFrame()];
-						} else{
-							image = ImageStorage.chainSpear[directionInt][animation.getAttackFrame()];
-						}
-						applicationWindow.cycleAnimations();
-						
-					} else { image  = ImageStorage.chainWalk[directionInt][animation.getWalkFrame()]; }
-					break;
-					
-				case "Plate Armour":
-					if(p.isAttacking()){
-						if(p.getWeapon() instanceof ShankWeapon){
-							image = ImageStorage.plateShank[directionInt][animation.getAttackFrame()];
-						} else{
-							image = ImageStorage.plateSpear[directionInt][animation.getAttackFrame()];
-						}
-	
-						applicationWindow.cycleAnimations();
-						
-					} else { image  = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()]; }
-					
-					break;
-				default:
-					if(p.isAttacking()){
-						if(p.getWeapon() instanceof ShankWeapon){
-							image = ImageStorage.robeShank[directionInt][animation.getAttackFrame()];
-						} else{
-							image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
-						}
-						applicationWindow.cycleAnimations();
-					} else { image  = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()]; }
-					break;
-			}	
+			int armour = p.getArmour().getType().ordinal();
+			int weapon = p.getWeapon().getType().ordinal();
+			
+			if(p.isAttacking()){
+				switch(weapon){
+					case 0:
+						image = ImageStorage.shanking[armour][directionInt][animation.getWalkFrame()];
+						break;
+					case 1:
+						image = ImageStorage.spearing[armour][directionInt][animation.getWalkFrame()];
+						break;
+				}
+			} else {
+				image = ImageStorage.walking[armour][directionInt][animation.getWalkFrame()];
+			}
+			
+
+			
 			
 			if(p.isDead()){
 				image = ImageStorage.tree;
