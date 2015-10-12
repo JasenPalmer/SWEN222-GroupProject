@@ -306,6 +306,7 @@ public class RenderingWindow extends JPanel{
 						image = ImageStorage.spearing[armour][directionInt][animation.getAttackFrame()];
 						break;
 				}
+				applicationWindow.cycleAnimations();
 			} else {
 				image = ImageStorage.walking[armour][directionInt][animation.getWalkFrame()];
 			}
