@@ -44,11 +44,6 @@ public class Player implements Serializable{
 	private int maxHealth;
 
 	/**
-	 * Players damage
-	 */
-	private int playerDamage = 100;
-
-	/**
 	 * Players name
 	 */
 	private String name;
@@ -161,6 +156,32 @@ public class Player implements Serializable{
 		}
 		return false;
 	}
+	
+	/**
+	 * add an item to the players inventory. This will add the item into the players first available
+	 * slot in the inventory
+	 * @param item to add
+	 * @return true if the item was successfully added
+	 */
+	public boolean addItem(Item item) {
+		if(inventoryFull()){return false;}
+		for(int i = 0; i < inventory.length; i++) {
+			if(inventory[i] == null) {
+				// add the item to the players inventory
+				inventory[i] = item;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Removes item form inventory at specified index
+	 * @param index - index of item to remove
+	 */
+	public void removeItem(int index){
+		inventory[index] = null;
+	}
 
 	/**
 	 * Remove item from invent if second is < 0 else
@@ -177,13 +198,6 @@ public class Player implements Serializable{
 			inventory[second] = item;
 	}
 
-	/**
-	 * Removes item form inventory at specified index
-	 * @param index - index of item to remove
-	 */
-	public void removeItem(int index){
-		inventory[index] = null;
-	}
 	
 	/**
 	 * Make this player attack the player in the tile in front of them
@@ -196,7 +210,15 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-		int damage = playerDamage-armour.getArmourRating();
+		
+		int damage = 0;
+		if(weapon != null && armour != null) {
+			damage = weapon.getDamage()-armour.getArmourRating();
+		}
+		else if(weapon != null) {
+			damage = weapon.getDamage();
+		}
+		
 		opponent.setHealth(opponent.getHealth()-damage);
 		if(opponent.getHealth() <= 0){
 			score++;
@@ -228,17 +250,6 @@ public class Player implements Serializable{
 		return true;
 	}
 
-	public boolean addItem(Item item) {
-		if(inventoryFull()){return false;}
-		for(int i = 0; i < inventory.length; i++) {
-			if(inventory[i] == null) {
-				// add the item to the players inventory
-				inventory[i] = item;
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Player attempts to pick-up the item on the tile in front of them
@@ -528,7 +539,6 @@ public class Player implements Serializable{
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
-		this.playerDamage = weapon.getDamage();
 	}
 
 	public int getMaxHealth() {
