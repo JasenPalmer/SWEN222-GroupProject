@@ -263,6 +263,18 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	private boolean isInventFull(){
+		Item[] itemList = client.getState().getInventory();
+		
+		for(int i = 0; i < itemList.length; i++){
+			if(itemList[i] == null){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	private Item makeItem(String name){
 		Item weapon = null;
 
@@ -315,8 +327,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			//If right click on weapon slot
 			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 
-				if(client.getState().getWeapon() != null){
-					//TODO Prevent items being added when invent full
+				if(client.getState().getWeapon() != null && !isInventFull()){
 					client.addItem(client.getState().getWeapon());
 					client.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
 					//TODO Uncomment this when players can have no weapon
@@ -329,8 +340,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 			//If right click on armour slot
 			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
-				if(client.getState().getArmour() != null){
-					//TODO Prevent items being added when invent full
+				if(client.getState().getArmour() != null && !isInventFull()){
 					client.addItem(client.getState().getArmour());
 					client.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
 					//TODO Uncomment this when players can have no armour
