@@ -9,7 +9,7 @@ public class Potion extends Item {
 	
 	private static final long serialVersionUID = -1161009772412731963L;
 	
-	private static final int healAmount = 15;
+	public static final int healAmount = 20;
 
 	public Potion(String name, String description, Point position,
 			Location location) {
@@ -19,7 +19,9 @@ public class Potion extends Item {
 	private Potion(Potion pot) {
 		super(pot.name, pot.description, pot.position, pot.location);
 	}
-
+	/**
+	 * Heal the player by the amount specified by the field healAmount
+	 */
 	@Override
 	public void interact(Player player) {
 		int health = player.getHealth();

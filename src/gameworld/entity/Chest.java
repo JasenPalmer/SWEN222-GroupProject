@@ -4,7 +4,7 @@ import gameworld.Player;
 import gameworld.entity.armour.ChainArmour;
 import gameworld.entity.armour.LeatherArmour;
 import gameworld.entity.armour.PlateArmour;
-import gameworld.entity.weapon.SpearWeapon;
+import gameworld.entity.weapon.Weapon;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -50,7 +50,7 @@ public class Chest extends Container implements Serializable{
 		
 		rareItems = new Item[] {
 				//weapon
-				new SpearWeapon("A spear","Stab stab", null, null),
+				new Weapon("A spear","Stab stab", null, null, Weapon.WeaponType.Spear),
 				//armour
 				new ChainArmour("Chain armour", "Provides good protection", null, null),
 				// misc

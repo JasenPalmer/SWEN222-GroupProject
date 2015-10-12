@@ -1,8 +1,5 @@
 package gameworld;
 
-import gameworld.entity.weapon.ShankWeapon;
-import gameworld.entity.weapon.SpearWeapon;
-
 import java.io.Serializable;
 
 public class Animation implements Serializable{

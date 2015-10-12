@@ -17,6 +17,8 @@ import java.io.Serializable;
  */
 public class Key extends Item implements Serializable{
 	
+	private static final long serialVersionUID = -1062125803835909442L;
+	
 	public Key(String name, String description, Point position, Location location) {
 		super(name, description, position, location);
 	}
@@ -24,9 +26,6 @@ public class Key extends Item implements Serializable{
 	private Key(Key key) {
 		super(key.name, key.description, key.position, key.location);
 	}
-
-
-	private static final long serialVersionUID = -1062125803835909442L;
 
 	@Override
 	public void interact(Player player) {
@@ -46,6 +45,7 @@ public class Key extends Item implements Serializable{
 		// is an entity but its not a container
 		if(!(ent instanceof Container)){ return;}
 		Container container = (Container) ent;
+		//if the container is locked
 		if(container.isLocked()) {
 			// unlock the container
 			container.setLocked(false);
