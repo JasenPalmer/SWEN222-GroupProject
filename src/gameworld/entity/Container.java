@@ -15,7 +15,7 @@ public abstract class Container implements InteractableEntity, Serializable {
 
 	private static final long serialVersionUID = 3833387180228381148L;
 
-	private static final int INV_SIZE = 8;
+	private static final int INV_SIZE = 18;
 
 	/**
 	 * Items that are stored in the container
