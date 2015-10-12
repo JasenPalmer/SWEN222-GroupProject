@@ -273,22 +273,22 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		Item weapon = null;
 
 		switch(name){
-		case "ShankWeapon":
+		case "Shank":
 			weapon = new Weapon("Shank", "Tis a shank mate", null, null, Weapon.WeaponType.Shank);
 			break;
-		case "SpearWeapon":
+		case "Spear":
 			weapon = new Weapon("Spear", "Tis a spear mate", null, null, Weapon.WeaponType.Spear);
 			break;
-		case "ChainArmour":
+		case "Chain Armour":
 			weapon = new Armour("Chain Armour", "Tis sexy chain armour mate", null, null, Armour.ArmourType.Chain);
 			break;
-		case "LeatherArmour":
+		case "Leather Armour":
 			weapon = new Armour("Leather Armour", "Tis pretty shitty leather armour mate", null, null, Armour.ArmourType.Leather);
 			break;
-		case "PlateArmour":
+		case "Plate Armour":
 			weapon = new Armour("Plate Armour", "Tis super sexy plate armour m9", null, null, Armour.ArmourType.Plate);
 			break;
-		case "RobeArmour":
+		case "Robe Armour":
 			weapon = new Armour("Robe Armour", "Mate why even pick this shit up?", null, null, Armour.ArmourType.Robe);
 			break;
 		}
@@ -320,11 +320,8 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			Item temp = null;
 			//If right click on weapon slot
 			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
-
 				if(client.getState().getWeapon() != null && !isInventFull()){
 					client.addItem(client.getState().getWeapon());
-					//client.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
-					//TODO Uncomment this when players can have no weapon
 					client.setWeapon(null);
 					playSound("Button");
 				}
@@ -336,8 +333,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
 				if(client.getState().getArmour() != null && !isInventFull()){
 					client.addItem(client.getState().getArmour());
-					//client.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
-					//TODO Uncomment this when players can have no armour
 					client.setArmour(null);
 					playSound("Button");
 				}
@@ -356,6 +351,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 										temp = client.getState().getWeapon();
 									}
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
+									System.out.println(inventArray[i][j].getName());
 									client.setWeapon(newWeapon);											
 									client.removeItem(convertIndex(i,j));
 

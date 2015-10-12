@@ -50,7 +50,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
 	private Client client;
-	private Player state;
 	private String username;
 	private String host;
 	private Clip musicClip;
@@ -549,11 +548,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public Player getPlayer(){return this.client.getState();}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
 	public InventoryPanel getInventPanel(){ return this.inventPanel;}
-
-	//Setters
-	public void setState(Player state){
-		this.state = state;
-	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
