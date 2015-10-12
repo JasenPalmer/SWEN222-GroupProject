@@ -305,7 +305,11 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 							System.out.println("Clicked" + " " + inventArray[i][j].getName());
 							movedItem = inventArray[i][j];
 							movedItemIndex = convertIndex(i,j);
+							return;
 						}
+					}
+					else{
+						movedItem = null;
 					}
 				}
 			}
