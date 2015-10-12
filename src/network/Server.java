@@ -297,6 +297,8 @@ public class Server {
 				if(currentEvent  != null) {
 					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
 					
+					System.out.println("Size of Quque: " + eventQueue.size());
+					if(eventQueue.size() > 25) eventQueue.poll();
 					switch(currentEvent.getType()){
 					case KEY_PRESS:
 						eventQueue.add(currentEvent);

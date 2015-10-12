@@ -204,7 +204,11 @@ public class Client {
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
-					//gameState.move(null)
+//					for(Player p : state.getLocation().getPlayers()){
+//						if(p.getName().equals(event.getUser())){
+//							p.move(event.getDir());
+//						}
+//					}
 					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();
