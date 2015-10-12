@@ -29,6 +29,10 @@ public class Armour extends Item {
 		}
 		return armourType.getArmourRating();
 	}
+	
+	public ArmourType getType() {
+		return armourType;
+	}
 
 	@Override
 	public void interact(Player player) {
