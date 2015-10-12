@@ -16,9 +16,8 @@ public class Weapon extends Item {
 	public Weapon(String name, String description, Point position,
 			Location location, WeaponType type) {
 		super(name, description, position, location);
+		weaponType = type;
 	}
-	
-	
 	
 	private Weapon(Weapon weapon) {
 		super(weapon.name, weapon.description, weapon.position, weapon.location);
@@ -31,11 +30,19 @@ public class Weapon extends Item {
 	}
 
 	public int getDamage() {
+		if(weaponType == null){
+			return 0;
+		}
 		return weaponType.getDamage();
 	}
 	
 	public WeaponType getType() {
 		return weaponType;
+	}
+	
+	@Override
+	public Item clone() {
+		return new Weapon(this);
 	}
 	
 	public enum WeaponType {
@@ -52,9 +59,5 @@ public class Weapon extends Item {
 		}
 	}
 
-	@Override
-	public Item clone() {
-		return new Weapon(this);
-	}
 
 }
