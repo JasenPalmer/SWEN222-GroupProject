@@ -114,6 +114,14 @@ public class Game implements Serializable {
 		return true;
 	}
 
+	/**
+	 * Removes item at index from container specified
+	 * @param index - index of item to be removed
+	 * @param container - container to remove item from
+	 */
+	public void removeItemContainer(int index, Container container) {
+		container.getItems()[index] = null;
+	}
 
 	/**
 	 * Returns the player with the given name

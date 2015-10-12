@@ -1,6 +1,7 @@
 package ui.panels;
 
 
+import gameworld.Player;
 import gameworld.entity.Armour;
 import gameworld.entity.Item;
 import gameworld.entity.Weapon;
@@ -207,7 +208,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 		if(client.getState().getArmour() != null){
 			String name = client.getState().getArmour().getName();
-			System.out.println(name);
 			String desc = client.getState().getArmour().getDescription();
 			ItemIcon armour = new ItemIcon(name, desc);
 			JLabel armourLabel = new JLabel(armour.getImage());
@@ -257,7 +257,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
-	private boolean isInventFull(){
+	public boolean isInventFull(){
 		Item[] itemList = client.getState().getInventory();
 
 		for(int i = 0; i < itemList.length; i++){
@@ -304,7 +304,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				for(int j = 0; j < inventArray[0].length; j++){
 					if(inventArray[i][j] != null && !inventArray[i][j].getName().equals("Empty")){
 						if(inventArray[i][j].contains(e.getX(), e.getY())){
-							System.out.println("Clicked" + " " + inventArray[i][j].getName());
 							movedItem = inventArray[i][j];
 							movedItemIndex = convertIndex(i,j);
 							return;
@@ -351,7 +350,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 										temp = client.getState().getWeapon();
 									}
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
-									System.out.println(inventArray[i][j].getName());
 									client.setWeapon(newWeapon);											
 									client.removeItem(convertIndex(i,j));
 
@@ -447,4 +445,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
+	
+	//Getters and Setters
+	public Client getPlayer(){return this.client;}
 }

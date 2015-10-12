@@ -118,6 +118,12 @@ public class NetworkEvent implements Serializable {
 		this.container = container;
 	}
 	
+	public NetworkEvent(String user, EventType type , int index, Container container){
+		this.user = user;
+		this.type = type;
+		this.container = container;
+		this.swapIndex1 = index;
+	}
 	
 	//Getters
 	public String getUser() { return user; }
@@ -144,7 +150,8 @@ public class NetworkEvent implements Serializable {
 		REMOVE_ITEM,
 		SWAP_ITEM,
 		DISPLAY_CONTAINER,
-		CLOSE;
+		CLOSE,
+		REMOVE_ITEM_CONTAINER;
 	}
 	
 }

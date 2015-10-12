@@ -204,6 +204,10 @@ public class Server {
 			p.setArmour((Armour)toProcess.getItem());
 			hasChanged = true;
 			break;
+		case REMOVE_ITEM_CONTAINER:
+			gameState.removeItemContainer(toProcess.getIndex1(), toProcess.getContainer());
+			hasChanged = true;
+			break;
 		case UPDATE_GAME:
 			break;
 		case CLOSE:
@@ -311,7 +315,7 @@ public class Server {
 				if(currentEvent  != null) {
 					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
 					
-					System.out.println("Size of Queque: " + eventQueue.size());
+					//System.out.println("Size of Queque: " + eventQueue.size());
 					if(eventQueue.size() > 35) eventQueue.poll();
 					switch(currentEvent.getType()){
 					case KEY_PRESS:
@@ -333,6 +337,9 @@ public class Server {
 						eventQueue.add(currentEvent);
 						break;
 					case SET_ARMOUR:
+						eventQueue.add(currentEvent);
+						break;
+					case REMOVE_ITEM_CONTAINER:
 						eventQueue.add(currentEvent);
 						break;
 					case MESSAGE:

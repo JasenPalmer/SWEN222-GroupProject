@@ -1,7 +1,7 @@
 package network;
 
-import gameworld.Game;
 import gameworld.Player;
+import gameworld.entity.Container;
 import gameworld.entity.Item;
 
 import java.awt.event.KeyEvent;
@@ -160,6 +160,16 @@ public class Client {
 		}
 	}
 
+	public void removeItemContainer(int index, Container container){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM_CONTAINER, index, container);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void close(){
 		serverConnection.finish();
 

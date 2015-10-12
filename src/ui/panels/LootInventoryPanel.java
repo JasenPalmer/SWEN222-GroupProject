@@ -1,24 +1,22 @@
 package ui.panels;
 
+import gameworld.entity.Armour;
 import gameworld.entity.Container;
 import gameworld.entity.Item;
+import gameworld.entity.Weapon;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
+
+import network.Client;
 
 public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 
@@ -30,6 +28,8 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	private int movedItemI;
 	private int movedItemJ;
 	private boolean inventOpen;
+	private Client client;
+	private Container container;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
@@ -45,6 +45,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 
 		populateSlots();
 		addMouseListener(this);
+		this.client = inventPanel.getPlayer();
 	}
 
 	public boolean addItem(ItemIcon item){
@@ -68,19 +69,38 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 	public void setLootContainer(Container container){
-		Item[] containerList = container.getItems();
+		this.container = container;
+		
+		Item[] containerList = this.container.getItems();
 		
 		for(int i = 0; i < 6; i++){
-			itemList[i][0] = new ItemIcon(containerList[i].getName(), containerList[i].getDescription());
+			if(containerList[i] != null){
+				//	System.out.println(((Armour) containerList[i]).getType());
+				itemList[i][0] = new ItemIcon(containerList[i].getName(), containerList[i].getDescription());
+			}
+			else{
+				itemList[i][0] = null;
+			}
 		}
 		
 		for(int i = 0; i < 6; i++){
-			itemList[i][1] = new ItemIcon(containerList[i+6].getName(), containerList[i+6].getDescription());
+			if(containerList[i+6] != null){
+				itemList[i][1] = new ItemIcon(containerList[i+6].getName(), containerList[i+6].getDescription());
+			}
+			else{
+				itemList[i][1] = null;
+			}
 		}
 		
 		for(int i = 0; i < 6; i++){
-			itemList[i][2] = new ItemIcon(containerList[i+12].getName(), containerList[i+12].getDescription());
+			if(containerList[i+12] != null){
+				itemList[i][2] = new ItemIcon(containerList[i+12].getName(), containerList[i+12].getDescription());
+			}
+			else{
+				itemList[i][2] = null;
+			}
 		}
+		populateSlots();
 	}
 	
 	private void populateSlots(){
@@ -159,14 +179,31 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	private int convertIndex(int i, int j){
+		int index = 0;
+		
+		if(j == 0){
+			index = i;
+		}
+		else if(j == 1){
+			index = i+6;
+		}
+		else{
+			index = i+12;
+		}
+		
+		return index;
+	}
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		System.out.println(e.getX() + " " + e.getY());
 		if(movedItem != null){
 			if(inventOpen){
 				if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
-					if(inventPanel.addItem(movedItem)){
-						itemList[movedItemI][movedItemJ] = null;
+					if(!inventPanel.isInventFull()){
+						client.addItem(makeItem(movedItem.getName(), movedItem.getDesciption()));
+						client.removeItemContainer(convertIndex(movedItemI, movedItemJ), this.container);
 						playSound("Button");
 						movedItem = null;
 					}
@@ -179,6 +216,39 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	private Item makeItem(String name, String desc){
+		Item item = null;
+
+		switch(name){
+		case "Shank":
+			item = new Weapon("Shank", desc, null, null, Weapon.WeaponType.Shank);
+			break;
+		case "Spear":
+			item = new Weapon("Spear", desc, null, null, Weapon.WeaponType.Spear);
+			break;
+		case "Chain Armour":
+			item = new Armour("Chain Armour", desc, null, null, Armour.ArmourType.Chain);
+			break;
+		case "Leather Armour":
+			item = new Armour("Leather Armour", desc, null, null, Armour.ArmourType.Leather);
+			break;
+		case "Plate Armour":
+			item = new Armour("Plate Armour", desc, null, null, Armour.ArmourType.Plate);
+			break;
+		case "Robe Armour":
+			item = new Armour("Robe Armour", desc, null, null, Armour.ArmourType.Robe);
+			break;
+		case "Potion":
+			item = new Armour("Potion", desc, null, null, Armour.ArmourType.Robe);
+			break;
+		case "Key":
+			item = new Armour("Key", desc, null, null, Armour.ArmourType.Robe);
+			break;
+		}
+
+		return item;
+	}
+	
 	private void playSound(String sound){
 		String soundPath = null;
 		switch(sound){

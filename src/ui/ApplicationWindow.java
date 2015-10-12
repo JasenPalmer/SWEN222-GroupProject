@@ -115,7 +115,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup Inventory
 		inventPanel = new InventoryPanel(client);
 		overlayPanel.add(inventPanel,2,0);
-		
+
 		//Setup loot inventory
 		lootInventPanel = new LootInventoryPanel(inventPanel);
 		overlayPanel.add(lootInventPanel,2,0);
@@ -272,8 +272,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "west":
 			compass.setIcon(new ImageIcon(westCompass));
 			break;
-			default:
-				break;
+		default:
+			break;
 		}
 	}
 
@@ -470,13 +470,21 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			timer.start();
 			break;
 		case KeyEvent.VK_ESCAPE:
-			if(showSettings == true){
-				showSettings = false;
+			if(lootInventOpen){
+				lootInventPanel.setVisible(false);
+				lootInventPanel.setFocusable(false);
+				lootInventOpen = false;
+				inventPanel.setLootVis(false);
 			}
 			else{
-				showSettings = true;
+				if(showSettings == true){
+					showSettings = false;
+				}
+				else{
+					showSettings = true;
+				}
+				setSettings();
 			}
-			setSettings();
 			break;
 		case KeyEvent.VK_ENTER:
 			chatBoxPanel.getTextField().requestFocus();
@@ -491,7 +499,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		}
 	}
-	
+
 	public void cycleAnimations() { this.client.cycleAnimations(); }
 
 	public void changeVolume(int change){
@@ -530,9 +538,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void closeAppWindow(){
-	System.exit(0);	
+		System.exit(0);	
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		timer.stop();
@@ -545,9 +553,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void openContainer(Container container){
 		lootInventPanel.setVisible(true);
 		lootInventPanel.setLootContainer(container);
+		lootInventOpen = true;
 		setLootInventory();
 	}
-	
+
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 	public Player getPlayer(){return this.client.getState();}
