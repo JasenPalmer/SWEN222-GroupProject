@@ -1,13 +1,12 @@
 package gameworld;
 
 import gameworld.Game.Direction;
-import gameworld.entity.Chest;
+import gameworld.entity.Armour;
+import gameworld.entity.Container;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
-import gameworld.entity.armour.Armour;
-import gameworld.entity.armour.RobeArmour;
-import gameworld.entity.weapon.ShankWeapon;
-import gameworld.entity.weapon.Weapon;
+import gameworld.entity.LootBag;
+import gameworld.entity.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
@@ -27,26 +26,26 @@ import java.io.Serializable;
 public class Player implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	
+	private static String startingLocation = "Test Map";
 
 	/**
 	 * Default size of the players inventory
 	 */
 	private static final int DEFAULT_INV_SIZE = 8;
 	
+	private static final int DEFAULT_HEALTH = 100;
+
 	/**
 	 * How many people the player has killed
 	 */
 	private int score;
-	
+
 	/**
 	 * The maximum health of the player
 	 */
 	private int maxHealth;
-	
-	/**
-	 * Players damage
-	 */
-	private int playerDamage = 100;
 
 	/**
 	 * Players name
@@ -57,7 +56,7 @@ public class Player implements Serializable{
 	 * The items that the player has in their inventory
 	 */
 	private  Item[] inventory;
-	
+
 	/**
 	 * The current location the player is in
 	 */
@@ -102,26 +101,29 @@ public class Player implements Serializable{
 	 * Direction the player is facing
 	 */
 	private Direction facing = Game.Direction.NORTH;
-	
+
 	/**
 	 * Weapon the player has equipped 
 	 */
 	private Weapon weapon;
-	
+
 	/**
 	 * Armour the player is wearing
 	 */
 	private Armour armour;
 	
+	private Game game;
+
 
 	public Player(String name, Game game) {
+		this.game = game;
 		score = 0;
 		//set user name
 		this.name = name;	
 		//create inventory
 		inventory = new Item[DEFAULT_INV_SIZE];	
 		//set location and add player to location
-		location = game.getLocation("Test Map");
+		location = game.getLocation(startingLocation);
 		location.addPlayer(this);
 		//players position
 		position = new Point(location.width()/2, location.height()/2);
@@ -131,38 +133,59 @@ public class Player implements Serializable{
 		//give the player animations
 		animation = new Animation(this);
 		// make the player alive
-		health = 100;
+		health = DEFAULT_HEALTH;
 		isDead = false;
 		setMaxHealth(health);
 		// set default gear
-		armour = new RobeArmour("Robe Armour", "Provides very basic protection", null, null);
-		setWeapon(new ShankWeapon("Shank", "A basic weapon", null, null));
+		armour = new Armour("Robe Armour", "Provides very basic protection", null, null, Armour.ArmourType.Robe);
+		weapon = new Weapon("Shank", "A basic weapon", null, null, Weapon.WeaponType.Shank)	;
 	}
-	
+
 	/**
 	 * Should be called when the action button is pressed (default F).
 	 * This method will pick up any item in front of the player or attempt to open a chest if there is one
 	 * @return true is an action was performed
 	 */
-	protected boolean performAction() {
+	protected Container performAction() {
 		Tile tile = this.getTile(facing);
-		if(tile == null){return false;}
-		if(tile.containedEntity() == null){return false;}
-		Entity ent = tile.containedEntity();
-		if(ent instanceof Item){
-			return pickupItem();
+		if(tile == null){return null;}
+		if(tile.containedEntity() == null){return null;}
+		if(tile.containedEntity() instanceof Container) {
+			Container con = (Container) tile.containedEntity();
+			if(con.isLocked()){return null;}
+			return con;
 		}
-		else if(tile.containedEntity() instanceof Chest) {
-			Chest chest = (Chest) tile.containedEntity();
-			if(chest.isLocked()){return false;}
-			chest.interact(this);
-			System.out.println(chest.toString());
-			return true;
+		return null;
+	}
+	
+	/**
+	 * add an item to the players inventory. This will add the item into the players first available
+	 * slot in the inventory
+	 * @param item to add
+	 * @return true if the item was successfully added
+	 */
+	public boolean addItem(Item item) {
+		if(inventoryFull()){return false;}
+		for(int i = 0; i < inventory.length; i++) {
+			if(inventory[i] == null) {
+				// add the item to the players inventory
+				inventory[i] = item;
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	/**
+	 * Removes item form inventory at specified index
+	 * @param index - index of item to remove
+	 */
+	public void removeItem(int index){
+		inventory[index] = null;
+	}
+
+	/**
+	 * Remove item from invent if second is < 0 else
 	 * Swap the items at the given indices in the inventory
 	 * @param first - index of first item
 	 * @param second - index of second item
@@ -171,12 +194,12 @@ public class Player implements Serializable{
 		if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
 			return;
 		}
-		Item item = inventory[first];
-		inventory[first] = inventory[second];
-		inventory[second] = item;
+			Item item = inventory[first];
+			inventory[first] = inventory[second];
+			inventory[second] = item;
 	}
-	
 
+	
 	/**
 	 * Make this player attack the player in the tile in front of them
 	 * @return true if the attack was successful
@@ -188,12 +211,38 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-		int damage = playerDamage-armour.getArmourRating();
+		
+		int damage = 0;
+		if(weapon != null && armour != null) {
+			damage = weapon.getDamage()-armour.getArmourRating();
+		}
+		else if(weapon != null) {
+			damage = weapon.getDamage();
+		}
+		
 		opponent.setHealth(opponent.getHealth()-damage);
 		if(opponent.getHealth() <= 0){
 			score++;
+			opponent.die();
 		}
 		return true;
+	}
+	
+	protected void die() {
+		//drop inventory
+		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
+		standingOn.setEntitiy(loot);
+		inventory = new Item[DEFAULT_INV_SIZE];
+		//respawn
+		standingOn.setPlayer(null);
+		location.removePlayer(this);
+		location = game.getLocation(startingLocation);
+		location.addPlayer(this);
+		position = new Point(location.width()/2, location.height()/2);
+		health = DEFAULT_HEALTH;
+		standingOn = location.getTileAt(position);
+		standingOn.setPlayer(this);
+		isDead = false;
 	}
 
 	/**
@@ -219,27 +268,8 @@ public class Player implements Serializable{
 		item.setLocation(location);
 		return true;
 	}
-	
-	public boolean addItem(Item item) {
-		if(inventoryFull()){return false;}
-		for(int i = 0; i < inventory.length; i++) {
-			if(inventory[i] == null) {
-				// add the item to the players inventory
-				inventory[i] = item;
-				return true;
-			}
-		}
-		return false;
-	}
 
-	/**
-	 * Sets specified index to null.
-	 * @param index - Index of array to be removed
-	 */
-	public void removeItem(int index){
-		inventory[index] = null;
-	}
-	
+
 	/**
 	 * Player attempts to pick-up the item on the tile in front of them
 	 * @return true if the item was successfully added
@@ -310,7 +340,7 @@ public class Player implements Serializable{
 	 * @param dir - direction to move
 	 * @return true if the player moved otherwise false
 	 */
-	protected boolean move(Game.Direction dir) {
+	public boolean move(Game.Direction dir) {
 		dir = calcDir(dir);
 		if(dir != facing){
 			animation.setAnimationDirection(dir.ordinal());
@@ -321,7 +351,10 @@ public class Player implements Serializable{
 		if(tile == null){return false;}
 		if(tile instanceof EntranceTile) {
 			EntranceTile ent = (EntranceTile) tile;
-			ent.enter(this);
+			if(!ent.enter(this)){
+				return false;
+			}
+			return true;
 		}
 		if(tile.getPlayer() != null){
 			if(!(tile.getPlayer().isDead())) {return false;}
@@ -410,7 +443,7 @@ public class Player implements Serializable{
 		animation.cycle();
 		return newDir;
 	}
-	
+
 	/**
 	 * Change the direction of the player based on the key that 
 	 * was pressed and the direction the camera is currently facing.
@@ -461,7 +494,7 @@ public class Player implements Serializable{
 	public Point getPosition() {
 		return position;
 	}
-	
+
 	public void setPosition(Point position) {
 		this.position = position;
 	}
@@ -505,7 +538,7 @@ public class Player implements Serializable{
 	public boolean isAttacking(){
 		return attacking;
 	}
-	
+
 	public void setAttacking(boolean b) {
 		attacking = b;
 	}
@@ -513,7 +546,7 @@ public class Player implements Serializable{
 	public Direction getFacing() {
 		return facing;
 	}
-	
+
 	public Tile getStandingOn() {
 		return standingOn;
 	}
@@ -528,7 +561,6 @@ public class Player implements Serializable{
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
-		this.playerDamage = weapon.getDamage();
 	}
 
 	public int getMaxHealth() {
@@ -538,7 +570,7 @@ public class Player implements Serializable{
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
-	
+
 	public Armour getArmour() {
 		return armour;
 	}
@@ -547,11 +579,10 @@ public class Player implements Serializable{
 		this.armour = armour;
 	}
 
-
 	public int getScore() {
 		return score;
 	}
-	
+
 	public Item[] getInventory() {
 		return inventory;
 	}

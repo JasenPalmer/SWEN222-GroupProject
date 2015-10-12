@@ -8,10 +8,15 @@ public class ItemIcon {
 	private String Description;
 	private ImageIcon image;
 	private String potionImage = "src/ui/images/items/potionInventItem.png";
-	private String katanaImage = "src/ui/images/items/katana-image.png";
-	private String shankImage = "src/ui/images/items/shankInventImageSize.png";
+	private String shankImage = "src/ui/images/items/shankImage.png";
+	private String spearImage = "src/ui/images/items/spearImage.png";
 	private String helmet1Image = "src/ui/images/items/helmet-1.png";
 	private String helmet2Image = "src/ui/images/items/helmet-2.png";
+	private String keyImage = "src/ui/images/items/keyImage.png";
+	private String plateImage = "src/ui/images/items/plateImage.png";
+	private String chainImage = "src/ui/images/items/chainImage.png";
+	private String leatherImage = "src/ui/images/items/leatherImage.png";
+	private String robeImage = "src/ui/images/items/robeImage.png";
 	private int x,y;
 	private boolean equipable;
 	private String type;
@@ -19,13 +24,13 @@ public class ItemIcon {
 	public ItemIcon(String n, String d){
 		this.Name = n;
 		this.Description = d;
-		if(n.equals("ShankWeapon")){
+		if(n.equals("Shank")){
 			image = new ImageIcon(shankImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
-		else if (n.equals("SpearWeapon")){
-			image = new ImageIcon(katanaImage);
+		else if (n.equals("Spear")){
+			image = new ImageIcon(spearImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
@@ -34,28 +39,28 @@ public class ItemIcon {
 			this.equipable = false;
 			this.type = "Consumable";
 		}
-		else if (n.equals("PlateArmour")){
-			image = new ImageIcon(helmet1Image);
+		else if (n.equals("Plate Armour")){
+			image = new ImageIcon(plateImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("ChainArmour")){
-			image = new ImageIcon(helmet2Image);
+		else if (n.equals("Chain Armour")){
+			image = new ImageIcon(chainImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("RobeArmour")){
-			image = new ImageIcon(helmet2Image);
+		else if (n.equals("Robe Armour")){
+			image = new ImageIcon(robeImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("LeatherArmour")){
-			image = new ImageIcon(helmet2Image);
+		else if (n.equals("Leather Armour")){
+			image = new ImageIcon(leatherImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
 		else if (n.equals("Key")){
-			image = new ImageIcon(helmet2Image);
+			image = new ImageIcon(keyImage);
 			this.equipable = true;
 			this.type = "Key";
 		}

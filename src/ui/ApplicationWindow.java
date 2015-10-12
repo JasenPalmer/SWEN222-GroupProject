@@ -1,11 +1,12 @@
 package ui;
 
-import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
-import gameworld.entity.Item;
+import gameworld.entity.Armour;
+import gameworld.entity.Container;
+import gameworld.entity.Key;
 import gameworld.entity.Potion;
-import gameworld.entity.weapon.ShankWeapon;
+import gameworld.entity.Weapon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,7 +51,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
 	private Client client;
-	private Player state;
 	private String username;
 	private String host;
 	private Clip musicClip;
@@ -113,9 +113,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.add(overlayPanel,2,0);
 
 		//Setup Inventory
-		inventPanel = new InventoryPanel(client.getState());
+		inventPanel = new InventoryPanel(client);
 		overlayPanel.add(inventPanel,2,0);
-		
+
 		//Setup loot inventory
 		lootInventPanel = new LootInventoryPanel(inventPanel);
 		overlayPanel.add(lootInventPanel,2,0);
@@ -168,7 +168,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				}
 				if(rw != null && client.getState() != null){
 					rw.repaint();
-					//cycleAnimations();
+					hpBar.setHealth(client.getState());
 				}
 			}
 		}
@@ -238,12 +238,14 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		JMenu option2 = new JMenu("Edit");
 		option2List.add(new JMenuItem("Shank all players"));
 		option2List.add(new JMenuItem("Add Shank"));
+		option2List.add(new JMenuItem("Add Spear"));
+		option2List.add(new JMenuItem("Add Plate Armour"));
+		option2List.add(new JMenuItem("Add Chain Armour"));
+		option2List.add(new JMenuItem("Add Leather Armour"));
+		option2List.add(new JMenuItem("Add Robe Armour"));
 		option2List.add(new JMenuItem("Add Potion"));
 		option2List.add(new JMenuItem("Add Shank loot"));
 		option2List.add(new JMenuItem("Add Potion loot"));
-		option2List.add(new JMenuItem("Add Katana"));
-		option2List.add(new JMenuItem("Add Helmet1"));
-		option2List.add(new JMenuItem("Add Helmet2"));
 
 		for(JMenuItem jmItem : option2List){
 			option2.add(jmItem);
@@ -254,15 +256,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		menuBar.add(option2);
 
 		this.setJMenuBar(menuBar);
-	}
-
-	public void repaintRenderingWindow(){
-		if(client.getState() != null && username != null && hpBar != null){
-			hpBar.setHealth(client.getState().getHealth());
-		}
-		if(rw != null){
-			rw.repaint();
-		}
 	}
 
 	private void updateCompass(){
@@ -279,8 +272,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "west":
 			compass.setIcon(new ImageIcon(westCompass));
 			break;
-			default:
-				break;
+		default:
+			break;
 		}
 	}
 
@@ -355,36 +348,41 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case "Shank all players":
 			System.out.println("All players were ruthlessly shanked, y u do dis?");
-			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
-			client.getState().addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
+			client.addItem(new Weapon("Shank", "Fuckn shank u mate", null, null, Weapon.WeaponType.Shank));
+			break;
+		case "Add Spear":
+			client.addItem(new Weapon("Spear", "I'll fukn spear you bro", null, null, Weapon.WeaponType.Spear));
 			break;
 		case "Add Potion":
-			client.getState().addItem(new Potion("Potion", "Drink this shit", null, null));
-			System.out.println(client.getState().getInventory());
+			client.addItem(new Potion("Potion", "Drink this shit", null, null));
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
+		case "Add Plate Armour":
+			client.addItem(new Armour("Plate Armour", "some plate amour", null, null,Armour.ArmourType.Plate));
+			break;
+		case "Add Chain Armour":
+			client.addItem(new Armour("Chain Armour", "some leather amour", null, null,Armour.ArmourType.Chain));
+			break;
+		case "Add Leather Armour":
+			client.addItem(new Armour("Leather Armour", "some leather amour", null, null,Armour.ArmourType.Leather));
+			break;
+		case "Add Robe Armour":
+			client.addItem(new Armour("Robe Armour", "some leather amour", null, null, Armour.ArmourType.Robe));
+			break;
 		case "Add Potion loot":
-			lootInventPanel.addItem(new ItemIcon("Potion", "Tis a potion mate"));
+			client.addItem(new Key("Key", "WTF", null, null));
 			break;
 		case "Add Shank loot":
 			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
-		case "Add Katana":
-			lootInventPanel.addItem(new ItemIcon("SpearWeapon", "Tis a katana mate"));
-			break;
-		case "Add Helmet1":
-			lootInventPanel.addItem(new ItemIcon("Helmet1", "Tis a helmet1 mate"));
-			break;
-		case "Add Helmet2":
-			lootInventPanel.addItem(new ItemIcon("Helmet2", "Tis a helmet2 mate"));
-			break;
 		default:
 			break;
 		}
+
 		inventPanel.populateInventArray();
 	}
 
@@ -472,13 +470,21 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			timer.start();
 			break;
 		case KeyEvent.VK_ESCAPE:
-			if(showSettings == true){
-				showSettings = false;
+			if(lootInventOpen){
+				lootInventPanel.setVisible(false);
+				lootInventPanel.setFocusable(false);
+				lootInventOpen = false;
+				inventPanel.setLootVis(false);
 			}
 			else{
-				showSettings = true;
+				if(showSettings == true){
+					showSettings = false;
+				}
+				else{
+					showSettings = true;
+				}
+				setSettings();
 			}
-			setSettings();
 			break;
 		case KeyEvent.VK_ENTER:
 			chatBoxPanel.getTextField().requestFocus();
@@ -488,13 +494,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case KeyEvent.VK_F:
 			client.registerKeyPress(e);
-			inventPanel.populateInventArray();
 			break;
 		default:
 			break;
 		}
 	}
-	
+
 	public void cycleAnimations() { this.client.cycleAnimations(); }
 
 	public void changeVolume(int change){
@@ -533,9 +538,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void closeAppWindow(){
-	System.exit(0);	
+		System.exit(0);	
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		timer.stop();
@@ -543,22 +548,23 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//TODO
+	}
+
+	public void openContainer(Container container){
+		lootInventPanel.setVisible(true);
+		lootInventPanel.setLootContainer(container);
+		lootInventOpen = true;
+		setLootInventory();
 	}
 
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 	public Player getPlayer(){return this.client.getState();}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
-
-	//Setters
-	public void setState(Player state){
-		this.state = state;
-	}
+	public InventoryPanel getInventPanel(){ return this.inventPanel;}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -569,26 +575,21 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 }

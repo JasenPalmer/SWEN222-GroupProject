@@ -1,7 +1,8 @@
 package network;
 
-import gameworld.Game;
 import gameworld.Player;
+import gameworld.entity.Container;
+import gameworld.entity.Item;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -108,7 +109,67 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	
+	public void swapItems(int index1, int index2){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SWAP_ITEM, index1, index2);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeItem(int index){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM, index, -1);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addItem(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM, item);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setWeapon(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_WEAPON, item);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setArmour(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_ARMOUR, item);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	public void removeItemContainer(int index, Container container){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM_CONTAINER, index, container);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void close(){
 		serverConnection.finish();
 
@@ -149,10 +210,20 @@ public class Client {
 				case UPDATE_GAME:
 					if(event.getState() == null) return;
 					state = event.getState();
+					if(gui.getInventPanel() != null) gui.getInventPanel().populateInventArray();
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
-					//gameState.move(null)
+					synchronized(state){
+						for(Player p : state.getLocation().getPlayers()){
+							if(p.getName().equals(event.getUser())){
+								p.move(event.getDir());
+							}
+						}
+					}
+					break;
+				case DISPLAY_CONTAINER:
+					gui.openContainer(event.getContainer());
 					break;
 				case MESSAGE:
 					ChatBoxPanel chatBox = gui.getChatBox();

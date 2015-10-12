@@ -3,6 +3,9 @@ package network;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.entity.Armour;
+import gameworld.entity.Container;
+import gameworld.entity.Weapon;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -133,21 +136,25 @@ public class Server {
 		NetworkEvent toProcess =  eventQueue.poll();
 		//System.out.println("Processing");
 		if(toProcess == null) return;
+		
+		boolean hasChanged = false;
+		Player p = null;
+		
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			boolean hasChanged = false;
+			boolean hasMoved = false;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
 				break;
 			case KeyEvent.VK_D:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
 				break;
 			case KeyEvent.VK_S:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
 				break;
 			case KeyEvent.VK_A:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
@@ -159,11 +166,13 @@ public class Server {
 				hasChanged = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
-				hasChanged = gameState.performAction(toProcess.getUser());
+				Container c = gameState.performAction(toProcess.getUser());
+				if(c != null) getClient(toProcess.getUser()).displayContainer(c);
+				break;
 			default:
 				break;
 			}
-			if(hasChanged) updateGUI(gameState.parsePlayer(toProcess.getUser()));
+			if(hasMoved) movePlayer(toProcess.getUser());
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
@@ -171,7 +180,33 @@ public class Server {
 				updateGUI(gameState.parsePlayer(toProcess.getUser()));
 			}
 			break;
-		case MESSAGE:
+		case ADD_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			hasChanged = p.addItem(toProcess.getItem());
+			break;
+		case REMOVE_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.removeItem(toProcess.getIndex1());
+			hasChanged = true;
+			break;
+		case SWAP_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.swapItems(toProcess.getIndex1(), toProcess.getIndex2());
+			hasChanged = true;
+			break;
+		case SET_WEAPON:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.setWeapon((Weapon)toProcess.getItem());
+			hasChanged = true;
+			break;
+		case SET_ARMOUR:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.setArmour((Armour)toProcess.getItem());
+			hasChanged = true;
+			break;
+		case REMOVE_ITEM_CONTAINER:
+			gameState.removeItemContainer(toProcess.getIndex1(), toProcess.getContainer());
+			hasChanged = true;
 			break;
 		case UPDATE_GAME:
 			break;
@@ -180,6 +215,7 @@ public class Server {
 		default:
 			break;
 		}
+		if(hasChanged) updateGUI(gameState.parsePlayer(toProcess.getUser()));
 	}
 
 
@@ -250,7 +286,16 @@ public class Server {
 		public void movePlayer(String movingUser) {
 			try {
 				output.reset();
-				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getDirection()));
+				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing()));
+			} catch (IOException e) {
+				console.displayError("Failed to write update to client: " + user + " - " + e);
+			}
+		}
+		
+		public void displayContainer(Container c){
+			try {
+				output.reset();
+				output.writeObject(new NetworkEvent(this.user, c));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -270,11 +315,31 @@ public class Server {
 				if(currentEvent  != null) {
 					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
 					
+					//System.out.println("Size of Queque: " + eventQueue.size());
+					if(eventQueue.size() > 35) eventQueue.poll();
 					switch(currentEvent.getType()){
 					case KEY_PRESS:
 						eventQueue.add(currentEvent);
 						break;
 					case CYCLE_ANIMATIONS:
+						eventQueue.add(currentEvent);
+						break;
+					case ADD_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case REMOVE_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case SWAP_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case SET_WEAPON:
+						eventQueue.add(currentEvent);
+						break;
+					case SET_ARMOUR:
+						eventQueue.add(currentEvent);
+						break;
+					case REMOVE_ITEM_CONTAINER:
 						eventQueue.add(currentEvent);
 						break;
 					case MESSAGE:

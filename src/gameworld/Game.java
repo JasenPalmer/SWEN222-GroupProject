@@ -1,9 +1,12 @@
 package gameworld;
 
+import gameworld.entity.Container;
+import gameworld.entity.Key;
 import gameworld.location.Location;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Game implements Serializable {
@@ -14,6 +17,8 @@ public class Game implements Serializable {
 
 	private Set<Location> locations;
 	private Set<Player> players;
+	
+	private Map<Key, Container> keysToContainers;
 
 	public Game() {
 		players = new HashSet<Player>();
@@ -21,7 +26,7 @@ public class Game implements Serializable {
 		Parser.loadEntityFiles();
 		Parser.loadDoors();
 	}
-	
+
 	/**
 	 * Get a location from the location name
 	 * @param locationName - name of the location to get
@@ -52,7 +57,6 @@ public class Game implements Serializable {
 		players.remove(player);
 	}
 
-
 	/**
 	 * Move a player in a direction
 	 *
@@ -67,7 +71,7 @@ public class Game implements Serializable {
 		if(!player.move(direction)) {return false;}
 		return true;
 	}
-	
+
 	/**
 	 * Drop the item in the players inventory at the given index
 	 * @param playerName - name of the player
@@ -81,13 +85,12 @@ public class Game implements Serializable {
 		if(!player.dropFromInv(index)){return false;}
 		return true;
 	}
-	
-	public boolean performAction(String playerName){
+
+	public Container performAction(String playerName){
 		Player player = parsePlayer(playerName);
-		if(player == null){return false;}
-		if(player.isDead()){return false;}
-		if(!player.performAction()){return false;}
-		return true;
+		if(player == null){return null;}
+		if(player.isDead()){return null;}
+		return player.performAction();
 	}
 
 	/**
@@ -111,6 +114,14 @@ public class Game implements Serializable {
 		return true;
 	}
 
+	/**
+	 * Removes item at index from container specified
+	 * @param index - index of item to be removed
+	 * @param container - container to remove item from
+	 */
+	public void removeItemContainer(int index, Container container) {
+		container.getItems()[index] = null;
+	}
 
 	/**
 	 * Returns the player with the given name

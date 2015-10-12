@@ -31,22 +31,12 @@ public class ImageStorage {
 	public static Image insideDoorL;
 	public static Image insideDoorR;
 
-	static Image[][] robeWalk = new Image[4][9];
-	static Image[][] robeSpear = new Image[4][8];
-	static Image[][] robeShank = new Image[4][6];
-	
-	static Image[][] leatherWalk = new Image[4][9];
-	static Image[][] leatherSpear = new Image[4][8];
-	static Image[][] leatherShank = new Image[4][6];
-	
-	static Image[][] chainWalk = new Image[4][9];
-	static Image[][] chainSpear = new Image[4][8];
-	static Image[][] chainShank = new Image[4][6];
-	
-	static Image[][] plateWalk = new Image[4][9];
-	static Image[][] plateSpear = new Image[4][8];
-	static Image[][] plateShank = new Image[4][6];
 
+	// indexing goes:  armour type, direction, frame
+	static Image[][][] walking = new Image[4][4][9];
+	static Image[][][] shanking = new Image[4][4][6];
+	static Image[][][] spearing = new Image[4][4][8];
+	
 	public ImageStorage(){
 		setImages();
 	}
@@ -88,6 +78,23 @@ public class ImageStorage {
 			chest = ImageIO.read(new File("src/ui/images/entities/Chest.png"));
 			chair = ImageIO.read(new File("src/ui/images/entities/Chair.png"));
 			bag = ImageIO.read(new File("src/ui/images/entities/Bag.png"));
+			
+			
+			Image[][] robeWalk = new Image[4][9];
+			Image[][] robeSpear = new Image[4][8];
+			Image[][] robeShank = new Image[4][6];
+			
+			Image[][] leatherWalk = new Image[4][9];
+			Image[][] leatherSpear = new Image[4][8];
+			Image[][] leatherShank = new Image[4][6];
+			
+			Image[][] chainWalk = new Image[4][9];
+			Image[][] chainSpear = new Image[4][8];
+			Image[][] chainShank = new Image[4][6];
+			
+			Image[][] plateWalk = new Image[4][9];
+			Image[][] plateSpear = new Image[4][8];
+			Image[][] plateShank = new Image[4][6];
 			
 //			robewalking
 			for(int i  = 0; i < robeWalk.length; i++){
@@ -152,7 +159,21 @@ public class ImageStorage {
 					}
 				}
 			}
-
+			
+			walking[0] = robeWalk;
+			walking[1] = leatherWalk;
+			walking[2] = chainWalk;
+			walking[3] = plateWalk;
+			
+			shanking[0] = robeShank;
+			shanking[1] = leatherShank;
+			shanking[2] = chainShank;
+			shanking[3] = plateShank;
+			
+			spearing[0] = robeSpear;
+			spearing[1] = leatherSpear;
+			spearing[2] = chainSpear;
+			spearing[3] = plateSpear;
 
 		}catch(IOException e){
 			System.err.println(e.getLocalizedMessage());
@@ -191,10 +212,10 @@ public class ImageStorage {
 			case "Chest":
 				return chest;
 			case "Key":
-				return bush;
+				return bag;
 			case "Chair":
 				return chair;
-			case "Bag":
+			case "LootBag":
 				return bag;
 		}
 		return null;

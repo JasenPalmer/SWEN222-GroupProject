@@ -1,10 +1,6 @@
 package gameworld.entity;
 
 import gameworld.Player;
-import gameworld.entity.armour.ChainArmour;
-import gameworld.entity.armour.LeatherArmour;
-import gameworld.entity.armour.PlateArmour;
-import gameworld.entity.weapon.SpearWeapon;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -21,7 +17,8 @@ import java.util.Random;
 public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;
-	private Player openedBy;
+	
+	private Key key;
 	
 	private Item[] epicItems; // 10%
 	private Item[] rareItems; // 30%
@@ -43,24 +40,24 @@ public class Chest extends Container implements Serializable{
 				//new ShankWeapon("Shank", "A basic weapon", null, null),
 				//armour
 				//new RobeArmour("Robe armour", "Provides very basic protection", null, null),
-				new LeatherArmour("Leather armour", "Provides basic protection",null, null),
+				new Armour("Leather Armour", "Provides basic protection",null, null, Armour.ArmourType.Leather),
 				//misc
-				new Potion("Health Potion", "Use this to heal yourself!", null, null)
+				new Potion("Potion", "Use this to heal yourself!", null, null)
 		};
 		
 		rareItems = new Item[] {
 				//weapon
-				new SpearWeapon("A spear","Stab stab", null, null),
+				new Weapon("Spear","Stab stab", null, null, Weapon.WeaponType.Spear),
 				//armour
-				new ChainArmour("Chain armour", "Provides good protection", null, null),
+				new Armour("Chain Armour", "Provides good protection", null, null, Armour.ArmourType.Chain),
 				// misc
-				new Key("A key", "Used to open doors or chests", null, null),
+				//new Key("A Key", "Used to open doors or chests", null, null),
 		};
 		
 		epicItems = new Item[] {
 				//weapon
 				//armour
-				new PlateArmour("Plate armour", "Provides the highest protection", null, null)
+				new Armour("Plate armour", "Provides the highest protection", null, null,Armour.ArmourType.Plate)
 				//misc
 		};
 	}
@@ -105,6 +102,18 @@ public class Chest extends Container implements Serializable{
 	private Item createEpic() {
 		int index = new Random().nextInt(epicItems.length);
 		return epicItems[index].clone();
+	}
+	
+	public void setKey(Key key) {
+		this.key = key;
+	}
+	
+	public boolean open(Key key) {
+		if(key == this.key) {
+			locked = false;
+			return true;
+		}
+		return false;
 	}
 
 	@Override

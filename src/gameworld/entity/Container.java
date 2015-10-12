@@ -1,5 +1,6 @@
 package gameworld.entity;
 
+import gameworld.Player;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -14,17 +15,19 @@ public abstract class Container implements InteractableEntity, Serializable {
 
 	private static final long serialVersionUID = 3833387180228381148L;
 
-	private static final int INV_SIZE = 8;
+	private static final int INV_SIZE = 18;
 
 	/**
 	 * Items that are stored in the container
 	 */
 	protected Item[] items;
 	
+	protected Player openedBy;
+	
 	/**
 	 * Flag for if the container if locked
 	 */
-	private boolean locked;
+	protected boolean locked;
 	
 	private Point position;
 	

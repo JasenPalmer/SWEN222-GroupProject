@@ -1,5 +1,7 @@
 package ui.panels;
 
+import gameworld.Player;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,8 +29,11 @@ public class HealthBarPanel extends JPanel{
 		}	
 	}
 	
-	public void setHealth(int health){
-		this.health = health;
+	public void setHealth(Player player){
+		this.health = player.getHealth();
+		if(this.health < 0){
+			this.health = 0;
+		}
 		this.repaint();
 	}
 	

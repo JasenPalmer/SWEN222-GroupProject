@@ -2,6 +2,8 @@ package network;
 
 import gameworld.Game;
 import gameworld.Player;
+import gameworld.entity.Container;
+import gameworld.entity.Item;
 
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
@@ -23,19 +25,30 @@ public class NetworkEvent implements Serializable {
 	private final EventType type;
 	
 	//KeyCode of the pressed key, -1 if this is not a KEY_PRESS event.
-	private final int keyCode;
+	private int keyCode = -1;
 	
 	//Message, null if not a MESSAGE event.
-	private final String message;
+	private String message = null;
 	
-	//Username of the client that created the NetworkEvent
+	//Username of the client that created the NetworkEvent.
 	private final String user;
 	
 	//The direction the client should move the player in.
-	private final Game.Direction dir;
+	private Game.Direction dir = null;
 	
-	//Game state used for broadcasting a gui update to clients
-	private Player state;
+	//Game state used for broadcasting a gui update to clients.
+	private Player state = null;
+
+	//The item that needs to be added or set on this player.
+	private Item item = null;
+	
+	//The starting index of an item in the inventory to be swapped.
+	private int swapIndex1 = -1;
+	
+	//The destination index of an inventory item to be swapped, stays -1 if to be removed.
+	private int swapIndex2 = -1;
+
+	private Container container;
 	
 	
 	/**
@@ -47,9 +60,6 @@ public class NetworkEvent implements Serializable {
 		this.type = EventType.KEY_PRESS;
 		this.keyCode = e.getKeyCode();
 		this.user = user;
-		
-		this.message = null;
-		this.dir = null;
 	}
 	
 	/**
@@ -61,9 +71,6 @@ public class NetworkEvent implements Serializable {
 		this.type = EventType.MESSAGE;
 		this.message = msg;
 		this.user = user;
-		
-		this.keyCode = -1;
-		this.dir = null;
 	}
 	
 	/**
@@ -74,10 +81,6 @@ public class NetworkEvent implements Serializable {
 		this.type = EventType.UPDATE_GAME;
 		this.user = "Server";
 		this.state = state; 
-		
-		this.keyCode = -1;
-		this.message = null;
-		this.dir = null;
 	}
 	
 	/**
@@ -88,23 +91,39 @@ public class NetworkEvent implements Serializable {
 	public NetworkEvent(String user, EventType type){
 		this.type = type;
 		this.user = user;
-		
-		this.state = null;
-		this.keyCode = -1;
-		this.message = null;
-		this.dir = null;
 	}
 	
 	public NetworkEvent(String user, Game.Direction dir){
 		this.type = EventType.MOVE_PLAYER;
 		this.user = user;
 		this.dir = dir;
-		
-		this.state = null; 
-		this.keyCode = -1;
-		this.message = null;
 	}
 	
+	public NetworkEvent (String user, EventType type, Item item){
+		this.user = user;
+		this.type = type;
+		this.item = item;
+	}
+	
+	public NetworkEvent (String user, EventType type, int index1, int index2){
+		this.user  = user;
+		this.type = type;
+		this.swapIndex1 = index1;
+		this.swapIndex2 = index2;
+	}
+	
+	public NetworkEvent(String user, Container container){
+		this.user = user;
+		this.type = EventType.DISPLAY_CONTAINER;
+		this.container = container;
+	}
+	
+	public NetworkEvent(String user, EventType type , int index, Container container){
+		this.user = user;
+		this.type = type;
+		this.container = container;
+		this.swapIndex1 = index;
+	}
 	
 	//Getters
 	public String getUser() { return user; }
@@ -113,6 +132,10 @@ public class NetworkEvent implements Serializable {
 	public String getMessage() { return message; }
 	public Player getState() { return state; }
 	public Game.Direction getDir() { return dir; }
+	public Item getItem() { return item; }
+	public int getIndex1() { return swapIndex1; }
+	public int getIndex2() { return swapIndex2; }
+	public Container getContainer() { return container; }
 	
 	//All possible types of NetworkEvents.
 	public enum EventType{
@@ -121,7 +144,14 @@ public class NetworkEvent implements Serializable {
 		UPDATE_GAME,
 		CYCLE_ANIMATIONS,
 		MOVE_PLAYER,
-		CLOSE;
+		ADD_ITEM,
+		SET_WEAPON,
+		SET_ARMOUR,
+		REMOVE_ITEM,
+		SWAP_ITEM,
+		DISPLAY_CONTAINER,
+		CLOSE,
+		REMOVE_ITEM_CONTAINER;
 	}
 	
 }
