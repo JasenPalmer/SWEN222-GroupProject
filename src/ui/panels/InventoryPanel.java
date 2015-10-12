@@ -329,9 +329,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 				if(client.getState().getWeapon() != null && !isInventFull()){
 					client.addItem(client.getState().getWeapon());
-					client.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
+					//client.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
 					//TODO Uncomment this when players can have no weapon
-					//player.setWeapon(null);
+					client.setWeapon(null);
 					playSound("Button");
 				}
 				else{
@@ -342,9 +342,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
 				if(client.getState().getArmour() != null && !isInventFull()){
 					client.addItem(client.getState().getArmour());
-					client.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
+					//client.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
 					//TODO Uncomment this when players can have no armour
-					//player.setArmour(null);
+					client.setArmour(null);
 					playSound("Button");
 				}
 				else{

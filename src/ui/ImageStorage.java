@@ -191,7 +191,7 @@ public class ImageStorage {
 			case "Chest":
 				return chest;
 			case "Key":
-				return bush;
+				return bag;
 			case "Chair":
 				return chair;
 			case "Bag":
