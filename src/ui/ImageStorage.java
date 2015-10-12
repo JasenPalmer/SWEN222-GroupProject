@@ -215,7 +215,7 @@ public class ImageStorage {
 				return bag;
 			case "Chair":
 				return chair;
-			case "Bag":
+			case "LootBag":
 				return bag;
 		}
 		return null;
