@@ -362,16 +362,16 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			inventPanel.addItemTo(0,0,1,0);
 			break;
 		case "Add Plate Armour":
-			client.addItem(new Armour("PlateArmour", "some plate amour", null, null,Armour.ArmourType.Plate));
+			client.addItem(new Armour("Plate Armour", "some plate amour", null, null,Armour.ArmourType.Plate));
 			break;
 		case "Add Chain Armour":
-			client.addItem(new Armour("ChainArmour", "some leather amour", null, null,Armour.ArmourType.Chain));
+			client.addItem(new Armour("Chain Armour", "some leather amour", null, null,Armour.ArmourType.Chain));
 			break;
 		case "Add Leather Armour":
-			client.addItem(new Armour("LeatherArmour", "some leather amour", null, null,Armour.ArmourType.Leather));
+			client.addItem(new Armour("Leather Armour", "some leather amour", null, null,Armour.ArmourType.Leather));
 			break;
 		case "Add Robe Armour":
-			client.addItem(new Armour("RobeArmour", "some leather amour", null, null, Armour.ArmourType.Robe));
+			client.addItem(new Armour("Robe Armour", "some leather amour", null, null, Armour.ArmourType.Robe));
 			break;
 		case "Add Potion loot":
 			client.addItem(new Key("Key", "WTF", null, null));

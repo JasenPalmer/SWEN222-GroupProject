@@ -24,12 +24,12 @@ public class ItemIcon {
 	public ItemIcon(String n, String d){
 		this.Name = n;
 		this.Description = d;
-		if(n.equals("ShankWeapon")){
+		if(n.equals("Shank")){
 			image = new ImageIcon(shankImage);
 			this.equipable = true;
 			this.type = "Weapon";
 		}
-		else if (n.equals("SpearWeapon")){
+		else if (n.equals("Spear")){
 			image = new ImageIcon(spearImage);
 			this.equipable = true;
 			this.type = "Weapon";
@@ -39,22 +39,22 @@ public class ItemIcon {
 			this.equipable = false;
 			this.type = "Consumable";
 		}
-		else if (n.equals("PlateArmour")){
+		else if (n.equals("Plate Armour")){
 			image = new ImageIcon(plateImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("ChainArmour")){
+		else if (n.equals("Chain Armour")){
 			image = new ImageIcon(chainImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("RobeArmour")){
+		else if (n.equals("Robe Armour")){
 			image = new ImageIcon(robeImage);
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("LeatherArmour")){
+		else if (n.equals("Leather Armour")){
 			image = new ImageIcon(leatherImage);
 			this.equipable = true;
 			this.type = "Armour";

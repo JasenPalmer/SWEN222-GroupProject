@@ -300,12 +300,13 @@ public class RenderingWindow extends JPanel{
 			if(p.isAttacking()){
 				switch(weapon){
 					case 0:
-						image = ImageStorage.shanking[armour][directionInt][animation.getWalkFrame()];
+						image = ImageStorage.shanking[armour][directionInt][animation.getAttackFrame()];
 						break;
 					case 1:
-						image = ImageStorage.spearing[armour][directionInt][animation.getWalkFrame()];
+						image = ImageStorage.spearing[armour][directionInt][animation.getAttackFrame()];
 						break;
 				}
+				applicationWindow.cycleAnimations();
 			} else {
 				image = ImageStorage.walking[armour][directionInt][animation.getWalkFrame()];
 			}

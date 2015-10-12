@@ -74,7 +74,8 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 		for(int i = 0; i < 4; i++){
 			if(itemList[i] != null){
-				inventArray[i][0] = new ItemIcon(itemList[i].getClass().getSimpleName(), itemList[i].getDescription());
+				inventArray[i][0] = new ItemIcon(itemList[i].getName(), itemList[i].getDescription());
+				System.out.println(itemList[i].getName());
 			}
 			else{
 				inventArray[i][0] = null;
@@ -83,7 +84,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 		for(int i = 0; i < 4; i++){
 			if(itemList[i+4] != null){
-				inventArray[i][1] = new ItemIcon(itemList[i+4].getClass().getSimpleName(), itemList[i+4].getDescription());
+				inventArray[i][1] = new ItemIcon(itemList[i+4].getName(), itemList[i+4].getDescription());
 			}
 			else{
 				inventArray[i][1] = null;
@@ -183,7 +184,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	private void fillEquipmentSlots(){
 		if(client.getState().getWeapon() != null){
-			String name = client.getState().getWeapon().getClass().getSimpleName();
+			String name = client.getState().getWeapon().getName();
 			String desc = client.getState().getWeapon().getDescription();
 			ItemIcon weapon = new ItemIcon(name, desc);
 			JLabel weaponLabel = new JLabel(weapon.getImage());
@@ -205,7 +206,8 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 		if(client.getState().getArmour() != null){
-			String name = client.getState().getArmour().getClass().getSimpleName();
+			String name = client.getState().getArmour().getName();
+			System.out.println(name);
 			String desc = client.getState().getArmour().getDescription();
 			ItemIcon armour = new ItemIcon(name, desc);
 			JLabel armourLabel = new JLabel(armour.getImage());
@@ -257,37 +259,37 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	private boolean isInventFull(){
 		Item[] itemList = client.getState().getInventory();
-		
+
 		for(int i = 0; i < itemList.length; i++){
 			if(itemList[i] == null){
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	private Item makeItem(String name){
 		Item weapon = null;
 
 		switch(name){
 		case "ShankWeapon":
-			weapon = new Weapon("ShankWeapon", "Tis a shank mate", null, null, Weapon.WeaponType.Shank);
+			weapon = new Weapon("Shank", "Tis a shank mate", null, null, Weapon.WeaponType.Shank);
 			break;
 		case "SpearWeapon":
-			weapon = new Weapon("SpearWeapon", "Tis a spear mate", null, null, Weapon.WeaponType.Spear);
+			weapon = new Weapon("Spear", "Tis a spear mate", null, null, Weapon.WeaponType.Spear);
 			break;
 		case "ChainArmour":
-			weapon = new Armour("ChainArmour", "Tis sexy chain armour mate", null, null, Armour.ArmourType.Chain);
+			weapon = new Armour("Chain Armour", "Tis sexy chain armour mate", null, null, Armour.ArmourType.Chain);
 			break;
 		case "LeatherArmour":
-			weapon = new Armour("LeatherArmour", "Tis pretty shitty leather armour mate", null, null,Armour.ArmourType.Leather);
+			weapon = new Armour("Leather Armour", "Tis pretty shitty leather armour mate", null, null, Armour.ArmourType.Leather);
 			break;
 		case "PlateArmour":
-			weapon = new Armour("PlateArmour", "Tis super sexy plate armour m9", null, null,Armour.ArmourType.Plate);
+			weapon = new Armour("Plate Armour", "Tis super sexy plate armour m9", null, null, Armour.ArmourType.Plate);
 			break;
 		case "RobeArmour":
-			weapon = new Armour("RobeArmour", "Mate why even pick this shit up?", null, null,Armour.ArmourType.Robe);
+			weapon = new Armour("Robe Armour", "Mate why even pick this shit up?", null, null, Armour.ArmourType.Robe);
 			break;
 		}
 
@@ -356,7 +358,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
 									client.setWeapon(newWeapon);											
 									client.removeItem(convertIndex(i,j));
-									
+
 									if(temp != null){
 										client.addItem(temp);
 									}
@@ -369,7 +371,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									Armour newArmour = (Armour) makeItem(inventArray[i][j].getName());
 									client.setArmour(newArmour);
 									client.removeItem(convertIndex(i,j));
-									
+
 									if(temp != null){
 										client.addItem(temp);
 									}
@@ -426,7 +428,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				}
 				populateInventArray();
 			}
-			
+
 		}
 	}
 
