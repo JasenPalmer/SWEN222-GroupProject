@@ -31,6 +31,9 @@ public class HealthBarPanel extends JPanel{
 	
 	public void setHealth(Player player){
 		this.health = player.getHealth();
+		if(this.health < 0){
+			this.health = 0;
+		}
 		this.repaint();
 	}
 	
