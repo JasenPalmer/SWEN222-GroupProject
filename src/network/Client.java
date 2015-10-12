@@ -200,6 +200,7 @@ public class Client {
 				case UPDATE_GAME:
 					if(event.getState() == null) return;
 					state = event.getState();
+					if(gui.getInventPanel() != null) gui.getInventPanel().populateInventArray();
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:

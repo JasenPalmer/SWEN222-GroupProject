@@ -4,9 +4,12 @@ import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.Key;
 import gameworld.entity.Potion;
+import gameworld.entity.armour.ChainArmour;
 import gameworld.entity.armour.LeatherArmour;
 import gameworld.entity.armour.PlateArmour;
+import gameworld.entity.armour.RobeArmour;
 import gameworld.entity.weapon.ShankWeapon;
+import gameworld.entity.weapon.SpearWeapon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -239,12 +242,14 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		JMenu option2 = new JMenu("Edit");
 		option2List.add(new JMenuItem("Shank all players"));
 		option2List.add(new JMenuItem("Add Shank"));
+		option2List.add(new JMenuItem("Add Spear"));
+		option2List.add(new JMenuItem("Add Plate Armour"));
+		option2List.add(new JMenuItem("Add Chain Armour"));
+		option2List.add(new JMenuItem("Add Leather Armour"));
+		option2List.add(new JMenuItem("Add Robe Armour"));
 		option2List.add(new JMenuItem("Add Potion"));
 		option2List.add(new JMenuItem("Add Shank loot"));
 		option2List.add(new JMenuItem("Add Potion loot"));
-		option2List.add(new JMenuItem("Add Katana"));
-		option2List.add(new JMenuItem("Add Helmet1"));
-		option2List.add(new JMenuItem("Add Helmet2"));
 
 		for(JMenuItem jmItem : option2List){
 			option2.add(jmItem);
@@ -361,18 +366,26 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Add Shank":
 			client.addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
 			break;
+		case "Add Spear":
+			client.addItem(new SpearWeapon("Spear", "I'll fukn spear you bro", null, null));
+			break;
 		case "Add Potion":
 			client.addItem(new Potion("Potion", "Drink this shit", null, null));
-			System.out.println(client.getState().getInventory());
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
-		case "Add Helmet1":
+		case "Add Plate Armour":
 			client.addItem(new PlateArmour("PlateArmour", "some plate amour", null, null));
 			break;
-		case "Add Helmet2":
+		case "Add Chain Armour":
+			client.addItem(new ChainArmour("ChainArmour", "some leather amour", null, null));
+			break;
+		case "Add Leather Armour":
 			client.addItem(new LeatherArmour("LeatherArmour", "some leather amour", null, null));
+			break;
+		case "Add Robe Armour":
+			client.addItem(new RobeArmour("RobeArmour", "some leather amour", null, null));
 			break;
 		case "Add Potion loot":
 			client.addItem(new Key("Key", "WTF", null, null));
@@ -380,12 +393,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Add Shank loot":
 			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
-		case "Add Katana":
-			lootInventPanel.addItem(new ItemIcon("SpearWeapon", "Tis a katana mate"));
-			break;
 		default:
 			break;
 		}
+
 		inventPanel.populateInventArray();
 	}
 
@@ -551,6 +562,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 	public Player getPlayer(){return this.client.getState();}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
+	public InventoryPanel getInventPanel(){ return this.inventPanel;}
 
 	//Setters
 	public void setState(Player state){
