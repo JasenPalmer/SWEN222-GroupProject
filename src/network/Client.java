@@ -204,9 +204,11 @@ public class Client {
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
-					for(Player p : state.getLocation().getPlayers()){
-						if(p.getName().equals(event.getUser())){
-							p.move(event.getDir());
+					synchronized(state){
+						for(Player p : state.getLocation().getPlayers()){
+							if(p.getName().equals(event.getUser())){
+								p.move(event.getDir());
+							}
 						}
 					}
 					break;
