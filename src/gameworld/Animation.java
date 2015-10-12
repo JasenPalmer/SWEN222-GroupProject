@@ -1,6 +1,6 @@
 package gameworld;
 
-import gameworld.entity.weapon.Weapon.WeaponType;
+import gameworld.entity.Weapon.WeaponType;
 
 import java.io.Serializable;
 

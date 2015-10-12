@@ -1,11 +1,13 @@
 package gameworld;
 
 import gameworld.Game.Direction;
+import gameworld.entity.Armour;
 import gameworld.entity.Chest;
+import gameworld.entity.Container;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
-import gameworld.entity.armour.Armour;
-import gameworld.entity.weapon.Weapon;
+import gameworld.entity.LootBag;
+import gameworld.entity.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
@@ -25,11 +27,16 @@ import java.io.Serializable;
 public class Player implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	
+	private static String startingLocation = "Test Map";
 
 	/**
 	 * Default size of the players inventory
 	 */
 	private static final int DEFAULT_INV_SIZE = 8;
+	
+	private static final int DEFAULT_HEALTH = 100;
 
 	/**
 	 * How many people the player has killed
@@ -105,16 +112,19 @@ public class Player implements Serializable{
 	 * Armour the player is wearing
 	 */
 	private Armour armour;
+	
+	private Game game;
 
 
 	public Player(String name, Game game) {
+		this.game = game;
 		score = 0;
 		//set user name
 		this.name = name;	
 		//create inventory
 		inventory = new Item[DEFAULT_INV_SIZE];	
 		//set location and add player to location
-		location = game.getLocation("Test Map");
+		location = game.getLocation(startingLocation);
 		location.addPlayer(this);
 		//players position
 		position = new Point(location.width()/2, location.height()/2);
@@ -124,7 +134,7 @@ public class Player implements Serializable{
 		//give the player animations
 		animation = new Animation(this);
 		// make the player alive
-		health = 100;
+		health = DEFAULT_HEALTH;
 		isDead = false;
 		setMaxHealth(health);
 		// set default gear
@@ -220,8 +230,23 @@ public class Player implements Serializable{
 		opponent.setHealth(opponent.getHealth()-damage);
 		if(opponent.getHealth() <= 0){
 			score++;
+			opponent.die();
 		}
 		return true;
+	}
+	
+	protected void die() {
+		//drop inventory
+		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
+		standingOn.setEntitiy(loot);
+		inventory = new Item[DEFAULT_INV_SIZE];
+		//respawn
+		location = game.getLocation(startingLocation);
+		position = new Point(location.width()/2, location.height()/2);
+		health = DEFAULT_HEALTH;
+		standingOn = location.getTileAt(position);
+		standingOn.setPlayer(this);
+		isDead = false;
 	}
 
 	/**

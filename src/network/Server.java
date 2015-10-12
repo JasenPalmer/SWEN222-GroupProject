@@ -3,8 +3,8 @@ package network;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
-import gameworld.entity.armour.Armour;
-import gameworld.entity.weapon.Weapon;
+import gameworld.entity.Armour;
+import gameworld.entity.Weapon;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;

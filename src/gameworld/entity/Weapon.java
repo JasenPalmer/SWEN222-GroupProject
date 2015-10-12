@@ -1,11 +1,15 @@
-package gameworld.entity.weapon;
+package gameworld.entity;
 
 import gameworld.Player;
-import gameworld.entity.Item;
 import gameworld.location.Location;
 
 import java.awt.Point;
 
+/**
+ * This class represents any weapon in the game.
+ * @author Jasen
+ *
+ */
 public class Weapon extends Item {
 
 	private static final long serialVersionUID = -6003314303346702099L;

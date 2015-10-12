@@ -1,13 +1,11 @@
 package ui.panels;
 
 
-import gameworld.Player;
+import gameworld.entity.Armour;
 import gameworld.entity.Item;
-import gameworld.entity.armour.Armour;
-import gameworld.entity.weapon.Weapon;
+import gameworld.entity.Weapon;
 
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

@@ -2,10 +2,10 @@ package ui;
 
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.entity.Armour;
 import gameworld.entity.Key;
 import gameworld.entity.Potion;
-import gameworld.entity.armour.Armour;
-import gameworld.entity.weapon.Weapon;
+import gameworld.entity.Weapon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

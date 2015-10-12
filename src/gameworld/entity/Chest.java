@@ -1,8 +1,6 @@
 package gameworld.entity;
 
 import gameworld.Player;
-import gameworld.entity.armour.Armour;
-import gameworld.entity.weapon.Weapon;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -19,7 +17,6 @@ import java.util.Random;
 public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;
-	private Player openedBy;
 	
 	private Item[] epicItems; // 10%
 	private Item[] rareItems; // 30%
@@ -41,18 +38,18 @@ public class Chest extends Container implements Serializable{
 				//new ShankWeapon("Shank", "A basic weapon", null, null),
 				//armour
 				//new RobeArmour("Robe armour", "Provides very basic protection", null, null),
-				new Armour("Leather armour", "Provides basic protection",null, null, Armour.ArmourType.Leather),
+				new Armour("Leather Armour", "Provides basic protection",null, null, Armour.ArmourType.Leather),
 				//misc
 				new Potion("Health Potion", "Use this to heal yourself!", null, null)
 		};
 		
 		rareItems = new Item[] {
 				//weapon
-				new Weapon("A spear","Stab stab", null, null, Weapon.WeaponType.Spear),
+				new Weapon("A Spear","Stab stab", null, null, Weapon.WeaponType.Spear),
 				//armour
-				new Armour("Chain armour", "Provides good protection", null, null, Armour.ArmourType.Chain),
+				new Armour("Chain Armour", "Provides good protection", null, null, Armour.ArmourType.Chain),
 				// misc
-				new Key("A key", "Used to open doors or chests", null, null),
+				new Key("A Key", "Used to open doors or chests", null, null),
 		};
 		
 		epicItems = new Item[] {

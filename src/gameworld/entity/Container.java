@@ -1,5 +1,6 @@
 package gameworld.entity;
 
+import gameworld.Player;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -20,6 +21,8 @@ public abstract class Container implements InteractableEntity, Serializable {
 	 * Items that are stored in the container
 	 */
 	protected Item[] items;
+	
+	protected Player openedBy;
 	
 	/**
 	 * Flag for if the container if locked
