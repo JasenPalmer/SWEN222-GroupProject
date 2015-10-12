@@ -3,6 +3,7 @@ package ui;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.Armour;
+import gameworld.entity.Container;
 import gameworld.entity.Key;
 import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
@@ -485,7 +486,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		case KeyEvent.VK_F:
 			client.registerKeyPress(e);
-			inventPanel.populateInventArray();
 			break;
 		default:
 			break;
@@ -542,6 +542,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void keyTyped(KeyEvent e) {
 	}
 
+	public void openContainer(Container container){
+		lootInventPanel.setVisible(true);
+		lootInventPanel.setLootContainer(container);
+		setLootInventory();
+	}
+	
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 	public Player getPlayer(){return this.client.getState();}

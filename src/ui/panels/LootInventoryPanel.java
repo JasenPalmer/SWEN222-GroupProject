@@ -1,5 +1,8 @@
 package ui.panels;
 
+import gameworld.entity.Container;
+import gameworld.entity.Item;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -64,6 +67,22 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		return false;
 	}
 
+	public void setLootContainer(Container container){
+		Item[] containerList = container.getItems();
+		
+		for(int i = 0; i < 6; i++){
+			itemList[i][0] = new ItemIcon(containerList[i].getName(), containerList[i].getDescription());
+		}
+		
+		for(int i = 0; i < 6; i++){
+			itemList[i][1] = new ItemIcon(containerList[i+6].getName(), containerList[i+6].getDescription());
+		}
+		
+		for(int i = 0; i < 6; i++){
+			itemList[i][2] = new ItemIcon(containerList[i+12].getName(), containerList[i+12].getDescription());
+		}
+	}
+	
 	private void populateSlots(){
 		this.removeAll();
 		this.add(lootInventBackground);
