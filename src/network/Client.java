@@ -2,6 +2,7 @@ package network;
 
 import gameworld.Game;
 import gameworld.Player;
+import gameworld.entity.Item;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -101,6 +102,56 @@ public class Client {
 	
 	public void cycleAnimations(){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void swapItems(int index1, int index2){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SWAP_ITEM, index1, index2);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeItem(int index){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM, index, -1);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void addItem(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM, item);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setWeapon(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_WEAPON, item);
+		try {
+			output.reset();
+			output.writeObject(toWrite);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setArmour(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_ARMOUR, item);
 		try {
 			output.reset();
 			output.writeObject(toWrite);

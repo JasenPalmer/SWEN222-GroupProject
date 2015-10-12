@@ -3,6 +3,8 @@ package network;
 import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
+import gameworld.entity.armour.Armour;
+import gameworld.entity.weapon.Weapon;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -133,9 +135,12 @@ public class Server {
 		NetworkEvent toProcess =  eventQueue.poll();
 		//System.out.println("Processing");
 		if(toProcess == null) return;
+		
+		boolean hasChanged = false;
+		Player p = null;
+		
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			boolean hasChanged = false;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
 				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
@@ -163,7 +168,6 @@ public class Server {
 			default:
 				break;
 			}
-			if(hasChanged) updateGUI(gameState.parsePlayer(toProcess.getUser()));
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
@@ -171,7 +175,29 @@ public class Server {
 				updateGUI(gameState.parsePlayer(toProcess.getUser()));
 			}
 			break;
-		case MESSAGE:
+		case ADD_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			hasChanged = p.addItem(toProcess.getItem());
+			break;
+		case REMOVE_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.removeItem(toProcess.getIndex1());
+			hasChanged = true;
+			break;
+		case SWAP_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.swapItems(toProcess.getIndex1(), toProcess.getIndex2());
+			hasChanged = true;
+			break;
+		case SET_WEAPON:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.setWeapon((Weapon)toProcess.getItem());
+			hasChanged = true;
+			break;
+		case SET_ARMOUR:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			p.setArmour((Armour)toProcess.getItem());
+			hasChanged = true;
 			break;
 		case UPDATE_GAME:
 			break;
@@ -180,6 +206,7 @@ public class Server {
 		default:
 			break;
 		}
+		if(hasChanged) updateGUI(gameState.parsePlayer(toProcess.getUser()));
 	}
 
 
@@ -275,6 +302,21 @@ public class Server {
 						eventQueue.add(currentEvent);
 						break;
 					case CYCLE_ANIMATIONS:
+						eventQueue.add(currentEvent);
+						break;
+					case ADD_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case REMOVE_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case SWAP_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case SET_WEAPON:
+						eventQueue.add(currentEvent);
+						break;
+					case SET_ARMOUR:
 						eventQueue.add(currentEvent);
 						break;
 					case MESSAGE:
