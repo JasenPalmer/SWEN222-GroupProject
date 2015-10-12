@@ -144,16 +144,16 @@ public class Server {
 			boolean hasMoved = false;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
 				break;
 			case KeyEvent.VK_D:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
 				break;
 			case KeyEvent.VK_S:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
 				break;
 			case KeyEvent.VK_A:
-				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
+				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
