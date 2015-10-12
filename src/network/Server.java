@@ -141,18 +141,19 @@ public class Server {
 		
 		switch(toProcess.getType()){
 		case KEY_PRESS:
+			boolean hasMoved = false;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
 				break;
 			case KeyEvent.VK_D:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.EAST);
 				break;
 			case KeyEvent.VK_S:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.SOUTH);
 				break;
 			case KeyEvent.VK_A:
-				hasChanged = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
+				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.WEST);
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
@@ -168,6 +169,7 @@ public class Server {
 			default:
 				break;
 			}
+			if(hasMoved) movePlayer(toProcess.getUser());
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
@@ -277,7 +279,7 @@ public class Server {
 		public void movePlayer(String movingUser) {
 			try {
 				output.reset();
-				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getDirection()));
+				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing()));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -297,8 +299,8 @@ public class Server {
 				if(currentEvent  != null) {
 					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
 					
-					System.out.println("Size of Quque: " + eventQueue.size());
-					if(eventQueue.size() > 25) eventQueue.poll();
+					System.out.println("Size of Queque: " + eventQueue.size());
+					if(eventQueue.size() > 35) eventQueue.poll();
 					switch(currentEvent.getType()){
 					case KEY_PRESS:
 						eventQueue.add(currentEvent);
