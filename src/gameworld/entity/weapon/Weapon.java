@@ -34,6 +34,10 @@ public class Weapon extends Item {
 		return weaponType.getDamage();
 	}
 	
+	public WeaponType getType() {
+		return weaponType;
+	}
+	
 	public enum WeaponType {
 		Shank(15),
 		Spear(40);
