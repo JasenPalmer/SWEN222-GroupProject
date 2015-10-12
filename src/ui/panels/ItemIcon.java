@@ -59,7 +59,7 @@ public class ItemIcon {
 			this.equipable = true;
 			this.type = "Armour";
 		}
-		else if (n.equals("Key")){
+		else if (n.equals("Chest Key")){
 			image = new ImageIcon(keyImage);
 			this.equipable = true;
 			this.type = "Key";

@@ -144,7 +144,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel.add(compass,2,0);
 
 		//Setup timer
-		timer = new Timer(70, new ActionListener(){
+		timer = new Timer(50, new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(keyEve != null){
@@ -540,7 +540,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//TODO
 	}
 
 	//Getters
@@ -551,7 +550,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -562,26 +560,21 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 	}
 }
