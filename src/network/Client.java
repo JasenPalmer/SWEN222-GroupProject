@@ -36,7 +36,7 @@ public class Client {
 	private static final int PORT = 9954;
 
 	private ServerThread serverConnection;
-	
+
 	private Player state;
 
 	public Client (String host, String user, ApplicationWindow gui){
@@ -99,7 +99,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void cycleAnimations(){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
 		try {
@@ -109,7 +109,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void swapItems(int index1, int index2){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SWAP_ITEM, index1, index2);
 		try {
@@ -119,7 +119,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void removeItem(int index){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM, index, -1);
 		try {
@@ -129,7 +129,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addItem(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM, item);
 		try {
@@ -139,7 +139,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setWeapon(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_WEAPON, item);
 		try {
@@ -149,7 +149,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setArmour(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_ARMOUR, item);
 		try {
@@ -169,7 +169,7 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void close(){
 		serverConnection.finish();
 
@@ -184,7 +184,7 @@ public class Client {
 			System.err.println("Error closing the client socket: " + e);
 		}
 	}
-	
+
 	//Getters
 	public Player getState(){ return state; }
 
@@ -214,7 +214,7 @@ public class Client {
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
-					synchronized(state){
+					synchronized(state.getLocation().getPlayers()){
 						for(Player p : state.getLocation().getPlayers()){
 							if(p.getName().equals(event.getUser())){
 								p.move(event.getDir());
