@@ -31,7 +31,7 @@ public abstract class Item implements InteractableEntity, Serializable{
 	protected String name;
 	
 	/**
-	 * Item's description
+	 * Item's description  
 	 */
 	protected String description;
 	

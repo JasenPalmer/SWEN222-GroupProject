@@ -27,7 +27,7 @@ public abstract class Container implements InteractableEntity, Serializable {
 	/**
 	 * Flag for if the container if locked
 	 */
-	private boolean locked;
+	protected boolean locked;
 	
 	private Point position;
 	

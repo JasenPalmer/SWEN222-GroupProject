@@ -147,22 +147,16 @@ public class Player implements Serializable{
 	 * This method will pick up any item in front of the player or attempt to open a chest if there is one
 	 * @return true is an action was performed
 	 */
-	protected boolean performAction() {
+	protected Container performAction() {
 		Tile tile = this.getTile(facing);
-		if(tile == null){return false;}
-		if(tile.containedEntity() == null){return false;}
-		Entity ent = tile.containedEntity();
-		if(ent instanceof Item){
-			return pickupItem();
+		if(tile == null){return null;}
+		if(tile.containedEntity() == null){return null;}
+		if(tile.containedEntity() instanceof Container) {
+			Container con = (Container) tile.containedEntity();
+			if(con.isLocked()){return null;}
+			return con;
 		}
-		else if(tile.containedEntity() instanceof Chest) {
-			Chest chest = (Chest) tile.containedEntity();
-			if(chest.isLocked()){return false;}
-			chest.interact(this);
-			System.out.println(chest.toString());
-			return true;
-		}
-		return false;
+		return null;
 	}
 	
 	/**
@@ -582,7 +576,6 @@ public class Player implements Serializable{
 	public void setArmour(Armour armour) {
 		this.armour = armour;
 	}
-
 
 	public int getScore() {
 		return score;
