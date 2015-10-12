@@ -113,7 +113,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.add(overlayPanel,2,0);
 
 		//Setup Inventory
-		inventPanel = new InventoryPanel(state);
+		inventPanel = new InventoryPanel(client.getState());
 		overlayPanel.add(inventPanel,2,0);
 		
 		//Setup loot inventory
@@ -166,7 +166,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				if(rw != null && state != null){
+				if(rw != null && client.getState() != null){
 					rw.repaint();
 					//cycleAnimations();
 				}
