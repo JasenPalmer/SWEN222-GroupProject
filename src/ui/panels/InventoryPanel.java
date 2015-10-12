@@ -8,8 +8,6 @@ import gameworld.entity.armour.ChainArmour;
 import gameworld.entity.armour.LeatherArmour;
 import gameworld.entity.armour.PlateArmour;
 import gameworld.entity.armour.RobeArmour;
-import gameworld.entity.weapon.ShankWeapon;
-import gameworld.entity.weapon.SpearWeapon;
 import gameworld.entity.weapon.Weapon;
 
 import java.awt.Image;
@@ -280,10 +278,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 		switch(name){
 		case "ShankWeapon":
-			weapon = new ShankWeapon("ShankWeapon", "Tis a shank mate", null, null);
+			weapon = new Weapon("ShankWeapon", "Tis a shank mate", null, null, Weapon.WeaponType.Shank);
 			break;
 		case "SpearWeapon":
-			weapon = new SpearWeapon("SpearWeapon", "Tis a spear mate", null, null);
+			weapon = new Weapon("SpearWeapon", "Tis a spear mate", null, null, Weapon.WeaponType.Spear);
 			break;
 		case "ChainArmour":
 			weapon = new ChainArmour("ChainArmour", "Tis sexy chain armour mate", null, null);
