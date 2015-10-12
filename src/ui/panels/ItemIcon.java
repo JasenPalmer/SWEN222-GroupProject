@@ -12,6 +12,7 @@ public class ItemIcon {
 	private String shankImage = "src/ui/images/items/shankInventImageSize.png";
 	private String helmet1Image = "src/ui/images/items/helmet-1.png";
 	private String helmet2Image = "src/ui/images/items/helmet-2.png";
+	private String keyImage = "src/ui/images/items/keyImage.png";
 	private int x,y;
 	private boolean equipable;
 	private String type;
@@ -55,7 +56,7 @@ public class ItemIcon {
 			this.type = "Armour";
 		}
 		else if (n.equals("Key")){
-			image = new ImageIcon(helmet2Image);
+			image = new ImageIcon(keyImage);
 			this.equipable = true;
 			this.type = "Key";
 		}
