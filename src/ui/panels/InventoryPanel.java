@@ -316,6 +316,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 
 				if(client.getState().getWeapon() != null){
+					//TODO Prevent items being added when invent full
 					client.addItem(client.getState().getWeapon());
 					client.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
 					//TODO Uncomment this when players can have no weapon
@@ -329,6 +330,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			//If right click on armour slot
 			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
 				if(client.getState().getArmour() != null){
+					//TODO Prevent items being added when invent full
 					client.addItem(client.getState().getArmour());
 					client.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
 					//TODO Uncomment this when players can have no armour
