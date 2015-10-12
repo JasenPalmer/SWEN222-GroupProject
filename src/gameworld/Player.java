@@ -2,7 +2,6 @@ package gameworld;
 
 import gameworld.Game.Direction;
 import gameworld.entity.Armour;
-import gameworld.entity.Chest;
 import gameworld.entity.Container;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
@@ -352,7 +351,10 @@ public class Player implements Serializable{
 		if(tile == null){return false;}
 		if(tile instanceof EntranceTile) {
 			EntranceTile ent = (EntranceTile) tile;
-			ent.enter(this);
+			if(!ent.enter(this)){
+				return false;
+			}
+			return true;
 		}
 		if(tile.getPlayer() != null){
 			if(!(tile.getPlayer().isDead())) {return false;}

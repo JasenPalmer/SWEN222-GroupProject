@@ -1,10 +1,12 @@
 package gameworld;
 
 import gameworld.entity.Container;
+import gameworld.entity.Key;
 import gameworld.location.Location;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Game implements Serializable {
@@ -15,6 +17,8 @@ public class Game implements Serializable {
 
 	private Set<Location> locations;
 	private Set<Player> players;
+	
+	private Map<Key, Container> keysToContainers;
 
 	public Game() {
 		players = new HashSet<Player>();
