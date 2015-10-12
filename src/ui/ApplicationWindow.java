@@ -172,7 +172,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				}
 				if(rw != null && client.getState() != null){
 					rw.repaint();
-					//cycleAnimations();
+					hpBar.setHealth(client.getState());
 				}
 			}
 		}
