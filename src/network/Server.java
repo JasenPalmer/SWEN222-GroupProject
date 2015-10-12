@@ -119,6 +119,15 @@ public class Server {
 			 }
 		 }
 	}
+	
+	public synchronized void movePlayer(String movingUser){
+		synchronized(connections){
+			for(ClientThread client : connections){
+				if(gameState.parsePlayer(movingUser).getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.movePlayer(movingUser);
+			}
+			
+		}
+	}
 
 	public synchronized void processEvents(){
 		NetworkEvent toProcess =  eventQueue.poll();
@@ -164,7 +173,7 @@ public class Server {
 			break;
 		case MESSAGE:
 			break;
-		case UPDATE_GUI:
+		case UPDATE_GAME:
 			break;
 		case CLOSE:
 			break;
@@ -236,6 +245,15 @@ public class Server {
 			gameState.addPlayer(new Player(user, gameState));
 			console.displayEvent(user + " connected.");
 			this.updateGUI();
+		}
+
+		public void movePlayer(String movingUser) {
+			try {
+				output.reset();
+				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getDirection()));
+			} catch (IOException e) {
+				console.displayError("Failed to write update to client: " + user + " - " + e);
+			}
 		}
 
 		public void run(){

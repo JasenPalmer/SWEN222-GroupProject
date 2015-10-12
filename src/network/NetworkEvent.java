@@ -31,6 +31,9 @@ public class NetworkEvent implements Serializable {
 	//Username of the client that created the NetworkEvent
 	private final String user;
 	
+	//The direction the client should move the player in.
+	private final Game.Direction dir;
+	
 	//Game state used for broadcasting a gui update to clients
 	private Player state;
 	
@@ -46,6 +49,7 @@ public class NetworkEvent implements Serializable {
 		this.user = user;
 		
 		this.message = null;
+		this.dir = null;
 	}
 	
 	/**
@@ -59,6 +63,7 @@ public class NetworkEvent implements Serializable {
 		this.user = user;
 		
 		this.keyCode = -1;
+		this.dir = null;
 	}
 	
 	/**
@@ -66,12 +71,13 @@ public class NetworkEvent implements Serializable {
 	 * that tells the clients GUI to update.
 	 */
 	public NetworkEvent(Player state){
-		this.type = EventType.UPDATE_GUI;
+		this.type = EventType.UPDATE_GAME;
 		this.user = "Server";
 		this.state = state; 
 		
 		this.keyCode = -1;
 		this.message = null;
+		this.dir = null;
 	}
 	
 	/**
@@ -86,6 +92,17 @@ public class NetworkEvent implements Serializable {
 		this.state = null;
 		this.keyCode = -1;
 		this.message = null;
+		this.dir = null;
+	}
+	
+	public NetworkEvent(String user, Game.Direction dir){
+		this.type = EventType.MOVE_PLAYER;
+		this.user = user;
+		this.dir = dir;
+		
+		this.state = null; 
+		this.keyCode = -1;
+		this.message = null;
 	}
 	
 	
@@ -95,13 +112,15 @@ public class NetworkEvent implements Serializable {
 	public int getKeyCode() { return keyCode; }
 	public String getMessage() { return message; }
 	public Player getState() { return state; }
+	public Game.Direction getDir() { return dir; }
 	
 	//All possible types of NetworkEvents.
 	public enum EventType{
 		KEY_PRESS,
 		MESSAGE,
-		UPDATE_GUI,
+		UPDATE_GAME,
 		CYCLE_ANIMATIONS,
+		MOVE_PLAYER,
 		CLOSE;
 	}
 	

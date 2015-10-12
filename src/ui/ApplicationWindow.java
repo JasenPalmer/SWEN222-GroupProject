@@ -257,8 +257,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	public void repaintRenderingWindow(){
-		if(state != null && username != null && hpBar != null){
-			hpBar.setHealth(state.getHealth());
+		if(client.getState() != null && username != null && hpBar != null){
+			hpBar.setHealth(client.getState().getHealth());
 		}
 		if(rw != null){
 			rw.repaint();
@@ -358,11 +358,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
-			state.addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
+			client.getState().addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
 			break;
 		case "Add Potion":
-			state.addItem(new Potion("Potion", "Drink this shit", null, null));
-			System.out.println(state.getInventory());
+			client.getState().addItem(new Potion("Potion", "Drink this shit", null, null));
+			System.out.println(client.getState().getInventory());
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
@@ -548,7 +548,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
-	public Player getPlayer(){return this.state;}
+	public Player getPlayer(){return this.client.getState();}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
 
 	//Setters
