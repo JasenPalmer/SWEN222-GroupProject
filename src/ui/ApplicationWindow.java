@@ -8,8 +8,7 @@ import gameworld.entity.armour.ChainArmour;
 import gameworld.entity.armour.LeatherArmour;
 import gameworld.entity.armour.PlateArmour;
 import gameworld.entity.armour.RobeArmour;
-import gameworld.entity.weapon.ShankWeapon;
-import gameworld.entity.weapon.SpearWeapon;
+import gameworld.entity.weapon.Weapon;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -354,10 +353,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			System.out.println("All players were ruthlessly shanked, y u do dis?");
 			break;
 		case "Add Shank":
-			client.addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
+			client.addItem(new Weapon("Shank", "Fuckn shank u mate", null, null, Weapon.WeaponType.Shank));
 			break;
 		case "Add Spear":
-			client.addItem(new SpearWeapon("Spear", "I'll fukn spear you bro", null, null));
+			client.addItem(new Weapon("Spear", "I'll fukn spear you bro", null, null, Weapon.WeaponType.Spear));
 			break;
 		case "Add Potion":
 			client.addItem(new Potion("Potion", "Drink this shit", null, null));
