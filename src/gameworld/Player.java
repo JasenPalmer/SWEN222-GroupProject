@@ -169,19 +169,22 @@ public class Player implements Serializable{
 	 * @param second - index of second item
 	 */
 	public void swapItems(int first, int second) {
-		if(second < 0){
-			inventory[first] = null;
-		}
-		else if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
+		if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
 			return;
-		}else{
-
+		}
 			Item item = inventory[first];
 			inventory[first] = inventory[second];
 			inventory[second] = item;
-		}
 	}
 
+	/**
+	 * Removes item form inventory at specified index
+	 * @param index - index of item to remove
+	 */
+	public void removeItem(int index){
+		inventory[index] = null;
+	}
+	
 	/**
 	 * Make this player attack the player in the tile in front of them
 	 * @return true if the attack was successful

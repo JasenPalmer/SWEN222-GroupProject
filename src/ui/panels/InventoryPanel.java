@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
+import network.Client;
+
 
 public class InventoryPanel extends JLayeredPane implements MouseListener{
 
@@ -36,15 +38,15 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	private boolean lootOpen;
 	private LootInventoryPanel lootInvent;
 	private InventoryPanel self = this;
-	private Player player;
+	private Client client;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
-	public InventoryPanel(Player player){
+	public InventoryPanel(Client client){
 		setLayout(null);
 		setBounds(814, 637, 231, 262);
-		this.player = player;
+		this.client = client;
 
 		//Add invent background
 		this.add(inventBackground,0,0);
@@ -76,9 +78,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 	public void populateInventArray(){	
-		Item[] itemList = player.getInventory();
-
-		System.out.println("----------------------");
+		Item[] itemList = client.getState().getInventory();
 
 		for(int i = 0; i < 4; i++){
 			if(itemList[i] != null){
@@ -89,8 +89,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 
-		System.out.println();
-
 		for(int i = 0; i < 4; i++){
 			if(itemList[i+4] != null){
 				inventArray[i][1] = new ItemIcon(itemList[i+4].getClass().getSimpleName(), itemList[i+4].getDescription());
@@ -99,8 +97,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				inventArray[i][1] = null;
 			}
 		}
-
-		System.out.println();
 
 		fillAllSlots();
 	}
@@ -194,14 +190,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 	private void fillEquipmentSlots(){
-		if(player.getWeapon() != null){
-			String name = player.getWeapon().getClass().getSimpleName();
-			String desc = player.getWeapon().getDescription();
+		if(client.getState().getWeapon() != null){
+			String name = client.getState().getWeapon().getClass().getSimpleName();
+			String desc = client.getState().getWeapon().getDescription();
 			ItemIcon weapon = new ItemIcon(name, desc);
 			JLabel weaponLabel = new JLabel(weapon.getImage());
 			weaponLabel.setBounds(65,195,42,52);
 			this.add(weaponLabel,1,0);
-			if(player.getWeapon() != null){
+			if(client.getState().getWeapon() != null){
 				weaponLabel.setToolTipText(desc);	
 				weaponLabel.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent e){
@@ -216,14 +212,14 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				});
 			}
 		}
-		if(player.getArmour() != null){
-			String name = player.getArmour().getClass().getSimpleName();
-			String desc = player.getArmour().getDescription();
+		if(client.getState().getArmour() != null){
+			String name = client.getState().getArmour().getClass().getSimpleName();
+			String desc = client.getState().getArmour().getDescription();
 			ItemIcon armour = new ItemIcon(name, desc);
 			JLabel armourLabel = new JLabel(armour.getImage());
 			armourLabel.setBounds(120,195,42,52);
 			this.add(armourLabel,1,0);
-			if(player.getArmour() != null){
+			if(client.getState().getArmour() != null){
 				armourLabel.setToolTipText(desc);	
 				armourLabel.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent e){
@@ -319,8 +315,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			//If right click on weapon slot
 			if(e.getX() >= 65 && e.getX() <= 107 && e.getY() >= 195 && e.getY() <= 247){
 
-				if(player.getWeapon() != null && player.addItem(player.getWeapon())){
-					player.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
+				if(client.getState().getWeapon() != null){
+					client.addItem(client.getState().getWeapon());
+					client.setWeapon(new SpearWeapon("SpearWeapon", "placeholder", null, null));
 					//TODO Uncomment this when players can have no weapon
 					//player.setWeapon(null);
 					playSound("Button");
@@ -331,8 +328,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 			//If right click on armour slot
 			else if(e.getX() >= 120 && e.getX() <= 162 && e.getY() >= 195 && e.getY() <= 247){
-				if(player.getArmour() != null && player.addItem(player.getArmour())){
-					player.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
+				if(client.getState().getArmour() != null){
+					client.addItem(client.getState().getArmour());
+					client.setArmour(new RobeArmour("RobeArmour", "placeholder", null, null));
 					//TODO Uncomment this when players can have no armour
 					//player.setArmour(null);
 					playSound("Button");
@@ -348,28 +346,28 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 						if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 							if(inventArray[i][j].contains(e.getX(), e.getY())){
 								if(inventArray[i][j].getType().equals("Weapon")){
-									if(player.getWeapon() != null){
-										temp = player.getWeapon();
+									if(client.getState().getWeapon() != null){
+										temp = client.getState().getWeapon();
 									}
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
-									player.setWeapon(newWeapon);											
-									player.swapItems(convertIndex(i,j), -1);
+									client.setWeapon(newWeapon);											
+									client.swapItems(convertIndex(i,j), -1);
 									
 									if(temp != null){
-										player.addItem(temp);
+										client.addItem(temp);
 									}
 									playSound("Button");
 								}
 								else if(inventArray[i][j].getType().equals("Armour")){
-									if(player.getArmour() != null){
-										temp = player.getArmour();
+									if(client.getState().getArmour() != null){
+										temp = client.getState().getArmour();
 									}
 									Armour newArmour = (Armour) makeItem(inventArray[i][j].getName());
-									player.setArmour(newArmour);
-									player.swapItems(convertIndex(i,j), -1);
+									client.setArmour(newArmour);
+									client.swapItems(convertIndex(i,j), -1);
 									
 									if(temp != null){
-										player.addItem(temp);
+										client.addItem(temp);
 									}
 									playSound("Button");
 								}
@@ -390,7 +388,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					for(int j = 0; j < inventArray[0].length; j++){
 						if(inventArray[i][j]!= null){
 							if(inventArray[i][j].contains(e.getX(), e.getY()) && !inventArray[i][j].getName().equals(movedItem.getName())){
-								player.swapItems(movedItemIndex, convertIndex(i,j));
+								client.swapItems(movedItemIndex, convertIndex(i,j));
 								movedItem = null;
 								playSound("Button");
 							}
@@ -403,7 +401,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					}
 				}
 				else{
-					System.out.println(e.getX() + " " + e.getY());
 					if(e.getX() > -454 && e.getX() < -130 && e.getY() > -521 && e.getY() < -319){
 						System.out.println("Inside");
 						for(int i = 0; i < inventArray.length; i++){

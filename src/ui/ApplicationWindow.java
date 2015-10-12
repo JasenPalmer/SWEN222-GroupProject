@@ -114,7 +114,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.add(overlayPanel,2,0);
 
 		//Setup Inventory
-		inventPanel = new InventoryPanel(client.getState());
+		inventPanel = new InventoryPanel(client);
 		overlayPanel.add(inventPanel,2,0);
 		
 		//Setup loot inventory
@@ -359,23 +359,23 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			hpBar.setHealth(0);
 			break;
 		case "Add Shank":
-			client.getState().addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
+			client.addItem(new ShankWeapon("Shank", "Fuckn shank u mate", null, null));
 			break;
 		case "Add Potion":
-			client.getState().addItem(new Potion("Potion", "Drink this shit", null, null));
+			client.addItem(new Potion("Potion", "Drink this shit", null, null));
 			System.out.println(client.getState().getInventory());
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
 		case "Add Helmet1":
-			client.getState().addItem(new PlateArmour("PlateArmour", "some plate amour", null, null));
+			client.addItem(new PlateArmour("PlateArmour", "some plate amour", null, null));
 			break;
 		case "Add Helmet2":
-			client.getState().addItem(new LeatherArmour("LeatherArmour", "some leather amour", null, null));
+			client.addItem(new LeatherArmour("LeatherArmour", "some leather amour", null, null));
 			break;
 		case "Add Potion loot":
-			client.getState().addItem(new Key("Key", "WTF", null, null));
+			client.addItem(new Key("Key", "WTF", null, null));
 			break;
 		case "Add Shank loot":
 			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
