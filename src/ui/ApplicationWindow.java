@@ -262,15 +262,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		this.setJMenuBar(menuBar);
 	}
 
-	public void repaintRenderingWindow(){
-		if(client.getState() != null && username != null && hpBar != null){
-			hpBar.setHealth(client.getState());
-		}
-		if(rw != null){
-			rw.repaint();
-		}
-	}
-
 	private void updateCompass(){
 		switch(direction){
 		case "north":
