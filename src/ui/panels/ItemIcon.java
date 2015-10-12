@@ -8,7 +8,6 @@ public class ItemIcon {
 	private String Description;
 	private ImageIcon image;
 	private String potionImage = "src/ui/images/items/potionInventItem.png";
-	private String katanaImage = "src/ui/images/items/katana-image.png";
 	private String shankImage = "src/ui/images/items/shankImage.png";
 	private String spearImage = "src/ui/images/items/spearImage.png";
 	private String helmet1Image = "src/ui/images/items/helmet-1.png";
