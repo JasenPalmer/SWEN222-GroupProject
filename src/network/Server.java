@@ -4,6 +4,7 @@ import gameworld.Game;
 import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.Armour;
+import gameworld.entity.Container;
 import gameworld.entity.Weapon;
 
 import java.awt.event.KeyEvent;
@@ -165,7 +166,9 @@ public class Server {
 				hasChanged = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
-				hasChanged = gameState.performAction(toProcess.getUser());
+				Container c = gameState.performAction(toProcess.getUser());
+				if(c != null) getClient(toProcess.getUser()).displayContainer(c);
+				break;
 			default:
 				break;
 			}
@@ -280,6 +283,15 @@ public class Server {
 			try {
 				output.reset();
 				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing()));
+			} catch (IOException e) {
+				console.displayError("Failed to write update to client: " + user + " - " + e);
+			}
+		}
+		
+		public void displayContainer(Container c){
+			try {
+				output.reset();
+				output.writeObject(new NetworkEvent(this.user, c));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
