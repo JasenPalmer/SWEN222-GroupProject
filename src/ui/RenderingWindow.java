@@ -298,18 +298,6 @@ public class RenderingWindow extends JPanel{
 			}
 			
 			switch(p.getArmour().getName()){
-				case "Robe Armour":
-					if(p.isAttacking()){
-						if(p.getWeapon() instanceof ShankWeapon){
-							image = ImageStorage.robeShank[directionInt][animation.getAttackFrame()];
-						} else{
-							image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
-						}
-						applicationWindow.cycleAnimations();
-					} else { image  = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()]; }
-					
-					break;
-					
 				case "Leather Armour":
 					if(p.isAttacking()){
 						if(p.getWeapon() instanceof ShankWeapon){
@@ -348,10 +336,20 @@ public class RenderingWindow extends JPanel{
 					} else { image  = ImageStorage.plateWalk[directionInt][animation.getWalkFrame()]; }
 					
 					break;
+				default:
+					if(p.isAttacking()){
+						if(p.getWeapon() instanceof ShankWeapon){
+							image = ImageStorage.robeShank[directionInt][animation.getAttackFrame()];
+						} else{
+							image = ImageStorage.robeSpear[directionInt][animation.getAttackFrame()];
+						}
+						applicationWindow.cycleAnimations();
+					} else { image  = ImageStorage.robeWalk[directionInt][animation.getWalkFrame()]; }
+					break;
 			}	
 			
 			if(p.isDead()){
-				image = ImageStorage.bush;
+				image = ImageStorage.tree;
 			}
 			
 			playerImage = image;
