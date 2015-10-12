@@ -5,7 +5,6 @@ import gameworld.entity.Chest;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
 import gameworld.entity.armour.Armour;
-import gameworld.entity.armour.RobeArmour;
 import gameworld.entity.weapon.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
@@ -129,8 +128,8 @@ public class Player implements Serializable{
 		isDead = false;
 		setMaxHealth(health);
 		// set default gear
-		armour = new RobeArmour("Robe Armour", "Provides very basic protection", null, null);
-		setWeapon(new Weapon("Shank", "A basic weapon", null, null, Weapon.WeaponType.Shank));
+		armour = new Armour("Robe Armour", "Provides very basic protection", null, null, Armour.ArmourType.Robe);
+		weapon = new Weapon("Shank", "A basic weapon", null, null, Weapon.WeaponType.Shank)	;
 	}
 
 	/**

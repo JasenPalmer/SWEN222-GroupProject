@@ -1,9 +1,7 @@
 package gameworld.entity;
 
 import gameworld.Player;
-import gameworld.entity.armour.ChainArmour;
-import gameworld.entity.armour.LeatherArmour;
-import gameworld.entity.armour.PlateArmour;
+import gameworld.entity.armour.Armour;
 import gameworld.entity.weapon.Weapon;
 import gameworld.location.Location;
 
@@ -43,7 +41,7 @@ public class Chest extends Container implements Serializable{
 				//new ShankWeapon("Shank", "A basic weapon", null, null),
 				//armour
 				//new RobeArmour("Robe armour", "Provides very basic protection", null, null),
-				new LeatherArmour("Leather armour", "Provides basic protection",null, null),
+				new Armour("Leather armour", "Provides basic protection",null, null, Armour.ArmourType.Leather),
 				//misc
 				new Potion("Health Potion", "Use this to heal yourself!", null, null)
 		};
@@ -52,7 +50,7 @@ public class Chest extends Container implements Serializable{
 				//weapon
 				new Weapon("A spear","Stab stab", null, null, Weapon.WeaponType.Spear),
 				//armour
-				new ChainArmour("Chain armour", "Provides good protection", null, null),
+				new Armour("Chain armour", "Provides good protection", null, null, Armour.ArmourType.Chain),
 				// misc
 				new Key("A key", "Used to open doors or chests", null, null),
 		};
@@ -60,7 +58,7 @@ public class Chest extends Container implements Serializable{
 		epicItems = new Item[] {
 				//weapon
 				//armour
-				new PlateArmour("Plate armour", "Provides the highest protection", null, null)
+				new Armour("Plate armour", "Provides the highest protection", null, null,Armour.ArmourType.Plate)
 				//misc
 		};
 	}
