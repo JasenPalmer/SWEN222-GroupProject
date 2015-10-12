@@ -4,10 +4,6 @@ package ui.panels;
 import gameworld.Player;
 import gameworld.entity.Item;
 import gameworld.entity.armour.Armour;
-import gameworld.entity.armour.ChainArmour;
-import gameworld.entity.armour.LeatherArmour;
-import gameworld.entity.armour.PlateArmour;
-import gameworld.entity.armour.RobeArmour;
 import gameworld.entity.weapon.Weapon;
 
 import java.awt.Image;
@@ -284,16 +280,16 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			weapon = new Weapon("SpearWeapon", "Tis a spear mate", null, null, Weapon.WeaponType.Spear);
 			break;
 		case "ChainArmour":
-			weapon = new ChainArmour("ChainArmour", "Tis sexy chain armour mate", null, null);
+			weapon = new Armour("ChainArmour", "Tis sexy chain armour mate", null, null, Armour.ArmourType.Chain);
 			break;
 		case "LeatherArmour":
-			weapon = new LeatherArmour("LeatherArmour", "Tis pretty shitty leather armour mate", null, null);
+			weapon = new Armour("LeatherArmour", "Tis pretty shitty leather armour mate", null, null,Armour.ArmourType.Leather);
 			break;
 		case "PlateArmour":
-			weapon = new PlateArmour("PlateArmour", "Tis super sexy plate armour m9", null, null);
+			weapon = new Armour("PlateArmour", "Tis super sexy plate armour m9", null, null,Armour.ArmourType.Plate);
 			break;
 		case "RobeArmour":
-			weapon = new RobeArmour("RobeArmour", "Mate why even pick this shit up?", null, null);
+			weapon = new Armour("RobeArmour", "Mate why even pick this shit up?", null, null,Armour.ArmourType.Robe);
 			break;
 		}
 
