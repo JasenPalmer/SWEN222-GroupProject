@@ -1,5 +1,7 @@
 package gameworld;
 
+import gameworld.entity.weapon.Weapon.WeaponType;
+
 import java.io.Serializable;
 
 public class Animation implements Serializable{
@@ -48,7 +50,7 @@ public class Animation implements Serializable{
 		if(player.isAttacking()){
 			attackFrame++;
 		}
-		if(player.getWeapon() instanceof SpearWeapon && attackFrame==7 || player.getWeapon() instanceof ShankWeapon && attackFrame==5){
+		if(player.getWeapon().getType().equals(WeaponType.Spear) && attackFrame==7 || player.getWeapon().getType().equals(WeaponType.Shank) && attackFrame==5){
 			attackFrame = 0;
 			player.setAttacking(false);
 		}
