@@ -241,7 +241,10 @@ public class Player implements Serializable{
 		standingOn.setEntitiy(loot);
 		inventory = new Item[DEFAULT_INV_SIZE];
 		//respawn
+		standingOn.setPlayer(null);
+		location.removePlayer(this);
 		location = game.getLocation(startingLocation);
+		location.addPlayer(this);
 		position = new Point(location.width()/2, location.height()/2);
 		health = DEFAULT_HEALTH;
 		standingOn = location.getTileAt(position);
