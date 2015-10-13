@@ -61,12 +61,15 @@ public class Game implements Serializable {
 	 * @param direction to move the player
 	 * @return true if the player moved successfully
 	 */
-	public boolean movePlayer(String playerName, Direction direction) {
+	public int movePlayer(String playerName, Direction direction) {
 		Player player = parsePlayer(playerName);
-		if(direction == null || player == null) {return false;}
-		if(player.isDead()){return false;}
-		if(!player.move(direction)) {return false;}
-		return true;
+		if(direction == null || player == null) {return 0;}
+		if(player.isDead()){return 0;}
+		Location oldLoc = player.getLocation();
+		if(!player.move(direction)) {return 0;}
+		Location newLoc = player.getLocation();
+		if(!oldLoc.equals(newLoc)){return 2;}
+		return 1;
 	}
 
 	/**

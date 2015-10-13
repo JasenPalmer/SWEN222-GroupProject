@@ -28,93 +28,32 @@ public class Player implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-
 	private static String startingLocation = "Test Map";
 
-	/**
-	 * Default size of the players inventory
-	 */
-	private static final int DEFAULT_INV_SIZE = 8;
-
-	private static final int DEFAULT_HEALTH = 100;
-
-	/**
-	 * How many people the player has killed
-	 */
-	private int score;
-
-	/**
-	 * The maximum health of the player
-	 */
-	private int maxHealth;
-
-	/**
-	 * Players name
-	 */
+	private Game game;
 	private String name;
-
-	/**
-	 * The items that the player has in their inventory
-	 */
+	private int score;
+	private static final int DEFAULT_INV_SIZE = 8;
 	private  Item[] inventory;
 
-	/**
-	 * The current location the player is in
-	 */
-	private Location location;
-
-	/**
-	 * The current position of the player
-	 */
-	private Point position;
-
-	/**
-	 * Direction that the screen is facing
-	 */
-	private Direction direction = Game.Direction.NORTH;
-
-	/**
-	 * Used for storing animation fields for player such as direction and cycle point
-	 */
-	private Animation animation;
-
-	/**
-	 * The tile that the player is standing on
-	 */
-	private Tile standingOn;
-
-	/**
-	 * Amount of health the player has
-	 */
+	private static final int DEFAULT_HEALTH = 100;
+	private int maxHealth;
 	private int health;
-
-	/**
-	 * is the player dead ie health <= 0
-	 */
 	private boolean isDead;
 
-	/**
-	 * Is the player currently attacking
-	 */
-	private boolean attacking;
-
-	/**
-	 * Direction the player is facing
-	 */
+	private Location location;
+	private Point position;
 	private Direction facing = Game.Direction.NORTH;
 
-	/**
-	 * Weapon the player has equipped
-	 */
+	private Direction direction = Game.Direction.NORTH;
+	private Animation animation;
+
+	private Tile standingOn;
+	
+	private boolean attacking;
+
 	private Weapon weapon;
-
-	/**
-	 * Armour the player is wearing
-	 */
 	private Armour armour;
-
-	private Game game;
-
 
 	public Player(String name, Game game) {
 		this.game = game;
@@ -248,7 +187,8 @@ public class Player implements Serializable{
 	 */
 	protected void die() {
 		//drop inventory
-		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
+		LootBag loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
+		loot.addItem(weapon);
 		standingOn.setEntitiy(loot);
 		inventory = new Item[DEFAULT_INV_SIZE];
 		//respawn
@@ -593,54 +533,98 @@ public class Player implements Serializable{
 		this.isDead = isDead;
 	}
 
+	/**
+	 * @return true if the player is currently attacking
+	 */
 	public boolean isAttacking(){
 		return attacking;
 	}
 
+	/**
+	 * set the player to be attacking or not
+	 * @param b
+	 */
 	public void setAttacking(boolean b) {
 		attacking = b;
 	}
 
+	/**
+	 * @return the direction that the player is facing
+	 */
 	public Direction getFacing() {
 		return facing;
 	}
 
+	/**
+	 * @return the tile that the player is standing on
+	 */
 	public Tile getStandingOn() {
 		return standingOn;
 	}
 
+	/**
+	 * set the tile that the player is standig on
+	 * @param standingOn - tile for the player to stand on
+	 */
 	public void setStandingOn(Tile standingOn) {
 		this.standingOn = standingOn;
 	}
 
+	/**
+	 * @return the weapon that the player is holding
+	 */
 	public Weapon getWeapon() {
 		return weapon;
 	}
 
+	/**
+	 * set the weapon the player is holding
+	 * @param weapon
+	 */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
 
+	/**
+	 * @return the maximum health of the player
+	 */
 	public int getMaxHealth() {
 		return maxHealth;
 	}
 
+	/**
+	 * set the maximum health the player can have
+	 * @param maxHealth
+	 */
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
 
+	/**
+	 * @return the armour that the player is wearing
+	 */
 	public Armour getArmour() {
 		return armour;
 	}
 
+	/**
+	 * set the armour for the player to wear
+	 * @param armour
+	 */
 	public void setArmour(Armour armour) {
 		this.armour = armour;
 	}
 
+	/**
+	 * @return the score of the player ie the amount of players this player has killed
+	 */
 	public int getScore() {
 		return score;
 	}
 
+	/**
+	 * @return array containing the inventory of the player
+	 */
 	public Item[] getInventory() {
 		return inventory;
 	}
