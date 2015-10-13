@@ -205,8 +205,8 @@ public class Server {
 				break;
 			}
 			
-			//if(hasMoved == 1) movePlayer(toProcess.getUser());
-			if(hasMoved > 0) gameNeedsUpdate = true;
+			if(hasMoved > 0) movePlayer(toProcess.getUser());
+			else if(hasMoved > 1) gameNeedsUpdate = true;
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
