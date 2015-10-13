@@ -138,7 +138,7 @@ public class RenderingWindow extends JPanel{
 		  for(Point position: playerPoints){
 			  x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
 			  y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
-			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours, MultipleGradientPaint.CycleMethod.REFLECT ));
+			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours));
 			  g.fillOval(x, y, radius*2, radius*2);
 		  }
 

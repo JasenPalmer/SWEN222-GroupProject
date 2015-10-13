@@ -12,3 +12,7 @@ Central Hub	14	29	Central Hub	18	29
 Central Hub	18	29	Central Hub	14	29
 Central Hub	2	29	Maze-big	1	0
 Maze-big	28	29	Central Hub	2	29
+Central Hub	13	16	T Building 1	18	3
+T Building 1	18	2	Central Hub	13	15
+T Building 1	13	15	T Building 2	12	5
+T Building 2	12	4	T Building 1	13	14
