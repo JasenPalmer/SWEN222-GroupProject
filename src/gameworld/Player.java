@@ -187,9 +187,9 @@ public class Player implements Serializable{
 	 */
 	protected void die() {
 		//drop inventory
-		LootBag loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
-		loot.addItem(weapon);
-		loot.addItem(armour);
+		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
+		loot.storeItem(weapon);
+		loot.storeItem(armour);
 		weapon = null;
 		armour = null;
 		standingOn.setEntitiy(loot);
