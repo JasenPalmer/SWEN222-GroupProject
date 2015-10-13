@@ -205,6 +205,7 @@ public class Player implements Serializable{
 		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
 		loot.storeItem(weapon);
 		loot.storeItem(armour);
+		//loot.storeItem(new Gold("Gold", null, null, null, 4));
 		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank);
 		armour = new Armour("Robe Armour", "Robe Armour", null, null, Armour.ArmourType.Robe);;
 		standingOn.setEntitiy(loot);

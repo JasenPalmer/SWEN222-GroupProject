@@ -21,6 +21,7 @@ public class LootBag extends Container {
 		for(Item i : items) {
 			storeItem(i);
 		}
+		locked = false;
 	}
 
 	@Override
