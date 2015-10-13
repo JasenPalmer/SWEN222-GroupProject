@@ -17,7 +17,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -66,75 +65,73 @@ public class RenderingWindow extends JPanel{
 		Tile[][] tiles = location.getTiles();
 		locationTiles = tiles;
 		Tile[][] rooms = null;
-
+		
 		if(location instanceof OutsideLocation){
 			OutsideLocation ol = (OutsideLocation) location;
 			rooms = ol.getBuildingTiles();
 		}
-
+		
+		
+		// a rotated version of tiles and rooms that are not how the actual arrays work
+		Tile[][] fakeTiles = tiles;
+		Tile[][] fakeRooms = rooms;
+		
+		
 		// Rotates array depending on direction and then rendering
 		switch(direction){
 		case NORTH:
 			isometric(tiles,rooms, offgc);
 			break;
 		case EAST:
-			isometric(rotate(tiles), rotate(rooms), offgc);
+			fakeTiles = rotate(tiles);
+			fakeRooms = rotate(rooms);
+			isometric(fakeTiles, fakeRooms, offgc);
 			break;
 		case SOUTH:
-			isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
+			fakeTiles = rotate(rotate(tiles));
+			fakeRooms = rotate(rotate(rooms));
+			isometric(fakeTiles, fakeRooms, offgc);
 			break;
 		case WEST:
-			isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
+			fakeTiles = rotate(rotate(rotate(tiles)));
+			fakeRooms = rotate(rotate(rotate(rooms)));
+			isometric(fakeTiles, fakeRooms, offgc);
 			break;
 
 		}
 
 			g.drawImage(offscreen,0,0,null);
+			
+			int[] playerPoint = getRealPlayerCoords(fakeTiles);
+			lighting((Graphics2D) g, this.getWidth(), this.getHeight(), new Point(playerPoint[0],playerPoint[1]));
+
+	}
+
+	private void lighting(Graphics2D g2d, int width, int height, Point position) {
+		  int radius = TILESIZE*2;
+		  int x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
+		  int y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
+		   
+		  Image image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+		  Graphics2D g = (Graphics2D) image.getGraphics();
+
+		  g.setColor(new Color(0, 0, 10, 200));
+		  g.fillRect(0, 0 , width, height);
 
 
-			// THE DANKEST LIGHTING EVER MADE
-			//drawLighting((Graphics2D) g, this.getWidth(), this.getHeight(), 0.8f, player.getPosition());
-
-		}
-
-		private void drawLighting(Graphics2D g2d, int width, int height, float lighting, Point position) {
-			  int radius = 100;
-			  int x = (position.x+16)-radius;
-			  int y = (position.y+16)-radius;
-			   g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-			           RenderingHints.VALUE_ANTIALIAS_ON);
-			  // get image
-			  BufferedImage im = new BufferedImage(width, height,
-			    BufferedImage.TYPE_INT_ARGB);
-			  Graphics2D g = (Graphics2D) im.getGraphics();
-
-			  // make screen dark
-			  AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, lighting);
-			  g.setComposite(ac);
-
-			  g.setColor(new Color(50, 30, 40));
-			  g.fillRect(0, 0 , width, height);
-
-			  // set up gradient for the circle
-			  g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OUT, .8f));
+		  g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OUT, 1f));
 
 
-			  float[] dist = { 0.0f, .4f, .8f };
-			  Color[] cols = {new Color(0,0,0,250),new Color(0,0,0,120), new Color(0,0,0, 0)};
+		  float[] distanceIntervals = {0.2f,0.4f,0.6f,0.8f,1f};
+		  Color[] colours = {new Color(0,0,10,200),new Color(0,0,10,150), new Color(0,0,10,100),new Color(0,0,10,50), new Color(0,0,10,0)};
 
-			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, (int)(radius*1.2), dist, cols, MultipleGradientPaint.CycleMethod.REFLECT ));
+		  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours, MultipleGradientPaint.CycleMethod.REFLECT ));
+		  g.fillOval(x, y, radius*2, radius*2);
 
-
-			  g.fillOval(x, y, radius*2, radius*2);
-
-			  g.setPaint(new RadialGradientPaint(position.x, position.y, (int)(radius*1.2), dist, cols, MultipleGradientPaint.CycleMethod.REFLECT ));
-			  g.fillOval(position.x-radius, position.y-radius, radius*2, radius*2);
-
-			  g.dispose();
-			  g2d.drawImage(im, 0, 0, null);
-
-		
-		}
+		  g.dispose();
+		  
+		  g2d.drawImage(image, 0, 0, null);
+	}
 
 
 
