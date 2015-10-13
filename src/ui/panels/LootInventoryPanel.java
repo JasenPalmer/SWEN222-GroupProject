@@ -2,6 +2,7 @@ package ui.panels;
 
 import gameworld.entity.Armour;
 import gameworld.entity.Container;
+import gameworld.entity.Gold;
 import gameworld.entity.Item;
 import gameworld.entity.Weapon;
 
@@ -129,8 +130,8 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 					JLabel item = new JLabel(itemList[i][j].getImage());
 					item.setBounds(itemList[i][j].getX(), itemList[i][j].getY(), 42,52);
 					this.add(item,1,0);
-					if(!itemList[i][j].getDesciption().equals("Placeholder")){
-						item.setToolTipText(itemList[i][j].getDesciption());
+					if(!itemList[i][j].getDescription().equals("Placeholder")){
+						item.setToolTipText(itemList[i][j].getDescription());
 						item.addMouseListener(new MouseAdapter(){
 							public void mouseClicked(MouseEvent e){
 								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -209,7 +210,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			if(inventOpen){
 				if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
 					if(!inventPanel.isInventFull()){
-						client.addItem(makeItem(movedItem.getName(), movedItem.getDesciption()));
+						client.addItem(makeItem(movedItem.getName(), movedItem.getDescription()));
 						client.removeItemContainer(convertIndex(movedItemI, movedItemJ), this.container);
 						playSound("Button");
 						movedItem = null;
@@ -250,6 +251,10 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			break;
 		case "Key":
 			item = new Armour("Key", desc, null, null, Armour.ArmourType.Robe);
+			break;
+		case "Gold":
+			String[] splitDesc = desc.split(" ");
+			item = new Gold("Gold", desc, null, null, Integer.parseInt(splitDesc[1]));
 			break;
 		}
 

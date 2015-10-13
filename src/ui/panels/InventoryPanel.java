@@ -3,6 +3,7 @@ package ui.panels;
 
 import gameworld.Player;
 import gameworld.entity.Armour;
+import gameworld.entity.Gold;
 import gameworld.entity.Item;
 import gameworld.entity.Weapon;
 
@@ -137,7 +138,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 42,52);
 					this.add(item,1,0);
 					if(!inventArray[i][j].getName().equals("Empty")){
-						item.setToolTipText(inventArray[i][j].getDesciption());
+						item.setToolTipText(inventArray[i][j].getDescription());
 						item.addMouseListener(new MouseAdapter(){
 							public void mouseClicked(MouseEvent e){
 								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -271,31 +272,34 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		return true;
 	}
 
-	private Item makeItem(String name){
-		Item weapon = null;
+	private Item makeItem(String name, String desc){
+		Item item = null;
 
 		switch(name){
 		case "Shank":
-			weapon = new Weapon("Shank", "Tis a shank mate", null, null, Weapon.WeaponType.Shank);
+			item = new Weapon(name, desc, null, null, Weapon.WeaponType.Shank);
 			break;
 		case "Spear":
-			weapon = new Weapon("Spear", "Tis a spear mate", null, null, Weapon.WeaponType.Spear);
+			item = new Weapon(name, desc, null, null, Weapon.WeaponType.Spear);
 			break;
 		case "Chain Armour":
-			weapon = new Armour("Chain Armour", "Tis sexy chain armour mate", null, null, Armour.ArmourType.Chain);
+			item = new Armour(name, desc, null, null, Armour.ArmourType.Chain);
 			break;
 		case "Leather Armour":
-			weapon = new Armour("Leather Armour", "Tis pretty shitty leather armour mate", null, null, Armour.ArmourType.Leather);
+			item = new Armour(name, desc, null, null, Armour.ArmourType.Leather);
 			break;
 		case "Plate Armour":
-			weapon = new Armour("Plate Armour", "Tis super sexy plate armour m9", null, null, Armour.ArmourType.Plate);
+			item = new Armour(name, desc, null, null, Armour.ArmourType.Plate);
 			break;
 		case "Robe Armour":
-			weapon = new Armour("Robe Armour", "Mate why even pick this shit up?", null, null, Armour.ArmourType.Robe);
+			item = new Armour(name, desc, null, null, Armour.ArmourType.Robe);
+			break;
+		case "Gold":
+			String[] splitDesc = desc.split(" ");
+			item = new Gold(name, desc, null, null, Integer.parseInt(splitDesc[1]));
 			break;
 		}
-
-		return weapon;
+		return item;
 	}
 
 	@Override
@@ -351,7 +355,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									if(client.getState().getWeapon() != null){
 										temp = client.getState().getWeapon();
 									}
-									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
+									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName(), inventArray[i][j].getDescription());
 									client.setWeapon(newWeapon);
 									client.removeItem(convertIndex(i,j));
 
@@ -364,7 +368,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									if(client.getState().getArmour() != null){
 										temp = client.getState().getArmour();
 									}
-									Armour newArmour = (Armour) makeItem(inventArray[i][j].getName());
+									Armour newArmour = (Armour) makeItem(inventArray[i][j].getName(), inventArray[i][j].getDescription());
 									client.setArmour(newArmour);
 									client.removeItem(convertIndex(i,j));
 
@@ -436,7 +440,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		volume.setValue(change);
 		initEffectVolume = change;
 	}
-	
+
 	private void playSound(String sound){
 		String soundPath = null;
 		switch(sound){
