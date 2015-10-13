@@ -213,10 +213,11 @@ public class Client {
 				
 				switch(event.getType()){
 				case UPDATE_GAME:
-					if(event.getState() == null) return;
-					state = event.getState();
+					if(event.getState() != null) state = event.getState();
+					break;
+				case UPDATE_INVENT:
+					if(event.getState() != null) state = event.getState();
 					if(gui.getInventPanel() != null) gui.getInventPanel().populateInventArray();
-					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
 					//tempPlayers = state.getLocation().getPlayers();
