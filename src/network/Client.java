@@ -207,6 +207,9 @@ public class Client {
 				catch (ClassNotFoundException e) {}
 
 				if(event == null) return;
+				
+				Set<Player> tempPlayers;
+				
 				switch(event.getType()){
 				case UPDATE_GAME:
 					if(event.getState() == null) return;
@@ -215,8 +218,8 @@ public class Client {
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
-					synchronized(state.getLocation().getPlayers()){
-						Set<Player> tempPlayers = state.getLocation().getPlayers();
+					tempPlayers = state.getLocation().getPlayers();
+					synchronized(tempPlayers){
 						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
 								p.move(event.getDir());
@@ -225,8 +228,9 @@ public class Client {
 					}
 					break;
 				case CYCLE_ANIMATIONS:
-					synchronized(state.getLocation().getPlayers()){
-						for(Player p : state.getLocation().getPlayers()){
+					tempPlayers = state.getLocation().getPlayers();
+					synchronized(tempPlayers){
+						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
 								p.getAnimation().cycleAttack();
 							}
