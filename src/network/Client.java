@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.Set;
 
 import ui.ApplicationWindow;
@@ -218,7 +219,9 @@ public class Client {
 					//gui.setState(event.getState());
 					break;
 				case MOVE_PLAYER:
-					tempPlayers = state.getLocation().getPlayers();
+					//tempPlayers = state.getLocation().getPlayers();
+					tempPlayers = new HashSet<Player>();
+					tempPlayers.addAll(state.getLocation().getPlayers());
 					synchronized(tempPlayers){
 						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
