@@ -253,15 +253,9 @@ public class Server {
 
 	public class EventThread extends Thread {
 		private boolean finished = false;
-		int count = 0; 
 		public void run(){
 			while(!finished){
-				if(count >= 30){
-					updateGUIAll();
-					count = 0;
-				}
 				processEvents();
-				count++;
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException e) {}
