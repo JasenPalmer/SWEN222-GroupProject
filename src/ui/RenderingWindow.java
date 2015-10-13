@@ -11,10 +11,15 @@ import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 import javax.swing.JPanel;
+
+import com.sun.prism.j2d.paint.RadialGradientPaint;
 
 public class RenderingWindow extends JPanel{
 
@@ -84,22 +89,12 @@ public class RenderingWindow extends JPanel{
 
 			g.drawImage(offscreen,0,0,null);
 
-			// do lighting here and draw final img over it.
 
-//			Image lighting = createImage(this.getWidth(), this.getHeight());
-//			Graphics lightingGraphic = lighting.getGraphics();
-//			Color c = new Color(0,0,0,200);
-//			lightingGraphic.setColor(c);
-//			lightingGraphic.fillRect(0,0,this.getWidth(),this.getHeight());
-//			
-//			int playerX =  (player.getPosition().x*TILESIZE/2) + (player.getPosition().y*TILESIZE/2) + ImageStorage.playerImage.getWidth(null)/2 - cameraX;
-//			int playerY =  ((player.getPosition().y*TILESIZE/4)-(player.getPosition().x*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - cameraY;
-//			
-//			c = new Color(0,0,0,100);
-//			lightingGraphic.setColor(c);
-//			lightingGraphic.fillOval(playerX, playerY, TILESIZE, TILESIZE);
-//			
-//			g.drawImage(lighting, 0, 0, this.getWidth(), this.getHeight(), null);
+			// THE DANKEST LIGHTING EVER MADE
+			Color c = new Color(0,0,0,50);
+			g.setColor(c);
+			g.fillRect(0,0,this.getWidth(),this.getHeight());
+
 		}
 
 		/**
@@ -124,16 +119,16 @@ public class RenderingWindow extends JPanel{
 				for(int j = tiles[i].length-1; j >=0 ; j--){
 					int x = (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
 					int y = ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY;
-					
+
 					Tile t = tiles[i][j];
 					if(t!=null) {
 						image = ImageStorage.getImage(t.toString());
 
-						
+
 						if(location instanceof OutsideLocation){
 							// FLOOR + ENTITES FOR OUTSIDE
 							offgc.drawImage(image, x, y, null);
-							
+
 							// DRAWING ENTITY
 							if(t.containedEntity()!=null){
 								if(t.containedEntity() instanceof BasicEntity){
@@ -141,7 +136,7 @@ public class RenderingWindow extends JPanel{
 								} else {
 									image = ImageStorage.getImage(t.containedEntity().getClass().getSimpleName());
 								}
-								
+
 								offgc.drawImage(image, x, y - Math.abs(image.getHeight(null)-TILESIZE/2), null);
 
 
@@ -152,7 +147,7 @@ public class RenderingWindow extends JPanel{
 								Player p = t.getPlayer();
 								offgc.drawImage(getPlayerImage(p), x, (int)(y - TILESIZE*0.75), null);
 							}
-							
+
 						}
 						else{
 							if(!(t instanceof EntranceTile)){
@@ -179,9 +174,9 @@ public class RenderingWindow extends JPanel{
 									offgc.drawImage(ImageStorage.wallR, x, y, null);
 								}
 							}
-							
 
-							
+
+
 							if(t.containedEntity()!=null){
 								if(t.containedEntity() instanceof BasicEntity){
 									image = ImageStorage.getImage(t.containedEntity().getName());
@@ -190,7 +185,7 @@ public class RenderingWindow extends JPanel{
 								}
 								offgc.drawImage(image, x, y, null);
 							}
-							
+
 							// DRAWING PLAYER
 							if(t.getPlayer()!=null){
 								Player p = t.getPlayer();
@@ -234,7 +229,7 @@ public class RenderingWindow extends JPanel{
 							if(j-1 >= 0 && i+1 < rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
 								image = ImageStorage.roofCornerI;
 							}
-							
+
 							// Outwards corner roof
 							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
 								image = ImageStorage.roofCornerO;
@@ -281,7 +276,7 @@ public class RenderingWindow extends JPanel{
 			Animation animation = p.getAnimation();
 			int directionInt = animation.getAnimationDirection();
 			Image image = null;
-			
+
 			switch(direction){
 				case EAST:
 					directionInt = addToDirInt(directionInt, 3);
@@ -295,10 +290,10 @@ public class RenderingWindow extends JPanel{
 					directionInt = addToDirInt(directionInt, 1);
 					break;
 			}
-			
+
 			int armour = 0;
 			int weapon = 0;
-			
+
 			if(p.getArmour()!=null){
 				armour = p.getArmour().getType().ordinal();
 			}
@@ -307,7 +302,7 @@ public class RenderingWindow extends JPanel{
 			}
 
 
-			
+
 			if(p.isAttacking()){
 				switch(weapon){
 					case 0:
@@ -321,14 +316,14 @@ public class RenderingWindow extends JPanel{
 			} else {
 				image = ImageStorage.walking[armour][directionInt][animation.getWalkFrame()];
 			}
-			
 
-			
-			
+
+
+
 			if(p.isDead()){
 				image = ImageStorage.tree;
 			}
-			
+
 			playerImage = image;
 			return image;
 		}
