@@ -76,7 +76,7 @@ public class Client {
 			//output = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			input = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
-			output.flush();
+			//output.flush();
 		} catch (IOException e){
 			System.err.println("Error opening object streams for client: " + user);
 			return;
@@ -97,6 +97,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -119,6 +120,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -314,7 +314,7 @@ public class Server {
 			try {
 				//output = new ObjectOutputStream(this.socket.getOutputStream());
 				input = new ObjectInputStream(this.socket.getInputStream());
-				console.displayEvent("Opening data streams for client");
+				//console.displayEvent("Opening data streams for client");
 				//input = new ObjectInputStream(new BufferedInputStream(this.socket.getInputStream()));
 				output = new ObjectOutputStream(new BufferedOutputStream(this.socket.getOutputStream()));
 				
@@ -425,7 +425,7 @@ public class Server {
 			try {
 				//output.reset();
 				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_GAME));
-				//output.reset();
+				output.reset();
 				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
