@@ -148,9 +148,13 @@ public class Parser {
 			case "Wa":
 				tile = new FloorTile("Water", new Point(x,y), false);
 				break;
-			case "En":
-				tile = new EntranceTile("Entrance", new Point(x,y), false);
+			case "EnB":
+				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.BUILDING);
 				break;
+			case "EnV":
+				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.INVISIBLE);
+			case "EnT":
+				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.TREE);
 			case "Fl":
 				tile = new FloorTile("Floor", new Point(x,y),true);
 			default:
@@ -244,7 +248,7 @@ public class Parser {
 				id = 0;
 			}
 		}
-		
+
 		switch(type) {
 		case "Key":
 			return new Key(name, desc, new Point(xPos,yPos), loc);

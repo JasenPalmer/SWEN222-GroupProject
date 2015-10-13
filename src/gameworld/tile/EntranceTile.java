@@ -21,9 +21,17 @@ public class EntranceTile extends Tile {
 	private Tile exitTile;
 	private boolean locked;
 	private Location exitLocation;
+	private Type type;
 
-	public EntranceTile(String name, Point pos, boolean passable) {
+	public enum Type {
+		BUILDING,
+		INVISIBLE,
+		TREE
+	}
+
+	public EntranceTile(String name, Point pos, boolean passable, Type type) {
 		super(name, pos, passable);
+		this.type = type;
 	}
 
 	public boolean isLocked() {
@@ -33,7 +41,7 @@ public class EntranceTile extends Tile {
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
-	
+
 	public void setExitLoc(Location location) {
 		this.exitLocation = location;
 	}
@@ -41,7 +49,7 @@ public class EntranceTile extends Tile {
 	public void setExitTile(Tile exit) {
 		this.exitTile = exit;
 	}
-	
+
 	public boolean enter(Player player) {
 		if(exitLocation == null || locked || exitTile == null) {
 			return false;
@@ -55,5 +63,5 @@ public class EntranceTile extends Tile {
 		player.setPosition(exitTile.getPosition());
 		return true;
 	}
-	
+
 }
