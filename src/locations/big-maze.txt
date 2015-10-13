@@ -3,7 +3,7 @@ A big maze
 outside
 30 30
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
-Ro-EnB Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
+Gr-EnV Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
@@ -31,4 +31,4 @@ Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0
-Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Ro-EnB Gr-0
+Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-0 Gr-EnV Gr-0

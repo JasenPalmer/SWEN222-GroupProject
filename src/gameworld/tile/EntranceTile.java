@@ -67,5 +67,14 @@ public class EntranceTile extends Tile {
 	public Type getType() {
 		return type;
 	}
+	
+	@Override
+	public String toString(){
+		if(type==Type.BUILDING){
+			return "EnB";
+		} else {
+			return "EnV";
+		}
+	}
 
 }

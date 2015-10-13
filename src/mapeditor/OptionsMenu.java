@@ -60,8 +60,8 @@ public class OptionsMenu extends JPanel {
 
 		// Building Menu
 
-		String[] outsideBuilding = {"Building", "Building Entrance", "Invisible Entrance", "Tree Entrance", "Null"};
-		String[] insideBuilding = {"Floor", "Building Entrace", "Invisible Entrance", "Null"};
+		String[] outsideBuilding = {"Building", "Entrance - Building", "Entrance - Invisible", "Null"};
+		String[] insideBuilding = {"Floor", "Entrance - Building", "Entrance - Invisible", "Null"};
 
 		String[] buildingsToUse = null;
 		if(map instanceof OutsideLocation){

@@ -23,6 +23,7 @@ public class OutsideLocation extends Location {
 		String toReturn = "";
 		toReturn += ""+name+"\n";
 		toReturn += ""+description+"\n";
+		toReturn += "outside\n";
 		toReturn += tiles[0].length+" "+tiles.length+"\n";
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){

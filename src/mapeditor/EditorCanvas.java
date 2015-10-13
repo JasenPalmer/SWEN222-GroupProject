@@ -9,6 +9,7 @@ import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
+import gameworld.tile.EntranceTile.Type;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -149,7 +150,12 @@ public class EditorCanvas extends JPanel {
 						if(i==0 || tiles[i-1][j]==null){
 							if(t instanceof EntranceTile){
 								if(tiles[i+1][j] instanceof FloorTile){
-									g.drawImage(ImageStorage.insideDoorL, x, y, null);
+									EntranceTile et = (EntranceTile) t;
+									if(et.getType()!=Type.BUILDING){
+										// don't draw shit
+									} else {
+										g.drawImage(ImageStorage.insideDoorL, x, y, null);
+									}
 								}
 							}
 							else {
@@ -159,7 +165,12 @@ public class EditorCanvas extends JPanel {
 						if(j==tiles.length-1|| tiles[i][j+1]==null){
 							if(t instanceof EntranceTile){
 								if(tiles[i][j-1] instanceof FloorTile){
-									g.drawImage(ImageStorage.insideDoorR, x, y, null);
+									EntranceTile et = (EntranceTile) t;
+									if(et.getType()!=Type.BUILDING){
+										// dont draw shit
+									} else {
+										g.drawImage(ImageStorage.insideDoorR, x, y, null);
+									}
 								}
 							}
 							else {
@@ -186,44 +197,61 @@ public class EditorCanvas extends JPanel {
 						// Drawing 2 block high walls
 						if(r instanceof EntranceTile){
 							if(j-1 >= 0 && rooms[i][j-1]==null){
-								g.drawImage(ImageStorage.doorUD, x, y-TILESIZE/2, null);
+								EntranceTile et = (EntranceTile) r;
+								if(et.getType()!=Type.BUILDING){
+									// dont draw shit
+								} else {
+									g.drawImage(ImageStorage.doorUD, x, y-TILESIZE/2, null);
+								}
 							} else {
-								g.drawImage(ImageStorage.doorLR, x, y-TILESIZE/2, null);
+								EntranceTile et = (EntranceTile) r;
+								if(et.getType()!=Type.BUILDING){
+									// dont draw shit
+								} else {
+									g.drawImage(ImageStorage.doorLR, x, y-TILESIZE/2, null);
+								}
 							}
 						}
 						else{
 							// draw wall if no door
 							g.drawImage(ImageStorage.building, x, y-TILESIZE/2, null);
 						}		
-						// second wall above wall/door
-						g.drawImage(ImageStorage.building, x, y-TILESIZE, null);
-
-
-						image = ImageStorage.building;
-
-						// Western most point of building
-						if(j-1 >= 0 && rooms[i][j-1] == null){
-							image = ImageStorage.roofUD;
+						
+						
+						EntranceTile et = null;
+						if(r instanceof EntranceTile){
+							et = (EntranceTile)r;
 						}
-
-						// Northern most point of building
-						if(i+1 < rooms.length && rooms[i+1][j]==null){
-							image = ImageStorage.roofLR;
+						
+						if(et==null || et.getType()==Type.BUILDING){
+								// second wall above wall/door
+								g.drawImage(ImageStorage.building, x, y-TILESIZE, null);
+								
+								image = ImageStorage.building;
+		
+								// Western most point of building
+								if(j-1 >= 0 && rooms[i][j-1] == null){
+									image = ImageStorage.roofUD;
+								}
+		
+								// Northern most point of building
+								if(i+1 < rooms.length && rooms[i+1][j]==null){
+									image = ImageStorage.roofLR;
+								}
+		
+								// Outwards corner roof
+								if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+									image = ImageStorage.roofCornerO;
+								}
+								// Inwards corner roof
+								if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+									image = ImageStorage.roofCornerI;
+								}
+		
+		
+								g.drawImage(image, x, (int) (y - 1.5*TILESIZE), null);
 						}
-
-						// Outwards corner roof
-						if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-							image = ImageStorage.roofCornerO;
-						}
-						// Inwards corner roof
-						if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-							image = ImageStorage.roofCornerI;
-						}
-
-
-						g.drawImage(image, x, (int) (y - 1.5*TILESIZE), null);
-
-					}
+					}	
 				}
 			}
 

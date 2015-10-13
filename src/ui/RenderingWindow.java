@@ -8,6 +8,7 @@ import gameworld.entity.BasicEntity;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
+import gameworld.tile.EntranceTile.Type;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
@@ -26,7 +27,6 @@ public class RenderingWindow extends JPanel{
 	private int cameraX;
 	private int cameraY;
 
-	private Image playerImage;
 	private Location location;
 	private Tile[][] locationTiles;
 
@@ -39,7 +39,6 @@ public class RenderingWindow extends JPanel{
 
 	public RenderingWindow(ApplicationWindow aw){
 		new ImageStorage();
-		playerImage = ImageStorage.playerImage;
 		setLayout(null);
 		setBounds(0,0,1050,950);
 		this.applicationWindow = aw;
@@ -111,8 +110,8 @@ public class RenderingWindow extends JPanel{
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
 			updateCamera(getRealPlayerCoords(tiles));
-
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
+			
 			Image image = null;
 			// outside tiles
 			for(int i = 0; i < tiles.length; i++){
@@ -122,6 +121,9 @@ public class RenderingWindow extends JPanel{
 
 					Tile t = tiles[i][j];
 					if(t!=null) {
+						if(t.toString().equals("EnV")){
+							System.out.println("wtf?");
+						}
 						image = ImageStorage.getImage(t.toString());
 
 
@@ -157,7 +159,12 @@ public class RenderingWindow extends JPanel{
 							if(i==0 || tiles[i-1][j]==null){
 								if(t instanceof EntranceTile){
 									if(tiles[i+1][j] instanceof FloorTile){
-										offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
+										EntranceTile et = (EntranceTile) t;
+										if(et.getType()!=Type.BUILDING){
+											// don't draw
+										} else {
+											offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
+										}
 									}
 								}
 								else {
@@ -167,7 +174,12 @@ public class RenderingWindow extends JPanel{
 							if(j==tiles.length-1|| tiles[i][j+1]==null){
 								if(t instanceof EntranceTile){
 									if(tiles[i][j-1] instanceof FloorTile){
-										offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
+										EntranceTile et = (EntranceTile) t;
+										if(et.getType()!=Type.BUILDING){
+											// don't draw
+										} else {
+											offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
+										}
 									}
 								}
 								else {
@@ -202,45 +214,61 @@ public class RenderingWindow extends JPanel{
 							// Drawing 2 block high walls
 							if(r instanceof EntranceTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
-									offgc.drawImage(ImageStorage.doorUD, x, y-TILESIZE/2, null);
+									EntranceTile et = (EntranceTile) r;
+									if(et.getType()!=Type.BUILDING){
+										// dont draw shit
+									} else {
+										offgc.drawImage(ImageStorage.doorUD, x, y-TILESIZE/2, null);
+									}
 								} else {
-									offgc.drawImage(ImageStorage.doorLR, x, y-TILESIZE/2, null);
+									EntranceTile et = (EntranceTile) r;
+									if(et.getType()!=Type.BUILDING){
+										// dont draw shit
+									} else {
+										offgc.drawImage(ImageStorage.doorLR, x, y-TILESIZE/2, null);
+									}
 								}
 							}
 							else{
+								// draw wall if no door
 								offgc.drawImage(ImageStorage.building, x, y-TILESIZE/2, null);
+							}		
+							
+							
+							EntranceTile et = null;
+							if(r instanceof EntranceTile){
+								et = (EntranceTile)r;
 							}
 							
-							offgc.drawImage(ImageStorage.building, x, y-TILESIZE, null);
-
-
-							image = ImageStorage.building;
-
-							// Western most point of building
-							if(j-1 >= 0 && rooms[i][j-1] == null){
-								image = ImageStorage.roofUD;
+							if(et==null || et.getType()==Type.BUILDING){
+									// second wall above wall/door
+									offgc.drawImage(ImageStorage.building, x, y-TILESIZE, null);
+									
+									image = ImageStorage.building;
+			
+									// Western most point of building
+									if(j-1 >= 0 && rooms[i][j-1] == null){
+										image = ImageStorage.roofUD;
+									}
+			
+									// Northern most point of building
+									if(i+1 < rooms.length && rooms[i+1][j]==null){
+										image = ImageStorage.roofLR;
+									}
+			
+									// Outwards corner roof
+									if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
+										image = ImageStorage.roofCornerO;
+									}
+									// Inwards corner roof
+									if(j-1 >= 0 && i+1 != rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
+										image = ImageStorage.roofCornerI;
+									}
+			
+			
+									offgc.drawImage(image, x, (int) (y - 1.5*TILESIZE), null);
 							}
-
-							// Northern most point of building
-							if(i+1 < rooms.length && rooms[i+1][j]==null){
-								image = ImageStorage.roofLR;
-							}
-
-							// Inwards corner roof
-							if(j-1 >= 0 && i+1 < rooms.length && rooms[i+1][j-1]==null && rooms[i][j-1] != null && rooms[i+1][j]!=null){
-								image = ImageStorage.roofCornerI;
-							}
-
-							// Outwards corner roof
-							if(j-1 >= 0 && i+1<rooms.length && rooms[i][j-1]==null && rooms[i+1][j]==null){
-								image = ImageStorage.roofCornerO;
-							}
-
-
-
-							offgc.drawImage(image, x, (int) (y - 1.5*TILESIZE), null);
-
-						}
+						}	
 					}
 				}
 
@@ -324,8 +352,7 @@ public class RenderingWindow extends JPanel{
 			if(p.isDead()){
 				image = ImageStorage.tree;
 			}
-
-			playerImage = image;
+			
 			return image;
 		}
 
@@ -391,10 +418,9 @@ public class RenderingWindow extends JPanel{
 		public void updateCamera(int[] realCoord){
 			int playerX = realCoord[0];
 			int playerY = realCoord[1];
-			if(playerImage!=null){
-			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + playerImage.getWidth(null)/2) - this.getWidth()/2;
-			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - playerImage.getHeight(null)/2 - this.getHeight()/2;
-			}
+			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + TILESIZE/2) - this.getWidth()/2;
+			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - TILESIZE/2 - this.getHeight()/2;
+			
 		}
 
 }

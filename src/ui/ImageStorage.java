@@ -12,7 +12,6 @@ public class ImageStorage {
 	public static Image water;
 	public static Image rock;
 	public static Image doorLR;
-	public static Image playerImage;
 	public static Image doorUD;
 	public static Image roofLR;
 	public static Image roofUD;
@@ -30,12 +29,13 @@ public class ImageStorage {
 	public static Image bag;
 	public static Image insideDoorL;
 	public static Image insideDoorR;
-
+	public static Image blank;
 
 	// indexing goes:  armour type, direction, frame
 	static Image[][][] walking = new Image[4][4][9];
 	static Image[][][] shanking = new Image[4][4][6];
 	static Image[][][] spearing = new Image[4][4][8];
+
 	
 	public ImageStorage(){
 		setImages();
@@ -52,6 +52,7 @@ public class ImageStorage {
 			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
 
 			// outside building images
+			blank = ImageIO.read(new File("src/ui/images/buildings/Blank.png"));
 			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
 			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
 			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
@@ -67,8 +68,6 @@ public class ImageStorage {
 			wallCorner = ImageIO.read(new File("src/ui/images/inside/WallCorner.png"));
 			insideDoorL = ImageIO.read(new File("src/ui/images/inside/DoorL.png"));
 			insideDoorR = ImageIO.read(new File("src/ui/images/inside/DoorR.png"));
-			// player images
-			playerImage = ImageIO.read(new File("src/ui/images/player/robe/0.png"));
 
 
 			// entity images
@@ -187,8 +186,6 @@ public class ImageStorage {
 	 */
 	public static Image getImage(String name){
 		switch(name){
-			case "Grass":
-				return grass;
 			case "Gr":
 				return grass;
 			case "Ro":
@@ -197,8 +194,17 @@ public class ImageStorage {
 				return water;
 			case "Bu":
 				return building;
+				
+			// cheapest fix i have ever implemented in my life holy shit.	
 			case "En":
-				return doorLR;
+				return grass;
+			case "EnB":
+				return grass;
+			case "EnV":
+				
+				
+				
+				return grass;
 			case "Fl":
 				return floor;
 

@@ -171,7 +171,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							// making BuildingTile
 							if(map instanceof OutsideLocation){
 								OutsideLocation oMap = (OutsideLocation) map;
-								if(currentOption=="Entrance"){
+								if(isEntrance(currentOption)){
 									oMap.setBuildingTile(x,y,getEntrance(currentOption, new Point(x,y)));
 								} else {
 									oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
@@ -206,15 +206,14 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		repaint();
 	}
 
+
 	private EntranceTile getEntrance(String name, Point p){
 		EntranceTile toReturn = null;
 		switch(name){
-		case "Building Entrance":
+		case "Entrance - Building":
 			return new EntranceTile(name, p, false, EntranceTile.Type.BUILDING);		
-		case "Invisible Entrance":
+		case "Entrance - Invisible":
 			return new EntranceTile(name, p, false, EntranceTile.Type.INVISIBLE);
-		case "Tree Entrance":
-			return new EntranceTile(name, p, false, EntranceTile.Type.TREE);
 		}
 		return toReturn;
 	}
@@ -250,7 +249,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		xClick1 = (e.getX()-97)/TILESIZE + canvas.getCameraX()/TILESIZE;
+		xClick1 = (e.getX()-(options.getWidth()+10))/TILESIZE + canvas.getCameraX()/TILESIZE;
 		yClick1 = (e.getY()-54)/TILESIZE + canvas.getCameraY()/TILESIZE;
 	}
 
@@ -258,7 +257,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		xClick2 = (e.getX()-97)/TILESIZE + canvas.getCameraX()/TILESIZE;
+		xClick2 = (e.getX()-(options.getWidth()+10))/TILESIZE + canvas.getCameraX()/TILESIZE;
 		yClick2 = (e.getY()-54)/TILESIZE + canvas.getCameraY()/TILESIZE;
 		mouseClicked(e);
 
@@ -326,14 +325,25 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		switch(name){
 			case "Building":
 				return true;
-			case "Building Entrance":
+			case "Entrance - Building":
 				return true;	
-			case "Invisible Entrance":
+			case "Entrance - Invisible":
 				return true;
-			case "Tree Entrance":
+			case "Entrance - Tree":
 				return true;
 		}
 		return false;
+	}
+	
+
+	private boolean isEntrance(String name) {
+		switch(name){
+		case "Entrance - Building":
+			return true;	
+		case "Entrance - Invisible":
+			return true;
+	}
+	return false;
 	}
 
 	public boolean isTerrain(String name){
