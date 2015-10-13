@@ -145,7 +145,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel.add(compass,2,0);
 
 		//Setup timer
-		timer = new Timer(50, new ActionListener(){
+		timer = new Timer(70, new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(keyEve != null){

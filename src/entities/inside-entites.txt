@@ -15,3 +15,4 @@ BasicEntity	Chair	This is for sitting!	5	6
 BasicEntity	Table	This is a table.	6	6
 BasicEntity	Table	This is a table.	7	6
 BasicEntity	Chair	This is for sitting!	8	6
+Chest	Chest	This is a chest	8	10
