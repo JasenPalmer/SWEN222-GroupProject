@@ -6,6 +6,7 @@ import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.BasicEntity;
 import gameworld.location.Location;
+import gameworld.location.Location.Lights;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
 import gameworld.tile.EntranceTile.Type;
@@ -102,31 +103,45 @@ public class RenderingWindow extends JPanel{
 
 			g.drawImage(offscreen,0,0,null);
 			
-			int[] playerPoint = getRealPlayerCoords(fakeTiles);
-			lighting((Graphics2D) g, this.getWidth(), this.getHeight(), new Point(playerPoint[0],playerPoint[1]));
+			int[] playerPoint = getRealPlayerCoords(player, fakeTiles);
+			Point[]playerPoints = new Point[location.getPlayers().size()];
+			
+			int index = 0;
+			for(Player p: location.getPlayers()){
+				playerPoints[index] = new Point(getRealPlayerCoords(p, fakeTiles)[0], getRealPlayerCoords(p, fakeTiles)[1]);
+				index++;
+			}
+			
+			if(location.getLights()==Lights.OFF){
+				lighting((Graphics2D) g, playerPoints);
+			}
 
 	}
 
-	private void lighting(Graphics2D g2d, int width, int height, Point position) {
+	private void lighting(Graphics2D g2d, Point[] playerPoints) {
 		  int radius = TILESIZE*2;
-		  int x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
-		  int y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
-		   
+		  int x = 0;
+		  int y = 0;
+		  int width = this.getWidth();
+		  int height = this.getHeight();
+		  float[] distanceIntervals = {0.2f,0.4f,0.6f,0.8f,1f};
+		  Color[] colours = {new Color(0,0,10,250),new Color(0,0,10,187), new Color(0,0,10,125),new Color(0,0,10,62), new Color(0,0,10,0)};
+		  
+		  
 		  Image image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		  Graphics2D g = (Graphics2D) image.getGraphics();
 
 		  g.setColor(new Color(0, 0, 10, 250));
 		  g.fillRect(0, 0 , width, height);
-
-
 		  g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OUT, 1f));
+		  
+		  for(Point position: playerPoints){
+			  x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
+			  y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
+			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours, MultipleGradientPaint.CycleMethod.REFLECT ));
+			  g.fillOval(x, y, radius*2, radius*2);
+		  }
 
-
-		  float[] distanceIntervals = {0.2f,0.4f,0.6f,0.8f,1f};
-		  Color[] colours = {new Color(0,0,10,250),new Color(0,0,10,187), new Color(0,0,10,125),new Color(0,0,10,62), new Color(0,0,10,0)};
-
-		  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours, MultipleGradientPaint.CycleMethod.REFLECT ));
-		  g.fillOval(x, y, radius*2, radius*2);
 
 		  g.dispose();
 		  
@@ -148,7 +163,7 @@ public class RenderingWindow extends JPanel{
 		 * @param offgc - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
-			updateCamera(getRealPlayerCoords(tiles));
+			updateCamera(getRealPlayerCoords(player, tiles));
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 			
 			Image image = null;
@@ -388,11 +403,11 @@ public class RenderingWindow extends JPanel{
 		 * @param tiles
 		 * @return int of player x and y
 		 */
-		private int[] getRealPlayerCoords(Tile[][] tiles) {
+		private int[] getRealPlayerCoords(Player p, Tile[][] tiles) {
 			int[] xy = new int[2];
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
-					if(tiles[i][j]!=null && tiles[i][j].getPosition().equals(player.getPosition())){
+					if(tiles[i][j]!=null && tiles[i][j].getPosition().equals(p.getPosition())){
 						xy[0] = j;
 						xy[1] = i;
 					}

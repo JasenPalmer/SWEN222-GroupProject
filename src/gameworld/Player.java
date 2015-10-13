@@ -80,7 +80,9 @@ public class Player implements Serializable{
 		// set default gear
 		armour = new Armour("Robe Armour", "Robe Armour", null, null, Armour.ArmourType.Robe);
 		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank);
-		inventory[0] = new Key("Key","A Key",null,null);
+		inventory[0] = new Gold("Gold", "Gold", null, null, 5);
+		inventory[1] = new Key("Key","A Key",null,null);
+		
 	}
 
 	/**
@@ -121,6 +123,14 @@ public class Player implements Serializable{
 		if(inventoryFull()){return false;}
 		if(item instanceof Gold){
 			Gold gold = (Gold) item;
+			for(Item i : inventory) {
+				if(i instanceof Gold) {
+					Gold g = (Gold) i;
+					g.setAmount(g.getAmount()+gold.getAmount());
+					score += gold.getAmount();
+					return true;
+				}
+			}
 			score += gold.getAmount();
 		}
 		for(int i = 0; i < inventory.length; i++) {

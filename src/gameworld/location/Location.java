@@ -22,6 +22,14 @@ public abstract class Location implements Serializable{
 	protected String description;
 	protected Tile[][] tiles;
 	protected Set<Player> players;
+	protected Lights lights = Lights.ON;
+	
+
+
+	public enum Lights {
+		ON,
+		OFF
+	}
 
 	public Location(String name, String description, Tile[][] tiles) {
 		this.name = name;
@@ -161,6 +169,13 @@ public abstract class Location implements Serializable{
 			tiles[pos.y][pos.x].setEntitiy(entity);
 		}
 	}
-	
+
+	public Lights getLights() {
+		return lights;
+	}
+
+	public void setLights(Lights lights) {
+		this.lights = lights;
+	}
 	
 }
