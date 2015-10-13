@@ -95,7 +95,8 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 		case "sfxVolumeSlider":
 			if (!source.getValueIsAdjusting()) {
 				int value = (int)source.getValue();
-				System.out.println("Change sfx volume here");
+				window.getInventPanel().changeEffectVolume(-80 + value);
+				window.changeEffectVolume(-80 + value);				
 				window.requestFocus();
 			}
 			break;

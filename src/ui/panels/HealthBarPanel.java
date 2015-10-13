@@ -12,6 +12,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import ui.ApplicationWindow;
+
 public class HealthBarPanel extends JPanel{
 
 	private Image backgroundImage;
@@ -32,7 +34,7 @@ public class HealthBarPanel extends JPanel{
 	public void setHealth(Player player){
 		this.health = player.getHealth();
 		if(this.health < 0){
-			this.health = 0;
+			this.health = 0;	
 		}
 		this.repaint();
 	}

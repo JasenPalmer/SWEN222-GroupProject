@@ -54,10 +54,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private String username;
 	private String host;
 	private Clip musicClip;
+	private Clip effectClip;
 	private boolean showSettings = false;
 	private HealthBarPanel hpBar;
 	private String track = null;
 	private int initVolume = -30;
+	private int initEffectVolume = -30;
 	Timer timer;
 	KeyEvent keyEve;
 	private String direction = "north";
@@ -65,6 +67,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
+	private String deathSound = "src/ui/sounds/deathSound.wav";
 	private String track1 = "src/ui/sounds/track1.wav";
 	private String track2 = "src/ui/sounds/track2.wav";
 	private String fighting = "src/ui/sounds/fighting.wav";
@@ -199,6 +202,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			inventPanel.setFocusable(true);
 			lootInventPanel.setInventVis(true);
 		}
+		playSound("Death");
 	}
 
 	/**
@@ -274,69 +278,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		default:
 			break;
-		}
-	}
-
-	private void playSound(String sound){
-		String soundPath = null;
-		switch(sound){
-		case "Button":
-			soundPath = buttonSound;
-			break;
-		default:
-			break;
-		}
-		try{
-			File file = new File(soundPath);
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(file));
-			clip.start();
-		}catch(Exception e){
-			System.out.println(e.getLocalizedMessage());
-		}
-	}
-
-	private void playMusic(String music){
-		switch(music){
-		case "Track 1":
-			track = track1;
-			break;
-		case "Track 2":
-			track = track2;
-			break;
-		case "Fighting":
-			track = fighting;
-			break;
-		}
-		try{
-			File file = new File(track);
-			musicClip = AudioSystem.getClip();
-			musicClip.open(AudioSystem.getAudioInputStream(file));
-			changeVolume(initVolume);
-			musicClip.start();
-			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
-		}catch(Exception e){
-			System.out.println(e.getLocalizedMessage());
-		}
-	}
-
-	private void stopMusic(){
-		musicClip.stop();
-	}
-
-	public void toggleMusic(){
-		stopMusic();
-		if(track.equals("Track 1")){
-			playMusic("Track 2");
-			track = "Track 2";
-		}
-		else if(track.equals("Track 2")){
-			playMusic("Fighting");
-			track = "Fighting";
-		}
-		else{
-			playMusic("Track 1");
-			track = "Track 1";
 		}
 	}
 
@@ -500,13 +441,99 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
-	public void cycleAnimations() { this.client.cycleAnimations(); }
+	public void openContainer(Container container){
+		lootInventPanel.setVisible(true);
+		lootInventPanel.setLootContainer(container);
+		lootInventOpen = true;
+		setLootInventory();
+	}
+
+	public void cycleAnimations() { 
+		this.client.cycleAnimations(); 
+	}
 
 	public void changeVolume(int change){
 		//-60 to 6
+		if(musicClip == null) return;
 		FloatControl volume = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
 		volume.setValue(change);
 		initVolume = change;
+	}
+
+	public void changeEffectVolume(int change){
+		//-60 to 6
+		if(effectClip == null) return;
+		FloatControl volume = (FloatControl) effectClip.getControl(FloatControl.Type.MASTER_GAIN);
+		//System.out.println(volume);
+		volume.setValue(change);
+		initEffectVolume = change;
+	}
+
+	private void playSound(String sound){
+		String soundPath = null;
+		switch(sound){
+		case "Button":
+			soundPath = buttonSound;
+			break;
+		case "Death":
+			soundPath = deathSound;
+			break;
+		default:
+			break;
+		}
+		try{
+			File file = new File(soundPath);
+			effectClip = AudioSystem.getClip();
+			effectClip.open(AudioSystem.getAudioInputStream(file));
+			changeEffectVolume(initEffectVolume);
+			effectClip.start();
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+
+	private void playMusic(String music){
+		switch(music){
+		case "Track 1":
+			track = track1;
+			break;
+		case "Track 2":
+			track = track2;
+			break;
+		case "Fighting":
+			track = fighting;
+			break;
+		}
+		try{
+			File file = new File(track);
+			musicClip = AudioSystem.getClip();
+			musicClip.open(AudioSystem.getAudioInputStream(file));
+			changeVolume(initVolume);
+			musicClip.start();
+			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+		}catch(Exception e){
+			System.out.println(e.getLocalizedMessage());
+		}
+	}
+
+	private void stopMusic(){
+		musicClip.stop();
+	}
+
+	public void toggleMusic(){
+		stopMusic();
+		if(track.equals("Track 1")){
+			playMusic("Track 2");
+			track = "Track 2";
+		}
+		else if(track.equals("Track 2")){
+			playMusic("Fighting");
+			track = "Fighting";
+		}
+		else{
+			playMusic("Track 1");
+			track = "Track 1";
+		}
 	}
 
 	private Direction directionSetter(String key){
@@ -537,10 +564,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		return null;
 	}
 
-	public void closeAppWindow(){
-		System.exit(0);	
-	}
-
 	@Override
 	public void keyReleased(KeyEvent e) {
 		timer.stop();
@@ -550,18 +573,16 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void keyTyped(KeyEvent e) {
 	}
 
-	public void openContainer(Container container){
-		lootInventPanel.setVisible(true);
-		lootInventPanel.setLootContainer(container);
-		lootInventOpen = true;
-		setLootInventory();
-	}
-
 	//Getters
 	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
 	public Player getPlayer(){return this.client.getState();}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
 	public InventoryPanel getInventPanel(){ return this.inventPanel;}
+
+
+	public void closeAppWindow(){
+		System.exit(0);	
+	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
