@@ -1,7 +1,9 @@
 package gameworld;
 
 import gameworld.entity.Container;
+import gameworld.entity.Key;
 import gameworld.location.Location;
+import gameworld.tile.Tile;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -109,9 +111,20 @@ public class Game implements Serializable {
 	 * @param index - index of item to be removed
 	 * @param container - container to remove item from
 	 */
-	public void removeItemContainer(Player player, int index, Container container) {
-		container.getItems()[index] = null;
+	public Container removeItemContainer(Player player, int index, Container container) {
+		Tile tile = player.getTile(player.getFacing());
+		if(tile != null){
+			if(tile.containedEntity() instanceof Container) {
+				Container con = (Container) tile.containedEntity();
+				con.getItems()[index] = null;
+				return con;
+			}
+		}
+		//Figured returning null would be bad
+		return container;
 	}
+
+
 
 	/**
 	 * Returns the player with the given name
