@@ -127,6 +127,7 @@ public class RenderingWindow extends JPanel{
 
 			  g.fillOval(x, y, radius*2, radius*2);
 
+			  
 			  g.setPaint(new RadialGradientPaint(position.x, position.y, (int)(radius*1.2), dist, cols, MultipleGradientPaint.CycleMethod.REFLECT ));
 			  g.fillOval(position.x-radius, position.y-radius, radius*2, radius*2);
 
@@ -163,9 +164,6 @@ public class RenderingWindow extends JPanel{
 
 					Tile t = tiles[i][j];
 					if(t!=null) {
-						if(t.toString().equals("EnV")){
-							System.out.println("wtf?");
-						}
 						image = ImageStorage.getImage(t.toString());
 
 
