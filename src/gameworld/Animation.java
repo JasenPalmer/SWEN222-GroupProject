@@ -48,7 +48,7 @@ public class Animation implements Serializable{
 
 	public void cycleAttack(){
 		if(player.isAttacking()){
-			attackFrame+=0.25;
+			attackFrame+=0.5;
 		}
 		if(player.getWeapon().getType().equals(WeaponType.Spear) && attackFrame>=7 || player.getWeapon().getType().equals(WeaponType.Shank) && attackFrame>=5){
 			attackFrame = 0;
