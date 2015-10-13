@@ -246,7 +246,7 @@ public class Client {
 					synchronized(tempPlayers){
 						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
-								movePlayer(p, event.getDir());
+								p.move(event.getDir());
 							}
 						}
 					}

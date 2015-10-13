@@ -40,7 +40,7 @@ public class Server {
 	//Queue of events to be processed
 	private Queue<NetworkEvent> eventQueue;
 
-	//private EventThread eventHandler;
+	private EventThread eventHandler;
 
 	//Running status of server
 	private boolean finished = false;
@@ -57,8 +57,8 @@ public class Server {
 
 		gameState = new Game();
 
-		//eventHandler = new EventThread();
-		//eventHandler.start();
+		eventHandler = new EventThread();
+		eventHandler.start();
 
 		start();
 	}
@@ -205,10 +205,10 @@ public class Server {
 				break;
 			}
 			
-//			if(hasMoved > 0) movePlayer(toProcess.getUser());
-//			else if(hasMoved > 1) gameNeedsUpdate = true;
+			if(hasMoved > 0) movePlayer(toProcess.getUser());
+			else if(hasMoved > 1) gameNeedsUpdate = true;
 			
-			if(hasMoved > 0) gameNeedsUpdate = true;
+//			if(hasMoved > 0) gameNeedsUpdate = true;
 			break;
 			
 		case CYCLE_ANIMATIONS:
@@ -266,24 +266,24 @@ public class Server {
 			connections.clear();
 		}
 		finished = true;
-		//eventHandler.finish();
+		eventHandler.finish();
 	}
 
-//	public class EventThread extends Thread {
-//		private boolean finished = false;
-//		public void run(){
-//			while(!finished){
-//				processEvents();
-//				try {
-//					Thread.sleep(5);
-//				} catch (InterruptedException e) {}
-//			}
-//		}
-//
-//		public void finish(){
-//			this.finished = true;
-//		}
-//	}
+	public class EventThread extends Thread {
+		private boolean finished = false;
+		public void run(){
+			while(!finished){
+				processEvents();
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {}
+			}
+		}
+
+		public void finish(){
+			this.finished = true;
+		}
+	}
 
 	public class ClientThread extends Thread {
 
@@ -402,7 +402,6 @@ public class Server {
 						console.displayError("Unexpected EventType from " + user + " : " + currentEvent.getType());
 						break;
 					}
-					processEvents();
 				}
 			}
 		}
