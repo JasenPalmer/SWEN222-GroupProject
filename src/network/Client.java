@@ -62,6 +62,8 @@ public class Client {
 		try {
 			System.out.println("Creating socket");
 			socket = new Socket(host, PORT);
+			socket.setReceiveBufferSize(64000);
+			socket.setSendBufferSize(64000);
 			socket.setTcpNoDelay(true);
 		} catch (IOException e){
 			System.err.println("Error creating new client: " + user);

@@ -167,7 +167,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		public void run(){
 			while(true){
 				try{
-					Thread.sleep(50);
+					Thread.sleep(100);
 				}catch(Exception e){
 					e.printStackTrace();
 				}

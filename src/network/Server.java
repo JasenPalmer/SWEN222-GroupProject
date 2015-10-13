@@ -68,6 +68,7 @@ public class Server {
 	public void start(){
 		try {
 			serverSocket= new ServerSocket(PORT);
+			serverSocket.setReceiveBufferSize(64000);
 			console.displayEvent("Server started successfully on port number: " + PORT);
 
 			while(!finished) {
