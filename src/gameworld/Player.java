@@ -79,7 +79,7 @@ public class Player implements Serializable{
 		setMaxHealth(health);
 		// set default gear
 		armour = new Armour("Robe Armour", "Robe Armour", null, null, Armour.ArmourType.Robe);
-		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank)	;
+		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank);
 		inventory[0] = new Key("Key","A Key",null,null);
 	}
 
@@ -195,8 +195,8 @@ public class Player implements Serializable{
 		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
 		loot.storeItem(weapon);
 		loot.storeItem(armour);
-		weapon = null;
-		armour = null;
+		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank);
+		armour = new Armour("Robe Armour", "Robe Armour", null, null, Armour.ArmourType.Robe);;
 		standingOn.setEntitiy(loot);
 		inventory = new Item[DEFAULT_INV_SIZE];
 		//respawn
