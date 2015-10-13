@@ -578,6 +578,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public Player getPlayer(){return this.client.getState();}
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
 	public InventoryPanel getInventPanel(){ return this.inventPanel;}
+	public LootInventoryPanel getLootInvent(){ return this.lootInventPanel;}
 
 
 	public void closeAppWindow(){

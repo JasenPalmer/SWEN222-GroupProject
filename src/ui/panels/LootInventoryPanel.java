@@ -12,6 +12,7 @@ import java.io.File;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
@@ -30,6 +31,8 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	private boolean inventOpen;
 	private Client client;
 	private Container container;
+	private Clip effectClip;
+	private int initEffectVolume = -30;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
@@ -249,6 +252,15 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		return item;
 	}
 	
+	public void changeEffectVolume(int change){
+		//-60 to 6
+		if(effectClip == null) return;
+		FloatControl volume = (FloatControl) effectClip.getControl(FloatControl.Type.MASTER_GAIN);
+		//System.out.println(volume);
+		volume.setValue(change);
+		initEffectVolume = change;
+	}
+	
 	private void playSound(String sound){
 		String soundPath = null;
 		switch(sound){
@@ -260,9 +272,10 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 		try{
 			File file = new File(soundPath);
-			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(file));
-			clip.start();
+			effectClip = AudioSystem.getClip();
+			effectClip.open(AudioSystem.getAudioInputStream(file));
+			changeEffectVolume(initEffectVolume);
+			effectClip.start();
 		}catch(Exception e){
 			System.out.println(e.getLocalizedMessage());
 		}
