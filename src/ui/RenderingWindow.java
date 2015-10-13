@@ -84,18 +84,18 @@ public class RenderingWindow extends JPanel{
 			isometric(tiles,rooms, offgc);
 			break;
 		case EAST:
-			fakeTiles = rotate(tiles);
-			fakeRooms = rotate(rooms);
+			fakeTiles = rotateCounterClockwise(tiles);
+			fakeRooms = rotateCounterClockwise(rooms);
 			isometric(fakeTiles, fakeRooms, offgc);
 			break;
 		case SOUTH:
-			fakeTiles = rotate(rotate(tiles));
-			fakeRooms = rotate(rotate(rooms));
+			fakeTiles = rotateCounterClockwise(rotateCounterClockwise(tiles));
+			fakeRooms = rotateCounterClockwise(rotateCounterClockwise(rooms));
 			isometric(fakeTiles, fakeRooms, offgc);
 			break;
 		case WEST:
-			fakeTiles = rotate(rotate(rotate(tiles)));
-			fakeRooms = rotate(rotate(rotate(rooms)));
+			fakeTiles = rotateClockwise(tiles);
+			fakeRooms = rotateClockwise(rooms);
 			isometric(fakeTiles, fakeRooms, offgc);
 			break;
 
@@ -422,7 +422,7 @@ public class RenderingWindow extends JPanel{
 		 * @param tiles - array to be rotated
 		 * @return rotated array
 		 */
-		public Tile[][] rotate(Tile[][] tiles){
+		public Tile[][] rotateCounterClockwise(Tile[][] tiles){
 			Tile[][] newTiles = null;
 			if(tiles!=null){
 				newTiles = new Tile[tiles.length][tiles[0].length];
@@ -435,6 +435,24 @@ public class RenderingWindow extends JPanel{
 			return newTiles;
 		}
 
+		/**
+		 *
+		 * Rotates given array of tiles 90 degrees clockwise.
+		 * @param tiles - array to be rotated
+		 * @return rotated array
+		 */
+		public Tile[][] rotateClockwise(Tile[][] tiles){
+			Tile[][] newTiles = null;
+			if(tiles!=null){
+				newTiles = new Tile[tiles.length][tiles[0].length];
+				for(int i = 0; i < tiles.length; i++){
+					for(int j = 0; j < tiles[i].length; j++){
+						newTiles[j][tiles.length-1-i] = tiles[i][j];
+					}
+				}
+			}
+			return newTiles;
+		}
 
 		/**
 		 * Sets direction of renderer. May possibly end up being stored in another class?
