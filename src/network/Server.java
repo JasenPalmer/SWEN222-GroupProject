@@ -214,7 +214,7 @@ public class Server {
 			needsUpdate = true;
 			break;
 		case REMOVE_ITEM_CONTAINER:
-			gameState.removeItemContainer(toProcess.getIndex1(), toProcess.getContainer());
+			gameState.removeItemContainer(toProcess.getState(),toProcess.getIndex1(), toProcess.getContainer());
 			needsUpdate = true;
 			break;
 		case UPDATE_GAME:

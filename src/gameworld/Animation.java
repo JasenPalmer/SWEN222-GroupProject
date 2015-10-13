@@ -10,7 +10,7 @@ public class Animation implements Serializable{
 	private Player player;
 	private int animationDirection;
 	private int walkFrame;
-	private int attackFrame;
+	private double attackFrame;
 
 	public Animation(Player player){
 		animationDirection = 0;
@@ -48,15 +48,15 @@ public class Animation implements Serializable{
 
 	public void cycleAttack(){
 		if(player.isAttacking()){
-			attackFrame++;
+			attackFrame+=0.25;
 		}
-		if(player.getWeapon().getType().equals(WeaponType.Spear) && attackFrame==7 || player.getWeapon().getType().equals(WeaponType.Shank) && attackFrame==5){
+		if(player.getWeapon().getType().equals(WeaponType.Spear) && attackFrame>=7 || player.getWeapon().getType().equals(WeaponType.Shank) && attackFrame>=5){
 			attackFrame = 0;
 			player.setAttacking(false);
 		}
 	}
 
 	public int getAttackFrame() {
-		return attackFrame;
+		return (int)attackFrame;
 	}
 }

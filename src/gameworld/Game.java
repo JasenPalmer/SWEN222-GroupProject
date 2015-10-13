@@ -109,7 +109,7 @@ public class Game implements Serializable {
 	 * @param index - index of item to be removed
 	 * @param container - container to remove item from
 	 */
-	public void removeItemContainer(int index, Container container) {
+	public void removeItemContainer(Player player, int index, Container container) {
 		container.getItems()[index] = null;
 	}
 
