@@ -9,7 +9,6 @@ import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
 import gameworld.tile.EntranceTile.Type;
-import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.AlphaComposite;
@@ -17,9 +16,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import com.sun.prism.j2d.paint.MultipleGradientPaint;
 import com.sun.prism.j2d.paint.RadialGradientPaint;
 
 public class RenderingWindow extends JPanel{
@@ -90,11 +93,50 @@ public class RenderingWindow extends JPanel{
 
 
 			// THE DANKEST LIGHTING EVER MADE
-			Color c = new Color(0,0,0,50);
-			g.setColor(c);
-			g.fillRect(0,0,this.getWidth(),this.getHeight());
+			drawLighting((Graphics2D) g, this.getWidth(), this.getHeight(), 0.8f, player.getPosition());
 
 		}
+
+		private void drawLighting(Graphics2D g2d, int width, int height, float lighting, Point position) {
+			  int radius = 100;
+			  int x = (position.x+16)-radius;
+			  int y = (position.y+16)-radius;
+			   g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+			           RenderingHints.VALUE_ANTIALIAS_ON);
+			  // get image
+			  BufferedImage im = new BufferedImage(width, height,
+			    BufferedImage.TYPE_INT_ARGB);
+			  Graphics2D g = (Graphics2D) im.getGraphics();
+
+			  // make screen dark
+			  AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, lighting);
+			  g.setComposite(ac);
+
+			  g.setColor(new Color(50, 30, 40));
+			  g.fillRect(0, 0 , width, height);
+
+			  // set up gradient for the circle
+			  g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OUT, .8f));
+
+
+			  float[] dist = { 0.0f, .4f, .8f };
+			  Color[] cols = {new Color(0,0,0,250),new Color(0,0,0,120), new Color(0,0,0, 0)};
+
+			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, (int)(radius*1.2), dist, cols, MultipleGradientPaint.CycleMethod.REFLECT ));
+
+
+			  g.fillOval(x, y, radius*2, radius*2);
+
+			  g.setPaint(new RadialGradientPaint(position.x, position.y, (int)(radius*1.2), dist, cols, MultipleGradientPaint.CycleMethod.REFLECT ));
+			  g.fillOval(position.x-radius, position.y-radius, radius*2, radius*2);
+
+			  g.dispose();
+			  g2d.drawImage(im, 0, 0, null);
+
+		
+		}
+
+
 
 		/**
 		 * Iterates through arrays of tiles drawing the map terrain, then iterates through
@@ -154,39 +196,30 @@ public class RenderingWindow extends JPanel{
 						else{
 							if(!(t instanceof EntranceTile)){
 								offgc.drawImage(image, x, y, null);
-							}
-							// FLOOR + ENTITES FOR INSIDE
-							if(i==0 || tiles[i-1][j]==null){
-								if(t instanceof EntranceTile){
-									if(tiles[i+1][j] instanceof FloorTile){
-										EntranceTile et = (EntranceTile) t;
-										if(et.getType()!=Type.BUILDING){
-											// don't draw
-										} else {
-											offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
-										}
-									}
-								}
-								else {
+								
+								// top left wall
+								if(i==0 || tiles[i-1][j]==null){
 									offgc.drawImage(ImageStorage.wallL, x, y, null);
 								}
-							}
-							if(j==tiles.length-1|| tiles[i][j+1]==null){
-								if(t instanceof EntranceTile){
-									if(tiles[i][j-1] instanceof FloorTile){
-										EntranceTile et = (EntranceTile) t;
-										if(et.getType()!=Type.BUILDING){
-											// don't draw
-										} else {
-											offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
-										}
-									}
-								}
-								else {
+								// top right wall
+								if(j==tiles.length-1|| tiles[i][j+1]==null){
 									offgc.drawImage(ImageStorage.wallR, x, y, null);
 								}
+							} else {
+								EntranceTile et = (EntranceTile) t;
+								if(et.getType()!=Type.INVISIBLE){
+									if(tiles[i][j-1]!=null){
+										offgc.drawImage(ImageStorage.insideDoorR, x, y, null);
+									}
+									if(tiles[i+1][j]!=null){
+										offgc.drawImage(ImageStorage.insideDoorL, x, y, null);
+									}
+									if(tiles[i][j+1]!=null || tiles[i-1][j]!=null){
+										offgc.drawImage(ImageStorage.floor, x, y, null);
+									}
+								}
 							}
-
+							// FLOOR + ENTITES FOR INSIDE
 
 
 							if(t.containedEntity()!=null){

@@ -145,36 +145,27 @@ public class EditorCanvas extends JPanel {
 					else{
 						if(!(t instanceof EntranceTile)){
 							g.drawImage(image, x, y, null);
-						}
-						// FLOOR + ENTITES FOR INSIDE
-						if(i==0 || tiles[i-1][j]==null){
-							if(t instanceof EntranceTile){
-								if(tiles[i+1][j] instanceof FloorTile){
-									EntranceTile et = (EntranceTile) t;
-									if(et.getType()!=Type.BUILDING){
-										// don't draw shit
-									} else {
-										g.drawImage(ImageStorage.insideDoorL, x, y, null);
-									}
-								}
-							}
-							else {
+							
+							// top left wall
+							if(i==0 || tiles[i-1][j]==null){
 								g.drawImage(ImageStorage.wallL, x, y, null);
 							}
-						}
-						if(j==tiles.length-1|| tiles[i][j+1]==null){
-							if(t instanceof EntranceTile){
-								if(tiles[i][j-1] instanceof FloorTile){
-									EntranceTile et = (EntranceTile) t;
-									if(et.getType()!=Type.BUILDING){
-										// dont draw shit
-									} else {
-										g.drawImage(ImageStorage.insideDoorR, x, y, null);
-									}
-								}
-							}
-							else {
+							// top right wall
+							if(j==tiles.length-1|| tiles[i][j+1]==null){
 								g.drawImage(ImageStorage.wallR, x, y, null);
+							}
+						} else {
+							EntranceTile et = (EntranceTile) t;
+							if(et.getType()!=Type.INVISIBLE){
+								if(tiles[i][j-1]!=null){
+									g.drawImage(ImageStorage.insideDoorR, x, y, null);
+								}
+								if(tiles[i+1][j]!=null){
+									g.drawImage(ImageStorage.insideDoorL, x, y, null);
+								}
+								if(tiles[i][j+1]!=null || tiles[i-1][j]!=null){
+									g.drawImage(ImageStorage.floor, x, y, null);
+								}
 							}
 						}
 						
@@ -307,14 +298,19 @@ public class EditorCanvas extends JPanel {
 	}
 
 	public Tile[][] rotate(Tile[][] tiles){
-		Tile[][] newTiles = new Tile[tiles.length][tiles[0].length];
-		// drawing floor
-		for(int i = 0; i < tiles.length; i++){
-			for(int j = 0; j < tiles[i].length; j++){
-				newTiles[(newTiles.length-1)-j][i] = tiles[i][j];
+		if(tiles!=null){
+			Tile[][] newTiles = new Tile[tiles.length][tiles[0].length];
+			// drawing floor
+			for(int i = 0; i < tiles.length; i++){
+				for(int j = 0; j < tiles[i].length; j++){
+					newTiles[(newTiles.length-1)-j][i] = tiles[i][j];
+				}
 			}
+			return newTiles;
+		} else {
+			return null;
 		}
-		return newTiles;
+
 	}
 
 
