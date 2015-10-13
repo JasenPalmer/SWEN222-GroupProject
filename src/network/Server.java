@@ -161,7 +161,7 @@ public class Server {
 
 		switch(toProcess.getType()){
 		case KEY_PRESS:
-			boolean hasMoved = false;
+			int hasMoved = 0;
 			switch(toProcess.getKeyCode()) {
 			case KeyEvent.VK_W:
 				hasMoved = gameState.movePlayer(toProcess.getUser(), Direction.NORTH);
@@ -194,7 +194,9 @@ public class Server {
 			default:
 				break;
 			}
-			if(hasMoved) movePlayer(toProcess.getUser());
+			
+			if(hasMoved == 1) movePlayer(toProcess.getUser());
+			else if(hasMoved > 1) needsUpdate = true;
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
