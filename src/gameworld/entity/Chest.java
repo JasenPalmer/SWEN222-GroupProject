@@ -55,7 +55,7 @@ public class Chest extends Container implements Serializable{
 		epicItems = new Item[] {
 				//weapon
 				//armour
-				new Armour("Plate armour", "Provides the highest protection", null, null,Armour.ArmourType.Plate)
+				new Armour("Plate Armour", "Provides the highest protection", null, null,Armour.ArmourType.Plate)
 				//misc
 		};
 	}
