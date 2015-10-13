@@ -49,7 +49,7 @@ public class Chest extends Container implements Serializable{
 				//armour
 				new Armour("Chain Armour", "Chain Armour", null, null, Armour.ArmourType.Chain),
 				// misc
-				new Key("A Key", "A Key. Used to unlock locks", null, null),
+				new Key("Key", "A Key. Used to unlock locks", null, null),
 		};
 
 		epicItems = new Item[] {

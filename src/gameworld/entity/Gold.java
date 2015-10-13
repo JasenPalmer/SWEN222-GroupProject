@@ -21,6 +21,11 @@ public class Gold extends Item {
 		super(g.name, g.description, g.position, g.location);
 		this.amount = g.amount;
 	}
+	
+	@Override
+	public String getDescription() {
+		return "Gold: "+amount;
+	}
 
 	@Override
 	public void interact(Player player) {
