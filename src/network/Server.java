@@ -177,9 +177,11 @@ public class Server {
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
+				needsUpdate = true;
 				break;
 			case KeyEvent.VK_E:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
+				needsUpdate = true;
 				break;
 			case KeyEvent.VK_SPACE:
 				needsUpdate = gameState.attackPlayer(toProcess.getUser());
@@ -187,6 +189,7 @@ public class Server {
 			case KeyEvent.VK_F:
 				Container c = gameState.performAction(toProcess.getUser());
 				if(c != null) getClient(toProcess.getUser()).displayContainer(c);
+				needsUpdate = true;
 				break;
 			default:
 				break;
