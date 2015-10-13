@@ -17,6 +17,7 @@ public class ItemIcon {
 	private String chainImage = "src/ui/images/items/chainImage.png";
 	private String leatherImage = "src/ui/images/items/leatherImage.png";
 	private String robeImage = "src/ui/images/items/robeImage.png";
+	private String goldImage = "src/ui/images/items/goldImage.png";
 	private int x,y;
 	private boolean equipable;
 	private String type;
@@ -63,6 +64,11 @@ public class ItemIcon {
 			image = new ImageIcon(keyImage);
 			this.equipable = true;
 			this.type = "Key";
+		}
+		else if (n.equals("Gold")){
+			image = new ImageIcon(goldImage);
+			this.equipable = false;
+			this.type = "Gold";
 		}
 		else{
 			image = null;
