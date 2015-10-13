@@ -77,8 +77,8 @@ public class Player implements Serializable{
 		isDead = false;
 		setMaxHealth(health);
 		// set default gear
-		armour = new Armour("Robe Armour", "Robe Armour. Provides very basic protection", null, null, Armour.ArmourType.Robe);
-		weapon = new Weapon("Shank", "A basic weapon", null, null, Weapon.WeaponType.Shank)	;
+		armour = new Armour("Robe Armour", "Robe Armour", null, null, Armour.ArmourType.Robe);
+		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank)	;
 		inventory[0] = new Key("Key","A Key",null,null);
 	}
 
