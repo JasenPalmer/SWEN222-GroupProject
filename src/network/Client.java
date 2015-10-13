@@ -73,8 +73,9 @@ public class Client {
 			System.out.println("Getting data streams");
 			output = new ObjectOutputStream(this.socket.getOutputStream());
 			//input = new ObjectInputStream(this.socket.getInputStream());
-			//output = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 			input = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+			//output = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+			
 
 			//output.flush();
 		} catch (IOException e){

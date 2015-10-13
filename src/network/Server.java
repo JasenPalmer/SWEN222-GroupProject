@@ -315,8 +315,9 @@ public class Server {
 				//output = new ObjectOutputStream(this.socket.getOutputStream());
 				input = new ObjectInputStream(this.socket.getInputStream());
 				//console.displayEvent("Opening data streams for client");
-				//input = new ObjectInputStream(new BufferedInputStream(this.socket.getInputStream()));
 				output = new ObjectOutputStream(new BufferedOutputStream(this.socket.getOutputStream()));
+				//input = new ObjectInputStream(new BufferedInputStream(this.socket.getInputStream()));
+
 				
 				output.flush();
 				
