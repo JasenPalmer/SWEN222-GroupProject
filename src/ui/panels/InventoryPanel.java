@@ -294,10 +294,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		case "Robe Armour":
 			item = new Armour(name, desc, null, null, Armour.ArmourType.Robe);
 			break;
-		case "Gold":
-			String[] splitDesc = desc.split(" ");
-			item = new Gold(name, desc, null, null, Integer.parseInt(splitDesc[1]));
-			break;
 		}
 		return item;
 	}

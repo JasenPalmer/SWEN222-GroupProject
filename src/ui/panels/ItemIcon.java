@@ -3,7 +3,7 @@ package ui.panels;
 import javax.swing.ImageIcon;
 
 public class ItemIcon {
-	
+
 	private String Name;
 	private String Description;
 	private ImageIcon image;
@@ -17,12 +17,12 @@ public class ItemIcon {
 	private String chainImage = "src/ui/images/items/chainImage.png";
 	private String leatherImage = "src/ui/images/items/leatherImage.png";
 	private String robeImage = "src/ui/images/items/robeImage.png";
-	
+
 	//Gold images
-	private String goldImage100k = "src/ui/images/items/100kgoldImage.png";
-	private String goldImage1k = "src/ui/images/items/1kgoldImage.png";
-	private String goldImage500 = "src/ui/images/items/100goldImage.png";
 	private String goldImage50 = "src/ui/images/items/50goldImage.png";
+	private String goldImage40 = "src/ui/images/items/40goldImage.png";
+	private String goldImage30 = "src/ui/images/items/30goldImage.png";
+	private String goldImage20 = "src/ui/images/items/20goldImage.png";
 	private String goldImage10 = "src/ui/images/items/10goldImage.png";
 	private String goldImage5 = "src/ui/images/items/5goldImage.png";
 	private String goldImage4 = "src/ui/images/items/4goldImage.png";
@@ -32,7 +32,7 @@ public class ItemIcon {
 	private int x,y;
 	private boolean equipable;
 	private String type;
-	
+
 	public ItemIcon(String n, String d){
 		this.Name = n;
 		this.Description = d;
@@ -77,22 +77,41 @@ public class ItemIcon {
 			this.type = "Key";
 		}
 		else if (n.equals("Gold")){
-			switch(d){
-			case "Gold: 1":
-				image = new ImageIcon(goldImage1);
-				break;
-			case "Gold: 2":
-				image = new ImageIcon(goldImage2);
-				break;
-			case "Gold: 3":
-				image = new ImageIcon(goldImage3);
-				break;
-			case "Gold: 4":
-				image = new ImageIcon(goldImage4);
-				break;
-			case "Gold: 5":
+			String[] splitDesc = d.split(" ");
+			int goldAmount = Integer.parseInt(splitDesc[1]);
+			if(goldAmount <= 4){
+				switch(goldAmount){
+				case 1:
+					image = new ImageIcon(goldImage1);
+					break;
+				case 2:
+					image = new ImageIcon(goldImage2);
+					break;
+				case 3:
+					image = new ImageIcon(goldImage3);
+					break;
+				case 4:
+					image = new ImageIcon(goldImage4);
+					break;
+				}
+			}
+			else if(goldAmount >= 5 && goldAmount < 10){
 				image = new ImageIcon(goldImage5);
-				break;
+			}
+			else if(goldAmount >= 10 && goldAmount < 20){
+				image = new ImageIcon(goldImage10);
+			}
+			else if(goldAmount >= 20 && goldAmount < 30){
+				image = new ImageIcon(goldImage20);
+			}
+			else if(goldAmount >= 30 && goldAmount < 40){
+				image = new ImageIcon(goldImage30);
+			}
+			else if(goldAmount >= 40 && goldAmount < 50){
+				image = new ImageIcon(goldImage40);
+			}
+			else if(goldAmount >= 50){
+				image = new ImageIcon(goldImage50);
 			}
 			this.equipable = false;
 			this.type = "Gold";
@@ -103,7 +122,7 @@ public class ItemIcon {
 			this.type = "Empty";
 		}
 	}
-	
+
 	//Getters and Setters
 	public String getName(){return this.Name;}
 	public String getDescription(){return this.Description;}
@@ -114,7 +133,7 @@ public class ItemIcon {
 	public int getY(){return this.y;}
 	public boolean getEquipable(){return this.equipable;}
 	public String getType(){return this.type;}
-	
+
 	public boolean contains(int x, int y){
 		if(x >= this.x && x <= this.x + 42){
 			if(y >= this.y && y <= this.y + 52){
