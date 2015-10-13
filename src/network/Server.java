@@ -335,6 +335,7 @@ public class Server {
 			try {
 				//output.reset();
 				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing(), gameState.parsePlayer(movingUser).getPosition()));
+				output.reset();
 				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
@@ -345,6 +346,7 @@ public class Server {
 			try {
 				//output.reset();
 				output.writeObject(new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS));
+				output.reset();
 				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
@@ -356,7 +358,7 @@ public class Server {
 			try {
 				
 				output.writeObject(new NetworkEvent(this.user, c));
-				//output.reset();
+				output.reset();
 				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
@@ -437,7 +439,7 @@ public class Server {
 			try {
 				
 				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_INVENT));
-				//output.reset();
+				output.reset();
 				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
@@ -448,6 +450,7 @@ public class Server {
 			try {
 				//output.reset();
 				output.writeObject(new NetworkEvent(message, senderUser));
+				output.reset();
 				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write message to client: " + user);

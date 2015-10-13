@@ -132,6 +132,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -143,6 +144,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -154,6 +156,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -165,6 +168,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -176,6 +180,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -187,6 +192,7 @@ public class Client {
 		try {
 			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
 			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
