@@ -97,7 +97,6 @@ public class Game implements Serializable {
 	 * @return true if the attack was successful
 	 */
 	public boolean attackPlayer(String player) {
-		System.out.println("Test");
 		Player attacker = parsePlayer(player);
 		attacker.setAttacking(true);
 		if(attacker.isDead()){return false;}

@@ -223,7 +223,7 @@ public class Player implements Serializable{
 		// nothing in front of the player
 		if(tile == null){return false;}
 		// if there is no player in front of the player return false
-		if(tile.getPlayer() == null){return false;}
+		if(tile.getPlayer() == null){return true;}
 		Player opponent = tile.getPlayer();
 		//calcualte the amount of damage to deal
 		int damage = 0;
