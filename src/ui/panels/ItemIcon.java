@@ -17,7 +17,18 @@ public class ItemIcon {
 	private String chainImage = "src/ui/images/items/chainImage.png";
 	private String leatherImage = "src/ui/images/items/leatherImage.png";
 	private String robeImage = "src/ui/images/items/robeImage.png";
-	private String goldImage = "src/ui/images/items/goldImage.png";
+	
+	//Gold images
+	private String goldImage100k = "src/ui/images/items/100kgoldImage.png";
+	private String goldImage1k = "src/ui/images/items/1kgoldImage.png";
+	private String goldImage500 = "src/ui/images/items/100goldImage.png";
+	private String goldImage50 = "src/ui/images/items/50goldImage.png";
+	private String goldImage10 = "src/ui/images/items/10goldImage.png";
+	private String goldImage5 = "src/ui/images/items/5goldImage.png";
+	private String goldImage4 = "src/ui/images/items/4goldImage.png";
+	private String goldImage3 = "src/ui/images/items/3goldImage.png";
+	private String goldImage2 = "src/ui/images/items/2goldImage.png";
+	private String goldImage1 = "src/ui/images/items/1goldImage.png";
 	private int x,y;
 	private boolean equipable;
 	private String type;
@@ -66,7 +77,23 @@ public class ItemIcon {
 			this.type = "Key";
 		}
 		else if (n.equals("Gold")){
-			image = new ImageIcon(goldImage);
+			switch(d){
+			case "Gold: 1":
+				image = new ImageIcon(goldImage1);
+				break;
+			case "Gold: 2":
+				image = new ImageIcon(goldImage2);
+				break;
+			case "Gold: 3":
+				image = new ImageIcon(goldImage3);
+				break;
+			case "Gold: 4":
+				image = new ImageIcon(goldImage4);
+				break;
+			case "Gold: 5":
+				image = new ImageIcon(goldImage5);
+				break;
+			}
 			this.equipable = false;
 			this.type = "Gold";
 		}
@@ -79,7 +106,7 @@ public class ItemIcon {
 	
 	//Getters and Setters
 	public String getName(){return this.Name;}
-	public String getDesciption(){return this.Description;}
+	public String getDescription(){return this.Description;}
 	public ImageIcon getImage(){return this.image;}
 	public void setX(int x){this.x = x;}
 	public void setY(int y){this.y = y;}

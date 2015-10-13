@@ -4,6 +4,7 @@ import gameworld.Game.Direction;
 import gameworld.Player;
 import gameworld.entity.Armour;
 import gameworld.entity.Container;
+import gameworld.entity.Gold;
 import gameworld.entity.Key;
 import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
@@ -247,6 +248,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		option2List.add(new JMenuItem("Add Chain Armour"));
 		option2List.add(new JMenuItem("Add Leather Armour"));
 		option2List.add(new JMenuItem("Add Robe Armour"));
+		option2List.add(new JMenuItem("Add 5 gold"));
 		option2List.add(new JMenuItem("Add Potion"));
 		option2List.add(new JMenuItem("Add Shank loot"));
 		option2List.add(new JMenuItem("Add Potion loot"));
@@ -320,6 +322,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Add Shank loot":
 			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
 			break;
+		case "Add 5 gold":
+			client.addItem(new Gold("Gold", "Gold: 5", null, null, 5));
+			break;		
 		default:
 			break;
 		}
