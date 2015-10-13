@@ -93,7 +93,7 @@ public class RenderingWindow extends JPanel{
 
 
 			// THE DANKEST LIGHTING EVER MADE
-			drawLighting((Graphics2D) g, this.getWidth(), this.getHeight(), 0.8f, player.getPosition());
+			//drawLighting((Graphics2D) g, this.getWidth(), this.getHeight(), 0.8f, player.getPosition());
 
 		}
 

@@ -74,7 +74,7 @@ public class Game implements Serializable {
 		if(direction == null || player == null) {return 0;}
 		if(player.isDead()){return 0;}
 		Location oldLoc = player.getLocation();
-		if(!player.move(direction)) {return 0;}
+		if(!player.move(direction, false)) {return 0;}
 		Location newLoc = player.getLocation();
 		if(!oldLoc.equals(newLoc)){return 2;}
 		return 1;

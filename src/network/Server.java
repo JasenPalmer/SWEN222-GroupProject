@@ -324,7 +324,7 @@ public class Server {
 		public void movePlayer(String movingUser) {
 			try {
 				output.reset();
-				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing()));
+				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing(), gameState.parsePlayer(movingUser).getPosition()));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}

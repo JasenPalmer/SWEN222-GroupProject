@@ -5,6 +5,7 @@ import gameworld.Player;
 import gameworld.entity.Container;
 import gameworld.entity.Item;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
@@ -47,8 +48,10 @@ public class NetworkEvent implements Serializable {
 
 	//The destination index of an inventory item to be swapped, stays -1 if to be removed.
 	private int swapIndex2 = -1;
+	
+	private Point pos = null;
 
-	private Container container;
+	private Container container = null;
 
 
 	/**
@@ -90,10 +93,11 @@ public class NetworkEvent implements Serializable {
 		this.user = user;
 	}
 
-	public NetworkEvent(String user, Game.Direction dir){
+	public NetworkEvent(String user, Game.Direction dir, Point pos){
 		this.type = EventType.MOVE_PLAYER;
 		this.user = user;
 		this.dir = dir;
+		this.pos = pos;
 	}
 
 	public NetworkEvent (String user, EventType type, Item item){
@@ -123,6 +127,7 @@ public class NetworkEvent implements Serializable {
 	}
 
 	//Getters
+	public Point getPos() { return pos; }
 	public String getUser() { return user; }
 	public EventType getType() { return type; }
 	public int getKeyCode() { return keyCode; }

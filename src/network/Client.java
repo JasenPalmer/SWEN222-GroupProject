@@ -174,22 +174,6 @@ public class Client {
 		}
 	}
 	
-	/**
-	 * Move a player in a direction
-	 *
-	 * @param player to move
-	 * @param direction to move the player
-	 * @return true if the player moved successfully
-	 */
-	public int movePlayer(Player player, Direction direction) {
-		if(direction == null || player == null) {return 0;}
-		if(player.isDead()){return 0;}
-		Location oldLoc = player.getLocation();
-		if(!player.move(direction)) {return 0;}
-		Location newLoc = player.getLocation();
-		if(!oldLoc.equals(newLoc)){return 2;}
-		return 1;
-	}
 
 	public void close(){
 		serverConnection.finish();
@@ -246,7 +230,7 @@ public class Client {
 					synchronized(tempPlayers){
 						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
-								p.move(event.getDir());
+								p.move(event.getDir(), true);
 							}
 						}
 					}
