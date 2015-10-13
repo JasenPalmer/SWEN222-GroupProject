@@ -65,8 +65,8 @@ public class Chest extends Container implements Serializable{
 	 * Randomly generate 1-3 items in the chest
 	 */
 	private void generateItems() {
-		//int itemAmount = (new Random().nextInt(3))+1;
-		int itemAmount = 8;
+		int itemAmount = (new Random().nextInt(3))+1;
+		//int itemAmount = 8;
 		for(int i = 0; i < itemAmount; i++) {
 			items[i] = createItem();
 		}
