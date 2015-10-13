@@ -77,6 +77,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		Item[] containerList = this.container.getItems();
 		System.out.println(containerList.length);
 		for(int i = 0; i < containerList.length; i++){
+			if(containerList[i]==null)continue;
 			System.out.println(containerList[i].getName());
 		}
 		
