@@ -19,22 +19,22 @@ import java.io.Serializable;
 
 /**
  * Represents a user controlled player within the game
- * 
+ *
  * @author Jasen
  *
  */
 public class Player implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
+
 	private static String startingLocation = "Test Map";
 
 	/**
 	 * Default size of the players inventory
 	 */
 	private static final int DEFAULT_INV_SIZE = 8;
-	
+
 	private static final int DEFAULT_HEALTH = 100;
 
 	/**
@@ -103,7 +103,7 @@ public class Player implements Serializable{
 	private Direction facing = Game.Direction.NORTH;
 
 	/**
-	 * Weapon the player has equipped 
+	 * Weapon the player has equipped
 	 */
 	private Weapon weapon;
 
@@ -111,7 +111,7 @@ public class Player implements Serializable{
 	 * Armour the player is wearing
 	 */
 	private Armour armour;
-	
+
 	private Game game;
 
 
@@ -119,9 +119,9 @@ public class Player implements Serializable{
 		this.game = game;
 		score = 0;
 		//set user name
-		this.name = name;	
+		this.name = name;
 		//create inventory
-		inventory = new Item[DEFAULT_INV_SIZE];	
+		inventory = new Item[DEFAULT_INV_SIZE];
 		//set location and add player to location
 		location = game.getLocation(startingLocation);
 		location.addPlayer(this);
@@ -157,7 +157,7 @@ public class Player implements Serializable{
 		}
 		return null;
 	}
-	
+
 	/**
 	 * add an item to the players inventory. This will add the item into the players first available
 	 * slot in the inventory
@@ -175,7 +175,7 @@ public class Player implements Serializable{
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Removes item form inventory at specified index
 	 * @param index - index of item to remove
@@ -199,7 +199,7 @@ public class Player implements Serializable{
 			inventory[second] = item;
 	}
 
-	
+
 	/**
 	 * Make this player attack the player in the tile in front of them
 	 * @return true if the attack was successful
@@ -211,15 +211,15 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-		
+
+
 		int damage = 0;
 		if(weapon != null && armour != null) {
-			damage = weapon.getDamage()-armour.getArmourRating();
+			damage = weapon.getDamage()-opponent.getArmour().getArmourRating();
 		}
-		else if(weapon != null) {
+		else if(weapon != null && armour == null) {
 			damage = weapon.getDamage();
 		}
-		
 		opponent.setHealth(opponent.getHealth()-damage);
 		if(opponent.getHealth() <= 0){
 			score++;
@@ -227,7 +227,7 @@ public class Player implements Serializable{
 		}
 		return true;
 	}
-	
+
 	protected void die() {
 		//drop inventory
 		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
@@ -298,7 +298,7 @@ public class Player implements Serializable{
 
 	/**
 	 * check the players inventory for a free space
-	 * 
+	 *
 	 * @return true if the players inventory is full
 	 */
 	private boolean inventoryFull() {
@@ -311,7 +311,7 @@ public class Player implements Serializable{
 
 	/**
 	 * Get the tile that is in a direction from the player
-	 * 
+	 *
 	 * @param dir - direction to get the tile from
 	 * @return the tile in the direction
 	 */
@@ -384,7 +384,7 @@ public class Player implements Serializable{
 
 	/**
 	 * Calculates the direction the player should move based on the direction of the camera(direction field)
-	 * 
+	 *
 	 * @param dir - the direction the player is trying to move in
 	 * @return the direction the player should move in
 	 */
@@ -445,7 +445,7 @@ public class Player implements Serializable{
 	}
 
 	/**
-	 * Change the direction of the player based on the key that 
+	 * Change the direction of the player based on the key that
 	 * was pressed and the direction the camera is currently facing.
 	 * Accepts KeyEvent.VK_E and KeyEvent.VK_Q
 	 * @param key - key press
