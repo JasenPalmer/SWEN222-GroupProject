@@ -60,10 +60,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private String track = null;
 	private int initVolume = -30;
 	private int initEffectVolume = -30;
-	Timer timer;
-	KeyEvent keyEve;
+	private Timer timer;
+	private KeyEvent keyEve;
 	private String direction = "north";
-	JLabel compass;
+	private JLabel compass;
+	private boolean wasOpen = false;
 
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
@@ -420,9 +421,13 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				lootInventPanel.setFocusable(false);
 				lootInventOpen = false;
 				inventPanel.setLootVis(false);
+				if(!wasOpen){
+					inventOpen = false;
+					setInventory();
+				}
 			}
 			else{
-				if(showSettings == true){
+				if(showSettings){
 					showSettings = false;
 				}
 				else{
@@ -450,6 +455,13 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		lootInventPanel.setLootContainer(container);
 		lootInventOpen = true;
 		setLootInventory();
+		
+		if(inventOpen){
+			wasOpen = true;
+		}else{
+			inventOpen = true;
+			setInventory();
+		}
 	}
 
 	public void cycleAnimations() { 

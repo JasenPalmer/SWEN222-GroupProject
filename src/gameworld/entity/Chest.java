@@ -38,16 +38,16 @@ public class Chest extends Container implements Serializable{
 				//new ShankWeapon("Shank", "A basic weapon", null, null),
 				//armour
 				//new RobeArmour("Robe armour", "Provides very basic protection", null, null),
-				new Armour("Leather Armour", "Provides basic protection",null, null, Armour.ArmourType.Leather),
+				new Armour("Leather Armour", "Leather Armour",null, null, Armour.ArmourType.Leather),
 				//misc
-				new Potion("Potion", "Use this to heal yourself!", null, null)
+				new Potion("Potion", "Health Potion", null, null)
 		};
 
 		rareItems = new Item[] {
 				//weapon
-				new Weapon("Spear","Stab stab", null, null, Weapon.WeaponType.Spear),
+				new Weapon("Spear","Spear", null, null, Weapon.WeaponType.Spear),
 				//armour
-				new Armour("Chain Armour", "Provides good protection", null, null, Armour.ArmourType.Chain),
+				new Armour("Chain Armour", "Chain Armour", null, null, Armour.ArmourType.Chain),
 				// misc
 				//new Key("A Key", "Used to open doors or chests", null, null),
 		};
@@ -55,7 +55,7 @@ public class Chest extends Container implements Serializable{
 		epicItems = new Item[] {
 				//weapon
 				//armour
-				new Armour("Plate Armour", "Provides the highest protection", null, null,Armour.ArmourType.Plate)
+				new Armour("Plate Armour", "Plate Armour", null, null,Armour.ArmourType.Plate)
 				//misc
 		};
 	}

@@ -79,7 +79,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		for(int i = 0; i < 4; i++){
 			if(itemList[i] != null){
 				inventArray[i][0] = new ItemIcon(itemList[i].getName(), itemList[i].getDescription());
-				//System.out.println(itemList[i].getName());
 			}
 			else{
 				inventArray[i][0] = null;

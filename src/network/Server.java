@@ -14,7 +14,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -135,6 +134,7 @@ public class Server {
 	
 
 	private void updateInvent(Player madeUpdate) {
+		console.displayEvent("Updating client invents");
 		synchronized(connections){
 			 for(ClientThread client : connections){
 				 if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateInvent();
@@ -414,7 +414,7 @@ public class Server {
 		}
 		
 		public synchronized void updateInvent(){
-			//console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
+			console.displayEvent("Updating INVENT for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
 				output.reset();
 				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_INVENT));

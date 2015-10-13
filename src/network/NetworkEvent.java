@@ -72,19 +72,10 @@ public class NetworkEvent implements Serializable {
 		this.message = msg;
 		this.user = user;
 	}
-
-	/**
-	 * Network event with Game parameter signals a server event,
-	 * that tells the clients GUI to update their gameState.
-	 */
-	public NetworkEvent(Player state){
-		this.type = EventType.UPDATE_GAME;
-		this.user = "Server";
-		this.state = state;
-	}
+	
 	
 	public NetworkEvent(Player state, EventType type){
-		this.type = EventType.UPDATE_GAME;
+		this.type = type;
 		this.user = "Server";
 		this.state = state;
 	}
