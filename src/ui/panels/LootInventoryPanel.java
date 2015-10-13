@@ -78,7 +78,6 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		
 		for(int i = 0; i < 6; i++){
 			if(containerList[i] != null){
-				//	System.out.println(((Armour) containerList[i]).getType());
 				itemList[i][0] = new ItemIcon(containerList[i].getName(), containerList[i].getDescription());
 			}
 			else{
