@@ -115,7 +115,7 @@ public class RenderingWindow extends JPanel{
 		  Image image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		  Graphics2D g = (Graphics2D) image.getGraphics();
 
-		  g.setColor(new Color(0, 0, 10, 200));
+		  g.setColor(new Color(0, 0, 10, 250));
 		  g.fillRect(0, 0 , width, height);
 
 
@@ -123,7 +123,7 @@ public class RenderingWindow extends JPanel{
 
 
 		  float[] distanceIntervals = {0.2f,0.4f,0.6f,0.8f,1f};
-		  Color[] colours = {new Color(0,0,10,200),new Color(0,0,10,150), new Color(0,0,10,100),new Color(0,0,10,50), new Color(0,0,10,0)};
+		  Color[] colours = {new Color(0,0,10,250),new Color(0,0,10,187), new Color(0,0,10,125),new Color(0,0,10,62), new Color(0,0,10,0)};
 
 		  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours, MultipleGradientPaint.CycleMethod.REFLECT ));
 		  g.fillOval(x, y, radius*2, radius*2);
