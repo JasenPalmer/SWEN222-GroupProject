@@ -18,7 +18,9 @@ public class LootBag extends Container {
 	public LootBag(String name, String description, Point position,
 			Location location, Item[] items) {
 		super(name, description, position, location);
-		this.items = items;
+		for(Item i : items) {
+			storeItem(i);
+		}
 	}
 
 	@Override
