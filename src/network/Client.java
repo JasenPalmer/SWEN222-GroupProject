@@ -222,6 +222,15 @@ public class Client {
 						}
 					}
 					break;
+				case CYCLE_ANIMATIONS:
+					synchronized(state.getLocation().getPlayers()){
+						for(Player p : state.getLocation().getPlayers()){
+							if(p.getName().equals(event.getUser())){
+								p.getAnimation().cycleAttack();
+							}
+						}
+					}
+					break;
 				case DISPLAY_CONTAINER:
 					gui.openContainer(event.getContainer());
 					break;

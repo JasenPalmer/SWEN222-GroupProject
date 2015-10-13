@@ -84,7 +84,7 @@ public class Server {
 			console.displayError("Server failed to start");
 		}
 	}
-	
+
 	public synchronized void kickPlayer(String user){
 		ClientThread toKick = getClient(user);
 		toKick.sendMessage("You have been kicked", "Server");
@@ -122,13 +122,22 @@ public class Server {
 			 }
 		 }
 	}
-	
+
 	public synchronized void movePlayer(String movingUser){
 		synchronized(connections){
 			for(ClientThread client : connections){
 				if(gameState.parsePlayer(movingUser).getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.movePlayer(movingUser);
 			}
-			
+
+		}
+	}
+
+	public synchronized void animationCycle(String cycleUser){
+		synchronized(connections){
+			for(ClientThread client : connections){
+				if(gameState.parsePlayer(cycleUser).getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.animationCycle(cycleUser);
+			}
+
 		}
 	}
 
@@ -136,10 +145,10 @@ public class Server {
 		NetworkEvent toProcess =  eventQueue.poll();
 		//System.out.println("Processing");
 		if(toProcess == null) return;
-		
-		boolean hasChanged = false;
+
+		boolean needsUpdate = false;
 		Player p = null;
-		
+
 		switch(toProcess.getType()){
 		case KEY_PRESS:
 			boolean hasMoved = false;
@@ -163,7 +172,7 @@ public class Server {
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
 				break;
 			case KeyEvent.VK_SPACE:
-				hasChanged = gameState.attackPlayer(toProcess.getUser());
+				needsUpdate = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
 				Container c = gameState.performAction(toProcess.getUser());
@@ -177,36 +186,36 @@ public class Server {
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
 				this.gameState.parsePlayer(toProcess.getUser()).getAnimation().cycleAttack();
-				updateGUI(gameState.parsePlayer(toProcess.getUser()));
+				animationCycle(toProcess.getUser());
 			}
 			break;
 		case ADD_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
-			hasChanged = p.addItem(toProcess.getItem());
+			needsUpdate = p.addItem(toProcess.getItem());
 			break;
 		case REMOVE_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.removeItem(toProcess.getIndex1());
-			hasChanged = true;
+			needsUpdate = true;
 			break;
 		case SWAP_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.swapItems(toProcess.getIndex1(), toProcess.getIndex2());
-			hasChanged = true;
+			needsUpdate = true;
 			break;
 		case SET_WEAPON:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.setWeapon((Weapon)toProcess.getItem());
-			hasChanged = true;
+			needsUpdate = true;
 			break;
 		case SET_ARMOUR:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.setArmour((Armour)toProcess.getItem());
-			hasChanged = true;
+			needsUpdate = true;
 			break;
 		case REMOVE_ITEM_CONTAINER:
 			gameState.removeItemContainer(toProcess.getIndex1(), toProcess.getContainer());
-			hasChanged = true;
+			needsUpdate = true;
 			break;
 		case UPDATE_GAME:
 			break;
@@ -215,7 +224,7 @@ public class Server {
 		default:
 			break;
 		}
-		if(hasChanged) updateGUI(gameState.parsePlayer(toProcess.getUser()));
+		if(needsUpdate) updateGUI(gameState.parsePlayer(toProcess.getUser()));
 	}
 
 
@@ -291,7 +300,17 @@ public class Server {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
 		}
-		
+
+		public void animationCycle(String cycleUser){
+			try {
+				output.reset();
+				output.writeObject(new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS));
+			} catch (IOException e) {
+				console.displayError("Failed to write update to client: " + user + " - " + e);
+			}
+		}
+
+
 		public void displayContainer(Container c){
 			try {
 				output.reset();
@@ -310,11 +329,12 @@ public class Server {
 					currentEvent = (NetworkEvent)input.readObject();
 				} catch (Exception e){
 					console.displayError("Failed to read input stream of client: " + user);
+					close();
 				}
 
 				if(currentEvent  != null) {
 					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
-					
+
 					//System.out.println("Size of Queque: " + eventQueue.size());
 					if(eventQueue.size() > 35) eventQueue.poll();
 					switch(currentEvent.getType()){
@@ -391,7 +411,7 @@ public class Server {
 
 		}
 	}
-	
+
 	public static void main(String [] args){
 		new Server();
 	}
