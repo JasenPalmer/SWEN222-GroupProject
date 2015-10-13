@@ -1,12 +1,10 @@
 package gameworld;
 
 import gameworld.entity.Container;
-import gameworld.entity.Key;
 import gameworld.location.Location;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class Game implements Serializable {
@@ -17,8 +15,6 @@ public class Game implements Serializable {
 
 	private Set<Location> locations;
 	private Set<Player> players;
-	
-	private Map<Key, Container> keysToContainers;
 
 	public Game() {
 		players = new HashSet<Player>();
@@ -30,7 +26,7 @@ public class Game implements Serializable {
 	/**
 	 * Get a location from the location name
 	 * @param locationName - name of the location to get
-	 * @return Location 
+	 * @return Location
 	 */
 	public Location getLocation(String locationName) {
 		for(Location loc : locations) {
@@ -101,16 +97,11 @@ public class Game implements Serializable {
 	 * @return true if the attack was successful
 	 */
 	public boolean attackPlayer(String player) {
+		System.out.println("Test");
 		Player attacker = parsePlayer(player);
 		attacker.setAttacking(true);
 		if(attacker.isDead()){return false;}
-		if(attacker.attack()) {
-			for(Player p : players) {
-				if(p.getHealth() <= 0) {
-					p.setDead(true);
-				}
-			}
-		}
+		if(!attacker.attack()){return false;}
 		return true;
 	}
 
@@ -139,7 +130,7 @@ public class Game implements Serializable {
 	}
 
 	//Getters
-	
+
 	public Set<Location> getLocations() {
 		return locations;
 	}

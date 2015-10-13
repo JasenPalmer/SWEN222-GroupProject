@@ -5,6 +5,7 @@ import gameworld.entity.Armour;
 import gameworld.entity.Container;
 import gameworld.entity.Entity;
 import gameworld.entity.Item;
+import gameworld.entity.Key;
 import gameworld.entity.LootBag;
 import gameworld.entity.Weapon;
 import gameworld.location.Location;
@@ -139,6 +140,7 @@ public class Player implements Serializable{
 		// set default gear
 		armour = new Armour("Robe Armour", "Provides very basic protection", null, null, Armour.ArmourType.Robe);
 		weapon = new Weapon("Shank", "A basic weapon", null, null, Weapon.WeaponType.Shank)	;
+		inventory[0] = new Key("Key","A Key",null,null);
 	}
 
 	/**
@@ -152,7 +154,18 @@ public class Player implements Serializable{
 		if(tile.containedEntity() == null){return null;}
 		if(tile.containedEntity() instanceof Container) {
 			Container con = (Container) tile.containedEntity();
-			if(con.isLocked()){return null;}
+			if(con.isLocked()){
+				for(int i = 0; i < inventory.length; i++) {
+					// if there is a key in the players inventroy
+					if(inventory[i] instanceof Key) {
+						//unlock the container
+						inventory[i].interact(this);
+						//then remove the key from the players inventory
+						inventory[i] = null;
+					}
+				}
+			}
+			if(con.isLocked()) {return null;}
 			return con;
 		}
 		return null;
@@ -212,6 +225,7 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
+		//calcualte the amount of damage to deal
 		int damage = 0;
 		if(weapon != null && armour != null) {
 			damage = weapon.getDamage()-opponent.getArmour().getArmourRating();

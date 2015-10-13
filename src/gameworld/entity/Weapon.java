@@ -13,7 +13,7 @@ import java.awt.Point;
 public class Weapon extends Item {
 
 	private static final long serialVersionUID = -6003314303346702099L;
-	
+
 	//private int damage = 5;
 	private WeaponType weaponType;
 
@@ -22,7 +22,7 @@ public class Weapon extends Item {
 		super(name, description, position, location);
 		weaponType = type;
 	}
-	
+
 	private Weapon(Weapon weapon) {
 		super(weapon.name, weapon.description, weapon.position, weapon.location);
 		this.weaponType = weapon.weaponType;
@@ -39,25 +39,25 @@ public class Weapon extends Item {
 		}
 		return weaponType.getDamage();
 	}
-	
+
 	public WeaponType getType() {
 		return weaponType;
 	}
-	
+
 	@Override
 	public Item clone() {
 		return new Weapon(this);
 	}
-	
+
 	public enum WeaponType {
 		Shank(15),
-		Spear(40);
-		
+		Spear(30);
+
 		private final int damage;
 		private WeaponType(int damage) {
 			this.damage = damage;
 		}
-		
+
 		public int getDamage() {
 			return damage;
 		}

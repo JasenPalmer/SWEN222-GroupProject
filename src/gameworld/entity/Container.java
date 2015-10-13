@@ -21,33 +21,33 @@ public abstract class Container implements InteractableEntity, Serializable {
 	 * Items that are stored in the container
 	 */
 	protected Item[] items;
-	
+
 	protected Player openedBy;
-	
+
 	/**
 	 * Flag for if the container if locked
 	 */
 	protected boolean locked;
-	
+
 	private Point position;
-	
+
 	private String name;
-	
+
 	private String description;
-	
+
 	private Location location;
-	
+
 	public Container(String name, String description, Point position, Location location) {
 		this.name = name;
 		this.description = description;
 		this.position = position;
 		items = new Item[INV_SIZE];
-		locked = false;
+		locked = true;
 		this.location = location;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return The items in the container if the container is open otherwise null
 	 */
 	public Item[] getItems() {
@@ -69,8 +69,8 @@ public abstract class Container implements InteractableEntity, Serializable {
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Removes an item from the container
 	 * @param item to remove
@@ -86,15 +86,15 @@ public abstract class Container implements InteractableEntity, Serializable {
 		}
 		return false;
 	}
-	
+
 	public boolean isLocked(){
 		return locked;
 	}
-	
+
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -109,11 +109,11 @@ public abstract class Container implements InteractableEntity, Serializable {
 	public Point getPosition() {
 		return position;
 	}
-	
+
 	@Override
 	public Location getLocation() {
 		return location;
 	}
-	
-	
+
+
 }

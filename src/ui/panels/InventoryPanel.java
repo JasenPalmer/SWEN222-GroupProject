@@ -23,7 +23,7 @@ import network.Client;
 
 public class InventoryPanel extends JLayeredPane implements MouseListener{
 
-	Image backgroundImage; 
+	Image backgroundImage;
 	ItemIcon[][] inventArray = new ItemIcon[4][2];
 	InventoryBackground inventBackground = new InventoryBackground();
 	private ItemIcon movedItem;
@@ -70,13 +70,13 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		return false;
 	}
 
-	public void populateInventArray(){	
+	public void populateInventArray(){
 		Item[] itemList = client.getState().getInventory();
 
 		for(int i = 0; i < 4; i++){
 			if(itemList[i] != null){
 				inventArray[i][0] = new ItemIcon(itemList[i].getName(), itemList[i].getDescription());
-				System.out.println(itemList[i].getName());
+				//System.out.println(itemList[i].getName());
 			}
 			else{
 				inventArray[i][0] = null;
@@ -135,7 +135,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 					item.setBounds(inventArray[i][j].getX(), inventArray[i][j].getY(), 42,52);
 					this.add(item,1,0);
 					if(!inventArray[i][j].getName().equals("Empty")){
-						item.setToolTipText(inventArray[i][j].getDesciption());	
+						item.setToolTipText(inventArray[i][j].getDesciption());
 						item.addMouseListener(new MouseAdapter(){
 							public void mouseClicked(MouseEvent e){
 								self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -192,7 +192,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			weaponLabel.setBounds(65,195,42,52);
 			this.add(weaponLabel,1,0);
 			if(client.getState().getWeapon() != null){
-				weaponLabel.setToolTipText(desc);	
+				weaponLabel.setToolTipText(desc);
 				weaponLabel.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent e){
 						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -214,7 +214,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			armourLabel.setBounds(120,195,42,52);
 			this.add(armourLabel,1,0);
 			if(client.getState().getArmour() != null){
-				armourLabel.setToolTipText(desc);	
+				armourLabel.setToolTipText(desc);
 				armourLabel.addMouseListener(new MouseAdapter(){
 					public void mouseClicked(MouseEvent e){
 						self.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, self));
@@ -231,7 +231,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {	
+	public void mouseClicked(MouseEvent e) {
 
 	}
 
@@ -248,7 +248,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	}
 
 
-	private int convertIndex(int i, int j){		
+	private int convertIndex(int i, int j){
 		if(j == 0){
 			return i;
 		}
@@ -350,7 +350,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 										temp = client.getState().getWeapon();
 									}
 									Weapon newWeapon = (Weapon) makeItem(inventArray[i][j].getName());
-									client.setWeapon(newWeapon);											
+									client.setWeapon(newWeapon);
 									client.removeItem(convertIndex(i,j));
 
 									if(temp != null){
@@ -413,7 +413,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 										}
 										else{
 											System.out.println("Loot inventory is full can't swap item");
-										}	
+										}
 									}
 								}
 							}
@@ -445,7 +445,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
-	
+
 	//Getters and Setters
 	public Client getPlayer(){return this.client;}
 }

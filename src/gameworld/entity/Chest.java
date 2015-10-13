@@ -10,16 +10,14 @@ import java.util.Random;
 /**
  * A chest it a type of container.
  * When a chest is created it will randomly generate 1-5 items in its inventory.
- * 
+ *
  * @author Jasen
  *
  */
 public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;
-	
-	private Key key;
-	
+
 	private Item[] epicItems; // 10%
 	private Item[] rareItems; // 30%
 	private Item[] commonItems; // 60%
@@ -44,7 +42,7 @@ public class Chest extends Container implements Serializable{
 				//misc
 				new Potion("Potion", "Use this to heal yourself!", null, null)
 		};
-		
+
 		rareItems = new Item[] {
 				//weapon
 				new Weapon("Spear","Stab stab", null, null, Weapon.WeaponType.Spear),
@@ -53,7 +51,7 @@ public class Chest extends Container implements Serializable{
 				// misc
 				//new Key("A Key", "Used to open doors or chests", null, null),
 		};
-		
+
 		epicItems = new Item[] {
 				//weapon
 				//armour
@@ -88,12 +86,12 @@ public class Chest extends Container implements Serializable{
 			return createEpic();
 		}
 	}
-	
+
 	private Item createCommon() {
 		int index = new Random().nextInt(commonItems.length);
 		return commonItems[index].clone();
 	}
-	
+
 	private Item createRare() {
 		int index = new Random().nextInt(rareItems.length);
 		return rareItems[index].clone();
@@ -102,18 +100,6 @@ public class Chest extends Container implements Serializable{
 	private Item createEpic() {
 		int index = new Random().nextInt(epicItems.length);
 		return epicItems[index].clone();
-	}
-	
-	public void setKey(Key key) {
-		this.key = key;
-	}
-	
-	public boolean open(Key key) {
-		if(key == this.key) {
-			locked = false;
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -129,7 +115,7 @@ public class Chest extends Container implements Serializable{
 	public Player getOpenedBy() {
 		return openedBy;
 	}
-	
+
 	public String toString() {
 		String toReturn = "{";
 		for(Item item : items) {

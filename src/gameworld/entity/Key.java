@@ -11,18 +11,18 @@ import java.io.Serializable;
 
 /**
  * This class represents a key that can be used to either open a door or a container
- * 
+ *
  * @author Jasen
  *
  */
 public class Key extends Item implements Serializable{
-	
+
 	private static final long serialVersionUID = -1062125803835909442L;
-	
+
 	public Key(String name, String description, Point position, Location location) {
 		super(name, description, position, location);
 	}
-	
+
 	private Key(Key key) {
 		super(key.name, key.description, key.position, key.location);
 	}
@@ -51,7 +51,7 @@ public class Key extends Item implements Serializable{
 			container.setLocked(false);
 		}
 	}
-	
+
 	@Override
 	public Item clone() {
 		return new Key(this);
