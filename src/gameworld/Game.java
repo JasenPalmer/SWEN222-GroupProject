@@ -2,6 +2,7 @@ package gameworld;
 
 import gameworld.entity.Container;
 import gameworld.location.Location;
+import gameworld.location.Location.Lights;
 import gameworld.tile.Tile;
 
 import java.io.Serializable;
@@ -30,6 +31,7 @@ public class Game implements Serializable {
 		locations = Parser.loadLocations();
 		Parser.loadEntityFiles();
 		Parser.loadDoors();
+		getLocation("Maze-big").setLights(Lights.OFF);
 	}
 
 	/**
