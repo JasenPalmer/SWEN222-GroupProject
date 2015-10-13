@@ -126,11 +126,20 @@ public class Server {
 
 	public synchronized void updateGUI(Player madeUpdate){
 		//console.displayEvent("Updating all clients");
-		 synchronized(connections){
+		synchronized(connections){
 			 for(ClientThread client : connections){
 				 if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateGUI();
 			 }
-		 }
+		}
+	}
+	
+
+	private void updateInvent(Player madeUpdate) {
+		synchronized(connections){
+			 for(ClientThread client : connections){
+				 if(madeUpdate.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser()))) client.updateInvent();
+			 }
+		}
 	}
 
 	public synchronized void movePlayer(String movingUser){
@@ -156,7 +165,8 @@ public class Server {
 		//System.out.println("Processing");
 		if(toProcess == null) return;
 
-		boolean needsUpdate = false;
+		boolean gameNeedsUpdate = false;
+		boolean inventNeedsUpdate = false;
 		Player p = null;
 
 		switch(toProcess.getType()){
@@ -177,26 +187,26 @@ public class Server {
 				break;
 			case KeyEvent.VK_Q:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
-				needsUpdate = true;
+				gameNeedsUpdate = true;
 				break;
 			case KeyEvent.VK_E:
 				gameState.parsePlayer(toProcess.getUser()).changeDirection(toProcess.getKeyCode());
-				needsUpdate = true;
+				gameNeedsUpdate = true;
 				break;
 			case KeyEvent.VK_SPACE:
-				needsUpdate = gameState.attackPlayer(toProcess.getUser());
+				gameNeedsUpdate = gameState.attackPlayer(toProcess.getUser());
 				break;
 			case KeyEvent.VK_F:
 				Container c = gameState.performAction(toProcess.getUser());
 				if(c != null) getClient(toProcess.getUser()).displayContainer(c);
-				needsUpdate = true;
+				gameNeedsUpdate = true;
 				break;
 			default:
 				break;
 			}
 			
 			//if(hasMoved == 1) movePlayer(toProcess.getUser());
-			if(hasMoved > 0) needsUpdate = true;
+			if(hasMoved > 0) gameNeedsUpdate = true;
 			break;
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
@@ -206,33 +216,33 @@ public class Server {
 			break;
 		case ADD_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
-			needsUpdate = p.addItem(toProcess.getItem());
+			inventNeedsUpdate = p.addItem(toProcess.getItem());
 			break;
 		case REMOVE_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.removeItem(toProcess.getIndex1());
-			needsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case SWAP_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.swapItems(toProcess.getIndex1(), toProcess.getIndex2());
-			needsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case SET_WEAPON:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.setWeapon((Weapon)toProcess.getItem());
-			needsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case SET_ARMOUR:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			p.setArmour((Armour)toProcess.getItem());
-			needsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case REMOVE_ITEM_CONTAINER:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			Container c = gameState.removeItemContainer(p,toProcess.getIndex1(), toProcess.getContainer());
 			getClient(toProcess.getUser()).displayContainer(c);
-			needsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case UPDATE_GAME:
 			break;
@@ -241,9 +251,9 @@ public class Server {
 		default:
 			break;
 		}
-		if(needsUpdate) updateGUI(gameState.parsePlayer(toProcess.getUser()));
+		if(gameNeedsUpdate) updateGUI(gameState.parsePlayer(toProcess.getUser()));
+		if(inventNeedsUpdate) updateInvent(gameState.parsePlayer(toProcess.getUser()));
 	}
-
 
 	public synchronized void stopServer(){
 		for(ClientThread t : connections){
@@ -397,7 +407,17 @@ public class Server {
 			//console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
 				output.reset();
-				output.writeObject(new NetworkEvent(gameState.parsePlayer(user)));
+				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_GAME));
+			} catch (IOException e) {
+				console.displayError("Failed to write update to client: " + user + " - " + e);
+			}
+		}
+		
+		public synchronized void updateInvent(){
+			//console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
+			try {
+				output.reset();
+				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_INVENT));
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
