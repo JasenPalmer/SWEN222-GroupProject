@@ -4,6 +4,7 @@ import gameworld.Game.Direction;
 import gameworld.entity.Armour;
 import gameworld.entity.Container;
 import gameworld.entity.Entity;
+import gameworld.entity.Gold;
 import gameworld.entity.Item;
 import gameworld.entity.Key;
 import gameworld.entity.LootBag;
@@ -28,7 +29,7 @@ public class Player implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private static String startingLocation = "Test Map";
+	private static String startingLocation = "Central Hub";
 
 	private Game game;
 	private String name;
@@ -118,6 +119,10 @@ public class Player implements Serializable{
 	 */
 	public boolean addItem(Item item) {
 		if(inventoryFull()){return false;}
+		if(item instanceof Gold){
+			Gold gold = (Gold) item;
+			score += gold.getAmount();
+		}
 		for(int i = 0; i < inventory.length; i++) {
 			if(inventory[i] == null) {
 				// add the item to the players inventory

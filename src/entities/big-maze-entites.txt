@@ -1,6 +1,6 @@
 Maze-big
 BasicEntity	Bush	Bush	0	0
-BasicEntity	Bush	Bush	1	0
+BasicEntity	Bush	Bush	0	1
 BasicEntity	Bush	Bush	2	0
 BasicEntity	Bush	Bush	3	0
 BasicEntity	Bush	Bush	4	0
@@ -450,7 +450,7 @@ BasicEntity	Bush	Bush	28	27
 BasicEntity	Bush	Bush	29	27
 BasicEntity	Bush	Bush	0	28
 BasicEntity	Bush	Bush	6	28
-BasicEntity	Bush	Bush	29	28
+Chest	Chest	Chest	29	28
 BasicEntity	Bush	Bush	0	29
 BasicEntity	Bush	Bush	1	29
 BasicEntity	Bush	Bush	2	29

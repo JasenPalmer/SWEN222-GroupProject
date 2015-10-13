@@ -40,7 +40,7 @@ public class Server {
 	//Queue of events to be processed
 	private Queue<NetworkEvent> eventQueue;
 
-	private EventThread eventHandler;
+	//private EventThread eventHandler;
 
 	//Running status of server
 	private boolean finished = false;
@@ -57,8 +57,8 @@ public class Server {
 
 		gameState = new Game();
 
-		eventHandler = new EventThread();
-		eventHandler.start();
+		//eventHandler = new EventThread();
+		//eventHandler.start();
 
 		start();
 	}
@@ -205,9 +205,12 @@ public class Server {
 				break;
 			}
 			
-			//if(hasMoved == 1) movePlayer(toProcess.getUser());
+//			if(hasMoved > 0) movePlayer(toProcess.getUser());
+//			else if(hasMoved > 1) gameNeedsUpdate = true;
+			
 			if(hasMoved > 0) gameNeedsUpdate = true;
 			break;
+			
 		case CYCLE_ANIMATIONS:
 			if(this.gameState.parsePlayer(toProcess.getUser()).isAttacking()){
 				this.gameState.parsePlayer(toProcess.getUser()).getAnimation().cycleAttack();
@@ -263,24 +266,24 @@ public class Server {
 			connections.clear();
 		}
 		finished = true;
-		eventHandler.finish();
+		//eventHandler.finish();
 	}
 
-	public class EventThread extends Thread {
-		private boolean finished = false;
-		public void run(){
-			while(!finished){
-				processEvents();
-				try {
-					Thread.sleep(5);
-				} catch (InterruptedException e) {}
-			}
-		}
-
-		public void finish(){
-			this.finished = true;
-		}
-	}
+//	public class EventThread extends Thread {
+//		private boolean finished = false;
+//		public void run(){
+//			while(!finished){
+//				processEvents();
+//				try {
+//					Thread.sleep(5);
+//				} catch (InterruptedException e) {}
+//			}
+//		}
+//
+//		public void finish(){
+//			this.finished = true;
+//		}
+//	}
 
 	public class ClientThread extends Thread {
 
@@ -399,6 +402,7 @@ public class Server {
 						console.displayError("Unexpected EventType from " + user + " : " + currentEvent.getType());
 						break;
 					}
+					processEvents();
 				}
 			}
 		}
@@ -414,7 +418,7 @@ public class Server {
 		}
 		
 		public synchronized void updateInvent(){
-			console.displayEvent("Updating INVENT for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
+			//console.displayEvent("Updating INVENT for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
 				output.reset();
 				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_INVENT));

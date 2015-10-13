@@ -22,6 +22,8 @@ public class Game implements Serializable {
 
 	private Set<Location> locations;
 	private Set<Player> players;
+	
+	public static final int scoreToWin = 10;
 
 	public Game() {
 		players = new HashSet<Player>();
