@@ -216,6 +216,7 @@ public class Client {
 					if(event.getState() != null) state = event.getState();
 					break;
 				case UPDATE_INVENT:
+					System.out.println("Received update invent event");
 					if(event.getState() != null) state = event.getState();
 					if(gui.getInventPanel() != null) gui.getInventPanel().populateInventArray();
 					break;
