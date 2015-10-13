@@ -210,6 +210,7 @@ public class RenderingWindow extends JPanel{
 							else{
 								offgc.drawImage(ImageStorage.building, x, y-TILESIZE/2, null);
 							}
+							
 							offgc.drawImage(ImageStorage.building, x, y-TILESIZE, null);
 
 

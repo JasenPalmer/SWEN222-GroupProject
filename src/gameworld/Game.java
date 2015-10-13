@@ -1,7 +1,6 @@
 package gameworld;
 
 import gameworld.entity.Container;
-import gameworld.entity.Key;
 import gameworld.location.Location;
 import gameworld.tile.Tile;
 
@@ -84,6 +83,7 @@ public class Game implements Serializable {
 		return true;
 	}
 
+	
 	public Container performAction(String playerName){
 		Player player = parsePlayer(playerName);
 		if(player == null){return null;}

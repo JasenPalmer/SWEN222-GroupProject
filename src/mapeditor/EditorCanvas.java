@@ -192,8 +192,10 @@ public class EditorCanvas extends JPanel {
 							}
 						}
 						else{
+							// draw wall if no door
 							g.drawImage(ImageStorage.building, x, y-TILESIZE/2, null);
-						}
+						}		
+						// second wall above wall/door
 						g.drawImage(ImageStorage.building, x, y-TILESIZE, null);
 
 

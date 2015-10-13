@@ -64,4 +64,8 @@ public class EntranceTile extends Tile {
 		return true;
 	}
 
+	public Type getType() {
+		return type;
+	}
+
 }
