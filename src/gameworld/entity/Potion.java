@@ -5,6 +5,12 @@ import java.awt.Point;
 import gameworld.Player;
 import gameworld.location.Location;
 
+/**
+ * A potion can be used by a player to regain some of the players missing health
+ * The amount of health regained it determined by the healAmount field
+ * @author Jasen
+ *
+ */
 public class Potion extends Item {
 	
 	private static final long serialVersionUID = -1161009772412731963L;

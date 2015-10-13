@@ -8,6 +8,12 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Main game class. Contains the current game's state 
+ * 
+ * @author Jasen
+ *
+ */
 public class Game implements Serializable {
 
 	private static final long serialVersionUID = 1L;

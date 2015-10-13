@@ -5,6 +5,12 @@ import gameworld.location.Location;
 
 import java.awt.Point;
 
+/**
+ * Armour can be equipped by a player can will reduce the amount of damage the player takes from an attack
+ * according to the armour type
+ * @author Jasen
+ *
+ */
 public class Armour extends Item {
 	
 	private static final long serialVersionUID = 690195706473427168L;
