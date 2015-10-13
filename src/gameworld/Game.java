@@ -1,7 +1,6 @@
 package gameworld;
 
 import gameworld.entity.Container;
-import gameworld.entity.Key;
 import gameworld.location.Location;
 import gameworld.tile.Tile;
 

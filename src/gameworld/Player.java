@@ -225,7 +225,7 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return true;}
 		Player opponent = tile.getPlayer();
-		//calcualte the amount of damage to deal
+		//calculate the amount of damage to deal
 		int damage = 0;
 		if(weapon != null && armour != null) {
 			damage = weapon.getDamage()-opponent.getArmour().getArmourRating();
@@ -373,7 +373,7 @@ public class Player implements Serializable{
 		}
 		if(!tile.isPassable()){return false;}
 		if(tile.containedEntity() != null){
-			if(!(tile.containedEntity() instanceof Item)) {
+			if(!(tile.containedEntity() instanceof Item || tile.containedEntity() instanceof LootBag)) {
 				return false;
 			}
 		}
