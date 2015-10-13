@@ -153,8 +153,10 @@ public class Parser {
 				break;
 			case "EnV":
 				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.INVISIBLE);
+				break;
 			case "EnT":
 				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.TREE);
+				break;
 			case "Fl":
 				tile = new FloorTile("Floor", new Point(x,y),true);
 			default:

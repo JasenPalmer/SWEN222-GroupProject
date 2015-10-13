@@ -189,6 +189,9 @@ public class Player implements Serializable{
 		//drop inventory
 		LootBag loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
 		loot.addItem(weapon);
+		loot.addItem(armour);
+		weapon = null;
+		armour = null;
 		standingOn.setEntitiy(loot);
 		inventory = new Item[DEFAULT_INV_SIZE];
 		//respawn
@@ -205,7 +208,7 @@ public class Player implements Serializable{
 
 	/**
 	 * Removes an item from the players inventory and places it on the ground.
-	 * Places the item on the tile the player is standing onda
+	 * Places the item on the tile the player is standing on
 	 *
 	 * @param index of the item to drop
 	 * @return true if the item was successfully removed
@@ -220,7 +223,7 @@ public class Player implements Serializable{
 		Container loot = new LootBag(item.getName(),item.getDescription(),position, location,new Item[]{item});
 		Tile tile = location.getTileAt(position);
 		//fail if there is already an item on the ground
-		if(tile.containedEntity() != null) { return false;}
+		if(tile.containedEntity() != null) {return false;}
 		tile.setEntity(loot);
 		//update the item data
 		return true;
