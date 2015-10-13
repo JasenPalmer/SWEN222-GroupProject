@@ -45,7 +45,7 @@ public class Animation implements Serializable{
 	public void resetWalk(){
 		walkFrame = 0;
 	}
-	
+
 	public void cycleAttack(){
 		if(player.isAttacking()){
 			attackFrame++;
