@@ -22,6 +22,10 @@ public class Game implements Serializable {
 
 	private Set<Location> locations;
 	private Set<Player> players;
+	
+	public static final int scoreToWin = 10;
+	
+	private Player winner;
 
 	public Game() {
 		players = new HashSet<Player>();
@@ -111,6 +115,13 @@ public class Game implements Serializable {
 		Player attacker = parsePlayer(player);
 		if(attacker.isDead()){return false;}
 		if(!attacker.attack()){return false;}
+		else {
+			for(Player p : players) {
+				if(p.getScore() >= scoreToWin) {
+					winner = p;
+				}
+			}
+		}
 		attacker.setAttacking(true);
 		return true;
 	}
