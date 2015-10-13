@@ -1,0 +1,22 @@
+T Building 2
+BasicEntity	Chair	This is for sitting!	9	7
+BasicEntity	Table	This is a table.	10	7
+BasicEntity	Table	This is a table.	11	7
+BasicEntity	Table	This is a table.	12	7
+BasicEntity	Table	This is a table.	13	7
+BasicEntity	Table	This is a table.	14	7
+BasicEntity	Chair	This is for sitting!	15	7
+BasicEntity	Chair	This is for sitting!	9	8
+BasicEntity	Table	This is a table.	10	8
+BasicEntity	Table	This is a table.	11	8
+BasicEntity	Table	This is a table.	12	8
+BasicEntity	Table	This is a table.	13	8
+BasicEntity	Table	This is a table.	14	8
+BasicEntity	Chair	This is for sitting!	15	8
+BasicEntity	Chair	This is for sitting!	9	9
+BasicEntity	Table	This is a table.	10	9
+BasicEntity	Table	This is a table.	11	9
+BasicEntity	Table	This is a table.	12	9
+BasicEntity	Table	This is a table.	13	9
+BasicEntity	Table	This is a table.	14	9
+BasicEntity	Chair	This is for sitting!	15	9
