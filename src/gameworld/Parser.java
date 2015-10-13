@@ -113,7 +113,13 @@ public class Parser {
 					if(tile instanceof BuildingTile || tile instanceof EntranceTile) {
 						buildingTiles[row][col] = tile;
 					}
-					if(!(tile instanceof BuildingTile)) {
+					if(tile instanceof EntranceTile && locType.equals("inside")) {
+						locTiles[row][col] = tile;
+					}
+					else if(tile instanceof EntranceTile && locType.equals("outside")) {
+						locTiles[row][col] = tile;
+					}
+					else {
 						locTiles[row][col] = tile;
 					}
 				}

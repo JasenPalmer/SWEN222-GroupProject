@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  * A chest it a type of container.
- * When a chest is created it will randomly generate 1-5 items in its inventory.
+ * When a chest is created it will randomly generate 1-3 items in its inventory.
  *
  * @author Jasen
  *
@@ -61,7 +61,7 @@ public class Chest extends Container implements Serializable{
 	}
 
 	/**
-	 * Randomly generate 1-5 items in the chest
+	 * Randomly generate 1-3 items in the chest
 	 */
 	private void generateItems() {
 		int itemAmount = (new Random().nextInt(3))+1;

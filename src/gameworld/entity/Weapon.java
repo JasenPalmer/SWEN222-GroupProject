@@ -6,7 +6,8 @@ import gameworld.location.Location;
 import java.awt.Point;
 
 /**
- * This class represents any weapon in the game.
+ * A weapon can be equipped by a player so that when a player attacks another player the attacking player will 
+ * deal the amount of damage associated with the weapon type
  * @author Jasen
  *
  */
