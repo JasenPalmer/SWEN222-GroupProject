@@ -203,7 +203,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			inventPanel.setFocusable(true);
 			lootInventPanel.setInventVis(true);
 		}
-		playSound("Death");
 	}
 
 	/**
