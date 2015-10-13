@@ -194,9 +194,9 @@ public class Player implements Serializable{
 		if(first >= inventory.length || first < 0 || second >= inventory.length || second < 0) {
 			return;
 		}
-			Item item = inventory[first];
-			inventory[first] = inventory[second];
-			inventory[second] = item;
+		Item item = inventory[first];
+		inventory[first] = inventory[second];
+		inventory[second] = item;
 	}
 
 
@@ -205,14 +205,13 @@ public class Player implements Serializable{
 	 * @return true if the attack was successful
 	 */
 	protected boolean attack() {
+		if(weapon == null){return false;}
 		Tile tile = getTile(getFacing());
 		// nothing in front of the player
 		if(tile == null){return false;}
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return false;}
 		Player opponent = tile.getPlayer();
-
-
 		int damage = 0;
 		if(weapon != null && armour != null) {
 			damage = weapon.getDamage()-opponent.getArmour().getArmourRating();
@@ -247,7 +246,7 @@ public class Player implements Serializable{
 
 	/**
 	 * Removes an item from the players inventory and places it on the ground.
-	 * Places the item on the tile the player is standing on
+	 * Places the item on the tile the player is standing onda
 	 *
 	 * @param index of the item to drop
 	 * @return true if the item was successfully removed
@@ -259,13 +258,12 @@ public class Player implements Serializable{
 		// remove the item from the inventory
 		inventory[index] = null;
 		// place the item on the ground
+		Container loot = new LootBag(item.getName(),item.getDescription(),position, location,new Item[]{item});
 		Tile tile = location.getTileAt(position);
 		//fail if there is already an item on the ground
 		if(tile.containedEntity() != null) { return false;}
-		tile.setEntity(item);
+		tile.setEntity(loot);
 		//update the item data
-		item.setPosition(position);
-		item.setLocation(location);
 		return true;
 	}
 
