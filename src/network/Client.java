@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Set;
 
 import ui.ApplicationWindow;
 import ui.panels.ChatBoxPanel;
@@ -215,7 +216,8 @@ public class Client {
 					break;
 				case MOVE_PLAYER:
 					synchronized(state.getLocation().getPlayers()){
-						for(Player p : state.getLocation().getPlayers()){
+						Set<Player> tempPlayers = state.getLocation().getPlayers();
+						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
 								p.move(event.getDir());
 							}

@@ -113,6 +113,16 @@ public class Server {
 			}
 		}
 	}
+	
+	public synchronized void updateGUIAll(){
+		if(!(connections.size() > 0)) return;
+		console.displayEvent("Updating all clients");
+		 synchronized(connections){
+			 for(ClientThread client : connections){
+				 client.updateGUI();
+			 }
+		 }
+	}
 
 	public synchronized void updateGUI(Player madeUpdate){
 		//console.displayEvent("Updating all clients");
@@ -243,10 +253,15 @@ public class Server {
 
 	public class EventThread extends Thread {
 		private boolean finished = false;
-
+		int count = 0; 
 		public void run(){
 			while(!finished){
+				if(count >= 30){
+					updateGUIAll();
+					count = 0;
+				}
 				processEvents();
+				count++;
 				try {
 					Thread.sleep(5);
 				} catch (InterruptedException e) {}
@@ -337,7 +352,7 @@ public class Server {
 				if(currentEvent  != null) {
 					console.displayEvent("Event Received from " + user + " : " + currentEvent.getType());
 
-					//System.out.println("Size of Queque: " + eventQueue.size());
+					//System.out.println("Size of Queue: " + eventQueue.size());
 					if(eventQueue.size() > 35) eventQueue.poll();
 					switch(currentEvent.getType()){
 					case KEY_PRESS:

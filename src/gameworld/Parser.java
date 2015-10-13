@@ -242,13 +242,6 @@ public class Parser {
 		if(!scan.hasNextInt()) {return null;}
 		// y position
 		int yPos = scan.nextInt();
-		int id = 0;
-		if(type.equals("key")) {
-			if(scan.hasNextInt()) {
-				id = 0;
-			}
-		}
-
 		switch(type) {
 		case "Key":
 			return new Key(name, desc, new Point(xPos,yPos), loc);

@@ -138,7 +138,7 @@ public class Player implements Serializable{
 		isDead = false;
 		setMaxHealth(health);
 		// set default gear
-		armour = new Armour("Robe Armour", "Provides very basic protection", null, null, Armour.ArmourType.Robe);
+		armour = new Armour("Robe Armour", "Robe Armour. Provides very basic protection", null, null, Armour.ArmourType.Robe);
 		weapon = new Weapon("Shank", "A basic weapon", null, null, Weapon.WeaponType.Shank)	;
 		inventory[0] = new Key("Key","A Key",null,null);
 	}
@@ -156,7 +156,7 @@ public class Player implements Serializable{
 			Container con = (Container) tile.containedEntity();
 			if(con.isLocked()){
 				for(int i = 0; i < inventory.length; i++) {
-					// if there is a key in the players inventroy
+					// if there is a key in the players inventory
 					if(inventory[i] instanceof Key) {
 						//unlock the container
 						inventory[i].interact(this);
@@ -225,7 +225,7 @@ public class Player implements Serializable{
 		// if there is no player in front of the player return false
 		if(tile.getPlayer() == null){return true;}
 		Player opponent = tile.getPlayer();
-		//calcualte the amount of damage to deal
+		//calculate the amount of damage to deal
 		int damage = 0;
 		if(weapon != null && armour != null) {
 			damage = weapon.getDamage()-opponent.getArmour().getArmourRating();
@@ -241,6 +241,11 @@ public class Player implements Serializable{
 		return true;
 	}
 
+	/**
+	 * Drops the players inventory on the ground and then
+	 * respawns the player in the specified starting location.
+	 * 
+	 */
 	protected void die() {
 		//drop inventory
 		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
@@ -368,12 +373,15 @@ public class Player implements Serializable{
 			}
 			return true;
 		}
+		//don't walk onto a tile with an alive player on it
 		if(tile.getPlayer() != null){
 			if(!(tile.getPlayer().isDead())) {return false;}
 		}
+		//don't walk over a tile that doesn't allow it
 		if(!tile.isPassable()){return false;}
+		//can walk over items and lootBags
 		if(tile.containedEntity() != null){
-			if(!(tile.containedEntity() instanceof Item)) {
+			if(!(tile.containedEntity() instanceof Item || tile.containedEntity() instanceof LootBag)) {
 				return false;
 			}
 		}
@@ -499,38 +507,69 @@ public class Player implements Serializable{
 
 	// getters and setters
 
+	/**
+	 * @return the name of the player
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @return the current position of the player
+	 */
 	public Point getPosition() {
 		return position;
 	}
 
+	/**
+	 * update the player's position
+	 * @param position to update to
+	 */
 	public void setPosition(Point position) {
 		this.position = position;
 	}
 
+	/**
+	 * @return current location of the player
+	 */
 	public Location getLocation() {
 		return location;
 	}
 
+	/**
+	 * update the location of the player
+	 * @param location to update to
+	 */
 	public void setLocation(Location location) {
 		this.location = location;
 	}
 
-	public Direction getDirection() {
+	/**
+	 * @return the direction the camera is facing
+	 */
+	public Direction getCameraDirection() {
 		return direction;
 	}
 
+	/**
+	 * @return the animation object of the player
+	 */
 	public Animation getAnimation(){
 		return animation;
 	}
 
+	/**
+	 * @return current health of the player
+	 */
 	public int getHealth() {
 		return health;
 	}
 
+	/**
+	 *  set the health of the player. 
+	 *  Setting the players health to a number < 0 will set the players health to 0
+	 * @param health
+	 */
 	public void setHealth(int health) {
 		if(this.health - health <= 0){
 			this.health = 0;
@@ -539,10 +578,17 @@ public class Player implements Serializable{
 		}
 	}
 
+	/**
+	 * @return true if the player is dead
+	 */
 	public boolean isDead() {
 		return isDead;
 	}
 
+	/**
+	 * kill or revive the player
+	 * @param isDead
+	 */
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
 	}
