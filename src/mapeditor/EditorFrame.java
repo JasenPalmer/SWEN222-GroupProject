@@ -11,6 +11,7 @@ import gameworld.tile.BuildingTile;
 import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
+import gameworld.tile.EntranceTile.Type;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -171,12 +172,12 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							if(map instanceof OutsideLocation){
 								OutsideLocation oMap = (OutsideLocation) map;
 								if(currentOption=="Entrance"){
-									oMap.setBuildingTile(x,y,new EntranceTile(currentOption, new Point(x,y), false));
+									oMap.setBuildingTile(x,y,getEntrance(currentOption, new Point(x,y)));
 								} else {
 									oMap.setBuildingTile(x,y,new BuildingTile(currentOption, new Point(x,y), false));
 								}
 							} else {
-								map.setTile(x, y, new EntranceTile(currentOption, new Point(x,y), false));
+								map.setTile(x, y, getEntrance(currentOption, new Point(x,y)));
 							}
 						}
 						else if(isEntity(currentOption)){
@@ -205,6 +206,19 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		repaint();
 	}
 
+	private EntranceTile getEntrance(String name, Point p){
+		EntranceTile toReturn = null;
+		switch(name){
+		case "Building Entrance":
+			return new EntranceTile(name, p, false, EntranceTile.Type.BUILDING);		
+		case "Invisible Entrance":
+			return new EntranceTile(name, p, false, EntranceTile.Type.INVISIBLE);
+		case "Tree Entrance":
+			return new EntranceTile(name, p, false, EntranceTile.Type.TREE);
+		}
+		return toReturn;
+	}
+	
 	private Entity getEntity(String name, Point p) {
 		switch(name){
 		case "Tree":
@@ -312,7 +326,11 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		switch(name){
 			case "Building":
 				return true;
-			case "Entrance":
+			case "Building Entrance":
+				return true;	
+			case "Invisible Entrance":
+				return true;
+			case "Tree Entrance":
 				return true;
 		}
 		return false;
