@@ -37,8 +37,6 @@ public class Gold extends Item {
 		return new Gold(this);
 	}
 
-
-
 	public int getAmount() {
 		return amount;
 	}
