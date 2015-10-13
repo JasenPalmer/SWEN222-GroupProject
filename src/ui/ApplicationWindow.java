@@ -395,18 +395,22 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			rw.repaint();
 			break;
 		case KeyEvent.VK_W:
+			if(lootInventOpen) break;
 			keyEve = e;
 			timer.start();
 			break;
 		case KeyEvent.VK_A:
+			if(lootInventOpen) break;
 			keyEve = e;
 			timer.start();
 			break;
 		case KeyEvent.VK_S:
+			if(lootInventOpen) break;
 			keyEve = e;
 			timer.start();
 			break;
 		case KeyEvent.VK_D:
+			if(lootInventOpen) break;
 			keyEve = e;
 			timer.start();
 			break;
