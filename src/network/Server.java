@@ -8,6 +8,8 @@ import gameworld.entity.Container;
 import gameworld.entity.Weapon;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -73,7 +75,9 @@ public class Server {
 				if(finished) break;
 
 				Socket client = serverSocket.accept();
+				console.displayEvent("Server accepting a new client");
 				ClientThread clientThread = new ClientThread(client);
+				
 				synchronized(connections){
 					connections.add(clientThread);
 				}
@@ -303,13 +307,19 @@ public class Server {
 		private boolean finished = false;
 
 		public ClientThread(Socket socket){
+			console.displayEvent("Creating client thread");
 			this.socket = socket;
 
 			//Create input/output streams to the client's socket, then read the username.
 			try {
-				output = new ObjectOutputStream(this.socket.getOutputStream());
+				//output = new ObjectOutputStream(this.socket.getOutputStream());
 				input = new ObjectInputStream(this.socket.getInputStream());
-
+				//console.displayEvent("Opening data streams for client");
+				//input = new ObjectInputStream(new BufferedInputStream(this.socket.getInputStream()));
+				output = new ObjectOutputStream(new BufferedOutputStream(this.socket.getOutputStream()));
+				
+				output.flush();
+				
 				this.user = (String)input.readObject();
 
 			} catch (Exception e) {
@@ -323,8 +333,9 @@ public class Server {
 
 		public void movePlayer(String movingUser) {
 			try {
-				output.reset();
+				//output.reset();
 				output.writeObject(new NetworkEvent(movingUser, gameState.parsePlayer(movingUser).getFacing(), gameState.parsePlayer(movingUser).getPosition()));
+				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -332,8 +343,9 @@ public class Server {
 
 		public void animationCycle(String cycleUser){
 			try {
-				output.reset();
+				//output.reset();
 				output.writeObject(new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS));
+				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -342,8 +354,10 @@ public class Server {
 
 		public void displayContainer(Container c){
 			try {
-				output.reset();
+				
 				output.writeObject(new NetworkEvent(this.user, c));
+				//output.reset();
+				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -409,8 +423,10 @@ public class Server {
 		public synchronized void updateGUI(){
 			//console.displayEvent("Updating GUI for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
-				output.reset();
+				//output.reset();
 				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_GAME));
+				output.reset();
+				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -419,8 +435,10 @@ public class Server {
 		public synchronized void updateInvent(){
 			//console.displayEvent("Updating INVENT for client: " + user + " with position at - " + gameState.parsePlayer(user).getPosition());
 			try {
-				output.reset();
+				
 				output.writeObject(new NetworkEvent(gameState.parsePlayer(user), NetworkEvent.EventType.UPDATE_INVENT));
+				//output.reset();
+				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write update to client: " + user + " - " + e);
 			}
@@ -428,8 +446,9 @@ public class Server {
 
 		public synchronized void sendMessage(String message, String senderUser){
 			try {
-				output.reset();
+				//output.reset();
 				output.writeObject(new NetworkEvent(message, senderUser));
+				output.flush();
 			} catch (IOException e) {
 				console.displayError("Failed to write message to client: " + user);
 			}

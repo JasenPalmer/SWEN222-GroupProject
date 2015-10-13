@@ -1,12 +1,12 @@
 package network;
 
 import gameworld.Player;
-import gameworld.Game.Direction;
 import gameworld.entity.Container;
 import gameworld.entity.Item;
-import gameworld.location.Location;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -60,6 +60,7 @@ public class Client {
 
 		//Create a new Socket to the specified host's server
 		try {
+			System.out.println("Creating socket");
 			socket = new Socket(host, PORT);
 			socket.setTcpNoDelay(true);
 		} catch (IOException e){
@@ -69,8 +70,13 @@ public class Client {
 
 		//Open object input and output streams for the newly created socket
 		try {
-			input = new ObjectInputStream(socket.getInputStream());
-			output = new ObjectOutputStream(socket.getOutputStream());
+			System.out.println("Getting data streams");
+			output = new ObjectOutputStream(this.socket.getOutputStream());
+			//input = new ObjectInputStream(this.socket.getInputStream());
+			//output = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+			input = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+
+			//output.flush();
 		} catch (IOException e){
 			System.err.println("Error opening object streams for client: " + user);
 			return;
@@ -78,7 +84,9 @@ public class Client {
 
 		//Write the username to the ouput
 		try {
+			System.out.println("Writing inital data");
 			output.writeObject(user);
+			output.flush();
 		} catch (IOException e) {
 			System.err.println("Error writing to output stream for client: " + user);
 		}
@@ -87,8 +95,10 @@ public class Client {
 	public void registerKeyPress(KeyEvent event){
 		NetworkEvent toWrite = new NetworkEvent(event, user);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,8 +107,9 @@ public class Client {
 	public void registerMessage(String message){
 		NetworkEvent toWrite = new NetworkEvent(message, user);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,8 +118,10 @@ public class Client {
 	public void cycleAnimations(){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.reset();
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -117,8 +130,9 @@ public class Client {
 	public void swapItems(int index1, int index2){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SWAP_ITEM, index1, index2);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -127,8 +141,9 @@ public class Client {
 	public void removeItem(int index){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM, index, -1);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -137,8 +152,9 @@ public class Client {
 	public void addItem(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM, item);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -147,8 +163,9 @@ public class Client {
 	public void setWeapon(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_WEAPON, item);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -157,8 +174,9 @@ public class Client {
 	public void setArmour(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_ARMOUR, item);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -167,8 +185,9 @@ public class Client {
 	public void removeItemContainer(int index, Container container){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM_CONTAINER, index, container);
 		try {
-			output.reset();
+			//output.reset();
 			output.writeObject(toWrite);
+			output.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -179,8 +198,9 @@ public class Client {
 		serverConnection.finish();
 
 		try{
-			output.reset();
+			//output.reset();
 			output.writeObject(new NetworkEvent(user, NetworkEvent.EventType.CLOSE));
+			output.flush();
 			output.close();
 			input.close();
 			socket.close();
