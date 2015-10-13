@@ -163,9 +163,6 @@ public class RenderingWindow extends JPanel{
 
 					Tile t = tiles[i][j];
 					if(t!=null) {
-						if(t.toString().equals("EnV")){
-							System.out.println("wtf?");
-						}
 						image = ImageStorage.getImage(t.toString());
 
 
