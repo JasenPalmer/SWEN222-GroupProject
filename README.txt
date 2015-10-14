@@ -1,6 +1,6 @@
 SHANK THE WORLD README:
 
-To Run game:
+To Run Game:
 
 If not executing automatically from a jar file, run "MainMenuWindow.java" in the ui package.
 For singleplayer, hit the host button followed by the join button. Leave the IP address blank, enter a name and hit ok.
@@ -34,23 +34,23 @@ Run "EditorFrame.java" in the mapeditor package. Write either "outside" or "insi
 
 Editor Controls:
 
-W - Move Camera up.
-A -	Move Camera left.
-S - Move Camera down.
-D - Move Camera right.
+W - 	Move Camera up.
+A -		Move Camera left.
+S - 	Move Camera down.
+D - 	Move Camera right.
 
 Using the Editor:
 
 - 	To draw, select a terrain, building or entity in the menus on the left and then either click or drag to fill out squares.
 - 	To view the map how it would appear in the game, switch from editor view to renderer view in the view drop box on the left.
 - 	To save, hit file, save and then fill in a map name and description. This will then create two files, <mapname>.txt and <mapname>-entites.txt.
-	These need to be moved into the correct entites and locations folder. From there a txt file connects the doors named door.txt and needs to be 
-	editted to display the locations in the game.
+	These need to be moved into the correct entities and locations folder. From there a txt file connects the doors named door.txt and needs to be 
+	edited to display the locations in the game.
 	
 
 The Map Editor has many problems I didn't have time to fix due to higher priorities and constantly needing to update how it worked.
 
-Creating entrances on INSIDE Buildings:
+Creating Entrances On INSIDE Buildings:
 	
 	Correct:				Incorrect:
 	
@@ -58,5 +58,5 @@ Creating entrances on INSIDE Buildings:
 	FL	FL	FL	En			FL	FL	En
 	FL	FL	FL				FL	FL	FL
 	
-Creating entrances on outside Buidlings is the opposite. Sorry for the confusion.
+Creating entrances on outside Buildings is the opposite. Sorry for the confusion.
 Also need to make sure the view is North when drawing as well as NOT having a building on the edge / not surrounded by terrain.

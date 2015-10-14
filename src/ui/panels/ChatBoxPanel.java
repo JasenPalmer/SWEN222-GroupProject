@@ -17,17 +17,31 @@ import javax.swing.border.Border;
 import network.Client;
 import ui.ApplicationWindow;
 
+/**
+ * Chatbox component
+ * @author ItsNotAGoodTime
+ *
+ */
 public class ChatBoxPanel extends JPanel implements KeyListener{
 
+	//Text items
 	private JTextArea textArea = new JTextArea();
 	private JTextField textBox = new JTextField();
 	private JScrollPane scrollPane = new JScrollPane();
+	
+	//Chatbox client
 	private Client client;
+	
+	//Chatbox application window
 	private ApplicationWindow window;
 
-	public ChatBoxPanel(Client client, ApplicationWindow window){
-		this.client = client;
+	/**
+	 * Adds and aligns elements
+	 * @param window - Application window associated with chatbox
+	 */
+	public ChatBoxPanel(ApplicationWindow window){
 		this.window = window;
+		this.client = window.getClient();
 		setOpaque(false);
 		setLayout(null);
 
@@ -69,6 +83,9 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 		this.add(textBox,2,0);
 	}
 
+	/**
+	 * Checks if user pressed enter
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if(e.getKeyChar() == '\n'){
@@ -80,15 +97,21 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 			}
 		}
 	}
-	public void keyPressed(KeyEvent arg0) {}
-	public void keyReleased(KeyEvent arg0) {}
 
+	/**
+	 * Sends textbox message to server
+	 */
 	private void sendMessage(){
 		client.registerMessage(textBox.getText());
 		textBox.setText("");
 		window.requestFocus();
 	}
 
+	/**
+	 * Displays in text area a message from server
+	 * @param user - Message owners username
+	 * @param message - Message to be displayed
+	 */
 	public void displayMessage(String user, String message){
 		System.out.println(user + ": " + message);
 		textArea.append("\n" + user + ": " + message);
@@ -97,4 +120,8 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 
 	//Getters
 	public JTextField getTextField(){return this.textBox;}
+	
+	//Required but unused methods
+	public void keyPressed(KeyEvent arg0) {}
+	public void keyReleased(KeyEvent arg0) {}
 }

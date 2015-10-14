@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
+import ui.ApplicationWindow;
 import network.Client;
 
 /**
@@ -29,30 +30,38 @@ import network.Client;
  *
  */
 public class LootInventoryPanel extends JLayeredPane implements MouseListener{
-
+	
+	//Item icon array
 	private ItemIcon[][] itemList = new ItemIcon[6][3];
+	
+	//Panels client
+	private Client client;
+	
+	//Container
+	private Container container;
+	
+	//States
+	private boolean inventOpen;
+	
+	//Panels
 	private LootInventoryBackground lootInventBackground = new LootInventoryBackground();
 	private InventoryPanel inventPanel;
 	private LootInventoryPanel self = this;
+	private ApplicationWindow app;
+	
+	//Moved item
 	private ItemIcon movedItem;
 	private int movedItemI;
 	private int movedItemJ;
-	private boolean inventOpen;
-	private Client client;
-	private Container container;
-	private Clip effectClip;
-	private int initEffectVolume = -30;
-
-	//Sound paths
-	private String buttonSound = "src/ui/sounds/buttonSound.wav";
-
+	
 	/**
 	 * Sets dimensions of layout
 	 * @param invent - the inventory panel of the player
 	 */
-	public LootInventoryPanel(InventoryPanel invent){
+	public LootInventoryPanel(ApplicationWindow app){
 		//Setup
-		this.inventPanel = invent;
+		this.app = app;
+		this.inventPanel = app.getInventPanel();
 		setLayout(null);
 		setBounds(345, 100, 360, 240);
 
@@ -64,33 +73,16 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		this.client = inventPanel.getPlayer();
 	}
 
-	public boolean addItem(ItemIcon item){
-		for(int i = 0; i < itemList[0].length; i++){
-			for(int j = 0; j < itemList.length; j++){
-				if(itemList[j][i] == null){
-					itemList[j][i] = item;
-					populateSlots();
-					return true;
-				}
-				if(i == itemList[0].length-1 && j == itemList.length-1){
-					if(itemList[j][i] != null){
-						System.out.println("Loot Inventory is full");
-					}
-					return false;
-				}
-			}
-		}
-		return false;
-	}
-
+	/**
+	 * Populates loot panel with the specified loot container
+	 * @param container - Container to populate from
+	 */
 	public void setLootContainer(Container container){
 		this.container = container;
 		
 		Item[] containerList = this.container.getItems();
-		for(int i = 0; i < containerList.length; i++){
-			if(containerList[i]==null)continue;
-		}
 		
+		//First row of 6 items
 		for(int i = 0; i < 6; i++){
 			if(containerList[i] != null){
 				itemList[i][0] = new ItemIcon(containerList[i].getName(), containerList[i].getDescription());
@@ -100,6 +92,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 		
+		//Second row of 6 items
 		for(int i = 0; i < 6; i++){
 			if(containerList[i+6] != null){
 				itemList[i][1] = new ItemIcon(containerList[i+6].getName(), containerList[i+6].getDescription());
@@ -109,6 +102,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 		
+		//Third row of 6 items
 		for(int i = 0; i < 6; i++){
 			if(containerList[i+12] != null){
 				itemList[i][2] = new ItemIcon(containerList[i+12].getName(), containerList[i+12].getDescription());
@@ -120,10 +114,14 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		populateSlots();
 	}
 	
+	/**
+	 * Sets locations of ItemIcon labels relevant to inventory image
+	 */
 	private void populateSlots(){
 		this.removeAll();
 		this.add(lootInventBackground);
 
+		//Sets x and y coords for ItemIcon list
 		for(int i = 0; i < itemList.length; i++){
 			for(int j = 0; j < itemList[0].length; j++){
 				if(itemList[i][j] != null){
@@ -133,6 +131,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 
+		//Creates label for each item in inventory and places it on items x and y coords
 		for(int i = 0; i < itemList.length; i++){
 			for(int j = 0; j < itemList[0].length; j++){
 				if(itemList[i][j] != null){
@@ -158,27 +157,17 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	/**
+	 * Changes inventOpen state
+	 * @param change
+	 */
 	public void setInventVis(boolean change){
 		this.inventOpen = change;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * Sets moved item to item clicked
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1){
@@ -196,9 +185,14 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	/**
+	 * Converts index's of a 2d array element to a 1d array index
+	 * @param i - Index 1
+	 * @param j - Index 2
+	 * @return - Converted index for 1d array
+	 */
 	private int convertIndex(int i, int j){
-		int index = 0;
-		
+		int index = 0;	
 		if(j == 0){
 			index = i;
 		}
@@ -207,11 +201,13 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 		else{
 			index = i+12;
-		}
-		
+		}	
 		return index;
 	}
 	
+	/**
+	 * Moves item to players inventory from loot panel
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if(movedItem != null){
@@ -220,7 +216,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 					if(!inventPanel.isInventFull()){
 						client.addItem(makeItem(movedItem.getName(), movedItem.getDescription()));
 						client.removeItemContainer(convertIndex(movedItemI, movedItemJ), this.container);
-						playSound("Button");
+						this.app.playSound("Button");
 						movedItem = null;
 					}
 					else{
@@ -232,6 +228,12 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		}
 	}
 
+	/**
+	 * Creates and item based on name and description provided
+	 * @param name - Name of item
+	 * @param desc - Description of item
+	 * @return - New item with specified details
+	 */
 	private Item makeItem(String name, String desc){
 		Item item = null;
 
@@ -269,32 +271,11 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		return item;
 	}
 	
-	public void changeEffectVolume(int change){
-		//-60 to 6
-		if(effectClip == null) return;
-		FloatControl volume = (FloatControl) effectClip.getControl(FloatControl.Type.MASTER_GAIN);
-		volume.setValue(change);
-		initEffectVolume = change;
-	}
-	
-	private void playSound(String sound){
-		String soundPath = null;
-		switch(sound){
-		case "Button":
-			soundPath = buttonSound;
-			break;
-		default:
-			break;
-		}
-		try{
-			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(soundPath));
-			effectClip = AudioSystem.getClip();
-			effectClip.open(AudioSystem.getAudioInputStream(file));
-			changeEffectVolume(initEffectVolume);
-			effectClip.start();
-		}catch(Exception e){
-			System.out.println(e.getLocalizedMessage());
-		}
-	}
-
+	//Required but unused methods
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+	@Override
+	public void mouseExited(MouseEvent e) {}
 }

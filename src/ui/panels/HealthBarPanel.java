@@ -14,11 +14,22 @@ import javax.swing.JPanel;
 
 import ui.ApplicationWindow;
 
+/**
+ * Health bar panel
+ * @author ItsNotAGoodTime
+ *
+ */
 public class HealthBarPanel extends JPanel{
 
+	//Background image
 	private Image backgroundImage;
+	
+	//Health
 	private int health = 100;
 	
+	/**
+	 * Gets image from file and sets panels layout
+	 */
 	public HealthBarPanel(){
 		setOpaque(false);
 		setLayout(null);
@@ -31,6 +42,10 @@ public class HealthBarPanel extends JPanel{
 		}	
 	}
 	
+	/**
+	 * Gets and sets health from player
+	 * @param player - Player to check health from
+	 */
 	public void setHealth(Player player){
 		this.health = player.getHealth();
 		if(this.health < 0){
@@ -39,6 +54,9 @@ public class HealthBarPanel extends JPanel{
 		this.repaint();
 	}
 	
+	/**
+	 * Paints background image and a rectangle which its size is determined by health
+	 */
 	public void paint(Graphics g){
 		g.setColor(new Color(0,0,0));
 		g.fillRect(55, 10, 140, 20);

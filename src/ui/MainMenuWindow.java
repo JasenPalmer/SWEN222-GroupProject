@@ -20,6 +20,11 @@ import javax.swing.JTextField;
 
 import network.Server;
 
+/**
+ * Main menu containing button options and a sound track
+ * @author ItsNotAGoodTime
+ *
+ */
 public class MainMenuWindow extends JFrame implements ActionListener{
 
 	//Sound paths
@@ -41,6 +46,9 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 	private boolean muted = false;
 	JButton muteButton;
 
+	/**
+	 * Sets dimensions to main menu and starts the sound track
+	 */
 	public MainMenuWindow(){
 		super("");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +59,9 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		addBackground();
 	}
 
+	/**
+	 * Adds the background label and aligns its contents
+	 */
 	private void addBackground(){
 		//Add background
 		JLabel background = new JLabel(new ImageIcon(getClass().getResource(backgroundImage)));
@@ -66,6 +77,9 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		addButtons();
 	}
 
+	/**
+	 * Adds all required main menu buttons
+	 */
 	private void addButtons(){
 		//Join
 		JButton joinButton = new JButton(new ImageIcon(getClass().getResource(join)));
@@ -108,6 +122,9 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		this.add(muteButton, 1,0);
 	}
 
+	/**
+	 * Changes the image of the mute/unmute button depending on its previous state
+	 */
 	private void setSoundButton(){
 		if(muted == true){
 			muteButton.setIcon(new ImageIcon(getClass().getResource(mute)));
@@ -117,19 +134,12 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		}
 	}
 
+	/**
+	 * Dictates what action to perform depending on what button was clicked
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
-		case "Exit":
-			playSound("Button");
-			stopMusic();
-			this.dispose();
-			break;
-		case "Host":
-			playSound("Button");
-
-			new Thread(new Runnable(){public void run(){new Server();}}).start();
-			break;
 		case "Join":
 			playSound("Button");
 			JLabel serverLabel = new JLabel("Server IP:");
@@ -138,20 +148,30 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			JTextField usernameText = new JTextField();
 			Component[] menuOptions = {serverLabel, serverText, usernameLabel, usernameText};
 			JOptionPane.showMessageDialog(this,  menuOptions, "Join server", JOptionPane.QUESTION_MESSAGE);
-
 			String defaultServer = "localhost";
+			//Sets username and joins local host
 			if(!usernameText.getText().equals("")  && serverText.getText().equals("")){
 				stopMusic();
 				this.dispose();
 				ApplicationWindow game = new ApplicationWindow(defaultServer,usernameText.getText());
 				game.setVisible(true);
 			}
+			//Sets username and join remote host
 			else if(!usernameText.getText().equals("") && !serverText.getText().equals("")){
 				stopMusic();
 				this.dispose();
 				ApplicationWindow game = new ApplicationWindow(serverText.getText(),usernameText.getText());
 				game.setVisible(true);
 			}
+			break;
+		case "Host":
+			playSound("Button");
+			new Thread(new Runnable(){public void run(){new Server();}}).start();
+			break;
+		case "Exit":
+			playSound("Button");
+			stopMusic();
+			this.dispose();
 			break;
 		case "Mute":
 			if(muted == true){
@@ -169,6 +189,10 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		}
 	}
 
+	/**
+	 * Plays a sound based on the string provided
+	 * @param sound - String associated with a sound
+	 */
 	private void playSound(String sound){
 		String soundPath = null;
 		switch(sound){
@@ -188,6 +212,9 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		}
 	}
 
+	/**
+	 * Starts the main menus music sound track
+	 */
 	private void playMusic(){
 		try{
 			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(music));
@@ -202,14 +229,18 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 		}
 	}
 
+	/**
+	 * Stops the main menus music sounds track
+	 */
 	private void stopMusic(){
 		musicClip.stop();
 	}
 
+	/**
+	 * Creates and starts a main menu screen
+	 * @param args - Possible terminal start option
+	 */
 	public static void main(String args[]){
-		//		SplashWindow splash = new SplashWindow();
-		//		splash.setVisible(true);
-		//		splash.dispose();
 		MainMenuWindow window = new MainMenuWindow();
 		window.setVisible(true);
 	}

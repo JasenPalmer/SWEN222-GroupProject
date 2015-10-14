@@ -10,10 +10,19 @@ import javax.swing.border.EmptyBorder;
 
 import ui.ApplicationWindow;
 
+/**
+ * Inventory panel background
+ * @author ItsNotAGoodTime
+ *
+ */
 public class InventoryBackground extends JPanel{
 	
+	//Background image
 	private Image backgroundImage; 
 	
+	/**
+	 * Gets image from file and sets panels layout
+	 */
 	public InventoryBackground(){
 		setLayout(null);
 		setOpaque(false);
@@ -26,6 +35,9 @@ public class InventoryBackground extends JPanel{
 		setBounds(0, 0, 231, 262);	
 	}
 	
+	/**
+	 * Paints panel based on background image
+	 */
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0, 0, null);

@@ -40,9 +40,14 @@ import ui.panels.ItemIcon;
 import ui.panels.LootInventoryPanel;
 import ui.panels.SettingsMenu;
 
-
+/**
+ * The screen the game is played on which stores all relevant panels
+ * @author ItsNotAGoodTime
+ *
+ */
 public class ApplicationWindow extends JFrame implements ActionListener, KeyListener, WindowListener{
 
+	//Panels
 	private JLayeredPane layeredPanel = new JLayeredPane();
 	private InventoryPanel inventPanel;
 	private JLayeredPane overlayPanel;
@@ -50,37 +55,52 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private ChatBoxPanel chatBoxPanel;
 	private SettingsMenu settings;
 	private RenderingWindow rw;
+	private HealthBarPanel hpBar;
+
+	//State checks
 	private boolean inventOpen = false;
 	private boolean lootInventOpen = false;
-	private Client client;
-	private String username;
-	private String host;
+	private boolean wasOpen = false;
+	private boolean showSettings = false;
+
+	//Sound items
 	private Clip musicClip;
 	private Clip effectClip;
-	private boolean showSettings = false;
-	private HealthBarPanel hpBar;
 	private String track = null;
 	private int initVolume = -30;
 	private int initEffectVolume = -30;
-	private Timer timer;
-	private KeyEvent keyEve;
+
+	//Compass items
 	private String direction = "north";
 	private JLabel compass;
-	private boolean wasOpen = false;
+
+	//Server/Client items
+	private Client client;
+	private String username;
+	private String host;
+
+	//Timer items
+	private Timer timer;
+	private KeyEvent keyEve;
 
 	//Sound paths
-	private String buttonSound = "sounds/buttonSound.wav";
-	private String deathSound = "sounds/deathSound.wav";
-	private String track1 = "sounds/track1.wav";
-	private String track2 = "sounds/track2.wav";
-	private String fighting = "sounds/fighting.wav";
+	private static final String buttonSound = "sounds/buttonSound.wav";
+	private static final String deathSound = "sounds/deathSound.wav";
+	private static final String track1 = "sounds/track1.wav";
+	private static final String track2 = "sounds/track2.wav";
+	private static final String fighting = "sounds/fighting.wav";
 
 	//Images
-	private String northCompass = "images/gui/compassNorth.png";
-	private String eastCompass = "images/gui/compassEast.png";
-	private String southCompass = "images/gui/compassSouth.png";
-	private String westCompass = "images/gui/compassWest.png";
+	private static final String northCompass = "images/gui/compassNorth.png";
+	private static final String eastCompass = "images/gui/compassEast.png";
+	private static final String southCompass = "images/gui/compassSouth.png";
+	private static final String westCompass = "images/gui/compassWest.png";
 
+	/**
+	 * Creates new application window and all necessary components 
+	 * @param host - IP of host
+	 * @param username - Username of this player
+	 */
 	public ApplicationWindow(String host, String username) {
 		//Setup
 		super("Shank the world");
@@ -115,18 +135,17 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		layeredPanel.add(overlayPanel,2,0);
 
 		//Setup Inventory
-		inventPanel = new InventoryPanel(client);
+		inventPanel = new InventoryPanel(this);
 		overlayPanel.add(inventPanel,2,0);
 
 		//Setup loot inventory
-		lootInventPanel = new LootInventoryPanel(inventPanel);
+		lootInventPanel = new LootInventoryPanel(this);
 		overlayPanel.add(lootInventPanel,2,0);
 		setInventory();
 		setLootInventory();
-		inventPanel.setLootInventPanel(lootInventPanel);
 
 		//Setup chat box
-		chatBoxPanel = new ChatBoxPanel(client, this);
+		chatBoxPanel = new ChatBoxPanel(this);
 		layeredPanel.add(chatBoxPanel,1,0);
 
 		//Setup the menu bar
@@ -156,10 +175,16 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			}});
 		timer.setRepeats(true);
 
+		//Repaint thread
 		RepaintThread rt = new RepaintThread();
 		rt.start();
 	}
 
+	/**
+	 * Thread that repaints the rendering window and health bar
+	 * @author ItsNotAGoodTime
+	 *
+	 */
 	public class RepaintThread extends Thread{
 		public void run(){
 			while(true){
@@ -176,6 +201,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
+	/**
+	 * Sets visibility of the settings menu
+	 */
 	private void setSettings(){
 		if(showSettings == true){
 			settings.setVisible(true);
@@ -220,7 +248,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	}
 
 	/**
-	 * Creates and populates the UI Menubar
+	 * Creates and populates the UI menu bar
 	 */
 	private void setupMenu(){
 		ArrayList<JMenuItem> option1List = new ArrayList<>();
@@ -230,37 +258,38 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu option1 = new JMenu("File");
-		option1List.add(new JMenuItem("New Game"));
+		option1List.add(new JMenuItem("Exit Game"));
 
 		for(JMenuItem jmItem : option1List){
 			option1.add(jmItem);
 			jmItem.addActionListener(this);
 		}
-
-		JMenu option2 = new JMenu("Edit");
-		option2List.add(new JMenuItem("Shank all players"));
-		option2List.add(new JMenuItem("Add Shank"));
-		option2List.add(new JMenuItem("Add Spear"));
-		option2List.add(new JMenuItem("Add Plate Armour"));
-		option2List.add(new JMenuItem("Add Chain Armour"));
-		option2List.add(new JMenuItem("Add Leather Armour"));
-		option2List.add(new JMenuItem("Add Robe Armour"));
-		option2List.add(new JMenuItem("Add 5 gold"));
-		option2List.add(new JMenuItem("Add Potion"));
-		option2List.add(new JMenuItem("Add Shank loot"));
-		option2List.add(new JMenuItem("Add Potion loot"));
-
-		for(JMenuItem jmItem : option2List){
-			option2.add(jmItem);
-			jmItem.addActionListener(this);
-		}
-
 		menuBar.add(option1);
-		menuBar.add(option2);
 
+		//Add debugging items if user is admin
+		if(this.username.equals("admin")){
+			JMenu option2 = new JMenu("Debug");
+			option2List.add(new JMenuItem("Add Shank"));
+			option2List.add(new JMenuItem("Add Spear"));
+			option2List.add(new JMenuItem("Add Plate Armour"));
+			option2List.add(new JMenuItem("Add Chain Armour"));
+			option2List.add(new JMenuItem("Add Leather Armour"));
+			option2List.add(new JMenuItem("Add Robe Armour"));
+			option2List.add(new JMenuItem("Add 5 gold"));
+			option2List.add(new JMenuItem("Add Potion"));
+
+			for(JMenuItem jmItem : option2List){
+				option2.add(jmItem);
+				jmItem.addActionListener(this);
+			}
+			menuBar.add(option2);
+		}
 		this.setJMenuBar(menuBar);
 	}
 
+	/**
+	 * Updates the direction the compass is facing
+	 */
 	private void updateCompass(){
 		switch(direction){
 		case "north":
@@ -280,44 +309,38 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
+	/**
+	 * Performs actions based on what option from the menu bar was selected
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
-		case "New Game":
-			System.out.println("New Game option clicked");
-			break;
-		case "Shank all players":
-			System.out.println("All players were ruthlessly shanked, y u do dis?");
+		case "Exit Game":
+			closeAppWindow();
 			break;
 		case "Add Shank":
-			client.addItem(new Weapon("Shank", "Fuckn shank u mate", null, null, Weapon.WeaponType.Shank));
+			client.addItem(new Weapon("Shank", "Debugging shank", null, null, Weapon.WeaponType.Shank));
 			break;
 		case "Add Spear":
-			client.addItem(new Weapon("Spear", "I'll fukn spear you bro", null, null, Weapon.WeaponType.Spear));
+			client.addItem(new Weapon("Spear", "Debugging spear", null, null, Weapon.WeaponType.Spear));
 			break;
 		case "Add Potion":
-			client.addItem(new Potion("Potion", "Drink this shit", null, null));
+			client.addItem(new Potion("Potion", "Debugging potion", null, null));
 			break;
 		case "Test":
 			inventPanel.addItemTo(0,0,1,0);
 			break;
 		case "Add Plate Armour":
-			client.addItem(new Armour("Plate Armour", "some plate amour", null, null,Armour.ArmourType.Plate));
+			client.addItem(new Armour("Plate Armour", "Debugging plate armour", null, null,Armour.ArmourType.Plate));
 			break;
 		case "Add Chain Armour":
-			client.addItem(new Armour("Chain Armour", "some leather amour", null, null,Armour.ArmourType.Chain));
+			client.addItem(new Armour("Chain Armour", "Debugging chain armour", null, null,Armour.ArmourType.Chain));
 			break;
 		case "Add Leather Armour":
-			client.addItem(new Armour("Leather Armour", "some leather amour", null, null,Armour.ArmourType.Leather));
+			client.addItem(new Armour("Leather Armour", "Debugging leather armour", null, null,Armour.ArmourType.Leather));
 			break;
 		case "Add Robe Armour":
-			client.addItem(new Armour("Robe Armour", "some leather amour", null, null, Armour.ArmourType.Robe));
-			break;
-		case "Add Potion loot":
-			client.addItem(new Key("Key", "WTF", null, null));
-			break;
-		case "Add Shank loot":
-			lootInventPanel.addItem(new ItemIcon("Shank", "Tis a shank mate"));
+			client.addItem(new Armour("Robe Armour", "Debugging robe armour", null, null, Armour.ArmourType.Robe));
 			break;
 		case "Add 5 gold":
 			client.addItem(new Gold("Gold", "Gold: 5", null, null, 5));
@@ -329,6 +352,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		inventPanel.populateInventArray();
 	}
 
+	/**
+	 * Performs actions based on key pressed
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()){
@@ -451,6 +477,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
+	/**
+	 * Populates the container and repaints its contents
+	 * @param container - Container to display
+	 */
 	public void openContainer(Container container){
 		lootInventPanel.setVisible(true);
 		lootInventPanel.setLootContainer(container);
@@ -458,7 +488,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		setLootInventory();
 		inventPanel.setContainer(container);
 		inventPanel.populateInventArray();
-		
+
 		if(inventOpen){
 			wasOpen = true;
 		}else{
@@ -468,10 +498,17 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
+	/**
+	 * Forces client to cycle its animations in relation to its current image frame
+	 */
 	public void cycleAnimations() { 
 		this.client.cycleAnimations(); 
 	}
 
+	/**
+	 * Changes the volume of the music track
+	 * @param change - Amount to set volume to
+	 */
 	public void changeVolume(int change){
 		//-60 to 6
 		if(musicClip == null) return;
@@ -480,6 +517,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		initVolume = change;
 	}
 
+	/**
+	 * Changes the volume of the sound effects
+	 * @param change - Amount to set volume to
+	 */
 	public void changeEffectVolume(int change){
 		//-60 to 6
 		if(effectClip == null) return;
@@ -489,7 +530,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		initEffectVolume = change;
 	}
 
-	private void playSound(String sound){
+	/**
+	 * Plays sound specified
+	 * @param sound - String associated with sound
+	 */
+	public void playSound(String sound){
 		String soundPath = null;
 		switch(sound){
 		case "Button":
@@ -502,7 +547,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		}
 		try{
-			File file = new File(soundPath);
+			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(soundPath));
 			effectClip = AudioSystem.getClip();
 			effectClip.open(AudioSystem.getAudioInputStream(file));
 			changeEffectVolume(initEffectVolume);
@@ -511,7 +556,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
-
+	
+	/**
+	 * Starts the music sound track
+	 * @param music - String associated to track to be played
+	 */
 	private void playMusic(String music){
 		switch(music){
 		case "Track 1":
@@ -536,10 +585,16 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
+	/**
+	 * Stops the current sound track
+	 */
 	private void stopMusic(){
 		musicClip.stop();
 	}
 
+	/**
+	 * Changes current sound track to next in line
+	 */
 	public void toggleMusic(){
 		stopMusic();
 		if(track.equals("Track 1")){
@@ -556,6 +611,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		}
 	}
 
+	/**
+	 * Sets the direction the camera is facing
+	 * @param key - Key pressed
+	 * @return - Direction the camera is now facing
+	 */
 	private Direction directionSetter(String key){
 		if(key.equals("Q")){
 			switch(rw.direction){
@@ -584,13 +644,12 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		return null;
 	}
 
+	/**
+	 * Stops the timer
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		timer.stop();
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
 	}
 
 	//Getters
@@ -599,39 +658,37 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public RenderingWindow getRenderingWindow(){ return this.rw;}
 	public InventoryPanel getInventPanel(){ return this.inventPanel;}
 	public LootInventoryPanel getLootInvent(){ return this.lootInventPanel;}
+	public Client getClient(){ return this.client;}
 
-
+	/**
+	 * Closes the application window
+	 */
 	public void closeAppWindow(){
 		System.exit(0);	
 	}
 
-	@Override
-	public void windowOpened(WindowEvent e) {
-	}
-
+	/**
+	 * Closes the application window
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		client.close();
 		System.exit(0);
 	}
 
+	//Required but unused methods
 	@Override
-	public void windowClosed(WindowEvent e) {
-	}
-
+	public void windowClosed(WindowEvent e) {}
 	@Override
-	public void windowIconified(WindowEvent e) {
-	}
-
+	public void windowIconified(WindowEvent e) {}
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-	}
-
+	public void windowDeiconified(WindowEvent e) {}
 	@Override
-	public void windowActivated(WindowEvent e) {
-	}
-
+	public void windowActivated(WindowEvent e) {}
 	@Override
-	public void windowDeactivated(WindowEvent e) {
-	}
+	public void windowDeactivated(WindowEvent e) {}
+	@Override
+	public void keyTyped(KeyEvent e) {}
+	@Override
+	public void windowOpened(WindowEvent e) {}
 }
