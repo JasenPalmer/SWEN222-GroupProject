@@ -74,6 +74,7 @@ public class Player implements Serializable{
 		//give the player animations
 		animation = new Animation(this);
 		// make the player alive
+		maxHealth = DEFAULT_HEALTH;
 		health = DEFAULT_HEALTH;
 		isDead = false;
 		setMaxHealth(health);
