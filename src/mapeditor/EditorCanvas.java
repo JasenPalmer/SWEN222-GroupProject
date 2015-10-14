@@ -17,7 +17,11 @@ import javax.swing.JPanel;
 
 import ui.ImageStorage;
 
-
+/**
+ * Class for displaying map in map editor
+ * @author Jake Dorne
+ *
+ */
 public class EditorCanvas extends JPanel {
 
 	private static final long serialVersionUID = -980063613171624041L;

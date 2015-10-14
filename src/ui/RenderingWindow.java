@@ -24,8 +24,12 @@ import javax.swing.JPanel;
 
 import com.sun.prism.j2d.paint.RadialGradientPaint;
 
+/**
+ * Class used for rendering the game isometrically.
+ * @author Jake Dorne
+ *
+ */
 public class RenderingWindow extends JPanel{
-	
 	private static final long serialVersionUID = -9113443536966121759L;
 	
 	private int cameraX;

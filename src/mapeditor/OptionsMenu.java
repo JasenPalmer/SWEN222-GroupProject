@@ -13,6 +13,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Contains options for map editor
+ * @author Jake Dorne
+ *
+ */
 public class OptionsMenu extends JPanel {
 
 	EditorFrame frame;

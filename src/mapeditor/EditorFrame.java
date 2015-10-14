@@ -37,7 +37,11 @@ import javax.swing.border.EmptyBorder;
 
 import ui.ImageStorage;
 
-
+/**
+ * Main class for the map editor in charge of button, key and mouse presses.
+ * @author Jake Dorne
+ *
+ */
 public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
 
