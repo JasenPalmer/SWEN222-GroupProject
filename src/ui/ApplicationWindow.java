@@ -31,7 +31,6 @@ import javax.swing.JMenuItem;
 import javax.swing.Timer;
 
 import network.Client;
-import ui.panels.BackgroundPanel;
 import ui.panels.ChatBoxPanel;
 import ui.panels.HealthBarPanel;
 import ui.panels.InventoryPanel;
@@ -75,10 +74,10 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private String fighting = "src/ui/sounds/fighting.wav";
 
 	//Images
-	private String northCompass = "src/ui/images/gui/compassNorth.png";
-	private String eastCompass = "src/ui/images/gui/compassEast.png";
-	private String southCompass = "src/ui/images/gui/compassSouth.png";
-	private String westCompass = "src/ui/images/gui/compassWest.png";
+	private String northCompass = "images/gui/compassNorth.png";
+	private String eastCompass = "images/gui/compassEast.png";
+	private String southCompass = "images/gui/compassSouth.png";
+	private String westCompass = "images/gui/compassWest.png";
 
 	public ApplicationWindow(String host, String username) {
 		//Setup
@@ -103,10 +102,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//Setup layered pane
 		layeredPanel.setBounds(0, 0, 1050, 950);
 		getContentPane().add(layeredPanel);
-
-		//Setup Background Panel
-		BackgroundPanel bgPanel = new BackgroundPanel();
-		layeredPanel.add(bgPanel);
 
 		//Setup rendering window
 		rw = new RenderingWindow(this);
@@ -145,7 +140,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		overlayPanel.add(hpBar,2,0);
 
 		//Setup compass		
-		compass = new JLabel(new ImageIcon(northCompass));
+		compass = new JLabel(new ImageIcon(getClass().getResource(northCompass)));
 		compass.setBounds(870, 10, 170,149);
 		overlayPanel.add(compass,2,0);
 
@@ -267,16 +262,16 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private void updateCompass(){
 		switch(direction){
 		case "north":
-			compass.setIcon(new ImageIcon(northCompass));
+			compass.setIcon(new ImageIcon(getClass().getResource(northCompass)));
 			break;
 		case "east":
-			compass.setIcon(new ImageIcon(eastCompass));
+			compass.setIcon(new ImageIcon(getClass().getResource(eastCompass)));
 			break;
 		case "south":
-			compass.setIcon(new ImageIcon(southCompass));
+			compass.setIcon(new ImageIcon(getClass().getResource(southCompass)));
 			break;
 		case "west":
-			compass.setIcon(new ImageIcon(westCompass));
+			compass.setIcon(new ImageIcon(getClass().getResource(westCompass)));
 			break;
 		default:
 			break;

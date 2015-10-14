@@ -25,7 +25,7 @@ public class HealthBarPanel extends JPanel{
 		setBounds(0,0,200,64);
 		
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/gui/healthBar.png"));
+			backgroundImage = ImageIO.read(ApplicationWindow.class.getResource("images/gui/healthBar.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}	

@@ -3,7 +3,6 @@ package ui.panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -20,11 +19,9 @@ import ui.ApplicationWindow;
 
 public class ChatBoxPanel extends JPanel implements KeyListener{
 
-	private Image backgroundImage;
 	private JTextArea textArea = new JTextArea();
 	private JTextField textBox = new JTextField();
 	private JScrollPane scrollPane = new JScrollPane();
-	private JViewport vp = new JViewport();
 	private Client client;
 	private ApplicationWindow window;
 

@@ -42,7 +42,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	private int initEffectVolume = -30;
 
 	//Sound paths
-	private String buttonSound = "src/ui/sounds/buttonSound.wav";
+	private String buttonSound = "sounds/buttonSound.wav";
 
 	/**
 	 * Sets dimensions of layout

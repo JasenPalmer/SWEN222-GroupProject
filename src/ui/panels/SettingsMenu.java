@@ -29,10 +29,10 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 	private static final int INIT_VOLUME = 50;
 
 	//Images
-	private static final String settingsImage = "src/ui/images/gui/settingsImage.png";
-	private static final String musicVolumeImage = "src/ui/images/gui/musicVolume.png";
-	private static final String sfxVolumeImage = "src/ui/images/gui/sfxVolume.png";
-	private static final String toggleImage = "src/ui/images/gui/toggle.png";
+	private static final String settingsImage = "images/gui/settingsImage.png";
+	private static final String musicVolumeImage = "images/gui/musicVolume.png";
+	private static final String sfxVolumeImage = "images/gui/sfxVolume.png";
+	private static final String toggleImage = "images/gui/toggle.png";
 
 	/**
 	 * Populates and configures layout of the settings menu
@@ -48,13 +48,13 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 		this.add(new SettingsMenuBackground(), 0,0);
 
 		//Add settings title
-		JLabel settingsLabel = new JLabel(new ImageIcon(settingsImage));
+		JLabel settingsLabel = new JLabel(new ImageIcon(ApplicationWindow.class.getResource(settingsImage)));
 		this.add(settingsLabel, 1,0);
 		settingsLabel.setBounds(243, 50, 164, 48);
 		settingsLabel.setOpaque(false);
 
 		//Add volume label
-		JLabel musicVolumeLabel = new JLabel(new ImageIcon(musicVolumeImage));
+		JLabel musicVolumeLabel = new JLabel(new ImageIcon(ApplicationWindow.class.getResource(musicVolumeImage)));
 		this.add(musicVolumeLabel, 1,0);
 		musicVolumeLabel.setBounds(100, 120, 150, 26);
 		musicVolumeLabel.setOpaque(false);
@@ -68,7 +68,7 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 		volumeSlider.setName("volumeSlider");
 
 		//Add SFX label
-		JLabel sfxVolumeLabel = new JLabel(new ImageIcon(sfxVolumeImage));
+		JLabel sfxVolumeLabel = new JLabel(new ImageIcon(ApplicationWindow.class.getResource(sfxVolumeImage)));
 		this.add(sfxVolumeLabel, 1,0);
 		sfxVolumeLabel.setBounds(100, 180, 150, 24);
 		sfxVolumeLabel.setOpaque(false);
@@ -82,7 +82,7 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 		sfxVolumeSlider.setName("sfxVolumeSlider");
 
 		//Add toggle button
-		JButton toggleMusic = new JButton(new ImageIcon(toggleImage));
+		JButton toggleMusic = new JButton(new ImageIcon(ApplicationWindow.class.getResource(toggleImage)));
 		this.add(toggleMusic,1,0);
 		toggleMusic.setBounds(500, 220, 50,50);
 		toggleMusic.setOpaque(false);

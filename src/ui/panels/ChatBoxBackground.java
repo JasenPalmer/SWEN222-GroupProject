@@ -2,12 +2,12 @@ package ui.panels;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
+import ui.ApplicationWindow;
 
 public class ChatBoxBackground extends JPanel{
 	
@@ -17,7 +17,7 @@ public class ChatBoxBackground extends JPanel{
 		setLayout(null);
 		setOpaque(false);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/gui/chatBoxBackground.png"));
+			backgroundImage = ImageIO.read(ApplicationWindow.class.getResource("images/gui/chatBoxBackground.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}

@@ -2,11 +2,12 @@ package ui.panels;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import ui.ApplicationWindow;
 
 /**
  * Panel containing background image and fixed dimensions for the settings menu
@@ -22,7 +23,7 @@ public class SettingsMenuBackground extends JPanel{
 		setLayout(null);
 		setOpaque(false);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/gui/settingsMenu.png"));
+			backgroundImage = ImageIO.read(ApplicationWindow.class.getResource("images/gui/settingsMenu.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}

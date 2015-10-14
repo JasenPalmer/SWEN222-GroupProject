@@ -5,6 +5,7 @@ import gameworld.Player;
 import gameworld.entity.Armour;
 import gameworld.entity.Gold;
 import gameworld.entity.Item;
+import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
 
 import java.awt.Image;
@@ -38,7 +39,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	private Clip effectClip;
 
 	//Sound paths
-	private String buttonSound = "src/ui/sounds/buttonSound.wav";
+	private String buttonSound = "sounds/buttonSound.wav";
 
 	public InventoryPanel(Client client){
 		setLayout(null);
@@ -294,6 +295,9 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		case "Robe Armour":
 			item = new Armour(name, desc, null, null, Armour.ArmourType.Robe);
 			break;
+		case "Potion":
+			item = new Potion(name, desc, null, null);
+			break;
 		}
 		return item;
 	}
@@ -374,7 +378,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									playSound("Button");
 								}
 								else if(inventArray[i][j].getType().equals("Consumable")){
-									//client.usePotion();
+									client.useItem((Potion)makeItem(inventArray[i][j].getName(), inventArray[i][j].getDescription()));
 									client.removeItem(convertIndex(i,j));
 								}
 							}

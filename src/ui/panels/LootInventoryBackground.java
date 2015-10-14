@@ -2,12 +2,12 @@ package ui.panels;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
+import ui.ApplicationWindow;
 
 /**
  * Background image panel for containers
@@ -23,7 +23,7 @@ public class LootInventoryBackground extends JPanel{
 		setLayout(null);
 		setOpaque(false);
 		try{
-			backgroundImage = ImageIO.read(new File("src/ui/images/gui/LootInventoryImage.png"));
+			backgroundImage = ImageIO.read(ApplicationWindow.class.getResource("images/gui/LootInventoryImage.png"));
 		}catch(IOException e){
 			System.out.println(e.getLocalizedMessage());
 		}
