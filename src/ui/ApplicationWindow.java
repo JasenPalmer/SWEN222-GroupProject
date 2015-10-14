@@ -345,7 +345,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Add Robe Armour":
 			client.addItem(new Armour("Robe Armour", "Debugging robe armour", null, null, Armour.ArmourType.Robe));
 			break;
-		case "Add 5 gold":
+		case "Add 5 Gold":
 			client.addItem(new Gold("Gold", "Gold: 5", null, null, 5));
 			break;		
 		case "Add Key":
