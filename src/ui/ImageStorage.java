@@ -47,36 +47,36 @@ public class ImageStorage {
 	private void setImages() {
 		try{
 			// terrain images
-			grass = ImageIO.read(new File("src/ui/images/terrain/Grass.png"));
-			water = ImageIO.read(new File("src/ui/images/terrain/Water.png"));
-			rock = ImageIO.read(new File("src/ui/images/terrain/Rock.png"));
+			grass = ImageIO.read(getClass().getResource("images/terrain/Grass.png"));
+			water = ImageIO.read(getClass().getResource("images/terrain/Water.png"));
+			rock = ImageIO.read(getClass().getResource("images/terrain/Rock.png"));
 
 			// outside building images
-			blank = ImageIO.read(new File("src/ui/images/buildings/Blank.png"));
-			building = ImageIO.read(new File("src/ui/images/buildings/Room.png"));
-			doorUD = ImageIO.read(new File("src/ui/images/buildings/DoorUD.png"));
-			doorLR = ImageIO.read(new File("src/ui/images/buildings/DoorLR.png"));
-			roofLR = ImageIO.read(new File("src/ui/images/buildings/RoofLR.png"));
-			roofUD = ImageIO.read(new File("src/ui/images/buildings/RoofUD.png"));
-			roofCornerO = ImageIO.read(new File("src/ui/images/buildings/RoofCornerO.png"));
-			roofCornerI = ImageIO.read(new File("src/ui/images/buildings/RoofCornerI.png"));
+			blank = ImageIO.read(getClass().getResource("images/buildings/Blank.png"));
+			building = ImageIO.read(getClass().getResource("images/buildings/Room.png"));
+			doorUD = ImageIO.read(getClass().getResource("images/buildings/DoorUD.png"));
+			doorLR = ImageIO.read(getClass().getResource("images/buildings/DoorLR.png"));
+			roofLR = ImageIO.read(getClass().getResource("images/buildings/RoofLR.png"));
+			roofUD = ImageIO.read(getClass().getResource("images/buildings/RoofUD.png"));
+			roofCornerO = ImageIO.read(getClass().getResource("images/buildings/RoofCornerO.png"));
+			roofCornerI = ImageIO.read(getClass().getResource("images/buildings/RoofCornerI.png"));
 
 			// inside building images
-			floor = ImageIO.read(new File("src/ui/images/inside/Floor.png"));
-			wallL = ImageIO.read(new File("src/ui/images/inside/WallLeft.png"));
-			wallR = ImageIO.read(new File("src/ui/images/inside/WallRight.png"));
-			wallCorner = ImageIO.read(new File("src/ui/images/inside/WallCorner.png"));
-			insideDoorL = ImageIO.read(new File("src/ui/images/inside/DoorL.png"));
-			insideDoorR = ImageIO.read(new File("src/ui/images/inside/DoorR.png"));
+			floor = ImageIO.read(getClass().getResource("images/inside/Floor.png"));
+			wallL = ImageIO.read(getClass().getResource("images/inside/WallLeft.png"));
+			wallR = ImageIO.read(getClass().getResource("images/inside/WallRight.png"));
+			wallCorner = ImageIO.read(getClass().getResource("images/inside/WallCorner.png"));
+			insideDoorL = ImageIO.read(getClass().getResource("images/inside/DoorL.png"));
+			insideDoorR = ImageIO.read(getClass().getResource("images/inside/DoorR.png"));
 
 
 			// entity images
-			tree = ImageIO.read(new File("src/ui/images/entities/Tree.png"));
-			bush = ImageIO.read(new File("src/ui/images/entities/Bush.png"));
-			table = ImageIO.read(new File("src/ui/images/entities/Table.png"));
-			chest = ImageIO.read(new File("src/ui/images/entities/Chest.png"));
-			chair = ImageIO.read(new File("src/ui/images/entities/Chair.png"));
-			bag = ImageIO.read(new File("src/ui/images/entities/Bag.png"));
+			tree = ImageIO.read(getClass().getResource("images/entities/Tree.png"));
+			bush = ImageIO.read(getClass().getResource("images/entities/Bush.png"));
+			table = ImageIO.read(getClass().getResource("images/entities/Table.png"));
+			chest = ImageIO.read(getClass().getResource("images/entities/Chest.png"));
+			chair = ImageIO.read(getClass().getResource("images/entities/Chair.png"));
+			bag = ImageIO.read(getClass().getResource("images/entities/Bag.png"));
 			
 			
 			Image[][] robeWalk = new Image[4][9];
@@ -98,14 +98,14 @@ public class ImageStorage {
 //			robewalking
 			for(int i  = 0; i < robeWalk.length; i++){
 				for(int j = 0; j < robeWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
+					Image img = ImageIO.read(getClass().getResource("images/player/robe/movement/robe-"+i+"-move-"+j+".png"));
 					robeWalk[i][j] = img;
 					if(j<robeSpear[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/robe/attack/robe-"+i+"-attack-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/robe/attack/robe-"+i+"-attack-"+j+".png"));
 						robeSpear[i][j] = img;
 					}
 					if(j<robeShank[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/robe/attack/robe-"+i+"-shank-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/robe/attack/robe-"+i+"-shank-"+j+".png"));
 						robeShank[i][j] = img;
 					}
 				}
@@ -114,14 +114,14 @@ public class ImageStorage {
 //			leatherwalking
 			for(int i  = 0; i < leatherWalk.length; i++){
 				for(int j = 0; j < leatherWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
+					Image img = ImageIO.read(getClass().getResource("images/player/leather/movement/leather-"+i+"-move-"+j+".png"));
 					leatherWalk[i][j] = img;
 					if(j<leatherSpear[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/leather/attack/leather-"+i+"-attack-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/leather/attack/leather-"+i+"-attack-"+j+".png"));
 						leatherSpear[i][j] = img;
 					}
 					if(j<leatherShank[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/leather/attack/leather-"+i+"-shank-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/leather/attack/leather-"+i+"-shank-"+j+".png"));
 						leatherShank[i][j] = img;
 					}
 				}
@@ -130,14 +130,14 @@ public class ImageStorage {
 //			chainwalking
 			for(int i  = 0; i < chainWalk.length; i++){
 				for(int j = 0; j < chainWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/chain/movement/chain-"+i+"-move-"+j+".png"));
+					Image img = ImageIO.read(getClass().getResource("images/player/chain/movement/chain-"+i+"-move-"+j+".png"));
 					chainWalk[i][j] = img;
 					if(j<chainSpear[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/chain/attack/chain-"+i+"-attack-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/chain/attack/chain-"+i+"-attack-"+j+".png"));
 						chainSpear[i][j] = img;
 					}
 					if(j<chainShank[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/chain/attack/chain-"+i+"-shank-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/chain/attack/chain-"+i+"-shank-"+j+".png"));
 						chainShank[i][j] = img;
 					}
 				}
@@ -146,14 +146,14 @@ public class ImageStorage {
 //			platewalking
 			for(int i  = 0; i < plateWalk.length; i++){
 				for(int j = 0; j < plateWalk[i].length; j++){
-					Image img = ImageIO.read(new File("src/ui/images/player/plate/movement/plate-"+i+"-move-"+j+".png"));
+					Image img = ImageIO.read(getClass().getResource("images/player/plate/movement/plate-"+i+"-move-"+j+".png"));
 					plateWalk[i][j] = img;
 					if(j<plateSpear[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/plate/attack/plate-"+i+"-attack-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/plate/attack/plate-"+i+"-attack-"+j+".png"));
 						plateSpear[i][j] = img;
 					}
 					if(j<plateShank[i].length){
-						img = ImageIO.read(new File("src/ui/images/player/plate/attack/plate-"+i+"-shank-"+j+".png"));
+						img = ImageIO.read(getClass().getResource("images/player/plate/attack/plate-"+i+"-shank-"+j+".png"));
 						plateShank[i][j] = img;
 					}
 				}
