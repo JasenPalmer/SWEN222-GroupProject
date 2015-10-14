@@ -160,7 +160,7 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 		int x = Math.min(xClick1, xClick2);
 		int y = Math.min(yClick1, yClick2);
 
-		if(currentOption!=null && x >= 0 && x < map.getTiles().length && y >= 0 && y < map.getTiles().length){
+		if(currentOption!=null && x >= 0 && x < map.getTiles().length && y >= 0 && y < map.getTiles().length && canvas.getView().equals("Editor")){
 				while(x<=Math.max(xClick1, xClick2)){
 					while(y<=Math.max(yClick1, yClick2)){
 
