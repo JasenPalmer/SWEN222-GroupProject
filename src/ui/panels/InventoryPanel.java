@@ -12,7 +12,9 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -455,7 +457,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			break;
 		}
 		try{
-			File file = new File(soundPath);
+			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(soundPath));
 			effectClip = AudioSystem.getClip();
 			effectClip.open(AudioSystem.getAudioInputStream(file));
 			changeEffectVolume(initEffectVolume);

@@ -15,7 +15,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.sound.sampled.AudioSystem;
@@ -67,11 +69,11 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	private boolean wasOpen = false;
 
 	//Sound paths
-	private String buttonSound = "src/ui/sounds/buttonSound.wav";
-	private String deathSound = "src/ui/sounds/deathSound.wav";
-	private String track1 = "src/ui/sounds/track1.wav";
-	private String track2 = "src/ui/sounds/track2.wav";
-	private String fighting = "src/ui/sounds/fighting.wav";
+	private String buttonSound = "sounds/buttonSound.wav";
+	private String deathSound = "sounds/deathSound.wav";
+	private String track1 = "sounds/track1.wav";
+	private String track2 = "sounds/track2.wav";
+	private String fighting = "sounds/fighting.wav";
 
 	//Images
 	private String northCompass = "images/gui/compassNorth.png";
@@ -522,7 +524,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			break;
 		}
 		try{
-			File file = new File(track);
+			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(track));
 			musicClip = AudioSystem.getClip();
 			musicClip.open(AudioSystem.getAudioInputStream(file));
 			changeVolume(initVolume);

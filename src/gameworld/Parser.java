@@ -15,6 +15,7 @@ import gameworld.tile.Tile;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,9 +32,9 @@ public class Parser {
 
 	private static Set<Location> locations;
 
-	private static final String entitiesPath = "src/entities";
-	private static final String locationsPath = "src/locations";
-	private static final String entrancePath = "src/doors/doors.txt";
+	private static final String entitiesPath = "entities";
+	private static final String locationsPath = "locations";
+	private static final String entrancePath = "doors/doors.txt";
 
 	//######## Locations Parser ########//
 
@@ -46,7 +47,7 @@ public class Parser {
 		Set<Location> locs = new HashSet<Location>();
 		try{
 			//create the file holding all the location files
-			File locFolder = new File(locationsPath);
+			File locFolder = new File(Parser.class.getResource(locationsPath).toURI());
 			for(File file : locFolder.listFiles()) {
 				// open file
 				fileScan = new Scanner(file);
@@ -62,6 +63,8 @@ public class Parser {
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}catch(ParserException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 		finally {
@@ -178,7 +181,7 @@ public class Parser {
 	public static void loadEntityFiles() {
 		Scanner fileScan = null;
 		try {
-			File folder = new File(entitiesPath);
+			File folder = new File(Parser.class.getResource(entitiesPath).toURI());
 			for(File entList : folder.listFiles()) {
 				fileScan = new Scanner(entList);
 				String location = fileScan.nextLine();
@@ -196,6 +199,8 @@ public class Parser {
 			e.printStackTrace();
 		}catch(FileNotFoundException e) {
 			System.err.println("Entities file not found");
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}finally {
 			if(fileScan != null) {
@@ -267,7 +272,7 @@ public class Parser {
 	public static void loadDoors() {
 		Scanner fileScan = null;
 		try {
-			fileScan = new Scanner(new File(entrancePath));
+			fileScan = new Scanner(new File(Parser.class.getResource(entrancePath).toURI()));
 			while(fileScan.hasNextLine()) {
 				String doorScan = fileScan.nextLine();
 				//skip commented lines
@@ -301,6 +306,8 @@ public class Parser {
 			e.printStackTrace();
 		}catch(NumberFormatException e) {
 			System.err.println("Incorrect format with TO and/or FROM positions");
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}finally {
 			if(fileScan != null) {
