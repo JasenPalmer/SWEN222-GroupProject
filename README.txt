@@ -16,10 +16,9 @@ A - 	Move left.
 S - 	Move backwards.
 D -		Move right.
 F - 	Interact with objects. (Opening chests & loots corpses).
-Space - Attack.
-I - 	Toggle loot menu. Note: Player can't move with loot menu open.
+Space - Attack.	
 Tab - 	Toggle Inventory.
-Esc - 	Sound options.
+Esc - 	Sound options / Close loot menu. Note: Player can't move with loot menu open.
 Enter - Toggle Chat.
 
 Game Objectives:
