@@ -1,8 +1,8 @@
 package ui.panels;
 
 
-import gameworld.Player;
 import gameworld.entity.Armour;
+import gameworld.entity.Container;
 import gameworld.entity.Gold;
 import gameworld.entity.Item;
 import gameworld.entity.Potion;
@@ -39,9 +39,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 	private Client client;
 	private int initEffectVolume = -30;
 	private Clip effectClip;
+	private Container container;
 
 	//Sound paths
-	private String buttonSound = "sounds/buttonSound.wav";
+	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
 	public InventoryPanel(Client client){
 		setLayout(null);
@@ -75,6 +76,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 		}
 		return false;
+	}
+
+	public void setContainer(Container container){
+		this.container = container;
 	}
 
 	public void populateInventArray(){
@@ -300,6 +305,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 		case "Potion":
 			item = new Potion(name, desc, null, null);
 			break;
+		case "Gold":
+			String[] splitDesc = desc.split(" ");
+			item = new Gold("Gold", desc, null, null, Integer.parseInt(splitDesc[1]));
+			break;
 		}
 		return item;
 	}
@@ -410,6 +419,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				if(!lootOpen){
 					if(e.getX() < -2 || e.getY() < -3){
 						System.out.println("Dropped");
+						client.dropItem(movedItemIndex);
 					}
 				}
 				else{
@@ -419,12 +429,17 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 							for(int j = 0; j < inventArray[0].length; j++){
 								if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
 									if(inventArray[i][j].contains(movedItem.getX(), movedItem.getY())){
-										if(lootInvent.addItem(movedItem)){
-											inventArray[i][j] = new ItemIcon("Empty", "Placeholder");
-											playSound("Button");
-										}
-										else{
-											System.out.println("Loot inventory is full can't swap item");
+										if(this.container != null){
+											if(!isContainerFull()){	
+												playSound("Button");
+												client.addItemContainer(makeItem(inventArray[i][j].getName(), inventArray[i][j].getDescription()), this.container);
+												client.removeItem(convertIndex(i,j));
+											}
+											else{
+												System.out.println("Loot inventory is full can't swap item");
+											}
+										}else{
+											System.out.println("is null");
 										}
 									}
 								}
@@ -436,6 +451,18 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 			}
 
 		}
+	}
+
+	private boolean isContainerFull() {
+		if(this.container == null) return true;
+
+		for(int i = 0; i < this.container.getItems().length; i++){
+			if(this.container.getItems()[i] == null){
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public void changeEffectVolume(int change){
