@@ -4,6 +4,7 @@ import gameworld.entity.Armour;
 import gameworld.entity.Container;
 import gameworld.entity.Gold;
 import gameworld.entity.Item;
+import gameworld.entity.Key;
 import gameworld.entity.Weapon;
 
 import java.awt.event.MouseAdapter;
@@ -250,7 +251,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			item = new Armour("Potion", desc, null, null, Armour.ArmourType.Robe);
 			break;
 		case "Key":
-			item = new Armour("Key", desc, null, null, Armour.ArmourType.Robe);
+			item = new Key("Key", desc, null, null);
 			break;
 		case "Gold":
 			String[] splitDesc = desc.split(" ");
