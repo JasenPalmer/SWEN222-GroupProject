@@ -375,6 +375,20 @@ public class Server {
 			getClient(toProcess.getUser()).displayContainer(c);
 			inventNeedsUpdate = true;
 			break;
+		case ADD_ITEM_CONTAINER:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			gameState.addItemContainer(p, toProcess.getItem(), toProcess.getContainer());
+			inventNeedsUpdate = true;
+			break;
+		case USE_ITEM:
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			gameState.useItem(p, toProcess.getItem());
+			gameNeedsUpdate = true;
+			break;
+		case DROP_ITEM:
+			gameState.playerDropItem(toProcess.getUser(), toProcess.getIndex1());
+			gameNeedsUpdate = true;
+			break;
 		case UPDATE_GAME:
 			break;
 		case CLOSE:
@@ -557,6 +571,15 @@ public class Server {
 						eventQueue.add(currentEvent);
 						break;
 					case REMOVE_ITEM_CONTAINER:
+						eventQueue.add(currentEvent);
+						break;
+					case USE_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case DROP_ITEM:
+						eventQueue.add(currentEvent);
+						break;
+					case ADD_ITEM_CONTAINER:
 						eventQueue.add(currentEvent);
 						break;
 					case MESSAGE:

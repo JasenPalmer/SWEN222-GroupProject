@@ -125,6 +125,14 @@ public class NetworkEvent implements Serializable {
 		this.container = container;
 		this.swapIndex1 = index;
 	}
+	
+	public NetworkEvent(String user, EventType type, Item item, Container container){
+		this.user = user;
+		this.type = type;
+		this.item = item;
+		this.container = container;
+	}
+	
 
 	//Getters
 	public Point getPos() { return pos; }
@@ -154,7 +162,10 @@ public class NetworkEvent implements Serializable {
 		SWAP_ITEM,
 		DISPLAY_CONTAINER,
 		CLOSE,
-		REMOVE_ITEM_CONTAINER;
+		REMOVE_ITEM_CONTAINER,
+		USE_ITEM,
+		ADD_ITEM_CONTAINER,
+		DROP_ITEM;
 	}
 
 }

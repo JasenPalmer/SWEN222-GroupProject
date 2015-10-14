@@ -194,6 +194,39 @@ public class Client {
 		}
 	}
 	
+	public void useItem(Item item){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.USE_ITEM, item);
+		try {
+			output.writeObject(toWrite);
+			output.reset();
+			output.flush();
+		} catch (IOException e) {
+			System.err.println("Failed to write use item event to server");
+		}
+	}
+	
+	public void dropItem(int index){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.DROP_ITEM, index, -1);
+		try {
+			output.writeObject(toWrite);
+			output.reset();
+			output.flush();
+		} catch (IOException e) {
+			System.err.println("Failed to write drop item event to server");
+		}
+	}
+	
+	public void addItemContainer(int index, Container container){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM_CONTAINER, index, container);
+		try {
+			output.writeObject(toWrite);
+			output.reset();
+			output.flush();
+		} catch (IOException e) {
+			System.err.println("Failed to write add item container event to server");
+		}
+	}
+	
 
 	public void close(){
 		serverConnection.finish();
