@@ -15,7 +15,6 @@ public class Weapon extends Item {
 
 	private static final long serialVersionUID = -6003314303346702099L;
 
-	//private int damage = 5;
 	private WeaponType weaponType;
 
 	public Weapon(String name, String description, Point position,
@@ -34,6 +33,10 @@ public class Weapon extends Item {
 		//not sure what this should do
 	}
 
+	/**
+	 * @return the amount of damage this weapon deal according to the WeaponType
+	 * of this weapon
+	 */
 	public int getDamage() {
 		if(weaponType == null){
 			return 0;
@@ -41,6 +44,9 @@ public class Weapon extends Item {
 		return weaponType.getDamage();
 	}
 
+	/**
+	 * @return the WeaponType associated with this weapon
+	 */
 	public WeaponType getType() {
 		return weaponType;
 	}
@@ -50,15 +56,24 @@ public class Weapon extends Item {
 		return new Weapon(this);
 	}
 
+	/**
+	 * The weapon type determines the amount of damage that the weapon can deal
+	 * @author Jasen
+	 *
+	 */
 	public enum WeaponType {
 		Shank(15),
 		Spear(30);
 
 		private final int damage;
+		
 		private WeaponType(int damage) {
 			this.damage = damage;
 		}
 
+		/**
+		 * @return the amount of damage this type deals
+		 */
 		public int getDamage() {
 			return damage;
 		}

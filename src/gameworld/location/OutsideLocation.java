@@ -5,6 +5,7 @@ import gameworld.tile.Tile;
 
 /**
  * An outside location is a location the can contain a BuildingTiles array
+ * An outside location uses the outside tile images
  * @author Jasen
  *
  */
@@ -19,6 +20,18 @@ public class OutsideLocation extends Location {
 		this.buildingTiles = buildingTiles;
 	}
 	
+	public Tile[][] getBuildingTiles() {
+		return buildingTiles;
+	}
+	
+	public void setBuildingTiles(Tile[][] tiles){
+		this.buildingTiles = tiles;
+	}
+	
+	public void setBuildingTile(int x, int y, Tile t){
+		this.buildingTiles[y][x] = t;
+	}
+
 	public String toString(){
 		String toReturn = "";
 		toReturn += ""+name+"\n";
@@ -48,20 +61,5 @@ public class OutsideLocation extends Location {
 		}
 		return toReturn;
 	}
-	
-	// getters/setters
-	public Tile[][] getBuildingTiles() {
-		return buildingTiles;
-	}
-	
-	public void setBuildingTiles(Tile[][] tiles){
-		this.buildingTiles = tiles;
-	}
-	
-	public void setBuildingTile(int x, int y, Tile t){
-		this.buildingTiles[y][x] = t;
-	}
-
-
 	
 }

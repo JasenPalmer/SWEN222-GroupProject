@@ -36,7 +36,7 @@ public class Game implements Serializable {
 	/**
 	 * Get a location from the location name
 	 * @param locationName - name of the location to get
-	 * @return Location
+	 * @return Location or null if no location was found
 	 */
 	public Location getLocation(String locationName) {
 		for(Location loc : locations) {
@@ -67,7 +67,6 @@ public class Game implements Serializable {
 
 	/**
 	 * Move a player in a direction
-	 *
 	 * @param player to move
 	 * @param direction to move the player
 	 * @return 0 if the player didn't move, 1 if the player did move and 2 if the player changed location
@@ -172,7 +171,7 @@ public class Game implements Serializable {
 	 * Returns the player with the given name
 	 *
 	 * @param user - name of player
-	 * @return the player object
+	 * @return the player object or null if no player was found
 	 */
 	public Player parsePlayer(String user) {
 		for(Player p : players) {

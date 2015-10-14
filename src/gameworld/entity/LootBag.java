@@ -7,7 +7,7 @@ import gameworld.location.Location;
 
 /**
  * A loot bag is dropped when the player dies. 
- * It contains all of the items in the player's inventory
+ * It should contains all of the items in the player's inventory
  * @author Jasen
  *
  */

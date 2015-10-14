@@ -24,13 +24,6 @@ public abstract class Location implements Serializable{
 	protected Set<Player> players;
 	protected Lights lights = Lights.ON;
 	
-
-
-	public enum Lights {
-		ON,
-		OFF
-	}
-
 	public Location(String name, String description, Tile[][] tiles) {
 		this.name = name;
 		this.description = description;
@@ -60,12 +53,24 @@ public abstract class Location implements Serializable{
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * set this locations name
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	/**
 	 * @return the description of the location
 	 */
 	public String getDescritpion() {
 		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
@@ -131,20 +136,11 @@ public abstract class Location implements Serializable{
 		return toReturn;
 	}
 	
+	/**
+	 * @return the players that are currently in the location
+	 */
 	public Set<Player> getPlayers() {
 		return players;
-	}
-	
-	//setters
-
-	public void setName(String name) {
-		this.name = name;
-		
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-		
 	}
 
 	/**
@@ -170,12 +166,28 @@ public abstract class Location implements Serializable{
 		}
 	}
 
+	/**
+	 * @return the lighting status of the location
+	 */
 	public Lights getLights() {
 		return lights;
 	}
 
+	/**
+	 * set the lighting of the location
+	 * @param lights
+	 */
 	public void setLights(Lights lights) {
 		this.lights = lights;
+	}
+	
+	/**
+	 * Lights determine whether or not there is lighting in the location
+	 * @author Jasen
+	 */
+	public enum Lights {
+		ON,
+		OFF
 	}
 	
 }

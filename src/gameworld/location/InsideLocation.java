@@ -3,7 +3,8 @@ package gameworld.location;
 import gameworld.tile.Tile;
 
 /**
- * An inside location is a location that does not contain any building tiles array
+ * An inside location is a location that does not contain any building tiles array.
+ * An inside location will be drawn with the inside tile images
  * @author Jasen
  *
  */

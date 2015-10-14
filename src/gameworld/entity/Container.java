@@ -17,24 +17,14 @@ public abstract class Container implements InteractableEntity, Serializable {
 
 	private static final int INV_SIZE = 18;
 
-	/**
-	 * Items that are stored in the container
-	 */
 	protected Item[] items;
 
 	protected Player openedBy;
-
-	/**
-	 * Flag for if the container if locked
-	 */
 	protected boolean locked;
 
-	private Point position;
-
 	private String name;
-
 	private String description;
-
+	private Point position;
 	private Location location;
 
 	public Container(String name, String description, Point position, Location location) {
@@ -47,8 +37,7 @@ public abstract class Container implements InteractableEntity, Serializable {
 	}
 
 	/**
-	 *
-	 * @return The items in the container if the container is open otherwise null
+	 * @return the items in the container
 	 */
 	public Item[] getItems() {
 		return items;
@@ -87,10 +76,17 @@ public abstract class Container implements InteractableEntity, Serializable {
 		return false;
 	}
 
+	/**
+	 * @return true if the container is locked
+	 */
 	public boolean isLocked(){
 		return locked;
 	}
 
+	/**
+	 * set the locked status of the container
+	 * @param locked
+	 */
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
@@ -109,10 +105,20 @@ public abstract class Container implements InteractableEntity, Serializable {
 	public Point getPosition() {
 		return position;
 	}
+	
+	@Override
+	public void setPosition(Point position) {
+		this.position = position;
+	}
 
 	@Override
 	public Location getLocation() {
 		return location;
+	}
+	
+	@Override
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 

@@ -9,7 +9,6 @@ import java.awt.Point;
  * Armour can be equipped by a player can will reduce the amount of damage the player takes from an attack
  * according to the armour type
  * @author Jasen
- *
  */
 public class Armour extends Item {
 	
@@ -28,6 +27,9 @@ public class Armour extends Item {
 		this.armourType = a.armourType;
 	}
 
+	/**
+	 * @return armour rating - the amount of damage this armour blocks
+	 */
 	public int getArmourRating() {
 		if(armourType == null) {
 			return 0;
@@ -35,6 +37,9 @@ public class Armour extends Item {
 		return armourType.getArmourRating();
 	}
 	
+	/**
+	 * @return the type of armour this is
+	 */
 	public ArmourType getType() {
 		return armourType;
 	}
@@ -49,6 +54,10 @@ public class Armour extends Item {
 		return new Armour(this);
 	}
 	
+	/**
+	 * The type of armour determines the amount of damage reduction from an attack
+	 * @author Jasen
+	 */
 	public enum ArmourType {
 		Robe(2),
 		Leather(5),
@@ -60,6 +69,9 @@ public class Armour extends Item {
 			this.rating = damage;
 		}
 		
+		/**
+		 * @return the amount of damage that this armour type blocks
+		 */
 		public int getArmourRating() {
 			return rating;
 		}

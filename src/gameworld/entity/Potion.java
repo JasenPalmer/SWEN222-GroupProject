@@ -26,7 +26,7 @@ public class Potion extends Item {
 	}
 
 	/**
-	 * Heal the player by the amount specified by the field healAmount
+	 * Heal the player
 	 */
 	@Override
 	public void interact(Player player) {
