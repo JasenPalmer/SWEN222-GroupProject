@@ -13,9 +13,9 @@ import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +35,23 @@ public class Parser {
 	private static final String entitiesPath = "entities";
 	private static final String locationsPath = "locations";
 	private static final String entrancePath = "doors/doors.txt";
+	
+	private static final String[] locationNames = {
+		"big-maze.txt", "DiningRoom.txt", "HallRoom1.txt", "HallRoom2.txt",
+		"HallRoom3.txt", "HallRoom4.txt", "hallway.txt", "Hub.txt",
+		"inside.txt", "MAP.txt", "mattsDankMap.txt", "TRoom1.txt", 
+		"TRoom2.txt", "YEAH DANK.txt"
+	};
+	
+	private static final String[] entityNames = {
+		"big-maze-entites.txt", "DiningRoom-entites.txt",
+		"HallRoom1-entites.txt", "HallRoom2-entites.txt",
+		"HallRoom3-entites.txt", "HallRoom4-entites.txt",
+		"hallway-entites.txt", "Hub-entites.txt",
+		"inside-entites.txt", "MapEntities.txt",
+		"mattsDankMap-entites.txt", "TRoom1-entites.txt",
+		"TRoom2-entites.txt", "YEAH DANK-entites.txt"
+	};
 
 	//######## Locations Parser ########//
 
@@ -45,12 +62,13 @@ public class Parser {
 	public static Set<Location> loadLocations() {
 		Scanner fileScan = null;
 		Set<Location> locs = new HashSet<Location>();
+		Scanner folderScan = null;
 		try{
 			//create the file holding all the location files
-			File locFolder = new File(Parser.class.getResource(locationsPath).toURI());
-			for(File file : locFolder.listFiles()) {
+			for(String l : locationNames) {
 				// open file
-				fileScan = new Scanner(file);
+				InputStream locFile = Parser.class.getResourceAsStream(locationsPath+"/"+l);
+				fileScan = new Scanner(locFile);
 				// create the tile array for the location
 				Location loc = parseLocationTiles(fileScan);
 				if(loc != null){locs.add(loc);}
@@ -60,16 +78,15 @@ public class Parser {
 		}catch(NullPointerException e){
 			System.err.println("Path to location folder is incorrect");
 			e.printStackTrace();
-		}catch(FileNotFoundException e){
-			e.printStackTrace();
 		}catch(ParserException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 		finally {
 			if(fileScan != null) {
 				fileScan.close();
+			}
+			if(folderScan != null) {
+				folderScan.close();
 			}
 		}
 		locations = locs;
@@ -181,9 +198,9 @@ public class Parser {
 	public static void loadEntityFiles() {
 		Scanner fileScan = null;
 		try {
-			File folder = new File(Parser.class.getResource(entitiesPath).toURI());
-			for(File entList : folder.listFiles()) {
-				fileScan = new Scanner(entList);
+			for(String e : entityNames) {
+				InputStream entFile = Parser.class.getResourceAsStream(entitiesPath+"/"+e);
+				fileScan = new Scanner(entFile);
 				String location = fileScan.nextLine();
 				Location loc = getLocation(location);
 				if(loc == null){
@@ -196,11 +213,6 @@ public class Parser {
 				}
 			}
 		}catch(ParserException e) {
-			e.printStackTrace();
-		}catch(FileNotFoundException e) {
-			System.err.println("Entities file not found");
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}finally {
 			if(fileScan != null) {
@@ -272,7 +284,7 @@ public class Parser {
 	public static void loadDoors() {
 		Scanner fileScan = null;
 		try {
-			fileScan = new Scanner(new File(Parser.class.getResource(entrancePath).toURI()));
+			fileScan = new Scanner(Parser.class.getResource(entrancePath).openStream());
 			while(fileScan.hasNextLine()) {
 				String doorScan = fileScan.nextLine();
 				//skip commented lines
@@ -307,7 +319,7 @@ public class Parser {
 		}catch(NumberFormatException e) {
 			System.err.println("Incorrect format with TO and/or FROM positions");
 			e.printStackTrace();
-		} catch (URISyntaxException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
 			if(fileScan != null) {
