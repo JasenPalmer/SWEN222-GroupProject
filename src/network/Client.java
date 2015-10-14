@@ -138,7 +138,7 @@ public class Client {
 	}
 
 	/**
-	 * Creates a NetworkEvent storing
+	 * Creates a NetworkEvent storing no extra info and writes it, tells the server that a client needs an animation cycle.
 	 */
 	public void cycleAnimations(){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
@@ -151,6 +151,11 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing two indexes and writes it, telling the server to swap these items in this clients inventory
+	 * @param index1 - Start index
+	 * @param index2 - End index
+	 */
 	public void swapItems(int index1, int index2){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SWAP_ITEM, index1, index2);
 		try {
@@ -162,6 +167,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing one index and writes it, telling the server to remove the item at the index in the players inventory.
+	 * @param index - Index of item to be removed.
+	 */
 	public void removeItem(int index){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM, index, -1);
 		try {
@@ -173,6 +182,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing an item and writes it, tells the server to add this item to this players inventory.
+	 * @param item - Item to be added.
+	 */
 	public void addItem(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM, item);
 		try {
@@ -184,6 +197,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent Storing a weapon item and writes it, tells the server to equip this item on the player.
+	 * @param item - The weapon to be equipped.
+	 */
 	public void setWeapon(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_WEAPON, item);
 		try {
@@ -195,6 +212,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent Storing an armour item and writes it, tells the server to equip this item on the player.
+	 * @param item - The weapon to be equipped.
+	 */
 	public void setArmour(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.SET_ARMOUR, item);
 		try {
@@ -206,6 +227,11 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing an index and a container and writes it, tells the server to remove said indexes item from the container specified.
+	 * @param index - The index of the item to be removed.
+	 * @param container - The container to remove it from.
+	 */
 	public void removeItemContainer(int index, Container container){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.REMOVE_ITEM_CONTAINER, index, container);
 		try {
@@ -217,6 +243,10 @@ public class Client {
 		}
 	}
 	
+	/**
+	 * Creates a NetworkEvent storing an item and writes it, telling the server to use the item on this player.
+	 * @param item - The item to be used.
+	 */
 	public void useItem(Item item){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.USE_ITEM, item);
 		try {
@@ -228,6 +258,10 @@ public class Client {
 		}
 	}
 	
+	/**
+	 * Creates a NetworkEvent storing an index and writes it, telling the server to drop the item at the index from this players inventory.
+	 * @param index - The index of the item to be dropped.
+	 */
 	public void dropItem(int index){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.DROP_ITEM, index, -1);
 		try {
@@ -239,6 +273,11 @@ public class Client {
 		}
 	}
 	
+	/**
+	 * Creates a NetworkEvent storing an item and a container and writes it, telling the server to add the item to the container.
+	 * @param item - Item to be added.
+	 * @param container - Container to add the item to.
+	 */
 	public void addItemContainer(Item item, Container container){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM_CONTAINER, item, container);
 		try {
@@ -250,7 +289,12 @@ public class Client {
 		}
 	}
 	
-
+	/**
+	 * Stops the ServerThread.
+	 * Creates a NetworkEvent storing no information and writes it, telling the server to close the connection to this client.
+	 * Closes input and output to the server.
+	 * Closes this socket.
+	 */
 	public void close(){
 		serverConnection.finish();
 
