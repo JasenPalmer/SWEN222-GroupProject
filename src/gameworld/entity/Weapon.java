@@ -62,8 +62,8 @@ public class Weapon extends Item {
 	 *
 	 */
 	public enum WeaponType {
-		Shank(15),
-		Spear(30);
+		Shank(20),
+		Spear(35);
 
 		private final int damage;
 		

@@ -8,6 +8,7 @@ import gameworld.entity.Gold;
 import gameworld.entity.Item;
 import gameworld.entity.Key;
 import gameworld.entity.LootBag;
+import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
@@ -214,12 +215,12 @@ public class Player implements Serializable{
 		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
 		loot.storeItem(weapon);
 		loot.storeItem(armour);
-		loot.storeItem(new Key("Key","Key", null, null));
-		//loot.storeItem(new Gold("Gold", null, null, null, 4));
 		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank);
 		armour = new Armour("Robe Armour", "Robe Armour", null, null, Armour.ArmourType.Robe);
 		standingOn.setEntitiy(loot);
 		inventory = new Item[DEFAULT_INV_SIZE];
+		inventory[0] = new Key("Key", "A Key", null,null);
+		inventory[1] = new Potion("Potion", "Health Potion", null, null);
 		//respawn
 		standingOn.setPlayer(null);
 		location.removePlayer(this);
