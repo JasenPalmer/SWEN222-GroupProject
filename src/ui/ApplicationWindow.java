@@ -5,6 +5,7 @@ import gameworld.Player;
 import gameworld.entity.Armour;
 import gameworld.entity.Container;
 import gameworld.entity.Gold;
+import gameworld.entity.Key;
 import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
 
@@ -277,6 +278,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			option2List.add(new JMenuItem("Add Robe Armour"));
 			option2List.add(new JMenuItem("Add 5 gold"));
 			option2List.add(new JMenuItem("Add Potion"));
+			option2List.add(new JMenuItem("Add Key"));
 
 			for(JMenuItem jmItem : option2List){
 				option2.add(jmItem);
@@ -346,6 +348,9 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		case "Add 5 gold":
 			client.addItem(new Gold("Gold", "Gold: 5", null, null, 5));
 			break;		
+		case "Add Key":
+			client.addItem(new Key("Key", "Debugging Key", null, null));
+			break;
 		default:
 			break;
 		}
