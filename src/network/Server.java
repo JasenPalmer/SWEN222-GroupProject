@@ -349,38 +349,45 @@ public class Server {
 			
 			break;
 		case CYCLE_ANIMATIONS:
-			if (this.gameState.parsePlayer(toProcess.getUser()).isAttacking()) {
-				this.gameState.parsePlayer(toProcess.getUser()).getAnimation()
-						.cycleAttack();
+			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
+			if (p.isAttacking()) {
+				p.getAnimation().cycleAttack();
 				animationCycle(toProcess.getUser());
 			}
 			break;
 		case ADD_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			inventNeedsUpdate = p.addItem(toProcess.getItem());
 			break;
 		case REMOVE_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			p.removeItem(toProcess.getIndex1());
 			inventNeedsUpdate = true;
 			break;
 		case SWAP_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			p.swapItems(toProcess.getIndex1(), toProcess.getIndex2());
 			inventNeedsUpdate = true;
 			break;
 		case SET_WEAPON:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			p.setWeapon((Weapon) toProcess.getItem());
 			inventNeedsUpdate = true;
 			break;
 		case SET_ARMOUR:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			p.setArmour((Armour) toProcess.getItem());
 			inventNeedsUpdate = true;
 			break;
 		case REMOVE_ITEM_CONTAINER:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			Container c = gameState.removeItemContainer(p,
 					toProcess.getIndex1(), toProcess.getContainer());
 			getClient(toProcess.getUser()).displayContainer(c);
@@ -388,6 +395,7 @@ public class Server {
 			break;
 		case ADD_ITEM_CONTAINER:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			gameState.addItemContainer(p, toProcess.getItem(), toProcess.getContainer());
 			Container cont = gameState.performAction(toProcess.getUser());
 			if (cont != null)
@@ -396,6 +404,7 @@ public class Server {
 			break;
 		case USE_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
+			if(p == null) return;
 			gameState.useItem(p, toProcess.getItem());
 			inventNeedsUpdate = true;
 			break;
