@@ -216,8 +216,8 @@ public class Client {
 		}
 	}
 	
-	public void addItemContainer(int index, Container container){
-		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM_CONTAINER, index, container);
+	public void addItemContainer(Item item, Container container){
+		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.ADD_ITEM_CONTAINER, item, container);
 		try {
 			output.writeObject(toWrite);
 			output.reset();
