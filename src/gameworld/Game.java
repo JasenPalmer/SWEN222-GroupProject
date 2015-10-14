@@ -60,6 +60,8 @@ public class Game implements Serializable {
 	 * @param player to remove
 	 */
 	public void removePlayer(Player player) {
+		player.getStandingOn().setPlayer(null);
+		player.getLocation().removePlayer(player);
 		players.remove(player);
 	}
 
@@ -123,6 +125,13 @@ public class Game implements Serializable {
 		return true;
 	}
 	
+	/**
+	 * Add an item to a container. The container should be directly in front of the player
+	 * @param player doing the interacting
+	 * @param item to add
+	 * @param container - to add to
+	 * @return container that was added to
+	 */
 	public Container addItemContainer(Player player,Item item, Container container) {
 		Tile tile = player.getTile(player.getFacing());
 		if(tile != null) {
@@ -133,7 +142,7 @@ public class Game implements Serializable {
 				return con;
 			}
 		}
-		return null;
+		return container;
 	}
 	
 
