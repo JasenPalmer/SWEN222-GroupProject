@@ -133,7 +133,7 @@ public class Game implements Serializable {
 	 * Add an item to a container. The container should be directly in front of the player
 	 * @param player doing the interacting
 	 * @param item to add
-	 * @param container - to add to
+	 * @param container to add to
 	 * @return container that was added to
 	 */
 	public Container addItemContainer(Player player,Item item, Container container) {

@@ -10,7 +10,9 @@ import gameworld.entity.Weapon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -67,7 +69,6 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			for(int j = 0; j < itemList.length; j++){
 				if(itemList[j][i] == null){
 					itemList[j][i] = item;
-					System.out.println(itemList[j][i].getName() + " Added");
 					populateSlots();
 					return true;
 				}
@@ -86,10 +87,8 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		this.container = container;
 		
 		Item[] containerList = this.container.getItems();
-		System.out.println(containerList.length);
 		for(int i = 0; i < containerList.length; i++){
 			if(containerList[i]==null)continue;
-			System.out.println(containerList[i].getName());
 		}
 		
 		for(int i = 0; i < 6; i++){
@@ -215,7 +214,6 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		System.out.println(e.getX() + " " + e.getY());
 		if(movedItem != null){
 			if(inventOpen){
 				if(e.getX() > 473 && e.getX() < 691 && e.getY() > 573 && e.getY() < 709){
@@ -275,7 +273,6 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 		//-60 to 6
 		if(effectClip == null) return;
 		FloatControl volume = (FloatControl) effectClip.getControl(FloatControl.Type.MASTER_GAIN);
-		//System.out.println(volume);
 		volume.setValue(change);
 		initEffectVolume = change;
 	}
@@ -290,7 +287,7 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 			break;
 		}
 		try{
-			File file = new File(soundPath);
+			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(soundPath));
 			effectClip = AudioSystem.getClip();
 			effectClip.open(AudioSystem.getAudioInputStream(file));
 			changeEffectVolume(initEffectVolume);

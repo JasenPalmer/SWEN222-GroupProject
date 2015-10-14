@@ -3,7 +3,9 @@ package ui;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -21,8 +23,8 @@ import network.Server;
 public class MainMenuWindow extends JFrame implements ActionListener{
 
 	//Sound paths
-	private static final String buttonSound = "src/ui/sounds/buttonSound.wav";
-	private static final String music = "src/ui/sounds/mainMenuMusic.wav";
+	private static final String buttonSound = "sounds/buttonSound.wav";
+	private static final String music = "sounds/mainMenuMusic.wav";
 
 	//Button image paths
 	private static String join = "images/gui/joinButtonImage.png";
@@ -177,7 +179,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 			break;
 		}
 		try{
-			File file = new File(soundPath);
+			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(soundPath));
 			Clip clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(file));
 			clip.start();
@@ -188,7 +190,7 @@ public class MainMenuWindow extends JFrame implements ActionListener{
 
 	private void playMusic(){
 		try{
-			File file = new File(music);
+			InputStream file = new BufferedInputStream(getClass().getResourceAsStream(music));
 			musicClip = AudioSystem.getClip();
 			musicClip.open(AudioSystem.getAudioInputStream(file));
 			FloatControl volume = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
