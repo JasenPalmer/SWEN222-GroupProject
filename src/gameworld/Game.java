@@ -17,14 +17,12 @@ import java.util.Set;
  */
 public class Game implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 6103462087859564215L;
+	
 	public static enum Direction{NORTH, EAST, SOUTH, WEST};
 
 	private Set<Location> locations;
 	private Set<Player> players;
-	
-	public static final int scoreToWin = 10;
 
 	public Game() {
 		players = new HashSet<Player>();
@@ -69,7 +67,7 @@ public class Game implements Serializable {
 	 *
 	 * @param player to move
 	 * @param direction to move the player
-	 * @return true if the player moved successfully
+	 * @return 0 if the player didn't move, 1 if the player did move and 2 if the player changed location
 	 */
 	public int movePlayer(String playerName, Direction direction) {
 		Player player = parsePlayer(playerName);
@@ -96,7 +94,12 @@ public class Game implements Serializable {
 		return true;
 	}
 
-	
+	/**
+	 * Have the player interact with the container in front of them
+	 * 
+	 * @param playerName - name of the player
+	 * @return the container the player is interacting with
+	 */
 	public Container performAction(String playerName){
 		Player player = parsePlayer(playerName);
 		if(player == null){return null;}
@@ -133,7 +136,6 @@ public class Game implements Serializable {
 				return con;
 			}
 		}
-		//Figured returning null would be bad
 		return container;
 	}
 

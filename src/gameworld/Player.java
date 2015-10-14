@@ -82,13 +82,12 @@ public class Player implements Serializable{
 		weapon = new Weapon("Shank", "A Shank", null, null, Weapon.WeaponType.Shank);
 		inventory[0] = new Gold("Gold", "Gold", null, null, 5);
 		inventory[1] = new Key("Key","A Key",null,null);
-		
 	}
 
 	/**
-	 * Should be called when the action button is pressed (default F).
-	 * This method will pick up any item in front of the player or attempt to open a chest if there is one
-	 * @return true is an action was performed
+	 * Used to interact with containers.
+	 * Will attempt to unlock the container if it is locked
+	 * @return container that the player want to interact with
 	 */
 	protected Container performAction() {
 		Tile tile = this.getTile(facing);
@@ -119,6 +118,15 @@ public class Player implements Serializable{
 			return con;
 		}
 		return null;
+	}
+	
+	/**
+	 * Use the item in the players inventory at the specified index
+	 * @param index of item in the inventory
+	 */
+	public void useItem(int index) {
+		if(inventory[index] == null){return;}
+		inventory[index].interact(this);
 	}
 
 	/**
@@ -180,7 +188,7 @@ public class Player implements Serializable{
 	 */
 	protected boolean attack() {
 		if(weapon == null){return false;}
-		Tile tile = getTile(getFacing());
+		Tile tile = getTile(facing);
 		// nothing in front of the player
 		if(tile == null){return false;}
 		// if there is no player in front of the player return false
@@ -197,7 +205,7 @@ public class Player implements Serializable{
 		opponent.setHealth(opponent.getHealth()-damage);
 		if(opponent.getHealth() <= 0){
 			score++;
-			opponent.die();
+			opponent.respawn();
 		}
 		return true;
 	}
@@ -207,7 +215,7 @@ public class Player implements Serializable{
 	 * respawns the player in the specified starting location.
 	 * 
 	 */
-	protected void die() {
+	private void respawn() {
 		//drop inventory
 		Container loot = new LootBag("Loot Bag", "Player "+name+"'s items", position, location, inventory);
 		loot.storeItem(weapon);
@@ -647,7 +655,7 @@ public class Player implements Serializable{
 	}
 
 	/**
-	 * @return the score of the player ie the amount of players this player has killed
+	 * @return the score of the player
 	 */
 	public int getScore() {
 		return score;

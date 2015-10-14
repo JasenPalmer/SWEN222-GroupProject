@@ -57,13 +57,11 @@ public class Parser {
 				fileScan.close();
 			}
 		}catch(NullPointerException e){
-			System.err.println("Path to location folder is incorrect - "+e);
+			System.err.println("Path to location folder is incorrect");
 			e.printStackTrace();
 		}catch(FileNotFoundException e){
-			System.err.println("File was not found - "+e);
 			e.printStackTrace();
 		}catch(ParserException e) {
-			System.err.println("Parsing error - "+e.getMessage());
 			e.printStackTrace();
 		}
 		finally {
@@ -195,7 +193,6 @@ public class Parser {
 				}
 			}
 		}catch(ParserException e) {
-			System.err.println("Parsing error - "+e.getMessage());
 			e.printStackTrace();
 		}catch(FileNotFoundException e) {
 			System.err.println("Entities file not found");
@@ -301,7 +298,6 @@ public class Parser {
 			System.err.println("Entrance file not found");
 			e.printStackTrace();
 		}catch(ParserException e) {
-			System.err.println("Parsing error - "+e.getMessage());
 			e.printStackTrace();
 		}catch(NumberFormatException e) {
 			System.err.println("Incorrect format with TO and/or FROM positions");
