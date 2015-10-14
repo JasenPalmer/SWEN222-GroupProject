@@ -266,6 +266,10 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Takes the head of the queue and performs the necessary action depending on what type of action
+	 * was removed from the queue. i.e. if a key press, game.move is called, then movePlayer() is called.
+	 */
 	public synchronized void processEvents() {
 		NetworkEvent toProcess = eventQueue.poll();
 		if (toProcess == null)
@@ -307,6 +311,7 @@ public class Server {
 				break;
 			case KeyEvent.VK_SPACE:
 				gameNeedsUpdate = gameState.attackPlayer(toProcess.getUser());
+				gameNeedsUpdate = true;
 				break;
 			case KeyEvent.VK_F:
 				Container c = gameState.performAction(toProcess.getUser());
@@ -373,11 +378,15 @@ public class Server {
 			break;
 		}
 		if (gameNeedsUpdate)
-			updateGUI(gameState.parsePlayer(toProcess.getUser()));
+			updateGUIAll();
+			//updateGUI(gameState.parsePlayer(toProcess.getUser()));
 		if (inventNeedsUpdate)
 			updateInvent(gameState.parsePlayer(toProcess.getUser()));
 	}
 
+	/**
+	 * Closes all connections to the server, clears the connection list and finishes all threads.
+	 */
 	public synchronized void stopServer() {
 		for (ClientThread t : connections) {
 			t.close();
@@ -389,6 +398,11 @@ public class Server {
 		eventHandler.finish();
 	}
 
+	/**
+	 * Thread to continuously call processEvents while the game is running
+	 * @author Matt Byers
+	 *
+	 */
 	public class EventThread extends Thread {
 		private boolean finished = false;
 
@@ -396,6 +410,7 @@ public class Server {
 			while (!finished) {
 				processEvents();
 				try {
+					//Sleeps to avoid processing glitches
 					Thread.sleep(5);
 				} catch (InterruptedException e) {
 				}
@@ -407,6 +422,12 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Thread that is created for each client that connects, this deals with any updates from the clients,
+	 * as well as writes updates to the client when the server requires it to.
+	 * @author Matt Byers
+	 *
+	 */
 	public class ClientThread extends Thread {
 
 		// Socket of the associated client
@@ -428,17 +449,11 @@ public class Server {
 			console.displayEvent("Creating client thread");
 			this.socket = socket;
 
-			// Create input/output streams to the client's socket, then read the
-			// username.
+			// Create input/output streams to the client's socket, then read the username.
 			try {
-				// output = new
-				// ObjectOutputStream(this.socket.getOutputStream());
 				input = new ObjectInputStream(this.socket.getInputStream());
-				// console.displayEvent("Opening data streams for client");
 				output = new ObjectOutputStream(new BufferedOutputStream(
 						this.socket.getOutputStream()));
-				// input = new ObjectInputStream(new
-				// BufferedInputStream(this.socket.getInputStream()));
 
 				output.flush();
 
@@ -556,11 +571,7 @@ public class Server {
 		}
 
 		public synchronized void updateGUI() {
-			// console.displayEvent("Updating GUI for client: " + user +
-			// " with position at - " +
-			// gameState.parsePlayer(user).getPosition());
 			try {
-				// output.reset();
 				output.writeObject(new NetworkEvent(
 						gameState.parsePlayer(user),
 						NetworkEvent.EventType.UPDATE_GAME));
@@ -573,9 +584,6 @@ public class Server {
 		}
 
 		public synchronized void updateInvent() {
-			// console.displayEvent("Updating INVENT for client: " + user +
-			// " with position at - " +
-			// gameState.parsePlayer(user).getPosition());
 			try {
 
 				output.writeObject(new NetworkEvent(
@@ -591,7 +599,6 @@ public class Server {
 
 		public synchronized void sendMessage(String message, String senderUser) {
 			try {
-				// output.reset();
 				output.writeObject(new NetworkEvent(message, senderUser));
 				output.reset();
 				output.flush();
@@ -602,9 +609,7 @@ public class Server {
 		}
 
 		// Getters
-		public String getUser() {
-			return user;
-		}
+		public String getUser() { return user; }
 
 		public void close() {
 
@@ -614,8 +619,7 @@ public class Server {
 				output.close();
 				input.close();
 				socket.close();
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
 
 		}
 	}

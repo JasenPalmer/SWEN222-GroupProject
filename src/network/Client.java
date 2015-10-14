@@ -64,7 +64,6 @@ public class Client {
 			socket.setSendBufferSize(128000);
 			socket.setTcpNoDelay(true);
 			
-			//System.out.println(socket.getReceiveBufferSize() + " " + socket.getSendBufferSize());
 		} catch (IOException e){
 			System.err.println("Error creating new client: " + user + ". Cloisng game...");
 			gui.closeAppWindow();
