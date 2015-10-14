@@ -48,8 +48,6 @@ public class NetworkEvent implements Serializable {
 
 	//The destination index of an inventory item to be swapped, stays -1 if to be removed.
 	private int swapIndex2 = -1;
-	
-	private Point pos = null;
 
 	private Container container = null;
 
@@ -76,7 +74,11 @@ public class NetworkEvent implements Serializable {
 		this.user = user;
 	}
 	
-	
+	/**
+	 * Signals a client game state update.
+	 * @param state - The state of the game.
+	 * @param type - The type of event.
+	 */
 	public NetworkEvent(Player state, EventType type){
 		this.type = type;
 		this.user = "Server";
@@ -93,11 +95,16 @@ public class NetworkEvent implements Serializable {
 		this.user = user;
 	}
 
-	public NetworkEvent(String user, Game.Direction dir, Point pos){
+	/**
+	 * 
+	 * @param user
+	 * @param dir
+	 * @param pos
+	 */
+	public NetworkEvent(String user, Game.Direction dir){
 		this.type = EventType.MOVE_PLAYER;
 		this.user = user;
 		this.dir = dir;
-		this.pos = pos;
 	}
 
 	public NetworkEvent (String user, EventType type, Item item){
@@ -135,7 +142,6 @@ public class NetworkEvent implements Serializable {
 	
 
 	//Getters
-	public Point getPos() { return pos; }
 	public String getUser() { return user; }
 	public EventType getType() { return type; }
 	public int getKeyCode() { return keyCode; }
