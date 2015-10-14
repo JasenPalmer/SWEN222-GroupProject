@@ -551,11 +551,13 @@ public class Player implements Serializable{
 	 * @param health
 	 */
 	public void setHealth(int health) {
-		if(this.health - health <= 0){
+		if(health <= 0){
 			this.health = 0;
-		}else{
+		}
+		else {
 			this.health = health;
 		}
+		
 	}
 
 	/**
