@@ -1,0 +1,2 @@
+Hallway
+Chest	Chest	This is a chest	15	4

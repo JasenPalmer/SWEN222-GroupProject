@@ -1,0 +1,11 @@
+Hall Room 3
+BasicEntity	Table	This is a table.	2	2
+BasicEntity	Table	This is a table.	3	2
+BasicEntity	Table	This is a table.	4	2
+BasicEntity	Table	This is a table.	5	2
+BasicEntity	Table	This is a table.	6	2
+BasicEntity	Table	This is a table.	2	3
+BasicEntity	Chair	This is for sitting!	3	3
+BasicEntity	Chair	This is for sitting!	5	3
+BasicEntity	Table	This is a table.	6	3
+Chest	Chest	This is a chest	6	5

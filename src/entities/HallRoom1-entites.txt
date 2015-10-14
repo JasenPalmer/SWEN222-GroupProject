@@ -1,0 +1,6 @@
+Hall Room 1
+BasicEntity	Table	This is a table.	3	2
+BasicEntity	Table	This is a table.	4	2
+BasicEntity	Chair	This is for sitting!	5	2
+BasicEntity	Table	This is a table.	3	3
+BasicEntity	Table	This is a table.	4	3

@@ -47,8 +47,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	private String currentOption;
 	private JMenuBar bar;
 
-	private static int MAPHEIGHT = 30;
-	private static int MAPWIDTH = 30;
+	private static int MAPHEIGHT = 10;
+	private static int MAPWIDTH = 10;
 	private static int TILESIZE = 64;
 
 	int xClick1;

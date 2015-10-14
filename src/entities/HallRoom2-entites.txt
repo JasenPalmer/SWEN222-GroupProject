@@ -1,0 +1,7 @@
+Hall Room 2
+Chest	Chest	This is a chest	2	2
+BasicEntity	Chair	This is for sitting!	5	2
+BasicEntity	Table	This is a table.	6	2
+BasicEntity	Table	This is a table.	6	3
+BasicEntity	Chair	This is for sitting!	5	4
+BasicEntity	Table	This is a table.	6	4

@@ -1,20 +1,24 @@
 #Formatting:
 # (fromLocation)	(EntranceTile x)	(EntranceTile y)	(toLocation)	(exitTile x)	(exitTile y)
 #Note: exitTile is not an EntranceTile but the tile you want the player to move to
-Test Map	8	10	DANKLAND	2	2
-Test Map	11	26	Maze-big	0	1
-Test Map	26	22	Inside Test	14	6
-Maze-big	28	29	Test Map	12	26
-Inside Test	15	6	Test Map	26	23
-Test Map	1	1	mattsDankMap	2	5
-mattsDankMap	1	5	Test Map	1	2
+# Water Skipping thing
 Central Hub	14	29	Central Hub	18	29
 Central Hub	18	29	Central Hub	14	29
+# Maze
 Central Hub	2	29	Maze-big	1	0
 Maze-big	28	29	Central Hub	2	29
+# T-Shaped Room
 Central Hub	13	16	T Building 1	18	3
 T Building 1	18	2	Central Hub	13	15
 T Building 1	13	15	T Building 2	12	5
 T Building 2	12	4	T Building 1	13	14
+# Dining Room thing
 Central Hub	21	12	Dining Room	2	9
 Dining Room	1	9	Central Hub	20	12
+# Hallway Room
+Central Hub	10	7	Hallway	3	4
+Hallway	2	4	Central Hub	9	7
+Hallway	5	2	Hall Room 1	4	5
+Hall Room 1	4	6	Hallway	5	3
+Hallway	9	2	Hall Room 2	4	5
+Hall Room 2	4	6	Hallway	9	3

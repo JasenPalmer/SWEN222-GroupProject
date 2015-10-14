@@ -23,8 +23,8 @@ public class EditorCanvas extends JPanel {
 	private Location location;
 	private String view = "Editor";
 
-	private int MAPHEIGHT = 25;
-	private int MAPWIDTH = 25;
+	private int MAPHEIGHT = 10;
+	private int MAPWIDTH = 10;
 	private int TILESIZE = 64;
 	private int cameraX = 0;
 	private int cameraY = 0;
