@@ -1,0 +1,35 @@
+LootRoom
+BasicEntity	Bush	Bush	9	4
+BasicEntity	Bush	Bush	10	4
+BasicEntity	Bush	Bush	11	4
+BasicEntity	Bush	Bush	12	4
+BasicEntity	Bush	Bush	13	4
+BasicEntity	Bush	Bush	14	4
+BasicEntity	Bush	Bush	15	4
+BasicEntity	Bush	Bush	16	4
+BasicEntity	Bush	Bush	17	4
+BasicEntity	Bush	Bush	9	5
+BasicEntity	Bush	Bush	10	5
+BasicEntity	Bush	Bush	11	5
+Chest	Chest	This is a chest	12	5
+Chest	Chest	This is a chest	13	5
+Chest	Chest	This is a chest	14	5
+BasicEntity	Bush	Bush	15	5
+BasicEntity	Bush	Bush	16	5
+BasicEntity	Bush	Bush	17	5
+BasicEntity	Bush	Bush	9	6
+BasicEntity	Bush	Bush	10	6
+BasicEntity	Bush	Bush	16	6
+BasicEntity	Bush	Bush	17	6
+BasicEntity	Bush	Bush	9	7
+BasicEntity	Bush	Bush	10	7
+BasicEntity	Bush	Bush	16	7
+BasicEntity	Bush	Bush	17	7
+BasicEntity	Bush	Bush	9	8
+BasicEntity	Bush	Bush	10	8
+BasicEntity	Bush	Bush	11	8
+BasicEntity	Bush	Bush	12	8
+BasicEntity	Bush	Bush	14	8
+BasicEntity	Bush	Bush	15	8
+BasicEntity	Bush	Bush	16	8
+BasicEntity	Bush	Bush	17	8

@@ -41,7 +41,7 @@ public class Parser {
 		"big-maze.txt", "DiningRoom.txt", "HallRoom1.txt", "HallRoom2.txt",
 		"HallRoom3.txt", "HallRoom4.txt", "hallway.txt", "Hub.txt",
 		"inside.txt", "MAP.txt", "mattsDankMap.txt", "TRoom1.txt", 
-		"TRoom2.txt", "YEAH DANK.txt", "LongRoom.txt"
+		"TRoom2.txt", "YEAH DANK.txt", "LongRoom.txt", "LootRoom.txt"
 	};
 	
 	/**
@@ -55,7 +55,7 @@ public class Parser {
 		"inside-entites.txt", "MapEntities.txt",
 		"mattsDankMap-entites.txt", "TRoom1-entites.txt",
 		"TRoom2-entites.txt", "YEAH DANK-entites.txt",
-		"LongRoom-entites.txt"
+		"LongRoom-entites.txt", "LootRoom-entites.txt"
 	};
 
 	//######## Locations Parser ########//
