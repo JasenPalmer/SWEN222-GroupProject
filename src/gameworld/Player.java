@@ -21,9 +21,7 @@ import java.io.Serializable;
 
 /**
  * Represents a user controlled player within the game
- *
  * @author Jasen
- *
  */
 public class Player implements Serializable{
 
@@ -481,8 +479,10 @@ public class Player implements Serializable{
 		}
 	}
 
-	// getters and setters
-	
+	/**
+	 * set the direction that the player is facing
+	 * @param dir
+	 */
 	public void setFacing(Direction dir){
 		this.facing = dir;
 	}
@@ -557,7 +557,6 @@ public class Player implements Serializable{
 		else {
 			this.health = health;
 		}
-		
 	}
 
 	/**

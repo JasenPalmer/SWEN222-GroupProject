@@ -26,8 +26,18 @@ public interface Entity{
 	public Point getPosition();
 	
 	/**
+	 * sets the current position of the entity
+	 */
+	public void setPosition(Point position);
+	
+	/**
 	 * @return the location that the entity is in
 	 */
 	public Location getLocation();
+	
+	/**
+	 * set the current location of the entity
+	 */
+	public void setLocation(Location location);
 	
 }

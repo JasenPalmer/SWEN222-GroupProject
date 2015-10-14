@@ -23,33 +23,49 @@ public class EntranceTile extends Tile {
 	private Location exitLocation;
 	private Type type;
 
-	public enum Type {
-		BUILDING,
-		INVISIBLE,
-		TREE
-	}
+
 
 	public EntranceTile(String name, Point pos, boolean passable, Type type) {
 		super(name, pos, passable);
 		this.type = type;
 	}
 
+	/**
+	 * @return true if the entrance is locked
+	 */
 	public boolean isLocked() {
 		return locked;
 	}
 
+	/**
+	 * lock or unlock the entrance
+	 * @param locked
+	 */
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
 
+	/**
+	 * set the location that this entrance leads to
+	 * @param location
+	 */
 	public void setExitLoc(Location location) {
 		this.exitLocation = location;
 	}
 
+	/**
+	 * set the tile that is the exit point for this entrance
+	 * @param exit - tile that is the exit point
+	 */
 	public void setExitTile(Tile exit) {
 		this.exitTile = exit;
 	}
 
+	/**
+	 * have a player move through this entrance to a new location
+	 * @param player that is entering this entrance
+	 * @return true if the player successfully moved through into the new location
+	 */
 	public boolean enter(Player player) {
 		if(exitLocation == null || locked || exitTile == null) {
 			return false;
@@ -64,6 +80,9 @@ public class EntranceTile extends Tile {
 		return true;
 	}
 
+	/**
+	 * @return the type of entrance this is
+	 */
 	public Type getType() {
 		return type;
 	}
@@ -75,6 +94,16 @@ public class EntranceTile extends Tile {
 		} else {
 			return "EnV";
 		}
+	}
+	
+	/**
+	 * The different types of entrances there can be.
+	 * This determines the image that gets drawn for an entrance
+	 * @author Jasen
+	 */
+	public enum Type {
+		BUILDING,
+		INVISIBLE,
 	}
 
 }

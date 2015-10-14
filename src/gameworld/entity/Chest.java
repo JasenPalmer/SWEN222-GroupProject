@@ -9,14 +9,18 @@ import java.util.Random;
 
 /**
  * A chest it a type of container.
- * When a chest is created it will randomly generate 1-3 items in its inventory.
- *
+ * When a chest is created it will randomly generate items in its inventory.
  * @author Jasen
- *
  */
 public class Chest extends Container implements Serializable{
 
 	private static final long serialVersionUID = -1295269831652028875L;
+	
+	private static final int maxItemAmount = 3;
+	
+	private static final int commonChance = 60;
+	//private static final int rareChance = 30;
+	private static final int epicChance = 10;
 
 	private Item[] epicItems; // 10%
 	private Item[] rareItems; // 30%
@@ -35,9 +39,7 @@ public class Chest extends Container implements Serializable{
 	private void initializeArrays() {
 		commonItems = new Item[] {
 				//weapons
-				//new ShankWeapon("Shank", "A basic weapon", null, null),
 				//armour
-				//new RobeArmour("Robe armour", "Provides very basic protection", null, null),
 				new Armour("Leather Armour", "Leather Armour",null, null, Armour.ArmourType.Leather),
 				//misc
 				new Potion("Potion", "Health Potion", null, null)
@@ -62,11 +64,10 @@ public class Chest extends Container implements Serializable{
 	}
 
 	/**
-	 * Randomly generate 1-3 items in the chest
+	 * Randomly generate items in the chest
 	 */
 	private void generateItems() {
-		int itemAmount = (new Random().nextInt(3))+1;
-		//int itemAmount = 8;
+		int itemAmount = (new Random().nextInt(maxItemAmount))+1;
 		for(int i = 0; i < itemAmount; i++) {
 			items[i] = createItem();
 		}
@@ -78,10 +79,10 @@ public class Chest extends Container implements Serializable{
 	 */
 	private Item createItem() {
 		int itemType = new Random().nextInt(100);
-		if(itemType < 60) {
+		if(itemType < commonChance) {
 			return createCommon();
 		}
-		else if(itemType >=60 && itemType < 90) {
+		else if(itemType >=commonChance && itemType < 100-epicChance) {
 			return createRare();
 		}
 		else {
@@ -89,16 +90,28 @@ public class Chest extends Container implements Serializable{
 		}
 	}
 
+	/**
+	 * creates a common level item
+	 * @return random common item
+	 */
 	private Item createCommon() {
 		int index = new Random().nextInt(commonItems.length);
 		return commonItems[index].clone();
 	}
 
+	/**
+	 * creates a rare level item
+	 * @return random rare item
+	 */
 	private Item createRare() {
 		int index = new Random().nextInt(rareItems.length);
 		return rareItems[index].clone();
 	}
 
+	/**
+	 * creates a epic level item
+	 * @return random epic level item
+	 */
 	private Item createEpic() {
 		int index = new Random().nextInt(epicItems.length);
 		return epicItems[index].clone();

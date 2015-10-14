@@ -10,10 +10,8 @@ import java.io.Serializable;
 
 
 /**
- * This class represents a key that can be used to either open a door or a container
- *
+ * This class represents a key that can be used to unlock a container or an EntranceTile
  * @author Jasen
- *
  */
 public class Key extends Item implements Serializable{
 
@@ -27,6 +25,10 @@ public class Key extends Item implements Serializable{
 		super(key.name, key.description, key.position, key.location);
 	}
 
+	/**
+	 * Interacting with a key causes it to be used unlock the container or Entrance (if there is one)
+	 * in front of the player. 
+	 */
 	@Override
 	public void interact(Player player) {
 		Tile tile = player.getTile(player.getFacing());

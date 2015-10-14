@@ -52,6 +52,13 @@ public class Server {
 	// Main instance of game, that will be sent to clients
 	private Game gameState;
 
+	/**
+	 * Creates a new Console window.
+	 * Initialises Storage arrays.
+	 * Creates the main Game instance.
+	 * Starts Processing Thread
+	 * Creates and starts the main ServerSocket
+	 */
 	public Server() {
 		console = new ServerWindow(this);
 
@@ -66,6 +73,10 @@ public class Server {
 		start();
 	}
 
+	/**
+	 * Creates a ServerSocket
+	 * Continuously wait for connections until the game is finished.
+	 */
 	public void start() {
 		try {
 			serverSocket = new ServerSocket(PORT);
@@ -401,10 +412,11 @@ public class Server {
 		}
 		
 		
-		//Updates the necessary part of the client.
+		//Updates gameState of client
 		if (gameNeedsUpdate)
-			//updateGUIAll();
 			updateGUI(gameState.parsePlayer(toProcess.getUser()));
+		
+		//Updates gameState of client and re-populates inventory panel.
 		if (inventNeedsUpdate)
 			updateInvent(gameState.parsePlayer(toProcess.getUser()));
 	}
@@ -468,8 +480,16 @@ public class Server {
 		// The last event read from the sockets input stream
 		private NetworkEvent currentEvent;
 
+		//Tells the ClientThread to keep going
 		private boolean finished = false;
 
+		/**
+		 * Creates a new ClientThread with a connection to the Client Socket,
+		 * reads the username from the client.
+		 * Creates a new player with the username and adds the player to the GameState.
+		 * Updates the GUI of all players to display the new player
+		 * @param socket - The Client Socket.
+		 */
 		public ClientThread(Socket socket) {
 			console.displayEvent("Creating client thread");
 			this.socket = socket;
@@ -494,6 +514,10 @@ public class Server {
 			updateGUIAll();
 		}
 
+		/**
+		 * Creates a NetworkEvent telling the client to move the specified player on their local gameState.
+		 * @param movingUser - The player to move.
+		 */
 		public void movePlayer(String movingUser) {
 			try {
 				output.writeObject(new NetworkEvent(movingUser, gameState
@@ -506,6 +530,10 @@ public class Server {
 			}
 		}
 
+		/**
+		 * Creates and writes a NetworkEvent telling the client to cycle the animations of the specified player.
+		 * @param cycleUser - The user who is animating currently.
+		 */
 		public void animationCycle(String cycleUser) {
 			try {
 				output.writeObject(new NetworkEvent(this.user,
@@ -518,6 +546,10 @@ public class Server {
 			}
 		}
 
+		/**
+		 * Creates and writes  NetworkEvent with as container, telling this client to display the given container.
+		 * @param c - The container to be displayed.
+		 */
 		public void displayContainer(Container c) {
 			try {
 
@@ -530,6 +562,10 @@ public class Server {
 			}
 		}
 
+		/**
+		 * Continuously trys to read objects from the client, and if one is read the correct action on the server
+		 * will be taken. Added to a queue if it needs to be processed or displayed etc.
+		 */
 		public void run() {
 			console.displayEvent("Client thread for " + user + " is running...");
 
@@ -601,6 +637,10 @@ public class Server {
 			}
 		}
 
+		/**
+		 * Creates and writes NetworkEvent with a Player object correspondent to this client,
+		 * telling the client to update their local copy with the new version.
+		 */
 		public synchronized void updateGUI() {
 			try {
 				output.writeObject(new NetworkEvent(
@@ -614,6 +654,10 @@ public class Server {
 			}
 		}
 
+		/**
+		 * Creates and writes NetworkEvent with a Player object correspondent to this client,
+		 * telling the client to update their local copy with the new version, and re-populate the inventory panel.
+		 */
 		public synchronized void updateInvent() {
 			try {
 
@@ -628,6 +672,12 @@ public class Server {
 			}
 		}
 
+		/**
+		 * Creates and writes NetworkEvent with a message and a sender, telling the cleint
+		 * to display a message in the chat box.
+		 * @param message - The message to be displayed.
+		 * @param senderUser - The user who sent the message, or Server.
+		 */
 		public synchronized void sendMessage(String message, String senderUser) {
 			try {
 				output.writeObject(new NetworkEvent(message, senderUser));
@@ -642,6 +692,13 @@ public class Server {
 		// Getters
 		public String getUser() { return user; }
 
+		/**
+		 * Finish the main loop.
+		 * Remove this player from the main game state.
+		 * close the input and output to the client.
+		 * Close the socket.
+		 * UpdateGUI of remaining client so they know someone has left.
+		 */
 		public void close() {
 
 			finished = true;

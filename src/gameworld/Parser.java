@@ -24,9 +24,7 @@ import java.util.Set;
 
 /**
  * The Parser contains static methods used by the game class to load in the locations, entities and doors
- *
  * @author Jasen
- *
  */
 public class Parser {
 
@@ -36,13 +34,19 @@ public class Parser {
 	private static final String locationsPath = "locations";
 	private static final String entrancePath = "doors/doors.txt";
 	
+	/**
+	 * list of the location files names
+	 */
 	private static final String[] locationNames = {
 		"big-maze.txt", "DiningRoom.txt", "HallRoom1.txt", "HallRoom2.txt",
 		"HallRoom3.txt", "HallRoom4.txt", "hallway.txt", "Hub.txt",
 		"inside.txt", "MAP.txt", "mattsDankMap.txt", "TRoom1.txt", 
-		"TRoom2.txt", "YEAH DANK.txt"
+		"TRoom2.txt", "YEAH DANK.txt", "LongRoom.txt"
 	};
 	
+	/**
+	 * List of the entity file names
+	 */
 	private static final String[] entityNames = {
 		"big-maze-entites.txt", "DiningRoom-entites.txt",
 		"HallRoom1-entites.txt", "HallRoom2-entites.txt",
@@ -50,14 +54,14 @@ public class Parser {
 		"hallway-entites.txt", "Hub-entites.txt",
 		"inside-entites.txt", "MapEntities.txt",
 		"mattsDankMap-entites.txt", "TRoom1-entites.txt",
-		"TRoom2-entites.txt", "YEAH DANK-entites.txt"
+		"TRoom2-entites.txt", "YEAH DANK-entites.txt",
+		"LongRoom-entites.txt"
 	};
 
 	//######## Locations Parser ########//
 
 	/**
 	 * Create all locations from a folder
-	 * @param folderName - name of the folder containing location files
 	 */
 	public static Set<Location> loadLocations() {
 		Scanner fileScan = null;
@@ -177,9 +181,6 @@ public class Parser {
 				break;
 			case "EnV":
 				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.INVISIBLE);
-				break;
-			case "EnT":
-				tile = new EntranceTile("Entrance", new Point(x,y), false, EntranceTile.Type.TREE);
 				break;
 			case "Fl":
 				tile = new FloorTile("Floor", new Point(x,y),true);
