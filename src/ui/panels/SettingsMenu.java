@@ -13,9 +13,17 @@ import javax.swing.event.ChangeListener;
 
 import ui.ApplicationWindow;
 
+/**
+ * Settings menu that contains controls for adjusting music volumes and tracks
+ * @author ItsNotAGoodTime
+ *
+ */
 public class SettingsMenu extends JPanel implements ChangeListener, ActionListener{
 
+	//Application window this settings panel is contained within
 	private ApplicationWindow window;
+	
+	//Initial volumes set
 	private static final int MIN_VOLUME = 26;
 	private static final int MAX_VOLUME = 86;
 	private static final int INIT_VOLUME = 50;
@@ -26,6 +34,10 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 	private static final String sfxVolumeImage = "src/ui/images/gui/sfxVolume.png";
 	private static final String toggleImage = "src/ui/images/gui/toggle.png";
 
+	/**
+	 * Populates and configures layout of the settings menu
+	 * @param window - Application window this settings menu is contained within
+	 */
 	public SettingsMenu(ApplicationWindow window){
 		this.window = window;
 		setLayout(null);
@@ -81,6 +93,9 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 		toggleMusic.addActionListener(this);
 	}
 
+	/**
+	 * Adjusts volume in all necessary panels when sliders are changed
+	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		JSlider source = (JSlider)e.getSource();
@@ -106,6 +121,9 @@ public class SettingsMenu extends JPanel implements ChangeListener, ActionListen
 		}
 	}
 
+	/**
+	 * Changes music on button press
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){

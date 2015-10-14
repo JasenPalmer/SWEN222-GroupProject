@@ -9,8 +9,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Background image panel for containers
+ * @author ItsNotAGoodTime
+ *
+ */
 public class LootInventoryBackground extends JPanel{
 	
+	//Background image
 	private Image backgroundImage; 
 	
 	public LootInventoryBackground(){
@@ -24,6 +30,7 @@ public class LootInventoryBackground extends JPanel{
 		setBounds(0, 0, 360, 240);	
 	}
 	
+	//Paints this panel using the background image
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0, 0, null);
