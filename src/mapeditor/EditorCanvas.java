@@ -1,15 +1,13 @@
 package mapeditor;
 
 import gameworld.Game;
-import gameworld.Player;
 import gameworld.entity.BasicEntity;
 import gameworld.location.InsideLocation;
 import gameworld.location.Location;
 import gameworld.location.OutsideLocation;
 import gameworld.tile.EntranceTile;
-import gameworld.tile.FloorTile;
-import gameworld.tile.Tile;
 import gameworld.tile.EntranceTile.Type;
+import gameworld.tile.Tile;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,7 +16,6 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import ui.ImageStorage;
-import ui.RenderingWindow;
 
 
 public class EditorCanvas extends JPanel {

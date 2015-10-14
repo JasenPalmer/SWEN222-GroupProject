@@ -1,42 +1,82 @@
 mattsDankMap
+BasicEntity	Tree	This is a tree. Just a tree.	1	0
+Chest	Chest	This is a chest	2	0
+BasicEntity	Tree	This is a tree. Just a tree.	3	0
+BasicEntity	Tree	This is a tree. Just a tree.	7	0
+Chest	Chest	This is a chest	8	0
+BasicEntity	Tree	This is a tree. Just a tree.	9	0
+BasicEntity	Tree	This is a tree. Just a tree.	13	0
+Chest	Chest	This is a chest	14	0
+BasicEntity	Tree	This is a tree. Just a tree.	15	0
+BasicEntity	Bush	Bush	1	1
 BasicEntity	Bush	Bush	3	1
-BasicEntity	Bush	Bush	5	1
 BasicEntity	Bush	Bush	7	1
 BasicEntity	Bush	Bush	9	1
-BasicEntity	Bush	Bush	11	1
+BasicEntity	Bush	Bush	13	1
+BasicEntity	Bush	Bush	15	1
+BasicEntity	Bush	Bush	1	2
 BasicEntity	Bush	Bush	3	2
-BasicEntity	Bush	Bush	5	2
 BasicEntity	Bush	Bush	7	2
 BasicEntity	Bush	Bush	9	2
-BasicEntity	Bush	Bush	11	2
+BasicEntity	Bush	Bush	13	2
+BasicEntity	Bush	Bush	15	2
+BasicEntity	Bush	Bush	1	3
 BasicEntity	Bush	Bush	3	3
-BasicEntity	Bush	Bush	5	3
 BasicEntity	Bush	Bush	7	3
 BasicEntity	Bush	Bush	9	3
-BasicEntity	Bush	Bush	11	3
+BasicEntity	Bush	Bush	13	3
+BasicEntity	Bush	Bush	15	3
+BasicEntity	Bush	Bush	0	4
+BasicEntity	Bush	Bush	1	4
 BasicEntity	Bush	Bush	3	4
+BasicEntity	Bush	Bush	4	4
 BasicEntity	Bush	Bush	5	4
+BasicEntity	Bush	Bush	6	4
 BasicEntity	Bush	Bush	7	4
 BasicEntity	Bush	Bush	9	4
+BasicEntity	Bush	Bush	10	4
 BasicEntity	Bush	Bush	11	4
-Chest	Chest	This is a chest	11	5
+BasicEntity	Bush	Bush	12	4
+BasicEntity	Bush	Bush	13	4
+BasicEntity	Tree	This is a tree. Just a tree.	15	4
+Chest	Chest	This is a chest	15	5
+BasicEntity	Bush	Bush	0	6
+BasicEntity	Bush	Bush	1	6
 BasicEntity	Bush	Bush	3	6
+BasicEntity	Bush	Bush	4	6
 BasicEntity	Bush	Bush	5	6
+BasicEntity	Bush	Bush	6	6
 BasicEntity	Bush	Bush	7	6
 BasicEntity	Bush	Bush	9	6
+BasicEntity	Bush	Bush	10	6
 BasicEntity	Bush	Bush	11	6
+BasicEntity	Bush	Bush	12	6
+BasicEntity	Bush	Bush	13	6
+BasicEntity	Tree	This is a tree. Just a tree.	15	6
+BasicEntity	Bush	Bush	1	7
 BasicEntity	Bush	Bush	3	7
-BasicEntity	Bush	Bush	5	7
 BasicEntity	Bush	Bush	7	7
 BasicEntity	Bush	Bush	9	7
-BasicEntity	Bush	Bush	11	7
+BasicEntity	Bush	Bush	13	7
+BasicEntity	Bush	Bush	15	7
+BasicEntity	Bush	Bush	1	8
 BasicEntity	Bush	Bush	3	8
-BasicEntity	Bush	Bush	5	8
 BasicEntity	Bush	Bush	7	8
 BasicEntity	Bush	Bush	9	8
-BasicEntity	Bush	Bush	11	8
+BasicEntity	Bush	Bush	13	8
+BasicEntity	Bush	Bush	15	8
+BasicEntity	Bush	Bush	1	9
 BasicEntity	Bush	Bush	3	9
-BasicEntity	Bush	Bush	5	9
 BasicEntity	Bush	Bush	7	9
 BasicEntity	Bush	Bush	9	9
-BasicEntity	Bush	Bush	11	9
+BasicEntity	Bush	Bush	13	9
+BasicEntity	Bush	Bush	15	9
+BasicEntity	Tree	This is a tree. Just a tree.	1	10
+Chest	Chest	This is a chest	2	10
+BasicEntity	Tree	This is a tree. Just a tree.	3	10
+BasicEntity	Tree	This is a tree. Just a tree.	7	10
+Chest	Chest	This is a chest	8	10
+BasicEntity	Tree	This is a tree. Just a tree.	9	10
+BasicEntity	Tree	This is a tree. Just a tree.	13	10
+Chest	Chest	This is a chest	14	10
+BasicEntity	Tree	This is a tree. Just a tree.	15	10

@@ -66,7 +66,8 @@ public class Client {
 			
 			//System.out.println(socket.getReceiveBufferSize() + " " + socket.getSendBufferSize());
 		} catch (IOException e){
-			System.err.println("Error creating new client: " + user);
+			System.err.println("Error creating new client: " + user + ". Cloisng game...");
+			gui.closeAppWindow();
 			return;
 		}
 
@@ -80,7 +81,8 @@ public class Client {
 
 			output.flush();
 		} catch (IOException e){
-			System.err.println("Error opening object streams for client: " + user);
+			System.err.println("Error opening object streams for client: " + user+ ". Closing game...");
+			gui.closeAppWindow();
 			return;
 		}
 
@@ -89,7 +91,9 @@ public class Client {
 			output.writeObject(user);
 			output.flush();
 		} catch (IOException e) {
-			System.err.println("Error writing to output stream for client: " + user);
+			System.err.println("Error writing username to output stream " + user + ". Closing game...");
+			gui.closeAppWindow();
+			return;
 		}
 	}
 
@@ -100,7 +104,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write key press to server");
 		}
 	}
 
@@ -110,7 +114,7 @@ public class Client {
 			output.writeObject(toWrite);
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write message to server");
 		}
 	}
 
@@ -121,7 +125,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write animation cycle to server");
 		}
 	}
 
@@ -132,7 +136,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write swap items in inventory event to server");
 		}
 	}
 
@@ -143,7 +147,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write remove item from inventory event to server");
 		}
 	}
 
@@ -154,7 +158,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write add item to inventory event to server");
 		}
 	}
 
@@ -165,7 +169,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write set weapon event to server");
 		}
 	}
 
@@ -176,7 +180,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write set armour to server");
 		}
 	}
 
@@ -187,7 +191,7 @@ public class Client {
 			output.reset();
 			output.flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Failed to write remove item from container event to server");
 		}
 	}
 	
@@ -225,7 +229,13 @@ public class Client {
 					gui.closeAppWindow();
 					close();
 				}
+				catch(NullPointerException e) {
+					System.err.println("Connection to the server could not be established, closing game...");
+					gui.closeAppWindow();
+					close();
+				}
 				catch (ClassNotFoundException e) {}
+				
 
 				if(event == null) return;
 				

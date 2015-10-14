@@ -16,3 +16,5 @@ Central Hub	13	16	T Building 1	18	3
 T Building 1	18	2	Central Hub	13	15
 T Building 1	13	15	T Building 2	12	5
 T Building 2	12	4	T Building 1	13	14
+Central Hub	21	12	Dining Room	2	9
+Dining Room	1	9	Central Hub	20	12
