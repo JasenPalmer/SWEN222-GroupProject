@@ -29,7 +29,7 @@ public class Game implements Serializable {
 		players = new HashSet<Player>();
 		locations = Parser.loadLocations();
 		Parser.loadEntityFiles();
-		Parser.loadDoors();
+		Parser.loadEntrances();
 		getLocation("Maze-big").setLights(Lights.OFF);
 	}
 

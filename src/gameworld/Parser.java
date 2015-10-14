@@ -277,12 +277,12 @@ public class Parser {
 		}
 	}
 
-	//######## Door Parser ########//
+	//######## Entrance Parser ########//
 
 	/**
 	 * Load all doors for all locations
 	 */
-	public static void loadDoors() {
+	public static void loadEntrances() {
 		Scanner fileScan = null;
 		try {
 			fileScan = new Scanner(Parser.class.getResource(entrancePath).openStream());
