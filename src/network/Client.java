@@ -319,9 +319,20 @@ public class Client {
 	//Getters
 	public Player getState(){ return state; }
 
+	/**
+	 * 
+	 * @author Matt
+	 * 
+	 * ServerThread that continuously looks for updates from the Server
+	 *
+	 */
 	public class ServerThread extends Thread {
 		private boolean finished = false;
-
+		
+		/**
+		 * Continuously tries to read updates from the server if one is found, appropriate methods in gui are called,
+		 * and the gamestate is updated as required.
+		 */
 		public void run() {
 			while(!finished) {
 				NetworkEvent event = null;
@@ -351,13 +362,14 @@ public class Client {
 					if(event.getState() != null) state = event.getState();
 					break;
 				case UPDATE_INVENT:
-					System.out.println("Received update invent event");
 					if(event.getState() != null) state = event.getState();
 					if(gui.getInventPanel() != null) gui.getInventPanel().populateInventArray();
 					break;
 				case MOVE_PLAYER:
+					//Stops concurrent errors
 					tempPlayers = new HashSet<Player>();
 					tempPlayers.addAll(state.getLocation().getPlayers());
+					
 					synchronized(tempPlayers){
 						for(Player p : tempPlayers){
 							if(p.getName().equals(event.getUser())){
@@ -386,13 +398,14 @@ public class Client {
 				case CLOSE:
 					if(event.getUser().equals("Server")) close();
 					break;
-				case KEY_PRESS:
-					break;
 				default:
 					break;
 				}
 			}
 		}
+		/**
+		 * Stop the ServerThreads main loop.
+		 */
 		public void finish(){
 			finished = true;
 		}
