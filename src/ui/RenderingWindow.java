@@ -50,7 +50,7 @@ public class RenderingWindow extends JPanel{
 
 	/**
 	 * Rotates tile arrays depending on the current viewing direction and then calls the isometric
-	 * renderer on the resulting arrays
+	 * renderer on the resulting arrays. Then renders the lighting if the location requires it to.
 	 */
 	public void paint( Graphics g ) {
 		super.paint(g);

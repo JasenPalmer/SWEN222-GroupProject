@@ -9,19 +9,24 @@ To play multiplayer online, the host needs to port forward. As in singleplayer, 
 
 Game Controls:
 
-Q - Rotate camera counter-clockwise.
-E - Rotate camera clockwise.
-W - Move forward.
-A - Move left.
-S - Move backwards.
-D - Move right.
-F - Interact with objects. (Opening chests).
+Q - 	Rotate camera counter-clockwise.
+E - 	Rotate camera clockwise.
+W - 	Move forward.
+A - 	Move left.
+S - 	Move backwards.
+D -		Move right.
+F - 	Interact with objects. (Opening chests & loots corpses).
 Space - Attack.
-I - Toggle loot menu. Note: Player can't move with loot menu open.
-Tab - Toggle Inventory.
-Esc - Sound options.
+I - 	Toggle loot menu. Note: Player can't move with loot menu open.
+Tab - 	Toggle Inventory.
+Esc - 	Sound options.
 Enter - Toggle Chat.
 
+Game Objectives:
+
+To simply kill players and loot the map. To open a chest you need a key and you only start with one. 
+Opening a chest breaks the key and if you were unlucky enough to not find one in the chest, 
+you will need to get another by killing a player.
 
 To Run Map Editor:
 
@@ -30,7 +35,7 @@ Run "EditorFrame.java" in the mapeditor package. Write either "outside" or "insi
 Editor Controls:
 
 W - Move Camera up.
-A - Move Camera left.
+A -	Move Camera left.
 S - Move Camera down.
 D - Move Camera right.
 
@@ -41,3 +46,17 @@ Using the Editor:
 - 	To save, hit file, save and then fill in a map name and description. This will then create two files, <mapname>.txt and <mapname>-entites.txt.
 	These need to be moved into the correct entites and locations folder. From there a txt file connects the doors named door.txt and needs to be 
 	editted to display the locations in the game.
+	
+
+The Map Editor has many problems I didn't have time to fix due to higher priorities and constantly needing to update how it worked.
+
+Creating entrances on INSIDE Buildings:
+	
+	Correct:				Incorrect:
+	
+	FL	FL	FL				FL	FL	FL
+	FL	FL	FL	En			FL	FL	En
+	FL	FL	FL				FL	FL	FL
+	
+Creating entrances on outside Buidlings is the opposite. Sorry for the confusion.
+Also need to make sure the view is North when drawing as well as NOT having a building on the edge / not surrounded by terrain.

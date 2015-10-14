@@ -20,6 +20,8 @@ import ui.ImageStorage;
 
 public class EditorCanvas extends JPanel {
 
+	private static final long serialVersionUID = -980063613171624041L;
+
 	private Location location;
 	private String view = "Editor";
 
@@ -46,6 +48,10 @@ public class EditorCanvas extends JPanel {
 		this.location = location;
 	}
 
+	/**
+	 * Rotates map depending on camera direction and then either calls the editor draw or isometric renderer draw 
+	 * depending on the selected option.
+	 */
 	public void paint(Graphics g){
 		Tile[][] tiles = location.getTiles();
 		Tile[][] rooms = null;
@@ -63,28 +69,28 @@ public class EditorCanvas extends JPanel {
 			if(view.equals("Render")){
 				isometric(tiles,rooms, offgc);
 			} else {
-				shittyDraw(tiles,rooms,offgc);
+				editorDraw(tiles,rooms,offgc);
 			}
 			break;
 		case EAST:
 			if(view.equals("Render")){
 				isometric(rotate(tiles), rotate(rooms), offgc);
 			} else {
-				shittyDraw(rotate(tiles), rotate(rooms), offgc);
+				editorDraw(rotate(tiles), rotate(rooms), offgc);
 			}
 			break;
 		case SOUTH:
 			if(view.equals("Render")){
 				isometric(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
 			} else {
-				shittyDraw(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
+				editorDraw(rotate(rotate(tiles)), rotate(rotate(rooms)), offgc);
 			}
 			break;
 		case WEST:
 			if(view.equals("Render")){
 				isometric(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
 			} else {
-				shittyDraw(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
+				editorDraw(rotate(rotate(rotate(tiles))), rotate(rotate(rotate(rooms))), offgc);
 			}
 			break;
 
@@ -253,7 +259,7 @@ public class EditorCanvas extends JPanel {
 	 * @param rooms - array of location buildingtiles
 	 * @param offgc - graphics to draw to
 	 */
-	public void shittyDraw(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
+	public void editorDraw(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
 		for(int i = 0; i < tiles.length; i++){
 			for(int j = 0; j < tiles[i].length; j++){
 				Tile t = tiles[i][j];
@@ -294,10 +300,15 @@ public class EditorCanvas extends JPanel {
 
 	}
 
+	
+	/**
+	 * Rotates array 90 degrees counter-clockwise.
+	 * @param tiles - tiles to be rotated
+	 * @return rotated version of tiles
+	 */
 	public Tile[][] rotate(Tile[][] tiles){
 		if(tiles!=null){
 			Tile[][] newTiles = new Tile[tiles.length][tiles[0].length];
-			// drawing floor
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = 0; j < tiles[i].length; j++){
 					newTiles[(newTiles.length-1)-j][i] = tiles[i][j];
@@ -318,7 +329,10 @@ public class EditorCanvas extends JPanel {
 
 	public void setView(String string) {
 		view = string;
-
+	}
+	
+	public String getView(){
+		return view;
 	}
 
 	public int getCameraX() {
