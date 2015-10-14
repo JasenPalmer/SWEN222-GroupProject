@@ -7,8 +7,6 @@ import gameworld.location.Location;
 
 /**
  * A potion can be used by a player to regain some of the players missing health
- * The amount of health regained it determined by the healAmount field
- * 
  * @author Jasen
  *
  */

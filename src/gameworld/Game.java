@@ -125,6 +125,10 @@ public class Game implements Serializable {
 		return true;
 	}
 	
+	public void useItem(Player player, Item item) {
+		player.useItem(item);
+	}
+	
 	/**
 	 * Add an item to a container. The container should be directly in front of the player
 	 * @param player doing the interacting
@@ -164,8 +168,6 @@ public class Game implements Serializable {
 		return container;
 	}
 
-
-
 	/**
 	 * Returns the player with the given name
 	 *
@@ -181,11 +183,15 @@ public class Game implements Serializable {
 		return null;
 	}
 
-	//Getters
-
+	/**
+	 * @return all the locations in the game
+	 */
 	public Set<Location> getLocations() {
 		return locations;
 	}
+	/**
+	 * @return all the players in the game
+	 */
 	public Set<Player> getPlayers() {
 		return players;
 	}

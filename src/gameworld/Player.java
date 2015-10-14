@@ -124,9 +124,9 @@ public class Player implements Serializable{
 	 * Use the item in the players inventory at the specified index
 	 * @param index of item in the inventory
 	 */
-	public void useItem(int index) {
-		if(inventory[index] == null){return;}
-		inventory[index].interact(this);
+	public void useItem(Item item) {
+		if(item == null){return;}
+		item.interact(this);
 	}
 
 	/**
