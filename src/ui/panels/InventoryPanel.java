@@ -8,16 +8,10 @@ import gameworld.entity.Item;
 import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
 
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
@@ -31,24 +25,27 @@ import ui.ApplicationWindow;
  *
  */
 public class InventoryPanel extends JLayeredPane implements MouseListener{
+	//Serialize
+	private static final long serialVersionUID = 1L;
+
 	//ItemIcon array
 	ItemIcon[][] inventArray = new ItemIcon[4][2];
-	
+
 	//Panels
 	private InventoryBackground inventBackground = new InventoryBackground();
 	private InventoryPanel self = this;
 	private ApplicationWindow app;
-	
+
 	//Moved item
 	private ItemIcon movedItem;
 	private int movedItemIndex;
-	
+
 	//States
 	private boolean lootOpen;
 
 	//Inventory client
 	private Client client;
-	
+
 	//Container player opened
 	private Container container;
 
@@ -441,7 +438,6 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 				//Move items to container
 				else{
 					if(e.getX() > -454 && e.getX() < -130 && e.getY() > -521 && e.getY() < -319){
-						System.out.println("Inside");
 						for(int i = 0; i < inventArray.length; i++){
 							for(int j = 0; j < inventArray[0].length; j++){
 								if(inventArray[i][j]!= null && inventArray[i][j].getName() != "Empty"){
@@ -455,18 +451,16 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 											else{
 												System.out.println("Loot inventory is full can't swap item");
 											}
-										}else{
-											System.out.println("is null");
 										}
 									}
 								}
 							}
 						}
 					}
+					populateInventArray();
 				}
-				populateInventArray();
-			}
 
+			}
 		}
 	}
 
@@ -486,7 +480,7 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 
 	//Getters and Setters
 	public Client getPlayer(){return this.client;}
-	
+
 	//Required but unused methods
 	@Override
 	public void mouseClicked(MouseEvent e) {}

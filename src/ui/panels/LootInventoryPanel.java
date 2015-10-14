@@ -10,19 +10,13 @@ import gameworld.entity.Weapon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
-import ui.ApplicationWindow;
 import network.Client;
+import ui.ApplicationWindow;
 
 /**
  * Panel that displays the contents of a container
@@ -31,6 +25,9 @@ import network.Client;
  */
 public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	
+	//Serialize
+	private static final long serialVersionUID = 1L;
+
 	//Item icon array
 	private ItemIcon[][] itemList = new ItemIcon[6][3];
 	

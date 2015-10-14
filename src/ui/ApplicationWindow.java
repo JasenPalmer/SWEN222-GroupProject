@@ -5,7 +5,6 @@ import gameworld.Player;
 import gameworld.entity.Armour;
 import gameworld.entity.Container;
 import gameworld.entity.Gold;
-import gameworld.entity.Key;
 import gameworld.entity.Potion;
 import gameworld.entity.Weapon;
 
@@ -16,7 +15,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -36,7 +34,6 @@ import network.Client;
 import ui.panels.ChatBoxPanel;
 import ui.panels.HealthBarPanel;
 import ui.panels.InventoryPanel;
-import ui.panels.ItemIcon;
 import ui.panels.LootInventoryPanel;
 import ui.panels.SettingsMenu;
 
@@ -47,6 +44,9 @@ import ui.panels.SettingsMenu;
  */
 public class ApplicationWindow extends JFrame implements ActionListener, KeyListener, WindowListener{
 
+	//Serialize
+	private static final long serialVersionUID = 1L;
+	
 	//Panels
 	private JLayeredPane layeredPanel = new JLayeredPane();
 	private InventoryPanel inventPanel;
@@ -525,7 +525,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		//-60 to 6
 		if(effectClip == null) return;
 		FloatControl volume = (FloatControl) effectClip.getControl(FloatControl.Type.MASTER_GAIN);
-		//System.out.println(volume);
 		volume.setValue(change);
 		initEffectVolume = change;
 	}

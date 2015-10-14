@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.InputStream;
 
 import javax.sound.sampled.AudioSystem;
@@ -15,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 import network.Server;
@@ -26,7 +24,8 @@ import network.Server;
  *
  */
 public class MainMenuWindow extends JFrame implements ActionListener{
-
+	//Serialize 
+	private static final long serialVersionUID = 1L;
 	//Sound paths
 	private static final String buttonSound = "sounds/buttonSound.wav";
 	private static final String music = "sounds/mainMenuMusic.wav";

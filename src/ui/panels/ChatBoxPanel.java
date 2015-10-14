@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import javax.swing.border.Border;
 
 import network.Client;
@@ -24,6 +23,8 @@ import ui.ApplicationWindow;
  */
 public class ChatBoxPanel extends JPanel implements KeyListener{
 
+	//Serialize
+	private static final long serialVersionUID = 1L;
 	//Text items
 	private JTextArea textArea = new JTextArea();
 	private JTextField textBox = new JTextField();
@@ -113,7 +114,6 @@ public class ChatBoxPanel extends JPanel implements KeyListener{
 	 * @param message - Message to be displayed
 	 */
 	public void displayMessage(String user, String message){
-		System.out.println(user + ": " + message);
 		textArea.append("\n" + user + ": " + message);
 		textArea.setCaretPosition(textArea.getDocument().getLength());
 	}

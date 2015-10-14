@@ -17,6 +17,8 @@ import ui.ApplicationWindow;
  */
 public class InventoryBackground extends JPanel{
 	
+	//Serialize
+	private static final long serialVersionUID = 1L;
 	//Background image
 	private Image backgroundImage; 
 	

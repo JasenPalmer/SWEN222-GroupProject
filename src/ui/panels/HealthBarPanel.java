@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -20,6 +19,9 @@ import ui.ApplicationWindow;
  *
  */
 public class HealthBarPanel extends JPanel{
+
+	//Serialize
+	private static final long serialVersionUID = 1L;
 
 	//Background image
 	private Image backgroundImage;

@@ -20,6 +20,9 @@ import ui.ApplicationWindow;
  */
 public class SettingsMenu extends JPanel implements ChangeListener, ActionListener{
 
+	//Serialize
+	private static final long serialVersionUID = 1L;
+
 	//Application window this settings panel is contained within
 	private ApplicationWindow window;
 	
