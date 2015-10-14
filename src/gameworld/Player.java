@@ -96,17 +96,25 @@ public class Player implements Serializable{
 		if(tile.containedEntity() == null){return null;}
 		if(tile.containedEntity() instanceof Container) {
 			Container con = (Container) tile.containedEntity();
+			// if container is locked attempt to unlock it
 			if(con.isLocked()){
+				System.out.println("Chest is locked");
+				for(Item i : inventory) {
+					if(i != null){System.out.println(i.getClass().getSimpleName());}
+				}
 				for(int i = 0; i < inventory.length; i++) {
 					// if there is a key in the players inventory
 					if(inventory[i] instanceof Key) {
+						System.out.println("Found a key");
 						//unlock the container
 						inventory[i].interact(this);
 						//then remove the key from the players inventory
 						inventory[i] = null;
+						break;
 					}
 				}
 			}
+			// if the player didn't have a key to unlock it return null
 			if(con.isLocked()) {return null;}
 			return con;
 		}
@@ -152,7 +160,6 @@ public class Player implements Serializable{
 	}
 
 	/**
-	 * Remove item from invent if second is < 0 else
 	 * Swap the items at the given indices in the inventory
 	 * @param first - index of first item
 	 * @param second - index of second item
