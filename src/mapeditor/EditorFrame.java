@@ -11,10 +11,8 @@ import gameworld.tile.BuildingTile;
 import gameworld.tile.EntranceTile;
 import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
-import gameworld.tile.EntranceTile.Type;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +42,8 @@ import ui.ImageStorage;
  */
 public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 
-
+	private static final long serialVersionUID = -3577104435119753889L;
+	
 	private Location map;
 	private EditorCanvas canvas;
 	private OptionsMenu options;

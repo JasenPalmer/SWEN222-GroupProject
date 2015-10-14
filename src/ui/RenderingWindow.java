@@ -330,7 +330,6 @@ public class RenderingWindow extends JPanel{
 						}	
 					}
 				}
-
 			}
 		}
 
