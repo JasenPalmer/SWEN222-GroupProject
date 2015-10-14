@@ -317,7 +317,7 @@ public class Server {
 				Container c = gameState.performAction(toProcess.getUser());
 				if (c != null)
 					getClient(toProcess.getUser()).displayContainer(c);
-				gameNeedsUpdate = true;
+				inventNeedsUpdate = true;
 				break;
 			default:
 				break;
@@ -383,11 +383,11 @@ public class Server {
 		case USE_ITEM:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			gameState.useItem(p, toProcess.getItem());
-			gameNeedsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case DROP_ITEM:
 			gameState.playerDropItem(toProcess.getUser(), toProcess.getIndex1());
-			gameNeedsUpdate = true;
+			inventNeedsUpdate = true;
 			break;
 		case UPDATE_GAME:
 			break;
