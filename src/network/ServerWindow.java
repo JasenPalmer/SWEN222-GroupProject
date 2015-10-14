@@ -93,13 +93,20 @@ public class ServerWindow extends JFrame implements WindowListener, KeyListener 
 		console.setCaretPosition(console.getDocument().getLength());
 	}
 	
+	/**
+	 * Sends a message to all clients from "Server".
+	 * @param message - The message to send.
+	 */
 	private void sendServerMessage(String message){
 		displayMessage(message, "Server");
 		server.broadcastMessage(message, "Server");
 	}
 
 
-
+	/**
+	 * If the Server console is closed, first stop the server(close clients etc.),
+	 * then exit the application.
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		server.stopServer();
@@ -107,6 +114,10 @@ public class ServerWindow extends JFrame implements WindowListener, KeyListener 
 		
 	}
 
+	/**
+	 * If the return key is pressed, first checks if the KICK command and
+	 * kick player. Else sends a global message to all clients.
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == '\n'){

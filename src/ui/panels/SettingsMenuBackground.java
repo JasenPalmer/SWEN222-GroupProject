@@ -19,6 +19,9 @@ public class SettingsMenuBackground extends JPanel{
 	//Background image
 	private Image backgroundImage; 
 
+	/**
+	 * Loads background image from file and sets panels layout
+	 */
 	public SettingsMenuBackground(){
 		setLayout(null);
 		setOpaque(false);

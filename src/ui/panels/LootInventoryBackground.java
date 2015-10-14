@@ -19,6 +19,9 @@ public class LootInventoryBackground extends JPanel{
 	//Background image
 	private Image backgroundImage; 
 	
+	/**
+	 * Loads background iamge from file and sets panels layout
+	 */
 	public LootInventoryBackground(){
 		setLayout(null);
 		setOpaque(false);
