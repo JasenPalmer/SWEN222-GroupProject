@@ -1,6 +1,7 @@
 package gameworld;
 
 import gameworld.entity.Container;
+import gameworld.entity.Item;
 import gameworld.location.Location;
 import gameworld.location.Location.Lights;
 import gameworld.tile.Tile;
@@ -121,6 +122,20 @@ public class Game implements Serializable {
 		attacker.setAttacking(true);
 		return true;
 	}
+	
+	public Container addItemContainer(Player player,Item item, Container container) {
+		Tile tile = player.getTile(player.getFacing());
+		if(tile != null) {
+			if(tile.containedEntity() == null){return container;}
+			if(tile.containedEntity() instanceof Container) {
+				Container con = (Container) tile.containedEntity();
+				con.storeItem(item);
+				return con;
+			}
+		}
+		return null;
+	}
+	
 
 	/**
 	 * Removes item at index from container specified
@@ -130,6 +145,7 @@ public class Game implements Serializable {
 	public Container removeItemContainer(Player player, int index, Container container) {
 		Tile tile = player.getTile(player.getFacing());
 		if(tile != null){
+			if(tile.containedEntity() == null){return container;}
 			if(tile.containedEntity() instanceof Container) {
 				Container con = (Container) tile.containedEntity();
 				con.getItems()[index] = null;
