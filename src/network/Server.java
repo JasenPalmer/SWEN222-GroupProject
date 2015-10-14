@@ -333,10 +333,6 @@ public class Server {
 			}
 			
 			break;
-			
-			
-
-
 		case CYCLE_ANIMATIONS:
 			if (this.gameState.parsePlayer(toProcess.getUser()).isAttacking()) {
 				this.gameState.parsePlayer(toProcess.getUser()).getAnimation()
@@ -378,6 +374,9 @@ public class Server {
 		case ADD_ITEM_CONTAINER:
 			p = this.gameState.parsePlayer(toProcess.getUser());
 			gameState.addItemContainer(p, toProcess.getItem(), toProcess.getContainer());
+			Container cont = gameState.performAction(toProcess.getUser());
+			if (cont != null)
+				getClient(toProcess.getUser()).displayContainer(cont);
 			inventNeedsUpdate = true;
 			break;
 		case USE_ITEM:
@@ -398,7 +397,7 @@ public class Server {
 		}
 		
 		
-		
+		//Updates the necessary part of the client.
 		if (gameNeedsUpdate)
 			//updateGUIAll();
 			updateGUI(gameState.parsePlayer(toProcess.getUser()));
@@ -494,8 +493,7 @@ public class Server {
 		public void movePlayer(String movingUser) {
 			try {
 				output.writeObject(new NetworkEvent(movingUser, gameState
-						.parsePlayer(movingUser).getFacing(), gameState
-						.parsePlayer(movingUser).getPosition()));
+						.parsePlayer(movingUser).getFacing()));
 				output.reset();
 				output.flush();
 			} catch (IOException e) {
