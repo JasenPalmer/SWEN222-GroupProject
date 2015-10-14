@@ -19,6 +19,10 @@ import ui.panels.ChatBoxPanel;
 /**
  *
  * @author Matt Byers
+ * 
+ * A client of our game, that connects to the main game instance located on a server.
+ * Sends updates to the server when the client does something and receives updates when the local 
+ * game requires changing.
  *
  */
 public class Client {
@@ -38,8 +42,10 @@ public class Client {
 	//Game uses a constant port of 9954
 	private static final int PORT = 9954;
 
+	//The thread checking for updates from the server
 	private ServerThread serverConnection;
 
+	//The gamestate specific to this client
 	private Player state;
 
 	/**
@@ -67,7 +73,7 @@ public class Client {
 	 */
 	public void start(){
 
-		System.out.println("Start new client: " + user);
+		System.out.println("Starting new client: " + user);
 
 		//Create a new Socket to the specified host's server
 		try {

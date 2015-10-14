@@ -5,7 +5,6 @@ import gameworld.Player;
 import gameworld.entity.Container;
 import gameworld.entity.Item;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
@@ -96,10 +95,10 @@ public class NetworkEvent implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @param user
-	 * @param dir
-	 * @param pos
+	 * Server Event, that tells the client to move this user on their local copy of Player, 
+	 * in the given direction.
+	 * @param user - User to move.
+	 * @param dir - Direction to move them.
 	 */
 	public NetworkEvent(String user, Game.Direction dir){
 		this.type = EventType.MOVE_PLAYER;
@@ -107,12 +106,27 @@ public class NetworkEvent implements Serializable {
 		this.dir = dir;
 	}
 
+	/**
+	 * User event, can be multiple types, gives an item. 
+	 * Therefore addItem is on case this would be called.
+	 * @param user - The user to update.
+	 * @param type - The type of NetworkEvent.
+	 * @param item - The item to be stored.
+	 */
 	public NetworkEvent (String user, EventType type, Item item){
 		this.user = user;
 		this.type = type;
 		this.item = item;
 	}
 
+	/**
+	 * User Event, storing two indexes but a unspecified event type,
+	 * used for swapping items normally.
+	 * @param user - The user to update.
+	 * @param type - The type of NetworkEvent.
+	 * @param index1 - Start index.
+	 * @param index2 - End index.
+	 */
 	public NetworkEvent (String user, EventType type, int index1, int index2){
 		this.user  = user;
 		this.type = type;
@@ -120,12 +134,25 @@ public class NetworkEvent implements Serializable {
 		this.swapIndex2 = index2;
 	}
 
+	/**
+	 * Server event, tells the specified client to display the given container.
+	 * @param user - The user who is opening the container
+	 * @param container - The container itself.
+	 */
 	public NetworkEvent(String user, Container container){
 		this.user = user;
 		this.type = EventType.DISPLAY_CONTAINER;
 		this.container = container;
 	}
 
+	/**
+	 * User event of varying type, stores and index and a container.
+	 * Can be used for removing items from a container.
+	 * @param user - The user who created the event
+	 * @param type - The type of NetworkEvent
+	 * @param index - The index.
+	 * @param container - The container to be edited.
+	 */
 	public NetworkEvent(String user, EventType type , int index, Container container){
 		this.user = user;
 		this.type = type;
@@ -133,6 +160,13 @@ public class NetworkEvent implements Serializable {
 		this.swapIndex1 = index;
 	}
 	
+	/**
+	 * User event of varying type, can be used for adding items to containers.
+	 * @param user - The user who created the event.
+	 * @param type - The type of NetworkEvent
+	 * @param item - The item.
+	 * @param container - The container to be modified.
+	 */
 	public NetworkEvent(String user, EventType type, Item item, Container container){
 		this.user = user;
 		this.type = type;

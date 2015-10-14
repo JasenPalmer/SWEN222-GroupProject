@@ -21,6 +21,10 @@ import java.util.Queue;
 /**
  *
  * @author Matt Byers
+ * 
+ * The main server for our multiplayer Arena Game: "Shank the World". 
+ * This server holds the main instance of our Game World and all clients in the game send and receive updates
+ * from this Server Instances Game World.
  *
  */
 public class Server {
