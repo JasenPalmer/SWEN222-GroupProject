@@ -2,34 +2,34 @@
 # (fromLocation) (EntranceTile x) (EntranceTile y) (toLocation) (exitTile x) (exitTile y)
 #Note: exitTile is not an EntranceTile but the tile you want the player to move to
 # Water Skipping thing
-Central Hub 14 29 Central Hub 18 29
-Central Hub 18 29 Central Hub 14 29
+Central Hub	14	29	Central Hub	18	29
+Central Hub	18	29	Central Hub	14	29
 # Maze
-Central Hub 2 29 Maze-big 1 0
-Maze-big 28 29 Central Hub 2 29
+Central Hub	2	29	Maze-big	1	0
+Maze-big	28	29	Central Hub	2	29
 # T-Shaped Room
-Central Hub 13 16 T Building 1 18 3
-T Building 1 18 2 Central Hub 13 15
-T Building 1 13 15 T Building 2 12 5
-T Building 2 12 4 T Building 1 13 14
+Central Hub	13	16	T Building 1	18	3
+T Building 1	18	2	Central Hub	13	15
+T Building 1	13	15	T Building 2	12	5
+T Building 2	12	4	T Building 1	13	14
 # Dining Room thing
-Central Hub 21 12 Dining Room 2 9
-Dining Room 1 9 Central Hub 20 12
+Central Hub	21	12	Dining Room	2	9
+Dining Room	1	9	Central Hub	20	12
 # Hallway Room
-Central Hub 10 7 Hallway 3 4
-Hallway 2 4 Central Hub 9 7
-Hallway 5 2 Hall Room 1 4 5
-Hall Room 1 4 6 Hallway 5 3
-Hallway 9 2 Hall Room 2 4 5
-Hall Room 2 4 6 Hallway 9 3
-Hallway 13 2 Hall Room 3 4 6
-Hall Room 3 4 7 Hallway 13 3
-Hallway 5 6 Hall Room 4 5 4
-Hallway 9 6 Hall Room 4 9 4
-Hallway 13 6 Hall Room 4 13 4
-Hall Room 4 5 3 Hallway 5 5
-Hall Room 4 9 3 Hallway 9 5
-Hall Room 4 13 3 Hallway 13 5
+Central Hub	10	7	Hallway	3	4
+Hallway	2	4	Central Hub	9	7
+Hallway	5	2	Hall Room 1	4	5
+Hall Room 1	4	6	Hallway	5	3
+Hallway	9	2	Hall Room 2	4	5
+Hall Room 2	4	6	Hallway	9	3
+Hallway	13	2	Hall Room 3	4	6
+Hall Room 3	4	7	Hallway	13	3
+Hallway	5	6	Hall Room 4	5	4
+Hallway	9	6	Hall Room 4	9	4
+Hallway	13	6	Hall Room 4	13	4
+Hall Room 4	5	3	Hallway	5	5
+Hall Room 4	9	3	Hallway	9	5
+Hall Room 4	13	3	Hallway	13	5
 # Matts thing
-Central Hub 29 29 mattsDankMap 1 5
-mattsDankMap 0 5 Central Hub 28 29
+Central Hub	29	29	mattsDankMap	1	5
+mattsDankMap	0	5	Central Hub	28	29
