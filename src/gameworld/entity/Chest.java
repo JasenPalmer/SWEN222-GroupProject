@@ -47,7 +47,7 @@ public class Chest extends Container implements Serializable{
 
 		rareItems = new Item[] {
 				//weapon
-				new Weapon("Spear","Spear", null, null, Weapon.WeaponType.Spear),
+				new Weapon("Spear","Shank on a stick", null, null, Weapon.WeaponType.Spear),
 				//armour
 				new Armour("Chain Armour", "Chain Armour", null, null, Armour.ArmourType.Chain),
 				// misc
