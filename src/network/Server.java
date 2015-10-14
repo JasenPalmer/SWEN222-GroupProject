@@ -224,8 +224,7 @@ public class Server {
 	 * Moves the specified users player on all clients who are in the same
 	 * location as said player.
 	 * 
-	 * @param movingUser
-	 *            - The username of the player who needs to be moved, if client
+	 * @param movingUser - The username of the player who needs to be moved, if client
 	 *            does not exist this will return.
 	 */
 	public synchronized void movePlayer(String movingUser) {
@@ -258,8 +257,7 @@ public class Server {
 
 		synchronized (connections) {
 			for (ClientThread client : connections) {
-				if (p.getLocation().getPlayers()
-						.contains(gameState.parsePlayer(client.getUser())))
+				if (p.getLocation().getPlayers().contains(gameState.parsePlayer(client.getUser())))
 					client.animationCycle(cycleUser);
 			}
 
@@ -278,11 +276,13 @@ public class Server {
 		boolean gameNeedsUpdate = false;
 		boolean inventNeedsUpdate = false;
 		Player p = null;
+		
 
 		switch (toProcess.getType()) {
 		case KEY_PRESS:
 			int hasMoved = 0;
 			switch (toProcess.getKeyCode()) {
+			
 			case KeyEvent.VK_W:
 				hasMoved = gameState.movePlayer(toProcess.getUser(),
 						Direction.NORTH);
@@ -322,15 +322,20 @@ public class Server {
 			default:
 				break;
 			}
-
+			
 			// Player has moved but hasn't changed locations
-			if (hasMoved > 0)
+			if (hasMoved == 1){
 				movePlayer(toProcess.getUser());
+			}
 			// Player has moved and has changed locations
-			else if (hasMoved > 1)
+			else if (hasMoved == 2){
 				gameNeedsUpdate = true;
-
+			}
+			
 			break;
+			
+			
+
 
 		case CYCLE_ANIMATIONS:
 			if (this.gameState.parsePlayer(toProcess.getUser()).isAttacking()) {
@@ -377,9 +382,12 @@ public class Server {
 		default:
 			break;
 		}
+		
+		
+		
 		if (gameNeedsUpdate)
-			updateGUIAll();
-			//updateGUI(gameState.parsePlayer(toProcess.getUser()));
+			//updateGUIAll();
+			updateGUI(gameState.parsePlayer(toProcess.getUser()));
 		if (inventNeedsUpdate)
 			updateInvent(gameState.parsePlayer(toProcess.getUser()));
 	}
@@ -465,13 +473,12 @@ public class Server {
 			}
 
 			gameState.addPlayer(new Player(user, gameState));
-
 			this.updateGUI();
+			updateGUIAll();
 		}
 
 		public void movePlayer(String movingUser) {
 			try {
-				// output.reset();
 				output.writeObject(new NetworkEvent(movingUser, gameState
 						.parsePlayer(movingUser).getFacing(), gameState
 						.parsePlayer(movingUser).getPosition()));
@@ -485,7 +492,6 @@ public class Server {
 
 		public void animationCycle(String cycleUser) {
 			try {
-				// output.reset();
 				output.writeObject(new NetworkEvent(this.user,
 						NetworkEvent.EventType.CYCLE_ANIMATIONS));
 				output.reset();
@@ -616,9 +622,11 @@ public class Server {
 			finished = true;
 
 			try {
+				gameState.removePlayer(gameState.parsePlayer(user));
 				output.close();
 				input.close();
 				socket.close();
+				updateGUIAll();
 			} catch (Exception e) {}
 
 		}
