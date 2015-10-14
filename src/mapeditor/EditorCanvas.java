@@ -24,7 +24,7 @@ import ui.RenderingWindow;
 public class EditorCanvas extends JPanel {
 
 	private Location location;
-	private String view = "Shit";
+	private String view = "Editor";
 
 	private int MAPHEIGHT = 25;
 	private int MAPWIDTH = 25;

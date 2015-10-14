@@ -61,7 +61,7 @@ public class OptionsMenu extends JPanel {
 		// Building Menu
 
 		String[] outsideBuilding = {"Building", "Entrance - Building", "Entrance - Invisible", "Null"};
-		String[] insideBuilding = {"Floor", "Entrance - Building", "Entrance - Invisible", "Null"};
+		String[] insideBuilding = {"Floor", "Entrance - Building", "Null"};
 
 		String[] buildingsToUse = null;
 		if(map instanceof OutsideLocation){
@@ -167,7 +167,7 @@ public class OptionsMenu extends JPanel {
 		gbc_lblView.gridy = 8;
 		add(lblView,gbc_lblView);
 
-		String[] viewOptions = {"Shit", "Render"};
+		String[] viewOptions = {"Editor", "Render"};
 
 		final JComboBox view = new JComboBox(viewOptions);
 		GridBagConstraints gbc_view = new GridBagConstraints();

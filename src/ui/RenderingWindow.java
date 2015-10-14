@@ -22,17 +22,16 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.sun.prism.j2d.paint.MultipleGradientPaint;
 import com.sun.prism.j2d.paint.RadialGradientPaint;
 
 public class RenderingWindow extends JPanel{
-
+	
+	private static final long serialVersionUID = -9113443536966121759L;
+	
 	private int cameraX;
 	private int cameraY;
 
 	private Location location;
-	private Tile[][] locationTiles;
-
 	private Player player;
 	private ApplicationWindow applicationWindow;
 
@@ -54,7 +53,6 @@ public class RenderingWindow extends JPanel{
 	 * renderer on the resulting arrays
 	 */
 	public void paint( Graphics g ) {
-
 		super.paint(g);
 
 		Image offscreen = createImage(this.getWidth(), this.getHeight());
@@ -64,7 +62,6 @@ public class RenderingWindow extends JPanel{
 		location = player.getLocation();
 
 		Tile[][] tiles = location.getTiles();
-		locationTiles = tiles;
 		Tile[][] rooms = null;
 		
 		if(location instanceof OutsideLocation){
@@ -74,8 +71,8 @@ public class RenderingWindow extends JPanel{
 		
 		
 		// a rotated version of tiles and rooms that are not how the actual arrays work
-		Tile[][] fakeTiles = tiles;
-		Tile[][] fakeRooms = rooms;
+		Tile[][] tilesToDraw = tiles;
+		Tile[][] roomsToDraw = rooms;
 		
 		
 		// Rotates array depending on direction and then rendering
@@ -84,31 +81,31 @@ public class RenderingWindow extends JPanel{
 			isometric(tiles,rooms, offgc);
 			break;
 		case EAST:
-			fakeTiles = rotateCounterClockwise(tiles);
-			fakeRooms = rotateCounterClockwise(rooms);
-			isometric(fakeTiles, fakeRooms, offgc);
+			tilesToDraw = rotateCounterClockwise(tiles);
+			roomsToDraw = rotateCounterClockwise(rooms);
+			isometric(tilesToDraw, roomsToDraw, offgc);
 			break;
 		case SOUTH:
-			fakeTiles = rotateCounterClockwise(rotateCounterClockwise(tiles));
-			fakeRooms = rotateCounterClockwise(rotateCounterClockwise(rooms));
-			isometric(fakeTiles, fakeRooms, offgc);
+			tilesToDraw = rotateCounterClockwise(rotateCounterClockwise(tiles));
+			roomsToDraw = rotateCounterClockwise(rotateCounterClockwise(rooms));
+			isometric(tilesToDraw, roomsToDraw, offgc);
 			break;
 		case WEST:
-			fakeTiles = rotateClockwise(tiles);
-			fakeRooms = rotateClockwise(rooms);
-			isometric(fakeTiles, fakeRooms, offgc);
+			tilesToDraw = rotateClockwise(tiles);
+			roomsToDraw = rotateClockwise(rooms);
+			isometric(tilesToDraw, roomsToDraw, offgc);
 			break;
 
 		}
 
 			g.drawImage(offscreen,0,0,null);
 			
-			int[] playerPoint = getRealPlayerCoords(player, fakeTiles);
 			Point[]playerPoints = new Point[location.getPlayers().size()];
 			
 			int index = 0;
 			for(Player p: location.getPlayers()){
-				playerPoints[index] = new Point(getRealPlayerCoords(p, fakeTiles)[0], getRealPlayerCoords(p, fakeTiles)[1]);
+				int[] coords = getRealPlayerCoords(p,tilesToDraw);
+				playerPoints[index] = new Point(coords[0], coords[1]);
 				index++;
 			}
 			
@@ -120,24 +117,30 @@ public class RenderingWindow extends JPanel{
 
 	private void lighting(Graphics2D g2d, Point[] playerPoints) {
 		  int radius = TILESIZE*2;
-		  int x = 0;
-		  int y = 0;
 		  int width = this.getWidth();
 		  int height = this.getHeight();
+		  
+		  // specifying where each corresponding colour in colour array starts in gradient paint
 		  float[] distanceIntervals = {0.2f,0.4f,0.6f,0.8f,1f};
-		  Color[] colours = {new Color(0,0,10,250),new Color(0,0,10,187), new Color(0,0,10,125),new Color(0,0,10,62), new Color(0,0,10,0)};
+		  
+		  // colours to be used in gradient going from centre colour out to edge of circle colour.
+		  Color[] colours = {new Color(0,0,10,0),new Color(0,0,10,62), new Color(0,0,10,125),new Color(0,0,10,187), new Color(0,0,10,250)};
 		  
 		  
 		  Image image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
 		  Graphics2D g = (Graphics2D) image.getGraphics();
 
+		  // filling the rest of the image in black for darkness
 		  g.setColor(new Color(0, 0, 10, 250));
 		  g.fillRect(0, 0 , width, height);
-		  g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OUT, 1f));
+		  
+		  // the sets graphics object to clear the overlapping pixel of the destination when next drawn on. 
+		  // So drawing an oval with a gradient over a rectangle clears the rectangle below it.
+		  g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN, 1f));
 		  
 		  for(Point position: playerPoints){
-			  x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
-			  y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
+			  int x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
+			  int y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
 			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours));
 			  g.fillOval(x, y, radius*2, radius*2);
 		  }
@@ -163,13 +166,17 @@ public class RenderingWindow extends JPanel{
 		 * @param offgc - the graphics
 		 */
 		public void isometric(Tile[][] tiles, Tile[][] rooms, Graphics offgc){
+			//updating camera based on player position
 			updateCamera(getRealPlayerCoords(player, tiles));
+			
+			// filling background in with black square
 			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
 			
 			Image image = null;
-			// outside tiles
+			
 			for(int i = 0; i < tiles.length; i++){
 				for(int j = tiles[i].length-1; j >=0 ; j--){
+					// converting x or y to work in isometric view
 					int x = (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
 					int y = ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY;
 
@@ -203,7 +210,9 @@ public class RenderingWindow extends JPanel{
 
 						}
 						else{
+							// FLOOR, WALLS AND ENTRANCES FOR INSIDE LOCATION
 							if(!(t instanceof EntranceTile)){
+								// drawing floor
 								offgc.drawImage(image, x, y, null);
 								
 								// top left wall
@@ -228,9 +237,8 @@ public class RenderingWindow extends JPanel{
 									}
 								}
 							}
-							// FLOOR + ENTITES FOR INSIDE
-
-
+							
+							// ENTITES FOR INSIDE LOCATION
 							if(t.containedEntity()!=null){
 								if(t.containedEntity() instanceof BasicEntity){
 									image = ImageStorage.getImage(t.containedEntity().getName());
@@ -253,7 +261,7 @@ public class RenderingWindow extends JPanel{
 					if(rooms!=null){
 						Tile r = rooms[i][j];
 						if(r!=null) {
-							// Drawing 2 block high walls
+							// Drawing 2 block high walls with the bottom being door if needed
 							if(r instanceof EntranceTile){
 								if(j-1 >= 0 && rooms[i][j-1]==null){
 									EntranceTile et = (EntranceTile) r;
@@ -283,6 +291,7 @@ public class RenderingWindow extends JPanel{
 							}
 							
 							if(et==null || et.getType()==Type.BUILDING){
+							// if the entrance is part of a building, or it is just a building wall, draw a building around it.
 									// second wall above wall/door
 									offgc.drawImage(ImageStorage.building, x, y-TILESIZE, null);
 									
@@ -339,7 +348,9 @@ public class RenderingWindow extends JPanel{
 		}
 
 		/**
-		 * finds correct image to draw in walk cycle depending on players direction and spot in cycle
+		 * If the player is not attacking, it finds the correct frame in the walk cycle as well as the animation direction.
+		 * If the player is attacking, it finds the correct frame and animation in one of the attacking animation cycles.
+		 * 
 		 * @param p - The player to get image for
 		 * @return image - The image to return
 		 */
@@ -348,6 +359,7 @@ public class RenderingWindow extends JPanel{
 			int directionInt = animation.getAnimationDirection();
 			Image image = null;
 
+			// changing animation direction based on camera direction
 			switch(direction){
 				case EAST:
 					directionInt = addToDirInt(directionInt, 3);
@@ -387,19 +399,14 @@ public class RenderingWindow extends JPanel{
 			} else {
 				image = ImageStorage.walking[armour][directionInt][animation.getWalkFrame()];
 			}
-
-
-
-
-			if(p.isDead()){
-				image = ImageStorage.tree;
-			}
 			
 			return image;
 		}
 
 		/**
-		 * gets the player x and y in the current tile array regardless of rotation.
+		 * If the player's position is (0,0) when the map is rotated, the position of the player will still remain 0,0.
+		 * This method gets the coordinates the player is at in the rotated version of the array.
+		 * If the map is rotated to the east, this method would return (map.length, 0) despite the player position still being (0,0).
 		 * @param tiles
 		 * @return int of player x and y
 		 */
@@ -472,14 +479,14 @@ public class RenderingWindow extends JPanel{
 		/**
 		 * changes the camera coords to the fit player in middle of screen
 		 * camera x = player rendering x position - (renderwindow size / 2)
-		 *
+		 * camera y = player rendering y position - tilesize/2
 		 * @param realCoord - int array of player x and y in the tile array
 		 */
 		public void updateCamera(int[] realCoord){
 			int playerX = realCoord[0];
 			int playerY = realCoord[1];
 			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + TILESIZE/2) - this.getWidth()/2;
-			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4)) + this.getHeight()/2  - TILESIZE/2 - this.getHeight()/2;
+			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4))  - TILESIZE/2;
 			
 		}
 

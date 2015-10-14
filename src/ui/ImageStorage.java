@@ -201,10 +201,8 @@ public class ImageStorage {
 			case "EnB":
 				return grass;
 			case "EnV":
-				
-				
-				
 				return grass;
+			
 			case "Fl":
 				return floor;
 
