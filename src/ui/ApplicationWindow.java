@@ -316,7 +316,8 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
 		case "Exit Game":
-			closeAppWindow();
+			client.close();
+			System.exit(0);
 			break;
 		case "Add Shank":
 			client.addItem(new Weapon("Shank", "Debugging shank", null, null, Weapon.WeaponType.Shank));
@@ -641,14 +642,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		timer.stop();
 	}
 
-	//Getters
-	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
-	public Player getPlayer(){return this.client.getState();}
-	public RenderingWindow getRenderingWindow(){ return this.rw;}
-	public InventoryPanel getInventPanel(){ return this.inventPanel;}
-	public LootInventoryPanel getLootInvent(){ return this.lootInventPanel;}
-	public Client getClient(){ return this.client;}
-
 	/**
 	 * Closes the application window
 	 */
@@ -664,6 +657,14 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		client.close();
 		System.exit(0);
 	}
+	
+	//Getters
+	public ChatBoxPanel getChatBox(){return this.chatBoxPanel;}
+	public Player getPlayer(){return this.client.getState();}
+	public RenderingWindow getRenderingWindow(){ return this.rw;}
+	public InventoryPanel getInventPanel(){ return this.inventPanel;}
+	public LootInventoryPanel getLootInvent(){ return this.lootInventPanel;}
+	public Client getClient(){ return this.client;}
 
 	//Required but unused methods
 	@Override
