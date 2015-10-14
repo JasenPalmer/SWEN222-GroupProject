@@ -30,7 +30,9 @@ public class RenderingWindow extends JPanel{
 	
 	private int cameraX;
 	private int cameraY;
-
+	private int width = 1050;
+	private int height = 950;
+	
 	private Location location;
 	private Player player;
 	private ApplicationWindow applicationWindow;
@@ -42,11 +44,9 @@ public class RenderingWindow extends JPanel{
 	public RenderingWindow(ApplicationWindow aw){
 		new ImageStorage();
 		setLayout(null);
-		setBounds(0,0,1050,950);
+		setBounds(0,0,width,height);
 		this.applicationWindow = aw;
 	}
-
-
 
 	/**
 	 * Rotates tile arrays depending on the current viewing direction and then calls the isometric
@@ -55,7 +55,7 @@ public class RenderingWindow extends JPanel{
 	public void paint( Graphics g ) {
 		super.paint(g);
 
-		Image offscreen = createImage(this.getWidth(), this.getHeight());
+		Image offscreen = createImage(width, height);
 		Graphics offgc = offscreen.getGraphics();
 
 		player = applicationWindow.getPlayer();
@@ -115,10 +115,14 @@ public class RenderingWindow extends JPanel{
 
 	}
 
+	/**
+	 * Creates a black square to cover map in darkness and then erases and draws an oval over player 
+	 * using gradient effect to reveal area around them
+	 * @param g2d - Graphics object
+	 * @param playerPoints - List of points of all players to be used in lighting
+	 */
 	private void lighting(Graphics2D g2d, Point[] playerPoints) {
 		  int radius = TILESIZE*2;
-		  int width = this.getWidth();
-		  int height = this.getHeight();
 		  
 		  // specifying where each corresponding colour in colour array starts in gradient paint
 		  float[] distanceIntervals = {0.2f,0.4f,0.6f,0.8f,1f};
@@ -140,7 +144,7 @@ public class RenderingWindow extends JPanel{
 		  
 		  for(Point position: playerPoints){
 			  int x = (position.x*TILESIZE/2) + (position.y*TILESIZE/2) - cameraX - radius + TILESIZE/2;
-			  int y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + this.getHeight()/2 - cameraY - radius;
+			  int y = (position.y*TILESIZE/4)-(position.x*TILESIZE/4) + height/2 - cameraY - radius;
 			  g.setPaint(new RadialGradientPaint(x+radius, y+radius, radius, distanceIntervals, colours));
 			  g.fillOval(x, y, radius*2, radius*2);
 		  }
@@ -170,7 +174,7 @@ public class RenderingWindow extends JPanel{
 			updateCamera(getRealPlayerCoords(player, tiles));
 			
 			// filling background in with black square
-			offgc.fillRect(0,0,this.getWidth(), this.getHeight());
+			offgc.fillRect(0,0,width, height);
 			
 			Image image = null;
 			
@@ -178,7 +182,7 @@ public class RenderingWindow extends JPanel{
 				for(int j = tiles[i].length-1; j >=0 ; j--){
 					// converting x or y to work in isometric view
 					int x = (j*TILESIZE/2) + (i*TILESIZE/2) - cameraX;
-					int y = ((i*TILESIZE/4)-(j*TILESIZE/4)) + this.getHeight()/2 - cameraY;
+					int y = ((i*TILESIZE/4)-(j*TILESIZE/4)) + height/2 - cameraY;
 
 					Tile t = tiles[i][j];
 					if(t!=null) {
@@ -485,7 +489,7 @@ public class RenderingWindow extends JPanel{
 		public void updateCamera(int[] realCoord){
 			int playerX = realCoord[0];
 			int playerY = realCoord[1];
-			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + TILESIZE/2) - this.getWidth()/2;
+			cameraX = (int) ((playerX*TILESIZE/2) + (playerY*TILESIZE/2) + TILESIZE/2) - width/2;
 			cameraY = (int) ((playerY*TILESIZE/4)-(playerX*TILESIZE/4))  - TILESIZE/2;
 			
 		}
