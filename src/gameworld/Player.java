@@ -48,7 +48,7 @@ public class Player implements Serializable{
 	private Animation animation;
 
 	private Tile standingOn;
-	
+
 	private boolean attacking;
 
 	private Weapon weapon;
