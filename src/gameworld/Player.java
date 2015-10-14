@@ -96,14 +96,9 @@ public class Player implements Serializable{
 			Container con = (Container) tile.containedEntity();
 			// if container is locked attempt to unlock it
 			if(con.isLocked()){
-				System.out.println("Chest is locked");
-				for(Item i : inventory) {
-					if(i != null){System.out.println(i.getClass().getSimpleName());}
-				}
 				for(int i = 0; i < inventory.length; i++) {
 					// if there is a key in the players inventory
 					if(inventory[i] instanceof Key) {
-						System.out.println("Found a key");
 						//unlock the container
 						inventory[i].interact(this);
 						//then remove the key from the players inventory

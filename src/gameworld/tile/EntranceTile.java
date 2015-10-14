@@ -1,6 +1,8 @@
 package gameworld.tile;
 
 import gameworld.Player;
+import gameworld.entity.Gold;
+import gameworld.entity.Item;
 import gameworld.location.Location;
 
 import java.awt.Point;
@@ -69,6 +71,16 @@ public class EntranceTile extends Tile {
 	public boolean enter(Player player) {
 		if(exitLocation == null || locked || exitTile == null) {
 			return false;
+		}
+		if(exitLocation.getName().equals("LootRoom")) {
+			for(Item i : player.getInventory()) {
+				if(i instanceof Gold) {
+					Gold g = (Gold) i;
+					if(!(g.getAmount() >= 20)) {
+						return false;
+					}
+				}
+			}
 		}
 		player.getLocation().removePlayer(player);
 		player.setLocation(exitLocation);
