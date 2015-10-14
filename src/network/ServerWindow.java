@@ -98,11 +98,7 @@ public class ServerWindow extends JFrame implements WindowListener, KeyListener 
 		server.broadcastMessage(message, "Server");
 	}
 
-	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void windowClosing(WindowEvent e) {
@@ -128,6 +124,7 @@ public class ServerWindow extends JFrame implements WindowListener, KeyListener 
 	}
 	
 	//Unused Window and Key Listener events
+	public void windowOpened(WindowEvent e) {}
 	public void windowClosed(WindowEvent e) {}
 	public void windowIconified(WindowEvent e) {}
 	public void windowDeiconified(WindowEvent e) {}

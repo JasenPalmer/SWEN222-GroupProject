@@ -47,8 +47,8 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	private String currentOption;
 	private JMenuBar bar;
 
-	private static int MAPHEIGHT = 10;
-	private static int MAPWIDTH = 10;
+	private static int MAPHEIGHT = 30;
+	private static int MAPWIDTH = 30;
 	private static int TILESIZE = 64;
 
 	int xClick1;
@@ -181,7 +181,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 							}
 						}
 						else if(isEntity(currentOption)){
-							System.out.print("current option is entity");
 							map.getTiles()[y][x].setEntitiy(getEntity(currentOption, new Point(x,y)));
 						}
 						else if(isTerrain(currentOption)){
