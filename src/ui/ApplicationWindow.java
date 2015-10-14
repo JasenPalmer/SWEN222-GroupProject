@@ -276,7 +276,7 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 			option2List.add(new JMenuItem("Add Chain Armour"));
 			option2List.add(new JMenuItem("Add Leather Armour"));
 			option2List.add(new JMenuItem("Add Robe Armour"));
-			option2List.add(new JMenuItem("Add 5 gold"));
+			option2List.add(new JMenuItem("Add 5 Gold"));
 			option2List.add(new JMenuItem("Add Potion"));
 			option2List.add(new JMenuItem("Add Key"));
 
