@@ -13,11 +13,9 @@ import gameworld.tile.FloorTile;
 import gameworld.tile.Tile;
 
 import java.awt.Point;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
