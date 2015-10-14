@@ -24,3 +24,9 @@ Hallway	9	2	Hall Room 2	4	5
 Hall Room 2	4	6	Hallway	9	3
 Hallway	13	2	Hall Room 3	4	6
 Hall Room 3	4	7	Hallway	13	3
+Hallway	5	6	Hall Room 4	5	4
+Hallway	9	6	Hall Room 4	9	4
+Hallway	13	6	Hall Room 4	13	4
+Hall Room 4	5	3	Hallway	5	5
+Hall Room 4	9	3	Hallway	9	5
+Hall Room 4	13	3	Hallway	13	5
