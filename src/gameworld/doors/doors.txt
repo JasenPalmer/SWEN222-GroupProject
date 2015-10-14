@@ -36,3 +36,6 @@ mattsDankMap	0	5	Central Hub	28	29
 # Long Room
 Central Hub	3	14	Long Room	6	9
 Long Room	7	9	Central Hub	4	14
+# Loot Room
+LootRoom	13	8	Central Hub	3	0
+Central Hub	3	0	LootRoom	13	8
