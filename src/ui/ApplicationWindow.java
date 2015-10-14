@@ -368,16 +368,6 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 				setInventory();
 			}
 			break;
-		case KeyEvent.VK_I:
-			if(lootInventOpen == true){
-				lootInventOpen = false;
-				setLootInventory();
-			}
-			else{
-				lootInventOpen = true;
-				setLootInventory();
-			}
-			break;
 		case KeyEvent.VK_Q:
 			rw.setDirection(directionSetter("Q"));
 			client.registerKeyPress(e);
