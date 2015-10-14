@@ -197,9 +197,9 @@ public class ImageStorage {
 				
 			// cheapest fix i have ever implemented in my life holy shit.	
 			case "En":
-				return grass;
+				return doorLR;
 			case "EnB":
-				return grass;
+				return doorLR;
 			case "EnV":
 				return grass;
 			
