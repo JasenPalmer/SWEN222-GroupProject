@@ -21,6 +21,11 @@ import javax.swing.SwingUtilities;
 
 import network.Client;
 
+/**
+ * Panel that displays the contents of a container
+ * @author ItsNotAGoodTime
+ *
+ */
 public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 
 	private ItemIcon[][] itemList = new ItemIcon[6][3];
@@ -39,6 +44,10 @@ public class LootInventoryPanel extends JLayeredPane implements MouseListener{
 	//Sound paths
 	private String buttonSound = "src/ui/sounds/buttonSound.wav";
 
+	/**
+	 * Sets dimensions of layout
+	 * @param invent - the inventory panel of the player
+	 */
 	public LootInventoryPanel(InventoryPanel invent){
 		//Setup
 		this.inventPanel = invent;

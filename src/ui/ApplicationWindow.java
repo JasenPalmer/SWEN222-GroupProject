@@ -459,12 +459,14 @@ public class ApplicationWindow extends JFrame implements ActionListener, KeyList
 		lootInventPanel.setLootContainer(container);
 		lootInventOpen = true;
 		setLootInventory();
+		inventPanel.populateInventArray();
 		
 		if(inventOpen){
 			wasOpen = true;
 		}else{
 			inventOpen = true;
 			setInventory();
+			wasOpen = false;
 		}
 	}
 

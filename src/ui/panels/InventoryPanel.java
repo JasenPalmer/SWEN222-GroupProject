@@ -373,6 +373,10 @@ public class InventoryPanel extends JLayeredPane implements MouseListener{
 									}
 									playSound("Button");
 								}
+								else if(inventArray[i][j].getType().equals("Consumable")){
+									//client.usePotion();
+									client.removeItem(convertIndex(i,j));
+								}
 							}
 						}
 					}

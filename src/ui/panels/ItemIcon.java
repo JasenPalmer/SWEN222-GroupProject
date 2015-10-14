@@ -2,37 +2,46 @@ package ui.panels;
 
 import javax.swing.ImageIcon;
 
-public class ItemIcon {
+/**
+ * Used to store image of relevant invent or container item
+ * @author ItsNotAGoodTime
+ *
+ */
+public class ItemIcon {	
+	//Inventory item images
+	private static final String potionImage = "src/ui/images/items/potionInventItem.png";
+	private static final String shankImage = "src/ui/images/items/shankImage.png";
+	private static final String spearImage = "src/ui/images/items/spearImage.png";
+	private static final String keyImage = "src/ui/images/items/keyImage.png";
+	private static final String plateImage = "src/ui/images/items/plateImage.png";
+	private static final String chainImage = "src/ui/images/items/chainImage.png";
+	private static final String leatherImage = "src/ui/images/items/leatherImage.png";
+	private static final String robeImage = "src/ui/images/items/robeImage.png";
 
+	//Gold images
+	private static final String goldImage50 = "src/ui/images/items/50goldImage.png";
+	private static final String goldImage40 = "src/ui/images/items/40goldImage.png";
+	private static final String goldImage30 = "src/ui/images/items/30goldImage.png";
+	private static final String goldImage20 = "src/ui/images/items/20goldImage.png";
+	private static final String goldImage10 = "src/ui/images/items/10goldImage.png";
+	private static final String goldImage5 = "src/ui/images/items/5goldImage.png";
+	private static final String goldImage4 = "src/ui/images/items/4goldImage.png";
+	private static final String goldImage3 = "src/ui/images/items/3goldImage.png";
+	private static final String goldImage2 = "src/ui/images/items/2goldImage.png";
+	private static final String goldImage1 = "src/ui/images/items/1goldImage.png";
+	private int x,y;
+	
+	private boolean equipable;
+	private String type;
 	private String Name;
 	private String Description;
 	private ImageIcon image;
-	private String potionImage = "src/ui/images/items/potionInventItem.png";
-	private String shankImage = "src/ui/images/items/shankImage.png";
-	private String spearImage = "src/ui/images/items/spearImage.png";
-	private String helmet1Image = "src/ui/images/items/helmet-1.png";
-	private String helmet2Image = "src/ui/images/items/helmet-2.png";
-	private String keyImage = "src/ui/images/items/keyImage.png";
-	private String plateImage = "src/ui/images/items/plateImage.png";
-	private String chainImage = "src/ui/images/items/chainImage.png";
-	private String leatherImage = "src/ui/images/items/leatherImage.png";
-	private String robeImage = "src/ui/images/items/robeImage.png";
-
-	//Gold images
-	private String goldImage50 = "src/ui/images/items/50goldImage.png";
-	private String goldImage40 = "src/ui/images/items/40goldImage.png";
-	private String goldImage30 = "src/ui/images/items/30goldImage.png";
-	private String goldImage20 = "src/ui/images/items/20goldImage.png";
-	private String goldImage10 = "src/ui/images/items/10goldImage.png";
-	private String goldImage5 = "src/ui/images/items/5goldImage.png";
-	private String goldImage4 = "src/ui/images/items/4goldImage.png";
-	private String goldImage3 = "src/ui/images/items/3goldImage.png";
-	private String goldImage2 = "src/ui/images/items/2goldImage.png";
-	private String goldImage1 = "src/ui/images/items/1goldImage.png";
-	private int x,y;
-	private boolean equipable;
-	private String type;
-
+	
+	/**
+	 * Creates ItemIcon based on provided name and description
+	 * @param n - Name of the item
+	 * @param d - Description of the item
+	 */
 	public ItemIcon(String n, String d){
 		this.Name = n;
 		this.Description = d;
@@ -134,6 +143,12 @@ public class ItemIcon {
 	public boolean getEquipable(){return this.equipable;}
 	public String getType(){return this.type;}
 
+	/**
+	 * Used to check whether the mouse pointer clicked on this item
+	 * @param x - x position of the mouse
+	 * @param y - y position of the mouse
+	 * @return - whether the user clicked this item
+	 */
 	public boolean contains(int x, int y){
 		if(x >= this.x && x <= this.x + 42){
 			if(y >= this.y && y <= this.y + 52){
