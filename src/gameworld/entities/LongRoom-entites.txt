@@ -1,0 +1,26 @@
+Long Room
+BasicEntity	Chair	This is for sitting!	2	1
+BasicEntity	Chair	This is for sitting!	3	1
+BasicEntity	Chair	This is for sitting!	5	1
+BasicEntity	Chair	This is for sitting!	6	1
+BasicEntity	Table	This is a table.	2	2
+BasicEntity	Table	This is a table.	3	2
+BasicEntity	Table	This is a table.	5	2
+BasicEntity	Table	This is a table.	6	2
+BasicEntity	Chair	This is for sitting!	2	5
+BasicEntity	Chair	This is for sitting!	3	5
+BasicEntity	Chair	This is for sitting!	5	5
+BasicEntity	Chair	This is for sitting!	6	5
+BasicEntity	Table	This is a table.	2	6
+BasicEntity	Table	This is a table.	3	6
+BasicEntity	Table	This is a table.	5	6
+BasicEntity	Table	This is a table.	6	6
+Chest	Chest	This is a chest	6	8
+BasicEntity	Table	This is a table.	2	11
+BasicEntity	Table	This is a table.	3	11
+BasicEntity	Table	This is a table.	5	11
+BasicEntity	Table	This is a table.	6	11
+BasicEntity	Chair	This is for sitting!	2	12
+BasicEntity	Chair	This is for sitting!	3	12
+BasicEntity	Chair	This is for sitting!	5	12
+BasicEntity	Chair	This is for sitting!	6	12

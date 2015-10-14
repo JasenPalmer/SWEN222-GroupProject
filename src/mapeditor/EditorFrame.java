@@ -56,9 +56,6 @@ public class EditorFrame extends JFrame implements MouseListener, KeyListener{
 	int xClick2;
 	int yClick2;
 
-	private Image image;
-
-
 	/**
 	 * Create the frame.
 	 */

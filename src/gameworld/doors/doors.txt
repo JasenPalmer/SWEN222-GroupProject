@@ -33,3 +33,6 @@ Hall Room 4	13	3	Hallway	13	5
 # Matts thing
 Central Hub	29	29	mattsDankMap	1	5
 mattsDankMap	0	5	Central Hub	28	29
+# Long Room
+Central Hub	3	14	Long Room	6	9
+Long Room	7	9	Central Hub	4	14

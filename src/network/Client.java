@@ -42,6 +42,13 @@ public class Client {
 
 	private Player state;
 
+	/**
+	 * Constructs a new client that will in turn create and connect a socket to the server socket at the specified host address.
+	 * The Client thread will also be started to wait for updates from the server.
+	 * @param host - The String address of the host to connect to, if empty the socket wont connect.
+	 * @param user - The user name of the client, this is checked by ApplicationWindow
+	 * @param gui - The ApplicationWindow that will display the clients gui.
+	 */
 	public Client (String host, String user, ApplicationWindow gui){
 		this.host = host;
 		this.user = user;
@@ -53,6 +60,11 @@ public class Client {
 		serverConnection.start();
 	}
 
+	/**
+	 * Starts the client socket.
+	 * Creates the input/output streams
+	 * Writes the first object to the output(the username of this client).
+	 */
 	public void start(){
 
 		System.out.println("Start new client: " + user);
@@ -96,6 +108,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing a KeyEvent and writes it to the output.
+	 * @param event- The KeyEvent of the key pressed.
+	 */
 	public void registerKeyPress(KeyEvent event){
 		NetworkEvent toWrite = new NetworkEvent(event, user);
 		try {
@@ -107,6 +123,10 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing a message string and writes it to the output.
+	 * @param message - The message written.
+	 */
 	public void registerMessage(String message){
 		NetworkEvent toWrite = new NetworkEvent(message, user);
 		try {
@@ -117,6 +137,9 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Creates a NetworkEvent storing
+	 */
 	public void cycleAnimations(){
 		NetworkEvent toWrite = new NetworkEvent(this.user, NetworkEvent.EventType.CYCLE_ANIMATIONS);
 		try {
