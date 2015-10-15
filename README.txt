@@ -14,12 +14,21 @@ E - 	Rotate camera clockwise.
 W - 	Move forward.
 A - 	Move left.
 S - 	Move backwards.
-D -		Move right.
+D -	Move right.
 F - 	Interact with objects. (Opening chests & loots corpses).
 Space - Attack.	
 Tab - 	Toggle Inventory.
 Esc - 	Sound options / Close loot menu. Note: Player can't move with loot menu open.
 Enter - Toggle Chat.
+
+Inventory Interaction:
+
+-	Hover over an item to view its description.
+-	Right-Click weapons/armour to equip/dequip.
+-	Right-Click potions to consume them.
+-	Drag and drop items to rearrange inventory slots.
+-	Drag and drop items between containers and inventory to move them.
+-	Drag and drop items off inventory to drop them into the world.
 
 Game Objectives:
 
@@ -34,16 +43,16 @@ Run "EditorFrame.java" in the mapeditor package. Write either "outside" or "insi
 Editor Controls:
 
 W - 	Move Camera up.
-A -		Move Camera left.
+A -	Move Camera left.
 S - 	Move Camera down.
 D - 	Move Camera right.
 
 Using the Editor:
 
-- 	To draw, select a terrain, building or entity in the menus on the left and then either click or drag to fill out squares.
-- 	To view the map how it would appear in the game, switch from editor view to renderer view in the view drop box on the left.
-- 	To save, hit file, save and then fill in a map name and description. This will then create two files, <mapname>.txt and <mapname>-entites.txt.
-	These need to be moved into the correct entities and locations folder. From there a txt file connects the doors named door.txt and needs to be 
+- 	To draw, select a terrain, building or entity in the menus on the left and then either click or drag to fill out 		squares.
+- 	To view the map how it would appear in the game, switch from editor view to renderer view in the view drop box on the 	left.
+- 	To save, hit file, save and then fill in a map name and description. This will then create two files, <mapname>.txt 		and <mapname>-entites.txt.
+	These need to be moved into the correct entities and locations folder. From there a txt file connects the doors named 	door.txt and needs to be 
 	edited to display the locations in the game.
 	
 
