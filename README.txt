@@ -21,7 +21,7 @@ Tab - 	Toggle Inventory.
 Esc - 	Sound options / Close loot menu. Note: Player can't move with loot menu open.
 Enter - Toggle Chat.
 
-Inventory Interaction:
+Inventory Interactions:
 
 -	Hover over an item to view its description.
 -	Right-Click weapons/armour to equip/dequip.
