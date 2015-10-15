@@ -9,13 +9,12 @@ import java.awt.event.KeyEvent;
 import java.io.Serializable;
 
 /**
- *
- * @author Matt Byers
- *
  * Network Events are used for transferring data through the socket input/output streams.
  *
  * Network Events can be of various types that hold different types of data therefore
  * the EventType must be checked before calling any of the getters as they will be null if the type is incorrect.
+ * @author Matt Byers
+ *
  */
 public class NetworkEvent implements Serializable {
 

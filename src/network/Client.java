@@ -17,12 +17,12 @@ import ui.ApplicationWindow;
 import ui.panels.ChatBoxPanel;
 
 /**
- *
- * @author Matt Byers
- * 
+  * 
  * A client of our game, that connects to the main game instance located on a server.
  * Sends updates to the server when the client does something and receives updates when the local 
  * game requires changing.
+ * 
+ * @author Matt Byers
  *
  */
 public class Client {
@@ -320,10 +320,8 @@ public class Client {
 	public Player getState(){ return state; }
 
 	/**
-	 * 
-	 * @author Matt
-	 * 
 	 * ServerThread that continuously looks for updates from the Server
+	 * @author Matt
 	 *
 	 */
 	public class ServerThread extends Thread {

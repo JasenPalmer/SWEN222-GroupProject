@@ -19,12 +19,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- *
- * @author Matt Byers
- * 
  * The main server for our multiplayer Arena Game: "Shank the World". 
  * This server holds the main instance of our Game World and all clients in the game send and receive updates
  * from this Server Instances Game World.
+ * 
+ * @author Matt Byers
  *
  */
 public class Server {
@@ -423,7 +422,8 @@ public class Server {
 		
 		//Updates gameState of client
 		if (gameNeedsUpdate)
-			updateGUI(gameState.parsePlayer(toProcess.getUser()));
+			updateGUIAll();
+			//updateGUI(gameState.parsePlayer(toProcess.getUser()));
 		
 		//Updates gameState of client and re-populates inventory panel.
 		if (inventNeedsUpdate)
