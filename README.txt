@@ -7,6 +7,12 @@ For singleplayer, hit the host button followed by the join button. Leave the IP 
 For multiplayer, playing locally requires one person to host and the others to enter the address of the host computer in the IP field.
 To play multiplayer online, the host needs to port forward. As in singleplayer, the host always needs to leave the ip blank.
 
+For testing Game:
+
+-	Choosing the name "admin" will give you a debug option in the top menu. This allows the user to add items in inventory without needing to open chests and find them.
+-	Viewing from the starting direction of the game (north), there is a gap in the bushes at the bottom of the map. This leads to a maze which has lighting effects.
+-	Viewing from the starting direction, there is a gap in the trees on the left corner which can only be accessed if the player has 20 gold.
+
 Game Controls:
 
 Q - 	Rotate camera counter-clockwise.
@@ -36,6 +42,7 @@ To simply kill players and loot the map. To open a chest you need a key and you 
 Opening a chest breaks the key and if you were unlucky enough to not find one in the chest, 
 you will need to get another by killing a player.
 
+
 To Run Map Editor:
 
 Run "EditorFrame.java" in the mapeditor package. Write either "outside" or "inside" when prompted for location type. (not case sensitive)
@@ -49,10 +56,10 @@ D - 	Move Camera right.
 
 Using the Editor:
 
-- 	To draw, select a terrain, building or entity in the menus on the left and then either click or drag to fill out 		squares.
-- 	To view the map how it would appear in the game, switch from editor view to renderer view in the view drop box on the 	left.
-- 	To save, hit file, save and then fill in a map name and description. This will then create two files, <mapname>.txt 		and <mapname>-entites.txt.
-	These need to be moved into the correct entities and locations folder. From there a txt file connects the doors named 	door.txt and needs to be 
+- 	To draw, select a terrain, building or entity in the menus on the left and then either click or drag to fill out squares.
+- 	To view the map how it would appear in the game, switch from editor view to renderer view in the view drop box on the left.
+- 	To save, hit file, save and then fill in a map name and description. This will then create two files, <mapname>.txt and <mapname>-entites.txt.
+	These need to be moved into the correct entities and locations folder. From there a txt file connects the doors named door.txt and needs to be 
 	edited to display the locations in the game.
 	
 
