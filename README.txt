@@ -10,8 +10,11 @@ To play multiplayer online, the host needs to port forward. As in singleplayer, 
 For testing Game:
 
 -	Choosing the name "admin" will give you a debug option in the top menu. This allows the user to add items in inventory without needing to open chests and find them.
+
 -	Viewing from the starting direction of the game (north), there is a gap in the bushes at the bottom of the map. This leads to a maze which has lighting effects.
+
 -	Viewing from the starting direction, there is a gap in the trees on the left corner which can only be accessed if the player has 20 gold.
+
 
 Game Controls:
 
